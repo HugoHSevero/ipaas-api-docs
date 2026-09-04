@@ -280,6 +280,8 @@ Nem toda spec oficial tem tags: a do Trello publica **261 operações sem nenhum
 
 **`number` pode virar `string`.** Um campo `number` foi importado como `string`; `integer` foi preservado. Prefira `integer` para valores inteiros.
 
+**Parâmetro de query `type: array` fica sem o tipo do elemento.** O importador não captura o `items.type` de parâmetros de query do tipo array — o parâmetro entra com `type: array` e `itemType: null`, e na interface o tipo do elemento aparece em branco. Verificado no Open-Meteo, cujos parâmetros como `hourly`/`daily` são `array` de `enum` de `string`. Solução: se a API aceita **lista separada por vírgula** (caso do Open-Meteo: `hourly=temperature_2m,precipitation`), declare o parâmetro como `type: string` na spec e registre os valores permitidos na `description`. O importador então mostra `string` e a execução funciona igual, porque o valor já vai como texto na query.
+
 **Parâmetros de path viram `{{{param}}}`.** Formato de template do iPaaS, esperado.
 
 **O corpo de POST/PUT não é importado.** O importador traz path, query params, headers e o schema de **resposta**, mas ignora o corpo da requisição. Verificado com spec de teste isolada: um `POST` com `requestBody` (OpenAPI 3) importa com HTTP 200, porém `properties` sai sem `requestBody` e o `inputSchema` contém apenas `inHeader`. Não é problema da spec — é limitação do importador.
@@ -489,7 +491,7 @@ Só uma revisão fica `PUBLISHED`; as anteriores viram `ARCHIVED`. Nada é destr
 
 ### 6.5 Desenhar as ligações entre as caixas
 
-As conexões lógicas (`next`/`previous`) bastam para **executar**, mas as setas só aparecem no canvas se houver `finalConnections` com o path SVG:
+As conexões lógicas (`next`/`previous`) bastam para **executar**, mas as setas só aparecem no canvas se houver `finalConnections` com o path SVG. Sem elas o fluxo executa por API, mas o diagrama aparece **sem setas** no builder e passa a impressão de não estar ligado nem publicável (visto no Open-Meteo: com `finalConnections: []` os steps ficaram soltos; ao preencher os paths, as setas apareceram e a versão publicou normalmente). Preencha sempre:
 
 ```json
 "finalConnections": [{
@@ -536,6 +538,10 @@ Retorna `status` (`DONE`/`ERROR`), `executionTime`, `initialComponent`, `finalCo
 Cuidado ao interpretar o campo `message`: numa execução `DONE` ele carrega o **payload enviado**, não um erro. Só trate como erro junto com `status: ERROR` ou `errorStack` preenchido.
 
 Não encontrei endpoint público de detalhamento por componente (`/components`, `/steps`, `/traceability` retornam 500 ou 403). Para validar recurso por recurso, inclua todos os steps na resposta síncrona e verifique os payloads.
+
+**A tela de detalhe da mensagem (rastreabilidade) pode ficar presa em skeleton.** No Monitor (`/ipaas/monitor`) a listagem carrega e mostra as execuções `DONE` normalmente. Ao abrir uma execução (ícone de olho, rota `/message/{id}`), se a página ficar só com os placeholders de carregamento, a causa mais provável é o nó `WEBHOOK_RESPONSE` sem `originalComponentId` (ver abaixo) — não uma limitação da plataforma. A listagem que funciona usa `GET /v4/messages?sourceTypes=ORIGINAL&status=DONE&status=ERROR&initialDate=<ISO Z>&finalDate=<ISO Z>` (as datas em ISO com `Z` e `sourceTypes` são obrigatórias; sem elas dá 400).
+
+**O nó `WEBHOOK_RESPONSE` sem `originalComponentId` quebra a rastreabilidade.** Se o response node do flow for montado por API sem o campo `originalComponentId`, o backend devolve `componentDTO: null` para esse step em `GET /ipaas/api/v3/steps/{integrationId}/{createdDate}/{messageId}`, e a tela de detalhe estoura com `TypeError: Cannot set properties of null (setting 'name')` em `translateStepLabel` (o front faz `step.componentDTO.name = ...` sem checar null para os steps de webhook). A tela então fica em skeleton e a aba **Rastreabilidade** não abre. Correção: no response node use sempre `"originalComponentId": "76c0da1d-ca69-4381-9124-d5d40d9eb106-synchronous-webhook-response"` — é o id global do componente de resposta síncrona, idêntico em todos os diagramas (BrasilAPI, Asaas, Brevo, Trello). Depois de corrigir e **republicar**, execute de novo: só as mensagens geradas pela revisão corrigida têm o `componentDTO` completo; as execuções antigas continuam quebrando o detalhe.
 
 #### Encadear a saída de um step na entrada do próximo — verificado
 
@@ -648,6 +654,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Asaas | `API_KEY` (header `access_token`) | 41 em 3 serviços | 41 recursos importados; conta criada e validada; diagrama com POST (`inBody`) e encadeamento entre steps executado `DONE`, criando cliente e cobrança reais no sandbox |
 | Brevo | `API_KEY` (header `api-key`) | 68 em 4 serviços | 68 recursos importados a partir da spec oficial convertida de Swagger 2.0; conta criada; diagrama com 6 steps em 3 serviços executado `DONE`, incluindo `POST /smtp/email` em modo sandbox. Serviço `SMS Transacional` **não validado**: plano gratuito não tem crédito de SMS e todos os endpoints respondem 500 |
 | Trello | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | 151 recursos importados; exigiu injetar `tags` (a spec oficial não tem nenhuma) e remover `securitySchemes` em query, que quebrava o importador; conta com **duas** chaves em query criada; diagrama com 6 steps em 4 serviços executado `DONE`, criando cartão real e encadeando `{{{id4.id}}}` |
+| Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
 
 ---
 
@@ -738,6 +745,36 @@ https://trello.com/1/authorize?expiration=never&scope=read,write&response_type=t
 **A spec oficial não descreve a resposta de 91 das 151 operações.** Os recursos importam e executam normalmente: na validação, `GET /boards/{id}/lists` (sem schema na spec) devolveu as 4 listas no payload. O que falta é o mapeamento campo a campo no builder. Conferido no import: `GET /boards/{id}` com 26 campos de resposta, `inPath(1)`, `inQuery(16)`; `GET /boards/{id}/cards` com 0 campos.
 
 O quadro de teste é `Meu quadro do Trello` (`6a997347d853e6791ec05a9c`), lista `Hoje` (`6a997347d853e6791ec05b1a`). A execução criou o cartão `6a997aa9b8b19364ad236f50` de verdade; reexecutar o diagrama cria um novo cartão a cada vez.
+
+### Open-Meteo — `NO_AUTH`
+
+Cada domínio do Open-Meteo tem um **subdomínio próprio**, e como o `baseURL` fica no ambiente, o app tem **um ambiente por subdomínio** (`Previsão do Tempo` e `Elevação` compartilham `api.open-meteo.com`). Um serviço por domínio, um recurso por serviço.
+
+| Item | Id |
+|---|---|
+| App (`componentId`) | `32c933f2-9b04-4f52-9954-4c90eaf8232e` |
+| Ambiente `api.open-meteo.com` | `d50c95c4-4734-4ddc-afef-1b9512dd959a` |
+| Ambiente `air-quality-api.open-meteo.com` | `81eff3fc-c995-4ee0-b40e-2a686a4bce83` |
+| Ambiente `climate-api.open-meteo.com` | `b5c7d8d0-60ca-4828-91c8-a039c03c7dcc` |
+| Ambiente `ensemble-api.open-meteo.com` | `9ae100de-61f4-41a4-ad08-6b83b7525d20` |
+| Ambiente `flood-api.open-meteo.com` | `cc2f667b-0965-4759-bb46-22b3aaffb04d` |
+| Ambiente `archive-api.open-meteo.com` | `d1b8c2bd-3945-4025-8c30-cdcf893ff599` |
+| Ambiente `marine-api.open-meteo.com` | `57cfa934-132b-4175-98dd-e13424d5d0ab` |
+| Ambiente `seasonal-api.open-meteo.com` | `e94c443c-8163-4c60-9f8f-087e52730b5c` |
+| Serviço `Previsão do Tempo` (`/v1/forecast`) | `35ec0792-a420-4ef0-aa64-41d6203c8343` |
+| Serviço `Elevação` (`/v1/elevation`) | `18a4a79f-d749-4461-9dad-be7255e95037` |
+| Serviço `Qualidade do Ar` (`/v1/air-quality`) | `4f007292-0189-445d-b856-9bd2d1f7786b` |
+| Serviço `Clima` (`/v1/climate`) | `1b7ec4ee-d0ca-4e71-aee8-411ff3964112` |
+| Serviço `Ensemble` (`/v1/ensemble`) | `def8a334-2dbb-47d7-bf76-6c89af26d172` |
+| Serviço `Enchentes` (`/v1/flood`) | `bbb0f72d-54a8-4a62-873a-c7df3f104056` |
+| Serviço `Histórico Meteorológico` (`/v1/archive`) | `7d9a5b69-0808-4e26-aa6d-d7b16fc734ad` |
+| Serviço `Meteorologia Marinha` (`/v1/marine`) | `45f06555-78d5-40de-b25f-61d2a78a5934` |
+| Serviço `Previsão Sazonal` (`/v1/seasonal`) | `47f6ed98-1615-46ae-b0ce-f67e4dadc004` |
+| Diagrama `Valida Open-Meteo` (`integrationId`) | `be2bd4cd-9195-42ed-affd-0bdde62778bc` |
+
+Sem contas (é `NO_AUTH`). Todos os parâmetros vão em query (`latitude`/`longitude` obrigatórios; `Clima` e `Histórico` também exigem `start_date`/`end_date`), então no diagrama use `configurations.inQuery`. A resposta síncrona do webhook vem embrulhada em um objeto `result`. Na validação, os 9 serviços responderam com dados reais em uma única execução `DONE` (7,5s).
+
+Os subdomínios `customer-*` (planos pagos com `apikey`) foram descartados das specs; ficam só as origens públicas. A spec foi publicada primeiro no fork `Jonathanfdr/ipaas-api-docs` (branch `open-meteo`) e importada por URL raw do fork por SHA, enquanto o PR para `dugabriel:main` não é mergeado. As URLs em `open-meteo/ipaas.json` já apontam para `dugabriel/.../main/` (valem após o merge).
 
 ### API BRASIL (app nativo TOTVS) — `NO_AUTH`
 App do catálogo TOTVS, não do nosso tenant (`ownerTenantName: TOTVS`, `isCustom: false`). Já existia com um serviço `Api` de um único recurso; recebeu um serviço novo com a spec completa da BrasilAPI.

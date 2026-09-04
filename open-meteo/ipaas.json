@@ -1,0 +1,131 @@
+{
+  "app": {
+    "name": "Open-Meteo",
+    "description": "APIs meteorológicas gratuitas e sem autenticação: previsão do tempo, qualidade do ar, clima, ensemble, enchentes, histórico, meteorologia marinha, previsão sazonal e elevação. Uso não comercial (CC BY 4.0)."
+  },
+  "environments": [
+    {
+      "name": "api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    },
+    {
+      "name": "air-quality-api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://air-quality-api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    },
+    {
+      "name": "climate-api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://climate-api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    },
+    {
+      "name": "ensemble-api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://ensemble-api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    },
+    {
+      "name": "flood-api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://flood-api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    },
+    {
+      "name": "archive-api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://archive-api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    },
+    {
+      "name": "marine-api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://marine-api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    },
+    {
+      "name": "seasonal-api.open-meteo.com",
+      "type": "REST",
+      "baseURL": "https://seasonal-api.open-meteo.com",
+      "authModels": ["NO_AUTH"]
+    }
+  ],
+  "accounts": [],
+  "services": [
+    {
+      "name": "Previsão do Tempo",
+      "description": "Previsão horária, diária e condições atuais para qualquer coordenada (/v1/forecast)",
+      "environment": "api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-forecast.ipaas.json"
+    },
+    {
+      "name": "Elevação",
+      "description": "Elevação do terreno (DEM 90m) para uma ou várias coordenadas (/v1/elevation)",
+      "environment": "api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-elevation.ipaas.json"
+    },
+    {
+      "name": "Qualidade do Ar",
+      "description": "Poluentes, poeira, UV e pólen por hora (/v1/air-quality)",
+      "environment": "air-quality-api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-air-quality.ipaas.json"
+    },
+    {
+      "name": "Clima",
+      "description": "Projeções climáticas de modelos CMIP6 até 2050 (/v1/climate)",
+      "environment": "climate-api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-climate.ipaas.json"
+    },
+    {
+      "name": "Ensemble",
+      "description": "Previsão por ensemble (múltiplos membros) para avaliar incerteza (/v1/ensemble)",
+      "environment": "ensemble-api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-ensemble.ipaas.json"
+    },
+    {
+      "name": "Enchentes",
+      "description": "Descarga fluvial e risco de cheias (GloFAS) (/v1/flood)",
+      "environment": "flood-api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-flood.ipaas.json"
+    },
+    {
+      "name": "Histórico Meteorológico",
+      "description": "Reanálise histórica desde 1940 (ERA5) (/v1/archive)",
+      "environment": "archive-api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-historical.ipaas.json"
+    },
+    {
+      "name": "Meteorologia Marinha",
+      "description": "Ondas, período e direção de mar, swell e vento (/v1/marine)",
+      "environment": "marine-api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-marine.ipaas.json"
+    },
+    {
+      "name": "Previsão Sazonal",
+      "description": "Previsão sazonal de longo prazo (até 9 meses) (/v1/seasonal)",
+      "environment": "seasonal-api.open-meteo.com",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/open-meteo/openapi-seasonal.ipaas.json"
+    }
+  ]
+}

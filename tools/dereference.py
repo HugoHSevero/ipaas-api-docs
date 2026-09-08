@@ -150,6 +150,54 @@ def remover_esquemas_em_query(spec):
     return removidos
 
 
+def _tem_binary(no):
+    """True se o nó contém, em qualquer profundidade, um schema `format: binary`."""
+    if isinstance(no, dict):
+        if no.get("format") == "binary":
+            return True
+        return any(_tem_binary(v) for v in no.values())
+    if isinstance(no, list):
+        return any(_tem_binary(i) for i in no)
+    return False
+
+
+def remover_corpos_multipart(spec):
+    """Remove requestBody `multipart/form-data` de UPLOAD, que quebra o importador.
+
+    Verificado no Anymarket: uma operação com `requestBody`
+    `multipart/form-data` contendo um campo de arquivo (`format: binary`) faz o
+    `import-swagger` responder HTTP 500 com
+    `Cannot invoke "java.lang.Throwable.getMessage()" ... "cause" is null`
+    (NPE no backend) — a mesma mensagem que a spec em Swagger 2.0 produz.
+
+    Bissecção confirmou que o gatilho é o `format: binary`, não o multipart em
+    si: dois outros serviços do mesmo app têm `multipart/form-data` SEM binary
+    (`POST /campaigns/{id}/products`, `DELETE /categories/.../groups/{id}`) e
+    importaram normalmente. Por isso só removemos o multipart quando ele
+    carrega um upload de arquivo.
+
+    Não se perde nada em execução: o importador não traz o corpo de POST/PUT de
+    qualquer forma (monta-se em `configurations.inBody` no diagrama). Se, após
+    remover o multipart, a operação ficar sem nenhum content, o requestBody
+    inteiro é descartado.
+    """
+    afetadas = []
+    for caminho, metodos in (spec.get("paths") or {}).items():
+        for metodo, op in metodos.items():
+            if metodo not in METODOS or not isinstance(op, dict):
+                continue
+            conteudo = (op.get("requestBody") or {}).get("content")
+            if not isinstance(conteudo, dict):
+                continue
+            mp = conteudo.get("multipart/form-data")
+            if mp is not None and _tem_binary(mp):
+                conteudo.pop("multipart/form-data")
+                afetadas.append(f"{metodo.upper()} {caminho}")
+                if not conteudo:
+                    op.pop("requestBody", None)
+    return afetadas
+
+
 def processar(pasta: Path):
     """Processa todas as specs fonte da pasta (openapi.json e openapi-*.json)."""
     origens = sorted(
@@ -174,6 +222,10 @@ def processar(pasta: Path):
         if em_query:
             print(f"    securitySchemes em query removidos: {', '.join(em_query)}"
                   " (quebram o importador; a conta do iPaaS injeta os parâmetros)")
+        multipart = remover_corpos_multipart(plano)
+        if multipart:
+            print(f"    corpos multipart/form-data removidos: {', '.join(multipart)}"
+                  " (quebram o importador com NPE; o corpo vai em inBody no diagrama)")
         # remove apenas o que foi embutido inline; securitySchemes descreve a
         # autenticação e nao e schema de dados, entao permanece
         componentes = plano.get("components") or {}

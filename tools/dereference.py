@@ -23,6 +23,10 @@ RAIZ = Path(__file__).resolve().parent.parent
 LIMITE_PROFUNDIDADE = 40
 METODOS = ("get", "post", "put", "delete", "patch", "head", "options")
 
+# $ref circulares truncados na dereferência da spec em processamento.
+# Preenchido por dereferenciar(); lido e zerado por processar().
+CICLOS_TRUNCADOS = set()
+
 
 def resolver_ponteiro(spec, ref):
     """Resolve um JSON pointer local (#/a/b/c)."""
@@ -67,7 +71,15 @@ def dereferenciar(no, spec, profundidade=0, vistos=None):
         if "$ref" in no:
             ref = no["$ref"]
             if ref in vistos:
-                raise RecursionError(f"$ref circular: {ref}")
+                # $ref circular (ex.: uma categoria que tem categorias filhas).
+                # Não dá para inlinar uma árvore infinita, e como o importador
+                # do iPaaS ignora $ref, o terminal correto é um objeto genérico:
+                # preserva a estrutura acíclica e faz a recursão parar.
+                nome = ref.split("/")[-1]
+                CICLOS_TRUNCADOS.add(ref)
+                return {"type": "object",
+                        "description": f"Referência recursiva a {nome} "
+                                       "(truncada; ver a spec fonte)"}
             alvo = resolver_ponteiro(spec, ref)
             resolvido = dereferenciar(alvo, spec, profundidade + 1, vistos | {ref})
             # preserva irmãos do $ref (ex.: description no ponto de uso)
@@ -153,7 +165,11 @@ def processar(pasta: Path):
         spec = json.loads(origem.read_text(encoding="utf-8"))
         problemas = validar_para_ipaas(spec)
 
+        CICLOS_TRUNCADOS.clear()
         plano = dereferenciar(spec, spec)
+        if CICLOS_TRUNCADOS:
+            print(f"    $ref circular truncado: {', '.join(sorted(CICLOS_TRUNCADOS))}"
+                  " (schema recursivo; virou objeto genérico no ponto do ciclo)")
         em_query = remover_esquemas_em_query(plano)
         if em_query:
             print(f"    securitySchemes em query removidos: {', '.join(em_query)}"

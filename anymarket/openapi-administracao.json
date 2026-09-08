@@ -1,0 +1,1927 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Administração",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Callback",
+      "description": "Gerenciamento de callbacks"
+    },
+    {
+      "name": "Monitoramento de Erro",
+      "description": "Monitoramento de erros"
+    },
+    {
+      "name": "Perfis de Acesso",
+      "description": "Gerenciamento de perfis de acesso"
+    },
+    {
+      "name": "Usuários",
+      "description": "Gerenciamento de usuários"
+    }
+  ],
+  "paths": {
+    "/callbacks": {
+      "parameters": [],
+      "post": {
+        "summary": "/callbacks",
+        "operationId": "post-callbacks",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID interno",
+                      "minimum": 0,
+                      "maximum": 9999999999
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL do callback",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token da Conta ANYMARKET"
+                    },
+                    "orderActive": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de pedido"
+                    },
+                    "productActive": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de produto"
+                    },
+                    "transmissionActive": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de transmissão"
+                    },
+                    "questionActive ": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de pergunta"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": 0,
+                      "url": "example.com",
+                      "token": "string",
+                      "orderActive": true,
+                      "productActive": true,
+                      "transmissionActive": true,
+                      "questionActive ": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          }
+        },
+        "description": "# Cria Callback\nCria um callback com os dados informados",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "URL de Callback"
+                  },
+                  "token": {
+                    "type": "string",
+                    "description": "Token da Conta ANYMARKET"
+                  },
+                  "orderActive": {
+                    "type": "boolean",
+                    "description": "Indica se o ANYMARKET deve encaminhar callback de pedido"
+                  },
+                  "productActive": {
+                    "type": "boolean",
+                    "description": "Indica se o ANYMARKET deve encaminhar callback de produto"
+                  },
+                  "transmissionActive": {
+                    "type": "boolean",
+                    "description": "Indica se o ANYMARKET deve encaminhar callback de transmissão"
+                  },
+                  "questionActive ": {
+                    "type": "boolean",
+                    "description": "Indica se o ANYMARKET deve encaminhar callback de pergunta"
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "url": "example.com",
+                    "token": "string",
+                    "orderActive": true,
+                    "productActive": true,
+                    "transmissionActive": true,
+                    "questionActive ": true
+                  }
+                },
+                "stoplight-example-1": {
+                  "value": {
+                    "id": 0,
+                    "url": "example.com",
+                    "token": "string",
+                    "orderActive": true,
+                    "productActive": true,
+                    "transmissionActive": true,
+                    "questionActive ": true
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "Callback"
+        ]
+      },
+      "get": {
+        "summary": "/callbacks",
+        "operationId": "get-callbacks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_CallBack"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "links": [
+                        {
+                          "rel": "next",
+                          "href": "https://.../v2/component?limit=5&offset=5"
+                        }
+                      ],
+                      "content": [
+                        {
+                          "id": 0,
+                          "url": "example.com",
+                          "token": "string",
+                          "orderActive": true,
+                          "productActive": true,
+                          "transmissionActive": true,
+                          "questionActive ": true
+                        }
+                      ],
+                      "page": {
+                        "size": 5,
+                        "totalElements": 0,
+                        "totalPages": 1,
+                        "number": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "description": "# Consulta Callbacks \nConsulta todos os callbacks disponíveis",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          }
+        ],
+        "tags": [
+          "Callback"
+        ],
+        "x-internal": true,
+        "x-stoplight": {
+          "id": "q85f0ckemeksm"
+        }
+      }
+    },
+    "/callbacks/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do callback gerado pelo ANYMARKET"
+        }
+      ],
+      "get": {
+        "summary": "/callbacks/{id}",
+        "operationId": "get-callbacks-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallBack"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": 0,
+                      "url": "example.com",
+                      "token": "string",
+                      "orderActive": true,
+                      "productActive": true,
+                      "transmissionActive": true,
+                      "questionActive ": true
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          }
+        },
+        "description": "# Consulta Callback\nConsulta os detalhes de um callback",
+        "parameters": [],
+        "tags": [
+          "Callback"
+        ]
+      },
+      "delete": {
+        "summary": "/callbacks/{id}",
+        "operationId": "delete-callback-id",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          }
+        },
+        "description": "# Exclui Callback\nExclui um callback",
+        "tags": [
+          "Callback"
+        ]
+      },
+      "put": {
+        "summary": "/callbacks/{id}",
+        "operationId": "put-callbacks-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID interno"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL do callback",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token da Conta ANYMARKET"
+                    },
+                    "orderActive": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de pedido"
+                    },
+                    "productActive": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de produto"
+                    },
+                    "transmissionActive": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de transmissão"
+                    },
+                    "questionActive ": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de pergunta"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": 0,
+                      "url": "string",
+                      "token": "string",
+                      "orderActive": true,
+                      "productActive": true,
+                      "transmissionActive": true,
+                      "questionActive ": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/422"
+                }
+              }
+            }
+          }
+        },
+        "description": "# Altera Callback\nAtualiza os dados de um callback\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallBackPost"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Callback"
+        ]
+      }
+    },
+    "/monitorings": {
+      "post": {
+        "summary": "/monitorings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "partnerId",
+                    "origin",
+                    "message",
+                    "createdAt",
+                    "type",
+                    "status"
+                  ],
+                  "properties": {
+                    "partnerId": {
+                      "type": "string",
+                      "description": "ID do monitoramento - controle no parceiro",
+                      "minLength": 1
+                    },
+                    "origin": {
+                      "type": "string",
+                      "description": "Nome do integrador",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Resumo da mensagem de erro",
+                      "minLength": 1,
+                      "maxLength": 500
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Detalhes da mensagem de erro",
+                      "minLength": 1,
+                      "maxLength": 4000
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Data de entrada do registro"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Tipo de monitoramento",
+                      "enum": [
+                        "ALERT",
+                        "INTERNAL_ERROR",
+                        "CRITICAL_ERROR"
+                      ]
+                    },
+                    "retryCallbackURL": {
+                      "type": "string",
+                      "description": "URL da API do integrador"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Tipo de satus do monitoramento",
+                      "enum": [
+                        "PENDING",
+                        "RETRYING",
+                        "CANCELLED",
+                        "CONCLUED"
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "partnerId": "order-1",
+                      "origin": "ERP",
+                      "message": "Erro ao importar pedido 1",
+                      "details": "Erro ao importar pedido 1 por falta do mapegamento de transportadora.",
+                      "createdAt": "2021-11-25T20:30:00-03:00",
+                      "type": "CRITICAL_ERROR",
+                      "retryCallbackURL": "https//callback.meusite.meu/orders/1",
+                      "status": "PENDING"
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "partnerId": "string",
+                      "origin": "string",
+                      "message": "string",
+                      "details": "string",
+                      "createdAt": "2019-08-24T14:15:22Z",
+                      "type": "ALERT",
+                      "retryCallbackURL": "http://example.com",
+                      "status": "PENDING"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-monitorings",
+        "description": "# Cria um registro para monitoração\nCria um registro para monitoração",
+        "tags": [
+          "Monitoramento de Erro"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitoringPost"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "partnerId": "order-1",
+                    "origin": "ERP",
+                    "message": "Erro ao importar pedido 1",
+                    "details": "Erro ao importar pedido 1 por falta do mapegamento de transportadora.",
+                    "createdAt": "2021-11-25T20:30:00-03:00",
+                    "type": "CRITICAL_ERROR",
+                    "retryCallbackURL": "https://callback.meusite.meu/orders/1",
+                    "status": "PENDING"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/monitorings/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do monitoramento gerado pelo ANYMARKET"
+        }
+      ],
+      "put": {
+        "summary": "/monitorings/{id}",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Monitoring"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "put-monitorings-id",
+        "description": "# Atualiza os dados de um evento monitorado\nAtualiza os dados de um evento monitorado\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "tags": [
+          "Monitoramento de Erro"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitoringPut"
+              }
+            }
+          }
+        },
+        "x-internal": true,
+        "x-stoplight": {
+          "id": "2mdj8q4hlsa0s"
+        }
+      }
+    },
+    "/users": {
+      "parameters": [],
+      "get": {
+        "summary": "Listar todos os usuários",
+        "tags": [
+          "Usuários"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "roles": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "pagination": {
+                        "offset": 0,
+                        "pageSize": 10
+                      },
+                      "users": [
+                        {
+                          "email": "abc@db1.com.br",
+                          "id": 1,
+                          "name": "ABC",
+                          "roles": [
+                            "Administrativo",
+                            "Comercial"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-users",
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "example": "[\"login\", \"ASC\"]"
+            },
+            "in": "query",
+            "name": "order",
+            "description": "Campo utilizado para ordenação e Ordenação a Utilizar"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "description": "Offset da paginação"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "size",
+            "description": "Tamanho das Páginas"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "abc@db1.com.br"
+            },
+            "in": "query",
+            "name": "filter",
+            "description": "Campo para filtragem (Nome ou Login)"
+          }
+        ],
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox"
+      },
+      "post": {
+        "summary": "Criar um novo usuário",
+        "tags": [
+          "Usuários"
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-users",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "login": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "login": "hugo@user.com",
+                    "name": "Hugo",
+                    "password": "12345678",
+                    "roles": [
+                      1,
+                      2,
+                      3
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "<!-- theme: alert -->\n> #### Important\n> Este endpoint não está disponível no ambiente de sandbox.\n\n<!-- theme: warning -->\n> #### Atenção!\n>\n> Este endpoint só deve ser chamado após a validação do Usuário ter sido realizada através do endpoint /validate."
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Alterar as informações de um usuário",
+        "tags": [
+          "Usuários"
+        ],
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "put-users-id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "login": "hugo@user.com",
+                    "roles": [
+                      {
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remover um usuário",
+        "tags": [
+          "Usuários"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "operationId": "delete-users-id",
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox\n\n<!-- theme: warning -->\n> #### Atenção!\n>\n> O usuário não será removido definitivamente do sistema, ele será apenas removido da organização. Caso o usuário esteja vinculado a mais de uma organização, ele será removido apenas da organização realizando a chamada."
+      }
+    },
+    "/users/validate": {
+      "get": {
+        "summary": "Validar se o usuário existe",
+        "tags": [
+          "Usuários"
+        ],
+        "responses": {
+          "202": {
+            "description": "Usuário existe no sistema, mas não está vinculado a organização."
+          },
+          "204": {
+            "description": "Usuário não existe no sistema."
+          },
+          "226": {
+            "description": "Usuário existe no sistema e está vinculado a organização."
+          }
+        },
+        "operationId": "get-users-validate",
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox\n\n<!-- theme: warning -->\n> #### Atenção!\n>\n> Este endpoint deve ser chamado antes de criar ou vincular um usuário a uma organização para validar a existência do mesmo.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "email",
+            "description": "Email do Usuário"
+          }
+        ]
+      }
+    },
+    "/users/bind": {
+      "get": {
+        "summary": "Vincular o usuário a Organização ou Empresa",
+        "tags": [
+          "Usuários"
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "operationId": "get-users-bind",
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox\n\n<!-- theme: warning -->\n> #### Atenção!\n>\n> Este endpoint só deve ser chamado após a validação do Usuário ter sido realizada através do endpoint /validate.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "email": "email@db1.com.br",
+                    "nameCountry": "Brasil",
+                    "roles": [
+                      {
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "summary": "Listar os perfis de acesso",
+        "tags": [
+          "Perfis de Acesso"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "totalUsers": {
+                            "type": "integer"
+                          },
+                          "totalPermissions": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "roles": [
+                        {
+                          "id": 82183,
+                          "name": "Não Deletar - Uso Interno",
+                          "totalUsers": 40,
+                          "quantity": 89
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-roles",
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox"
+      },
+      "post": {
+        "summary": "Criar um perfil de acesso",
+        "tags": [
+          "Perfis de Acesso"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-roles",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "resourcesId": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "name": "Novo Perfil Teste",
+                    "resourcesId": [
+                      2,
+                      1
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "<!-- theme: warning -->\n> #### Atenção!\n>\n> Os ids dos recursos podem ser obtidos no endpoint /roles/permission"
+        },
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox"
+      }
+    },
+    "/roles/permissions": {
+      "get": {
+        "summary": "Retornar as permissões do vendedor",
+        "tags": [
+          "Perfis de Acesso"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "journeys": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "resources": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "journeys": [
+                        {
+                          "id": 14,
+                          "keyInternationalization": "journey.administrative",
+                          "description": "Administrativo",
+                          "type": "DEFAULT",
+                          "icon": "pi pi-briefcase",
+                          "resources": [
+                            {
+                              "id": 284,
+                              "key": "financialInformationSeller",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.financialInformationSeller",
+                              "description": "Faturas",
+                              "isPresent": null
+                            },
+                            {
+                              "id": 286,
+                              "key": "userManagement",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.userManagement",
+                              "description": "Usuários",
+                              "isPresent": null
+                            },
+                            {
+                              "id": 285,
+                              "key": "profileManagement",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.profileManagement",
+                              "description": "Perfis de Acesso",
+                              "isPresent": null
+                            }
+                          ]
+                        },
+                        {
+                          "id": 15,
+                          "keyInternationalization": "journey.help",
+                          "description": "Ajuda",
+                          "type": "DEFAULT",
+                          "icon": "pi pi-question-circle",
+                          "resources": [
+                            {
+                              "id": 287,
+                              "key": "allowedChat",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.allowedChat",
+                              "description": "Chat",
+                              "isPresent": null
+                            },
+                            {
+                              "id": 288,
+                              "key": "support",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.support",
+                              "description": "Ajuda",
+                              "isPresent": null
+                            },
+                            {
+                              "id": 289,
+                              "key": "university",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.university",
+                              "description": "Universidade ANYMARKET",
+                              "isPresent": null
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-roles-permissions",
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox"
+      }
+    },
+    "/roles/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Buscar informações do perfil de acesso",
+        "tags": [
+          "Perfis de Acesso"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "journeys": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "resources": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "journeys": [
+                        {
+                          "id": 14,
+                          "keyInternationalization": "journey.administrative",
+                          "description": "Administrativo",
+                          "type": "DEFAULT",
+                          "icon": "pi pi-briefcase",
+                          "resources": [
+                            {
+                              "id": 284,
+                              "key": "financialInformationSeller",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.financialInformationSeller",
+                              "description": "Faturas",
+                              "isPresent": false
+                            },
+                            {
+                              "id": 286,
+                              "key": "userManagement",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.userManagement",
+                              "description": "Usuários",
+                              "isPresent": false
+                            },
+                            {
+                              "id": 285,
+                              "key": "profileManagement",
+                              "type": "FEATURE",
+                              "keyInternationalization": "resource.profileManagement",
+                              "description": "Perfis de Acesso",
+                              "isPresent": false
+                            }
+                          ]
+                        }
+                      ],
+                      "name": "Administrativo - HomologBrasil",
+                      "id": 6
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "A role informada não existe no sistema",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "errorCode": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Perfil invalido, por favor verifique o perfil informado.",
+                      "errorCode": "INVALID_ROLE"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-roles-id",
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox"
+      },
+      "put": {
+        "summary": "Alterar informações do perfil de acesso",
+        "tags": [
+          "Perfis de Acesso"
+        ],
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox\n\nAlterar informações do perfil de acesso\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "resourcesId": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "abc",
+                      "resourcesId": [
+                        1
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "put-roles-id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "resourcesId": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "name": "abc",
+                    "resourcesId": [
+                      1
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um perfil de acesso",
+        "tags": [
+          "Perfis de Acesso"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "operationId": "delete-roles-id",
+        "description": "<!-- theme: alert -->\n> #### Importante\n>\n> Este endpoint não está disponível no ambiente de sandbox"
+      }
+    },
+    "/monitorings/{id}/retry": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "/monitoring/{id}/retry",
+        "tags": [
+          "Monitoramento de Erro"
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        },
+        "operationId": "put-monitorings-id-retry",
+        "description": "# Envia um monitoring para retentativa\nEnvia um monitoring para retentativa\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações."
+      }
+    },
+    "/monitorings/{id}/cancel": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "/monitoring/{id}/cancel",
+        "tags": [
+          "Monitoramento de Erro"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "put-monitorings-id-cancel",
+        "description": "# Cancela um monitoring\nCancela um monitoring\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações."
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    },
+    "parameters": {
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 5,
+          "default": 5,
+          "example": 5,
+          "maximum": 100
+        },
+        "description": "Número máximo de elementos"
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "description": "Posição de início da paginação"
+      },
+      "sort": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Atributo para ordenação"
+      }
+    },
+    "schemas": {
+      "404": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "title": "404 - Not Found",
+        "example": {
+          "code": "404",
+          "message": "Recurso com o id 'xxx' não encontrado."
+        }
+      },
+      "422": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "title": "422 - Error",
+        "example": {
+          "code": "422",
+          "message": "O campo informado esta fora das especificações."
+        }
+      },
+      "CallBack": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL do callback",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "orderActive": {
+            "type": "boolean",
+            "description": "Indica se o ANYMARKET deve encaminhar callback de pedido"
+          },
+          "productActive": {
+            "type": "boolean",
+            "description": "Indica se o ANYMARKET deve encaminhar callback de produto"
+          },
+          "transmissionActive": {
+            "type": "boolean",
+            "description": "Indica se o ANYMARKET deve encaminhar callback de transmissão"
+          },
+          "questionActive ": {
+            "type": "boolean",
+            "description": "Indica se o ANYMARKET deve encaminhar callback de pergunta"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "example": {
+          "url": "http://example.com",
+          "token": "string",
+          "orderActive": true,
+          "productActive": true,
+          "transmissionActive": true,
+          "questionActive ": true
+        }
+      },
+      "CallBackPost": {
+        "title": "CallBackPost",
+        "allOf": [
+          {
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL do callback",
+                "minLength": 1,
+                "maxLength": 255,
+                "format": "hostname"
+              },
+              "orderActive": {
+                "type": "boolean",
+                "description": "Indica se o ANYMARKET deve encaminhar callback de pedido "
+              },
+              "productActive": {
+                "type": "boolean",
+                "description": "Indica se o ANYMARKET deve encaminhar callback de produto"
+              },
+              "transmissionActive": {
+                "type": "boolean",
+                "description": "Indica se o ANYMARKET deve encaminhar callback de transmissão "
+              },
+              "questionActive ": {
+                "type": "boolean",
+                "description": "Indica se o ANYMARKET deve encaminhar callback de pergunta"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          }
+        ],
+        "description": "Model post callBack",
+        "type": "object"
+      },
+      "Monitoring": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID do monitoramento",
+            "format": "int64",
+            "minimum": 1
+          },
+          "partnerId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ID do monitoramento - controle \nno parceiro"
+          },
+          "origin": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Nome do integrador"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Resumo da mensagem de erro",
+            "maxLength": 500
+          },
+          "details": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Detalhes da mensagem de erro ",
+            "maxLength": 4000
+          },
+          "createdAt": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Data de entrada do registro",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Tipo de monitoramento (ERROR, WARN)",
+            "enum": [
+              "ALERT",
+              "INTERNAL_ERROR",
+              "CRITICAL_ERROR"
+            ]
+          },
+          "retryCallbackURL": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Url da API do integrador ",
+            "format": "uri"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Tipo de satus do monitoramento (PENDING, RETRYING, CANCELLED, CONCLUDED)",
+            "enum": [
+              "PENDING",
+              "RETRYING",
+              "CANCELLED",
+              "CONCLUDED"
+            ]
+          }
+        }
+      },
+      "MonitoringPost": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "partnerId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ID do monitoramento - controle \nno parceiro"
+          },
+          "origin": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Nome do integrador"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Resumo da mensagem de erro",
+            "maxLength": 500
+          },
+          "details": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Detalhes da mensagem de erro ",
+            "maxLength": 4000
+          },
+          "createdAt": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Data de entrada do registro",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Tipo de monitoramento (ERROR, WARN)",
+            "enum": [
+              "ALERT",
+              "INTERNAL_ERROR",
+              "CRITICAL_ERROR"
+            ]
+          },
+          "retryCallbackURL": {
+            "type": "string",
+            "minLength": 1,
+            "description": "URL da API do integrador ",
+            "format": "uri"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Tipo de satus do monitoramento (PENDING, RETRYING, CANCELLED, CONCLUDED)",
+            "enum": [
+              "PENDING",
+              "RETRYING",
+              "CANCELLED",
+              "CONCLUDED"
+            ]
+          }
+        },
+        "required": [
+          "partnerId",
+          "origin",
+          "message",
+          "createdAt"
+        ]
+      },
+      "MonitoringPut": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID do monitoramento",
+            "format": "int64",
+            "minimum": 1
+          },
+          "partnerId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ID do monitoramento - controle \nno parceiro"
+          },
+          "origin": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Nome do integrador"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Resumo da mensagem de erro",
+            "maxLength": 500
+          },
+          "details": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Detalhes da mensagem de erro ",
+            "maxLength": 4000
+          },
+          "createdAt": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Data de entrada do registro",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Tipo de monitoramento (ERROR, WARN)",
+            "enum": [
+              "ALERT",
+              "INTERNAL_ERROR",
+              "CRITICAL_ERROR"
+            ]
+          },
+          "retryCallbackURL": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Url da API do integrador ",
+            "format": "uri"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Tipo de satus do monitoramento (PENDING, RETRYING, CANCELLED, CONCLUDED)",
+            "enum": [
+              "PENDING",
+              "RETRYING",
+              "CANCELLED",
+              "CONCLUDED"
+            ]
+          }
+        },
+        "required": [
+          "partnerId",
+          "origin",
+          "message",
+          "status"
+        ]
+      },
+      "PageLinks": {
+        "title": "PageLinks",
+        "type": "object",
+        "properties": {
+          "rel": {
+            "type": "string",
+            "description": "Relacionamento do hyperlink",
+            "example": "next"
+          },
+          "href": {
+            "type": "string",
+            "description": "URL de definição do recurso",
+            "example": "https://.../v2/{rota}?limit=5&offset=5"
+          }
+        }
+      },
+      "PageMetadata": {
+        "title": "PageMetadata",
+        "type": "object",
+        "properties": {
+          "size": {
+            "type": "integer",
+            "description": "Tamanho da página",
+            "format": "int64",
+            "readOnly": true
+          },
+          "totalElements": {
+            "type": "integer",
+            "description": "Total de elementos existentes",
+            "format": "int64",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "Total de páginas disponíveis",
+            "format": "int64",
+            "readOnly": true
+          },
+          "number": {
+            "type": "integer",
+            "description": "Número da página atual",
+            "format": "int64",
+            "readOnly": true
+          }
+        }
+      },
+      "Page_CallBack": {
+        "title": "Page_CallBack",
+        "allOf": [
+          {
+            "properties": {
+              "links": {
+                "type": "array",
+                "description": "Referências de paginação",
+                "uniqueItems": false,
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/PageLinks"
+                }
+              },
+              "page": {
+                "$ref": "#/components/schemas/PageMetadata"
+              }
+            }
+          }
+        ],
+        "description": "",
+        "type": "object"
+      }
+    }
+  }
+}

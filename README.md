@@ -67,6 +67,7 @@ confirme comigo antes de começar.
 | [brevo](./brevo) | `API_KEY` (header `api-key`) | 68 em 4 serviços | importado e validado em diagrama |
 | [trello](./trello) | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | importado e validado em diagrama |
 | [open-meteo](./open-meteo) | `NO_AUTH` | 9 em 9 serviços | importado e validado em diagrama |
+| [anymarket](./anymarket) | `API_KEY` (header `gumgaToken`) | 153 em 5 serviços | specs prontas; cadastro e validação pendentes |
 
 ## Estrutura
 

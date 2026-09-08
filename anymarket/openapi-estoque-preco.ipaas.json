@@ -1,0 +1,3398 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Estoque e Preço",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Campanhas",
+      "description": "Gerenciamento de Campanhas"
+    },
+    {
+      "name": "Estoque",
+      "description": "Gerenciamento de stock"
+    },
+    {
+      "name": "Local de Estoque",
+      "description": "Gerenciamento de Locais de Estoque"
+    },
+    {
+      "name": "Promoção",
+      "description": "Gerenciamento de regras de preço (Promoções)"
+    },
+    {
+      "name": "Feed reserva",
+      "description": "Gerenciamento de feed de reservas"
+    },
+    {
+      "name": "Preço",
+      "description": "Gerenciamento de preços"
+    }
+  ],
+  "paths": {
+    "/campaigns": {
+      "parameters": [],
+      "get": {
+        "summary": "/campaigns",
+        "operationId": "get-campaigns",
+        "description": "# Consulta Campanha\nRetorna por paginação TODAS campanhas cadastradas",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "status",
+            "description": "Os status podem ser SCHEDULED, ACTIVE e FINALIZED."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "Quantidade de registro da paginação, valor máximo 100."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "offset",
+            "description": "Quantidade de registros deslocados na paginação."
+          }
+        ],
+        "tags": [
+          "Campanhas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pageSize": {
+                      "type": "integer"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "start": {
+                      "type": "integer"
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "idAccount": {
+                            "type": "string"
+                          },
+                          "accountName": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "initialDate": {
+                            "type": "string"
+                          },
+                          "finalDate": {
+                            "type": "string"
+                          },
+                          "marketplace": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "productsCount": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "pageSize": 0,
+                      "count": 0,
+                      "start": 0,
+                      "values": [
+                        {
+                          "id": 0,
+                          "title": "string",
+                          "idAccount": "string",
+                          "accountName": "string",
+                          "description": "string",
+                          "initialDate": "string",
+                          "finalDate": "string",
+                          "marketplace": "string",
+                          "status": "string",
+                          "productsCount": 0
+                        }
+                      ]
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "pageSize": 5,
+                      "count": 64,
+                      "start": 0,
+                      "values": [
+                        {
+                          "id": 203,
+                          "title": "Automação1662035570679",
+                          "idAccount": "1",
+                          "accountName": "ECOMMERCE",
+                          "description": "Campanha de testes automatizados",
+                          "initialDate": "2022-09-03T09:32:42.041Z",
+                          "finalDate": "2022-09-07T09:32:42.041Z",
+                          "marketplace": "ECOMMERCE",
+                          "status": "SCHEDULED",
+                          "productsCount": 0
+                        },
+                        {
+                          "id": 206,
+                          "title": "Automação1662036323424",
+                          "idAccount": "1",
+                          "accountName": "ECOMMERCE",
+                          "description": "Campanha de testes automatizados",
+                          "initialDate": "2022-09-03T09:45:14.789Z",
+                          "finalDate": "2022-09-07T09:45:14.789Z",
+                          "marketplace": "ECOMMERCE",
+                          "status": "FINALIZED",
+                          "productsCount": 0
+                        },
+                        {
+                          "id": 209,
+                          "title": "Automação1662038893910",
+                          "idAccount": "1",
+                          "accountName": "ECOMMERCE",
+                          "description": "Campanha de testes automatizados",
+                          "initialDate": "2022-09-03T10:28:05.454Z",
+                          "finalDate": "2022-09-07T10:28:05.454Z",
+                          "marketplace": "ECOMMERCE",
+                          "status": "FINALIZED",
+                          "productsCount": 0
+                        },
+                        {
+                          "id": 263,
+                          "title": "Automação1672060413770",
+                          "idAccount": "1",
+                          "accountName": "ECOMMERCE",
+                          "description": "Campanha de testes automatizados",
+                          "initialDate": "2022-12-28T13:12:42.733Z",
+                          "finalDate": "2023-01-01T13:12:42.733Z",
+                          "marketplace": "ECOMMERCE",
+                          "status": "FINALIZED",
+                          "productsCount": 0
+                        },
+                        {
+                          "id": 262,
+                          "title": "Automação1672060393631",
+                          "idAccount": "1",
+                          "accountName": "ECOMMERCE",
+                          "description": "Campanha de testes automatizados",
+                          "initialDate": "2022-12-28T13:12:42.651Z",
+                          "finalDate": "2023-01-01T13:12:42.651Z",
+                          "marketplace": "ECOMMERCE",
+                          "status": "ACTIVE",
+                          "productsCount": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": "400",
+                      "message": "O campo 'status' na url está em formato incorreto. Verifique a documentação para maiores detalhes."
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "code": "400",
+                      "message": "O campo 'status' na url está em formato incorreto. Verifique a documentação para maiores detalhes."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "/campaigns",
+        "tags": [
+          "Campanhas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "marketplace": {
+                      "type": "string"
+                    },
+                    "idAccount": {
+                      "type": "integer"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "initialDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "finalDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "overrideCampaignItens": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 0,
+                      "title": "string",
+                      "marketplace": "string",
+                      "idAccount": 0,
+                      "description": "string",
+                      "initialDate": "2024-08-24T14:15:22Z",
+                      "finalDate": "2024-08-24T15:15:22Z",
+                      "overrideCampaignItens": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "422",
+                      "message": "[O campo title deve ter no máximo 35 caracteres]"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-campaigns",
+        "description": "# Criar campanha\nCria uma campanha com os dados informados",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "initialDate",
+                  "finalDate",
+                  "marketplace"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Nome da campanha",
+                    "maxLength": 35
+                  },
+                  "initialDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data inicial"
+                  },
+                  "finalDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data Final"
+                  },
+                  "marketplace": {
+                    "type": "string",
+                    "description": "Marketplace da campanha"
+                  },
+                  "idAccount": {
+                    "type": "integer",
+                    "description": "ID da conta utilizada no MARKETPLACE"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Descrição da campanha",
+                    "maxLength": 100
+                  },
+                  "overrideCampaignItens": {
+                    "type": "boolean",
+                    "description": "Sobrescrever itens em outras campanhas",
+                    "default": false
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/campaigns/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID da campanha gerado pelo ANYMARKET"
+        }
+      ],
+      "get": {
+        "summary": "/campaigns/{id}",
+        "operationId": "get-campaigns-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID gerado pelo ANYMARKET",
+                      "format": "int64",
+                      "minimum": 0
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Título da campanha",
+                      "maxLength": 35
+                    },
+                    "idAccount": {
+                      "type": "string",
+                      "maxLength": 35,
+                      "description": "ID da conta utilizada no MARKETPLACE "
+                    },
+                    "accountName": {
+                      "type": "string",
+                      "description": "Conta utilizada no MARKETPLACE",
+                      "maxLength": 100
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Descrição da campanha"
+                    },
+                    "initialDate": {
+                      "type": "string",
+                      "description": "Data inicial",
+                      "format": "date-time"
+                    },
+                    "finalDate": {
+                      "type": "string",
+                      "description": "Data final",
+                      "format": "date-time"
+                    },
+                    "marketplace": {
+                      "type": "string",
+                      "description": "Marketplace da campanha"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status relacionado a campanha",
+                      "enum": [
+                        "SCHEDULED",
+                        "ACTIVE",
+                        "FINALIZED"
+                      ]
+                    },
+                    "productsCount": {
+                      "type": "number",
+                      "description": "Quantidade de produtos afetados na campanha.",
+                      "format": "long"
+                    }
+                  },
+                  "title": "Campaign",
+                  "description": "Model return campaign"
+                },
+                "examples": {}
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Consulta Campanha\nConsulta os detalhes de uma campanha",
+        "parameters": [],
+        "tags": [
+          "Campanhas"
+        ]
+      },
+      "put": {
+        "summary": "/campaigns/{id}",
+        "operationId": "put-campaigns",
+        "tags": [
+          "Campanhas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "marketplace": {
+                      "type": "string"
+                    },
+                    "idAccount": {
+                      "type": "integer"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "initialDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "finalDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "overrideCampaignItens": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 0,
+                      "title": "string",
+                      "marketplace": "string",
+                      "idAccount": 0,
+                      "description": "string",
+                      "initialDate": "2019-08-24T14:15:22Z",
+                      "finalDate": "2019-08-24T14:15:22Z",
+                      "overrideCampaignItens": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "422",
+                      "message": "Uma campanha já finalizada não pode ser alterada!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Atualizar campanha\n\nAtualiza uma campanha com os dados informados.\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "initialDate",
+                  "finalDate",
+                  "marketplace"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Nome da campanha\n`<= 35 characters`"
+                  },
+                  "initialDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data inicial"
+                  },
+                  "finalDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Data Final"
+                  },
+                  "marketplace": {
+                    "type": "string",
+                    "description": "Marketplace da campanha"
+                  },
+                  "idAccount": {
+                    "type": "integer",
+                    "description": "ID da conta utilizada no MARKETPLACE"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Descrição da campanha\n`<= 100 characters`"
+                  },
+                  "overrideCampaignItens": {
+                    "type": "boolean",
+                    "description": "Sobrescrever itens em outras campanhas",
+                    "default": false
+                  }
+                }
+              },
+              "examples": {}
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/products": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID da campanha gerado pelo ANYMARKET"
+        }
+      ],
+      "get": {
+        "summary": "/campaigns/{id}/products",
+        "tags": [
+          "Campanhas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pageSize": {
+                      "type": "integer"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "start": {
+                      "type": "integer"
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "sku": {
+                            "type": "string"
+                          },
+                          "codInMarketplace": {
+                            "type": "string"
+                          },
+                          "regularPrice": {
+                            "type": "number"
+                          },
+                          "discountPrice": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "pageSize": 0,
+                      "count": 0,
+                      "start": 0,
+                      "values": [
+                        {
+                          "id": 0,
+                          "sku": "string",
+                          "codInMarketplace": "string",
+                          "regularPrice": 0,
+                          "discountPrice": 0
+                        }
+                      ]
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "pageSize": 5,
+                      "count": 163,
+                      "start": 0,
+                      "values": [
+                        {
+                          "id": 12879,
+                          "sku": "MKP002099002586",
+                          "codInMarketplace": "MLB4735784160",
+                          "regularPrice": 1944.8,
+                          "discountPrice": 1934.8
+                        },
+                        {
+                          "id": 12746,
+                          "sku": "MKP002099004566",
+                          "codInMarketplace": "MLB4735861148",
+                          "regularPrice": 899.9,
+                          "discountPrice": 889.9
+                        },
+                        {
+                          "id": 12818,
+                          "sku": "MKP002097005340",
+                          "codInMarketplace": "MLB4735784570",
+                          "regularPrice": 2794.8,
+                          "discountPrice": 2784.8
+                        },
+                        {
+                          "id": 12755,
+                          "sku": "MKP002098020510",
+                          "codInMarketplace": "MLB4735822152",
+                          "regularPrice": 1073.8,
+                          "discountPrice": 1063.8
+                        },
+                        {
+                          "id": 12881,
+                          "sku": "MKP002099005668",
+                          "codInMarketplace": "MLB4735796512",
+                          "regularPrice": 1916.8,
+                          "discountPrice": 1906.8
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "404",
+                      "message": "Recurso com o id 'xxx' não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-campaigns-id-products",
+        "description": "# Consulta Produtos da Campanha\nRetorna por paginação TODOS os produtos cadastrados na campanha",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "Quantidade de registro da paginação, valor máximo 100."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "offset",
+            "description": "Quantidade de registros deslocados na paginação."
+          }
+        ]
+      },
+      "post": {
+        "summary": "/campaigns/{id}/products",
+        "tags": [
+          "Campanhas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "400",
+                      "message": "O campo 'id' na url está em formato incorreto. Verifique a documentação para maiores detalhes."
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "code": "400",
+                      "message": "O parâmetro 'file' é obrigatório, consulte a documentação para maiores informações."
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "400",
+                      "message": "O campo 'id' na url está em formato incorreto. Verifique a documentação para maiores detalhes."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "404",
+                      "message": "Recurso com o id 'xxx' não encontrado."
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "404",
+                      "message": "Recurso com o id 'xxx' não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "422",
+                      "message": "File not supported"
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "422",
+                      "message": "File not supported"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "500",
+                      "message": "Content type 'null' not supported"
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "500",
+                      "message": "Content type 'null' not supported"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-campaigns-id-products",
+        "description": "# Gerencia produtos de uma campanha\nEndpoint para a importação de planilha dos produtos de uma campanha",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "key: File <br> value: Arquivo XLS ou XLSX"
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "file": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/inactivate": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "name": "id",
+          "in": "path",
+          "description": "ID da campanha gerado pelo ANYMARKET",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "/campaigns/{id}/inactivate",
+        "tags": [
+          "Campanhas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "idAccount": {
+                          "type": "integer"
+                        },
+                        "accountName": {
+                          "type": "string"
+                        },
+                        "initialDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "finalDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "marketplace": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "productsCount": {
+                          "type": "integer"
+                        },
+                        "override": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Campanha encerrada com sucesso!",
+                      "data": {
+                        "id": 0,
+                        "title": "teste",
+                        "idAccount": 0,
+                        "accountName": "ECOMMERCE",
+                        "initialDate": "2019-08-24T14:15:22Z",
+                        "finalDate": "2019-08-24T14:15:22Z",
+                        "marketplace": "ECOMMERCE",
+                        "status": "FINALIZED",
+                        "productsCount": 0,
+                        "override": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "400",
+                      "message": "O campo 'id' na url está em formato incorreto. Verifique a documentação para maiores detalhes."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "404",
+                      "message": "Recurso com o id '0' não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "422",
+                      "message": "Método POST não suportado para path solicitado. Verifique a documentação para maiores detalhes."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-campaigns-id-inactivate",
+        "description": "# Inativar Campanha\nEncerrar uma campanha previamente criada"
+      }
+    },
+    "/stocks": {
+      "get": {
+        "summary": "/stocks",
+        "tags": [
+          "Estoque"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "links": {
+                      "type": "array",
+                      "description": "Referências de paginação",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "description": "Relacionamento do hyperlink",
+                            "example": "next"
+                          },
+                          "href": {
+                            "type": "string",
+                            "description": "URL de definição do recurso",
+                            "example": "https://.../v2/component?limit=5&offset=5"
+                          }
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "array",
+                      "description": "Lista de estoques",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "stockKeepingUnit": {
+                            "type": "object",
+                            "description": "Objeto SKU",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID do SKU gerado pelo ANYMARKET"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "Título do SKY"
+                              },
+                              "partnerId": {
+                                "type": "string",
+                                "description": "ID do parceiro"
+                              }
+                            }
+                          },
+                          "stockLocal": {
+                            "type": "object",
+                            "description": "Local de Estoque",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID do estoque gerado pelo ANYMARKET"
+                              },
+                              "oi": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "type": "string",
+                                    "description": "Identificador da Conta ANYMARKET"
+                                  }
+                                }
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Nome do Estoque"
+                              },
+                              "virtual": {
+                                "type": "boolean",
+                                "description": "Identifica se é estoque virtual"
+                              },
+                              "defaultLocal": {
+                                "type": "boolean",
+                                "description": "Identifica se é o estoque principal"
+                              },
+                              "priorityPoints": {
+                                "type": "integer",
+                                "description": "Pontos de prioridade para Múltiplos CDs"
+                              }
+                            }
+                          },
+                          "amount": {
+                            "type": "integer",
+                            "description": "Quantidade em estoque"
+                          },
+                          "reservationAmount": {
+                            "type": "integer",
+                            "description": "Quantidade em Reserva"
+                          },
+                          "availableAmount": {
+                            "type": "integer",
+                            "description": "Quantidade de estoque disponível"
+                          },
+                          "price": {
+                            "type": "integer",
+                            "description": "Preço de Custo"
+                          },
+                          "active": {
+                            "type": "boolean",
+                            "description": "Identifica se o estoque está ativo"
+                          },
+                          "additionalTime": {
+                            "type": "integer",
+                            "description": "Crossdocking"
+                          },
+                          "lastStockUpdate": {
+                            "type": "string",
+                            "description": "Data da última atualização"
+                          },
+                          "skuLocationDescription": {
+                            "type": "string",
+                            "description": "Local de Estoque"
+                          }
+                        }
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "size": {
+                          "type": "integer",
+                          "description": "Tamanho da página"
+                        },
+                        "totalElements": {
+                          "type": "integer",
+                          "description": "Total de elementos existentes"
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total de páginas disponíveis"
+                        },
+                        "number": {
+                          "type": "integer",
+                          "description": "Número da página atual"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "links": [
+                        {
+                          "rel": "string",
+                          "href": "string"
+                        }
+                      ],
+                      "content": [
+                        {
+                          "stockKeepingUnit": {
+                            "id": 0,
+                            "title": "string",
+                            "partnerId": "string"
+                          },
+                          "stockLocal": {
+                            "id": 0,
+                            "oi": {
+                              "value": "string"
+                            },
+                            "name": "string",
+                            "virtual": true,
+                            "defaultLocal": true,
+                            "priorityPoints": 0
+                          },
+                          "amount": 0,
+                          "reservationAmount": 0,
+                          "availableAmount": 0,
+                          "price": 0,
+                          "active": true,
+                          "additionalTime": 0,
+                          "lastStockUpdate": "string"
+                        }
+                      ],
+                      "page": {
+                        "size": 0,
+                        "totalElements": 0,
+                        "totalPages": 0,
+                        "number": 0
+                      }
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "links": [
+                        {
+                          "rel": "next",
+                          "href": "https://.../v2/component?limit=5&offset=5"
+                        }
+                      ],
+                      "content": [
+                        {
+                          "stockKeepingUnit": {
+                            "id": 0,
+                            "title": "string",
+                            "partnerId": "string"
+                          },
+                          "stockLocal": {
+                            "id": 0,
+                            "oi": {
+                              "value": "string"
+                            },
+                            "name": "string",
+                            "virtual": true,
+                            "defaultLocal": true,
+                            "priorityPoints": 0
+                          },
+                          "amount": 0,
+                          "reservationAmount": 0,
+                          "availableAmount": 0,
+                          "price": 0,
+                          "active": true,
+                          "additionalTime": 0,
+                          "lastStockUpdate": "2019-08-24T14:15:22Z"
+                        }
+                      ],
+                      "page": {
+                        "size": 5,
+                        "totalElements": 0,
+                        "totalPages": 1,
+                        "number": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-stocks",
+        "description": "# Consulta Estoques\nConsulta os detalhes de um estoque\n\n> A consulta pode ser realizada através de filtros utilizados na query. Caso não seja específicado nenhum filtro, e o retorno possuir mais de 50 mil registros, será utilizado o retorno total de registros **(totalElements)** com valor aproximado, por questões de performance.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "idSku",
+            "description": "Atributo para filtrar pelo ID do SKU"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "idStockLocal",
+            "description": "Atributo para filtrar pelo id do estoque local"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sku",
+            "description": "Atributo para filtrar pelo SKU"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 0
+            },
+            "description": "Posição de início da paginação"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 5,
+              "default": 5,
+              "example": 5,
+              "maximum": 100
+            },
+            "description": "Número máximo de elementos"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Atributo para ordenação"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            },
+            "description": "Atributo para direcionar a ordenação (ASC ou DESC)"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "hasReservation",
+            "description": "Atributo para filtras os estoques que possuem reserva"
+          }
+        ]
+      },
+      "post": {
+        "summary": "/stocks",
+        "operationId": "post-stocks",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Estoque"
+        ],
+        "description": "# Cria Estoque\nSerá criado o estoque para o SKU e o Local de Estoque informado com todas as informações de quantidade, custo e prazo adicional",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "partnerId",
+                    "quantity",
+                    "cost",
+                    "stockLocalId"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID do SKU gerado pelo ANYMARKET"
+                    },
+                    "partnerId": {
+                      "type": "string",
+                      "description": "Código do SKU do parceiro"
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "description": "Quantidade de estoque"
+                    },
+                    "cost": {
+                      "type": "integer",
+                      "description": "Preço de Custo. A partir desse custo será calculado o preço final do produto caso o tipo do cálculo de preço esteja como automático"
+                    },
+                    "additionalTime": {
+                      "type": "integer",
+                      "description": "Prazo Adicional para entrega do produto. Também chamado de 'crossdocking' este é o prazo de preparo de cada produto para envio, seja de fabricação, aquisição, embalagem ou redirecionamento de local. Utilizado em marketplaces como B2W e VIA. Caso não informado, manterá o valor atual."
+                    },
+                    "stockLocalId": {
+                      "type": "integer",
+                      "description": "ID do Local de Estoque"
+                    },
+                    "skuLocationDescription": {
+                      "type": "string",
+                      "description": "Local de Estoque"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": [
+                    {
+                      "id": 0,
+                      "partnerId": "string",
+                      "quantity": 0,
+                      "cost": 0,
+                      "additionalTime": 0,
+                      "stockLocalId": 0
+                    }
+                  ]
+                },
+                "stoplight-example-1": {
+                  "value": [
+                    {
+                      "partnerId": "naomexerIntelipost",
+                      "quantity": 50,
+                      "cost": 1000,
+                      "additionalTime": 0,
+                      "stockLocalId": 18448
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "description": "<!-- theme: warning -->\n> #### Atenção!\n>\n> Tamanho máximo do lote é de **200 itens.**"
+        }
+      },
+      "put": {
+        "summary": "/stocks",
+        "operationId": "put-stocks",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Altera Estoque\nSerá utilizada para realizar a atualização de estoque, prazo adicional ou do custo médio. A operação de estoque é realizada em batch, ou seja é possível enviar um ou mais SKUs para atualização.\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID do SKU gerado pelo ANYMARKET"
+                    },
+                    "partnerId": {
+                      "type": "string",
+                      "description": "Código do SKU do parceiro"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "description": "Quantidade em estoque",
+                      "minimum": 0
+                    },
+                    "cost": {
+                      "type": "number",
+                      "description": "Custo médio do SKU no estoque. A partir desse custo será calculado o preço final do produto caso o tipo do cálculo de preço esteja como automático.",
+                      "minimum": 0
+                    },
+                    "additionalTime": {
+                      "type": "integer",
+                      "description": "Prazo Adicional para entrega do produto. Também chamado de 'crossdocking' este é o prazo de preparo de cada produto para envio, seja de fabricação, aquisição, embalagem ou redirecionamento de local. Utilizado em marketplaces como B2W e CNOVA. Caso não informado, manterá o valor atual.\n"
+                    },
+                    "stockLocalId": {
+                      "type": "integer",
+                      "description": "ID do Local de Estoque"
+                    },
+                    "skuLocationDescription": {
+                      "type": "string",
+                      "description": "Local de Estoque"
+                    }
+                  },
+                  "required": [
+                    "partnerId",
+                    "quantity"
+                  ]
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": [
+                    {
+                      "id": 0,
+                      "partnerId": "string",
+                      "quantity": 0,
+                      "cost": 0,
+                      "additionalTime": 0,
+                      "stockLocalId": 0
+                    }
+                  ]
+                },
+                "stoplight-Example 1": {
+                  "value": [
+                    {
+                      "id": 0,
+                      "partnerId": "string",
+                      "quantity": 0,
+                      "cost": 0,
+                      "additionalTime": 0,
+                      "stockLocalId": 0
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "description": "<!-- theme: warning -->\n> #### Atenção!\n>\n> Tamanho máximo do lote é de **200 itens**."
+        },
+        "tags": [
+          "Estoque"
+        ]
+      }
+    },
+    "/stocks/batch": {
+      "parameters": [],
+      "put": {
+        "summary": "/stocks/batch",
+        "operationId": "put-stocks-batch",
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "array",
+                      "description": "SKUs atualizados com Sucesso",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID do SKU e Mensagem de erro dee Atualização"
+                          }
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "SKUs com erro de Atualização",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID do SKU e Mensagem de erro dee Atualização"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "success": [
+                        {
+                          "SKU1": "Atualizado com sucesso"
+                        },
+                        {
+                          "SKU2": "Atualizado com sucesso"
+                        }
+                      ],
+                      "errors": [
+                        {
+                          "SKU3": "Erro ao processar: Quantidade, Custo, Prazo Adicional ou Localização do produto devem ser informados"
+                        }
+                      ]
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "success": {
+                        "id": "string"
+                      },
+                      "errors": {
+                        "id": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "# Altera Estoque\nSerá utilizada para realizar a atualização de estoque, prazo adicional ou do custo médio. A operação de estoque é realizada em batch, ou seja é possível enviar um ou mais SKUs para atualização.\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "partnerId",
+                    "quantity"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID do SKU gerado pelo ANYMARKET"
+                    },
+                    "partnerId": {
+                      "type": "string",
+                      "description": "Código do SKU do parceiro"
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "description": "Quantidade em estoque"
+                    },
+                    "cost": {
+                      "type": "integer",
+                      "description": "Custo médio do SKU no estoque. A partir desse custo será calculado o preço final do produto caso o tipo do cálculo de preço esteja como automático."
+                    },
+                    "additionalTime": {
+                      "type": "integer",
+                      "description": "Prazo Adicional para entrega do produto. Também chamado de 'crossdocking' este é o prazo de preparo de cada produto para envio, seja de fabricação, aquisição, embalagem ou redirecionamento de local. Utilizado em marketplaces como Americanas e VIA. Caso não informado, manterá o valor atual."
+                    },
+                    "stockLocalId": {
+                      "type": "integer",
+                      "description": "ID do Local de Estoque"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": [
+                    {
+                      "id": 0,
+                      "partnerId": "string",
+                      "quantity": 0,
+                      "cost": 0,
+                      "additionalTime": 0,
+                      "stockLocalId": 0
+                    }
+                  ]
+                },
+                "example-1": {
+                  "value": [
+                    {
+                      "id": 0,
+                      "partnerId": "string",
+                      "quantity": 0,
+                      "cost": 0,
+                      "additionalTime": 0,
+                      "stockLocalId": 0
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "description": "<!-- theme: warning -->\n> #### Atenção!\n>\n> Tamanho máximo do lote é de **200 itens**."
+        },
+        "tags": [
+          "Estoque"
+        ]
+      }
+    },
+    "/stocks/locals": {
+      "get": {
+        "summary": "/stocks/locals",
+        "tags": [
+          "Local de Estoque"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "description": "",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID do local de estoque",
+                        "format": "int64",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Descrição do local de estoque "
+                      },
+                      "virtual": {
+                        "type": "boolean",
+                        "description": "Identifica se o local de estoque é virtual"
+                      },
+                      "defaultLocal": {
+                        "type": "boolean",
+                        "description": "Identifica se o local de estoque é o padrão "
+                      },
+                      "zipCode": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "CEP do local de estoque"
+                      }
+                    },
+                    "example": {
+                      "id": 0,
+                      "name": "string",
+                      "virtual": true,
+                      "distributor": "string",
+                      "defaultLocal": true,
+                      "zipCode": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-stocks-locals",
+        "description": "# Consulta Locais de Estoque\nUtilizada para listar os dados de locais de estoque."
+      },
+      "post": {
+        "summary": "/stocks/locals",
+        "operationId": "post-stocks-locals",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "description": "",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "ID do local de estoque",
+                          "format": "int64",
+                          "minimum": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Descrição do local de estoque "
+                        },
+                        "virtual": {
+                          "type": "boolean",
+                          "description": "Identifica se o local de estoque é virtual"
+                        },
+                        "defaultLocal": {
+                          "type": "boolean",
+                          "description": "Identifica se o local de estoque é o padrão "
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "CEP do local de estoque"
+                        }
+                      },
+                      "example": {
+                        "id": 0,
+                        "name": "string",
+                        "virtual": true,
+                        "distributor": "string",
+                        "defaultLocal": true,
+                        "zipCode": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "message": "Estoque criado com sucesso!",
+                      "data": {
+                        "id": 1,
+                        "name": "string",
+                        "virtual": true,
+                        "distributor": "string",
+                        "defaultLocal": true,
+                        "zipCode": "string"
+                      }
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "message": "Estoque criado com sucesso!",
+                      "data": {
+                        "id": 3586,
+                        "name": "stringqwe",
+                        "virtual": false,
+                        "defaultLocal": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Cria Local de Estoque\nUtilizada para criar os dados de locais de estoque.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Descrição do local de estoque",
+                    "maxLength": 200
+                  },
+                  "virtual": {
+                    "type": "boolean",
+                    "description": "Identifica se o local de estoque é virtual "
+                  },
+                  "defaultLocal": {
+                    "type": "boolean",
+                    "description": "Identifica se o local de estoque é o padrão"
+                  },
+                  "zipCode": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "CEP do local de estoque"
+                  },
+                  "distributor": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Aceita apenas os valores do enum UNDEFINED, ALDO, EVOLUSOM, HAYAMAX, PROSHOWS. Se o valor informado não corresponder a nenhum desses nada é salvo. Campo não obrigatório"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "example": {
+                  "name": "string",
+                  "virtual": true,
+                  "defaultLocal": true,
+                  "zipCode": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Local de Estoque"
+        ]
+      }
+    },
+    "/stocks/locals/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do Local de Estoque gerado pelo ANYMARKET"
+        }
+      ],
+      "get": {
+        "summary": "/stocks/locals/{id}",
+        "tags": [
+          "Local de Estoque"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID do local de estoque",
+                      "format": "int64",
+                      "minimum": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Descrição do local de estoque "
+                    },
+                    "virtual": {
+                      "type": "boolean",
+                      "description": "Identifica se o local de estoque é virtual"
+                    },
+                    "defaultLocal": {
+                      "type": "boolean",
+                      "description": "Identifica se o local de estoque é o padrão "
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "CEP do local de estoque"
+                    }
+                  },
+                  "example": {
+                    "id": 0,
+                    "name": "string",
+                    "virtual": true,
+                    "distributor": "string",
+                    "defaultLocal": true,
+                    "zipCode": "string"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-stocks-locals-id",
+        "description": "# Consulta Local de Estoque\nUtilizada para buscar local de estoque por id."
+      },
+      "delete": {
+        "summary": "/stocks/locals/{id}",
+        "operationId": "delete-stocks-locals-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "integer",
+                      "format": "int64",
+                      "minimum": 1
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "message": "Local de Estoque removido com sucesso!",
+                      "data": 1
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "message": "Local de Estoque removido com sucesso!",
+                      "data": 3586
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Exclui Local de Estoque\nExclui o Local de Estoque",
+        "tags": [
+          "Local de Estoque"
+        ]
+      },
+      "put": {
+        "summary": "/stocks/locals/{id}",
+        "operationId": "put-stocks-locals-id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "description": "",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "ID do local de estoque",
+                          "format": "int64",
+                          "minimum": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Descrição do local de estoque "
+                        },
+                        "virtual": {
+                          "type": "boolean",
+                          "description": "Identifica se o local de estoque é virtual"
+                        },
+                        "defaultLocal": {
+                          "type": "boolean",
+                          "description": "Identifica se o local de estoque é o padrão "
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "CEP do local de estoque"
+                        }
+                      },
+                      "example": {
+                        "id": 0,
+                        "name": "string",
+                        "virtual": true,
+                        "distributor": "string",
+                        "defaultLocal": true,
+                        "zipCode": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "message": "Atualizado com sucesso!",
+                      "data": {
+                        "id": 1,
+                        "name": "string",
+                        "virtual": true,
+                        "defaultLocal": true,
+                        "zipCode": "string"
+                      }
+                    }
+                  },
+                  "stoplight-example-1": {
+                    "value": {
+                      "message": "Estoque criado com sucesso!",
+                      "data": {
+                        "id": 3586,
+                        "name": "stringqwe",
+                        "virtual": false,
+                        "defaultLocal": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Altera Local de Estoque\nUtilizada para alterar os dados de locais de estoque.\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Descrição do local de estoque",
+                    "maxLength": 200
+                  },
+                  "virtual": {
+                    "type": "boolean",
+                    "description": "Identifica se o local de estoque é virtual "
+                  },
+                  "defaultLocal": {
+                    "type": "boolean",
+                    "description": "Identifica se o local de estoque é o padrão"
+                  },
+                  "zipCode": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "CEP do local de estoque"
+                  },
+                  "distributor": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Aceita apenas os valores do enum UNDEFINED, ALDO, EVOLUSOM, HAYAMAX, PROSHOWS. Se o valor informado não corresponder a nenhum desses nada é salvo. Campo não obrigatório"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "example": {
+                  "name": "string",
+                  "virtual": true,
+                  "defaultLocal": true,
+                  "zipCode": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Local de Estoque"
+        ]
+      }
+    },
+    "/reservations/feeds": {
+      "parameters": [],
+      "get": {
+        "summary": "/reservations/feeds",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 13
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "5238ba67-57b6-4097-9f75-14c3b2ae6a78"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-reservations-feeds",
+        "description": "# Consulta todos as reservas de estoque alteradas\nQuando uma reserva de estoque é criada ou alterada no ANYMARKET,  a mesmo é disponibilizada para consulta través desse feed e fica disponível por 30 dias (se foi lido, 30 dias a partir da data de leitura, se não foi lido, 30 dias a partir da data de criação/edição.). \n\n\nO caso não informado um limit o resultado da consulta de feed retorna 100 itens disponíveis aleatóriamente\n\n<!-- theme: warning -->\n> #### Atenção!\n>\n> Só serão retornadas as operações configuradas pelo seller no painel do ANYMARKET.\n\nApós leitura dos itens dos FEED, é necessário realizar um PUT para confirmar a leitura.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 5,
+              "default": 5,
+              "example": 5,
+              "maximum": 100
+            },
+            "description": "Número máximo de elementos"
+          }
+        ],
+        "tags": [
+          "Feed reserva"
+        ]
+      }
+    },
+    "/reservations/feeds/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do SKU gerado pelo ANYMARKET"
+        }
+      ],
+      "put": {
+        "summary": "/reservations/feeds/{id}",
+        "operationId": "put-reservations-feeds-id",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Marca o feed como processado\nApós consulta da reserva através do feed, é preciso marcá-lo como lido. Caso não seja marcado, o mesmo continuará a ser trazido na consulta.\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "minLength": 1,
+                    "format": "uuid",
+                    "description": "Token recuperado na consulta do feed"
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "token": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Dados para atualização do feed"
+        },
+        "tags": [
+          "Feed reserva"
+        ]
+      }
+    },
+    "/reservations/feeds/batch": {
+      "parameters": [],
+      "put": {
+        "summary": "/reservations/feeds/batch",
+        "operationId": "put-reservations-feeds-batch",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Marca vários feeds de reserva de estoque como processados de uma vez\nApós consulta de diversas reservas de estoque através do feed, é preciso marcá-los como lidos. Caso não sejam marcados, continuarão retornandos na consulta. Por este endpoint é possível fazer a confirmação de leitura em massa de vários pedidos.\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "token",
+                    "type"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "Id da notificação de reserva de estoque",
+                      "example": 188443520
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Evento da reserva",
+                      "example": "CREATED"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token recuperado na consulta do feed",
+                      "format": "uuid",
+                      "example": "c74952c9-f181-4ea5-81d2-adeee74215c4"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Tipo da notificação",
+                      "example": "STOCK_RESERVATION"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": [
+                    {
+                      "id": 188443520,
+                      "status": "CREATE",
+                      "token": "c74952c9-f181-4ea5-81d2-adeee74215c4",
+                      "type": "STOCK_RESERVATION"
+                    },
+                    {
+                      "id": 188443520,
+                      "status": "UPDATE",
+                      "token": "c74952c9-f181-4ea5-81d2-adeee74215c4",
+                      "type": "STOCK_RESERVATION"
+                    }
+                  ]
+                },
+                "stoplight-Example 1": {
+                  "value": [
+                    {
+                      "id": 188443520,
+                      "status": "PAID_WAITING_SHIP",
+                      "token": "c74952c9-f181-4ea5-81d2-adeee74215c4",
+                      "type": "ORDER"
+                    },
+                    {
+                      "id": 188443328,
+                      "status": "PAID_WAITING_SHIP",
+                      "token": "5238ba67-57b6-4097-9f75-14c3b2ae6a78",
+                      "type": "ORDER"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "description": "Dados para atualização do feed de transmissão"
+        },
+        "parameters": [],
+        "tags": [
+          "Feed reserva"
+        ]
+      }
+    },
+    "/promotions/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID da regra de preço (promoção) gerado pelo ANYMARKET"
+        }
+      ],
+      "get": {
+        "summary": "/promotions/{id}",
+        "tags": [
+          "Promoção"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID gerado pelo ANYMARKET",
+                      "format": "int64"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Descrição da regra de preço",
+                      "maxLength": 255
+                    },
+                    "initialDate": {
+                      "type": "string",
+                      "description": "Data inicial",
+                      "format": "date-time"
+                    },
+                    "finalDate": {
+                      "type": "string",
+                      "description": "Data final",
+                      "format": "date-time"
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Indica se a regra de preço esta ativa"
+                    },
+                    "actions": {
+                      "type": "array",
+                      "description": "Ações programadas para a regra de preço",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID gerado pelo ANYMARKET",
+                            "format": "int64"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Tipo da ação",
+                            "enum": [
+                              "PERCENT_VALUE",
+                              "FIXED_VALUE",
+                              "ADD_VALUE",
+                              "ADD_PERCENT_VALUE"
+                            ]
+                          },
+                          "values": {
+                            "type": "array",
+                            "description": "Valores das ações",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "ID gerado pelo ANYMARKET",
+                                  "format": "int64"
+                                },
+                                "value": {
+                                  "type": "number",
+                                  "description": "Valor",
+                                  "format": "double"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "conditions": {
+                      "type": "array",
+                      "description": "Condições para a aplicação da regra de preços",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID gerado pelo ANYMARKET",
+                            "format": "int64"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Tipo da condição",
+                            "enum": [
+                              "PRODUCT",
+                              "CATEGORY",
+                              "MARKETPLACE",
+                              "BRAND"
+                            ]
+                          },
+                          "values": {
+                            "type": "array",
+                            "description": "Valores das condições",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "ID gerado pelo ANYMARKET",
+                                  "format": "int64"
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "description": "Valor da condição"
+                                },
+                                "subConditions": {
+                                  "type": "array",
+                                  "description": "Valores das sub-condições",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "integer",
+                                        "description": "Id gerado pelo ANYMARKET",
+                                        "format": "int64"
+                                      },
+                                      "subconditionType": {
+                                        "type": "string",
+                                        "description": "Tipo da sub condição",
+                                        "enum": [
+                                          "LISTING_TYPE",
+                                          "CONDITION",
+                                          "SHIPPING_MODE",
+                                          "ACCOUNT",
+                                          "OFFICIAL_STORE"
+                                        ]
+                                      },
+                                      "values": {
+                                        "type": "array",
+                                        "description": "Valores das sub-condições",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "integer",
+                                              "description": "ID gerado pelo ANYMARKET",
+                                              "format": "int64"
+                                            },
+                                            "value": {
+                                              "type": "string",
+                                              "description": "Valor da sub-condição"
+                                            },
+                                            "description": {
+                                              "type": "string",
+                                              "description": "Descrição"
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "childrenSubConditions": {
+                                        "type": "array",
+                                        "description": "Valores das sub-condições",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "integer",
+                                              "description": "Id gerado pelo ANYMARKET",
+                                              "format": "int64"
+                                            },
+                                            "subconditionType": {
+                                              "type": "string",
+                                              "description": "Tipo da sub condição",
+                                              "enum": [
+                                                "LISTING_TYPE",
+                                                "CONDITION",
+                                                "SHIPPING_MODE",
+                                                "ACCOUNT",
+                                                "OFFICIAL_STORE"
+                                              ]
+                                            },
+                                            "values": {
+                                              "type": "array",
+                                              "description": "Valores das sub-condições",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "id": {
+                                                    "type": "integer",
+                                                    "description": "ID gerado pelo ANYMARKET",
+                                                    "format": "int64"
+                                                  },
+                                                  "value": {
+                                                    "type": "string",
+                                                    "description": "Valor da sub-condição"
+                                                  },
+                                                  "description": {
+                                                    "type": "string",
+                                                    "description": "Descrição"
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "childrenSubConditions": {
+                                              "type": "array",
+                                              "description": "Valores das sub-condições",
+                                              "items": {
+                                                "type": "object",
+                                                "description": "Referência recursiva a PromotionRuleChildreenSubConditionResource (truncada; ver a spec fonte)"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "deleted": {
+                      "type": "boolean",
+                      "description": "Indica se o ANYMARKET deve encaminhar callback de pergunta"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status relacionado a regra de preço",
+                      "enum": [
+                        "UNSCHEDULED",
+                        "SCHEDULED",
+                        "APPLIED",
+                        "FINALIZED"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-promotions-id",
+        "description": "# Consulta os detalhes de uma Regra de Preço\nConsulta os detalhes de uma Regra de Preço"
+      }
+    },
+    "/skus/{skuId}/stocks/reservation": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "skuId",
+          "in": "path",
+          "required": true,
+          "description": "ID do SKU"
+        }
+      ],
+      "get": {
+        "summary": "/skus/{skuId}/stocks/reservation",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "orderId": {
+                        "type": "integer"
+                      },
+                      "marketplaceId": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "integer"
+                      },
+                      "marketplace": {
+                        "type": "string"
+                      },
+                      "typeStockReservation": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "orderId": 0,
+                        "marketplaceId": "string",
+                        "amount": 0,
+                        "marketplace": "string",
+                        "typeStockReservation": "string"
+                      }
+                    ]
+                  },
+                  "stoplight-Example 1": {
+                    "value": [
+                      {
+                        "orderId": 21001610,
+                        "marketplaceId": "702-2057085-4861050",
+                        "amount": 1,
+                        "marketplace": "AMAZON",
+                        "typeStockReservation": "SALE_RESERVATION"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-skus-skuId-stocks-reservation",
+        "description": "# Consulta todos os pedidos em reserva de um SKU\nConsulta todos os pedidos em reserva de um SKU, utilizando o skuId como parâmetro",
+        "parameters": [],
+        "tags": [
+          "Estoque"
+        ]
+      }
+    },
+    "/prices": {
+      "parameters": [],
+      "get": {
+        "summary": "/prices/transmission/{id}",
+        "tags": [
+          "Preço"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "TransmissionPrice",
+                  "description": "Modelo de transmissão de preço",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID da transmissão"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Título da transmissão"
+                    },
+                    "accountName": {
+                      "type": "string",
+                      "description": "Nome do marketplace"
+                    },
+                    "idAccount": {
+                      "type": "integer",
+                      "description": "Conta do marketplace"
+                    },
+                    "idSku": {
+                      "type": "integer",
+                      "description": "ID do SKU"
+                    },
+                    "basePrice": {
+                      "type": "number",
+                      "description": "Preço base do SKU"
+                    },
+                    "priceFactor": {
+                      "type": "number",
+                      "description": "Markup"
+                    },
+                    "originalPrice": {
+                      "type": "number",
+                      "description": "Preço DE"
+                    },
+                    "finalPrice": {
+                      "type": "number",
+                      "description": "Preço POR"
+                    },
+                    "discount": {
+                      "type": "object",
+                      "title": "TransmissionPriceDiscount",
+                      "description": "Modelo de desconto da transmissão de preço",
+                      "properties": {
+                        "discountType": {
+                          "type": "string",
+                          "description": "Tipo de desconto"
+                        },
+                        "discountValue": {
+                          "type": "integer",
+                          "description": "Valor do desconto"
+                        }
+                      },
+                      "example": {
+                        "discountType": "PERCENT",
+                        "discountValue": 12.23
+                      }
+                    },
+                    "priceRule": {
+                      "type": "object",
+                      "title": "TransmissionPriceRule",
+                      "description": "Modelo de regra de preço da transmissão de preço",
+                      "properties": {
+                        "priceRuleRegular": {
+                          "type": "number",
+                          "description": "Preço DE"
+                        },
+                        "priceRuleDeal": {
+                          "type": "number",
+                          "description": "Preço POR"
+                        }
+                      },
+                      "example": {
+                        "priceRuleRegular": 1871.83,
+                        "priceRuleDeal": 1871.82
+                      }
+                    },
+                    "campaign": {
+                      "type": "object",
+                      "title": "TransmissionPriceCampaign",
+                      "description": "Modelo de preço de campanha da transmissão de preço",
+                      "properties": {
+                        "campaignRegularPrice": {
+                          "type": "number",
+                          "description": "Preço DE"
+                        },
+                        "campaignDealPrice": {
+                          "type": "number",
+                          "description": "Preço POR"
+                        }
+                      },
+                      "example": {
+                        "campaignRegularPrice": 1871.83,
+                        "campaignDealPrice": 1871.82
+                      }
+                    }
+                  },
+                  "example": {
+                    "id": 9276,
+                    "title": "Kit 02 Poltrona 01 Namoradeira e 02 Puffs Dado Suede Amarelo",
+                    "accountName": "ECOMMERCE",
+                    "idAccount": 1,
+                    "idSku": 76579,
+                    "basePrice": 1039.9,
+                    "priceFactor": 1.8,
+                    "originalPrice": 1984.81,
+                    "finalPrice": 1875.81,
+                    "discount": {
+                      "discountType": "PERCENT",
+                      "discountValue": 12.78
+                    },
+                    "priceRule": {
+                      "priceRuleRegular": 1871.83,
+                      "priceRuleDeal": 1871.82
+                    },
+                    "campaign": {
+                      "campaignRegularPrice": 1871.83,
+                      "campaignDealPrice": 1871.82
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 9276,
+                      "title": "Kit 02 Poltrona 01 Namoradeira e 02 Puffs Dado Suede Amarelo",
+                      "accountName": "ECOMMERCE",
+                      "idAccount": 1,
+                      "idSku": 76579,
+                      "basePrice": 1039.9,
+                      "priceFactor": 1.8,
+                      "originalPrice": 1984.81,
+                      "finalPrice": 1875.81,
+                      "discount": {
+                        "discountType": "PERCENT",
+                        "discountValue": 12.43
+                      },
+                      "priceRule": {
+                        "priceRuleRegular": 1871.83,
+                        "priceRuleDeal": 1871.82
+                      },
+                      "campaign": {
+                        "campaignRegularPrice": 1871.83,
+                        "campaignDealPrice": 1871.82
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "404",
+                      "message": "TransmissionPrice não encontrado para o oi=47., transmissionId=927600"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-prices-id",
+        "description": "# Consultar dados de transmissão por ID\r\nEste endpoint retorna as informações detalhadas da transmissão (registro da tabela SKU_MARKETPLACE) identificada pelo seu ID. Os dados incluem título do SKU, conta associada, preços (base, original e final), fator de preço, regras aplicadas, descontos e campanhas."
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

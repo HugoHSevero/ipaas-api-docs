@@ -1,0 +1,71 @@
+{
+  "app": {
+    "name": "Anymarket",
+    "description": "Hub de integração com marketplaces (olist): catálogo de produtos e SKUs, anúncios e transmissões, pedidos, estoque, preço e administração."
+  },
+  "environments": [
+    {
+      "name": "Sandbox",
+      "type": "REST",
+      "baseURL": "https://sandbox-api.anymarket.com.br/v2",
+      "authModels": ["API_KEY"]
+    },
+    {
+      "name": "Produção",
+      "type": "REST",
+      "baseURL": "https://api.anymarket.com.br/v2",
+      "authModels": ["API_KEY"]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Sandbox",
+      "environment": "Sandbox",
+      "authModel": "API_KEY",
+      "addTo": "header",
+      "keys": [{ "key": "gumgaToken", "value": "<token do sandbox, cadastrar na interface>" }]
+    }
+  ],
+  "services": [
+    {
+      "name": "Catálogo",
+      "description": "Produtos, SKUs, imagens, marcas, categorias e tipos/valores de variação",
+      "environment": "Sandbox",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/anymarket/openapi-catalogo.ipaas.json"
+    },
+    {
+      "name": "Anúncios e Transmissões",
+      "description": "Anúncios (SKU Marketplace), transmissões, templates e feeds de transmissão e preço",
+      "environment": "Sandbox",
+      "resourceType": "REST",
+      "icon": "refresh",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/anymarket/openapi-anuncios-transmissoes.ipaas.json"
+    },
+    {
+      "name": "Pedidos",
+      "description": "Pedidos, devoluções, perguntas, mensageria, fulfillment, documentos fiscais, etiquetas e frete",
+      "environment": "Sandbox",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/anymarket/openapi-pedidos.ipaas.json"
+    },
+    {
+      "name": "Estoque e Preço",
+      "description": "Estoque, locais de estoque, feed de reservas, preço, promoções e campanhas",
+      "environment": "Sandbox",
+      "resourceType": "REST",
+      "icon": "money",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/anymarket/openapi-estoque-preco.ipaas.json"
+    },
+    {
+      "name": "Administração",
+      "description": "Usuários, perfis de acesso, callbacks e monitoramento de erro",
+      "environment": "Sandbox",
+      "resourceType": "REST",
+      "icon": "light-bulb",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/anymarket/openapi-administracao.ipaas.json"
+    }
+  ]
+}

@@ -1,0 +1,544 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "bisect v06a_sem_addprops",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "mensagens",
+      "description": "Envio de mensagens, mídia, chamadas e histórico de conversas."
+    }
+  ],
+  "paths": {
+    "/{Phone-Number-ID}/messages_encrypted": {
+      "post": {
+        "tags": [
+          "mensagens"
+        ],
+        "summary": "Send Encrypted Message",
+        "description": "Send encrypted messages using JWE (JSON Web Encryption) format. This endpoint provides an additional layer of security on top of existing standard TLS/SSL by accepting pre-encrypted message payloads and returning encrypted responses.\n\n**Important Notes:**\n- Only successful responses will be encrypted\n- Error responses will be returned unencrypted if the underlying JSON is incorrectly formatted\n- Payload encryption must be enabled for the phone number using the `POST /<Phone-Number-ID>/settings` endpoint\n- The encrypted payload must follow the same structure as the original `/messages` endpoint\n\n**Prerequisites:**\n- User Access Token with `whatsapp_business_messaging` permission\n- Valid `Phone-Number-ID` for your registered WhatsApp Business account\n- Payload encryption enabled for the phone number\n- Properly formatted JWE token containing encrypted message payload using supported algorithms\n\n**Supported Algorithms:**\n- **Content Encryption:** A128GCM, A256GCM...",
+        "operationId": "sendEncryptedMessage",
+        "parameters": [
+          {
+            "name": "Phone-Number-ID",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the phone number used to send the message. Retrieved from the WhatsApp Business Account.",
+            "schema": {
+              "type": "string",
+              "example": "1234567890123456"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "description": "Messaging service used for the request. Use whatsapp.",
+                    "example": "whatsapp",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  },
+                  "encrypted_contents": {
+                    "type": "string",
+                    "description": "JWE payload with encrypted messages structure. This should be a valid JWE token containing the encrypted message payload.",
+                    "example": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ..."
+                  }
+                },
+                "required": [
+                  "messaging_product",
+                  "encrypted_contents"
+                ]
+              },
+              "examples": {
+                "Send Encrypted Text Message": {
+                  "summary": "Send an encrypted text message",
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "encrypted_contents": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ..."
+                  }
+                },
+                "Send Encrypted Media Message": {
+                  "summary": "Send an encrypted media message",
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "encrypted_contents": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ.encrypted_media_payload..."
+                  }
+                },
+                "Send Encrypted Template Message": {
+                  "summary": "Send an encrypted template message",
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "encrypted_contents": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ.encrypted_template_payload..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Encrypted message sent successfully",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Connection-Quality": {
+                "schema": {
+                  "type": "string",
+                  "example": "EXCELLENT; q=0.9, rtt=7, rtx=0, c=10, mss=1380, tbw=372, tp=-1, tpl=-1, uplat=527, ullat=0"
+                },
+                "description": "Facebook connection quality metrics"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "encrypted_contents": {
+                      "type": "string",
+                      "description": "JWE payload with encrypted messages response structure. Contains the encrypted response from the WhatsApp Business API.",
+                      "example": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ..."
+                    }
+                  },
+                  "required": [
+                    "encrypted_contents"
+                  ]
+                },
+                "examples": {
+                  "Encrypted Message Success Response": {
+                    "summary": "Successful encrypted message response",
+                    "value": {
+                      "encrypted_contents": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ.encrypted_response_payload..."
+                    }
+                  },
+                  "Encrypted Text Message Response": {
+                    "summary": "Response for encrypted text message",
+                    "value": {
+                      "encrypted_contents": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ..."
+                    }
+                  },
+                  "Encrypted Media Message Response": {
+                    "summary": "Response for encrypted media message",
+                    "value": {
+                      "encrypted_contents": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhDQkMtSFMyNTYifQ.media_response..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid JWE token or malformed request. Note: Error responses are returned unencrypted even when payload encryption is enabled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "Invalid JWE Token": {
+                    "summary": "Invalid JWE token format",
+                    "value": {
+                      "error": {
+                        "message": "Invalid JWE token format",
+                        "type": "OAuthException",
+                        "code": 400,
+                        "error_subcode": 1234567
+                      }
+                    }
+                  },
+                  "Missing Required Fields": {
+                    "summary": "Missing required fields",
+                    "value": {
+                      "error": {
+                        "message": "Missing required field messaging_product",
+                        "type": "OAuthException",
+                        "code": 400,
+                        "error_subcode": 1234568
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid access token. Note: Error responses are returned unencrypted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "Invalid Access Token": {
+                    "summary": "Invalid access token",
+                    "value": {
+                      "error": {
+                        "message": "Invalid OAuth access token",
+                        "type": "OAuthException",
+                        "code": 190,
+                        "error_subcode": 460
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions. Note: Error responses are returned unencrypted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "Insufficient Permissions": {
+                    "summary": "Insufficient permissions",
+                    "value": {
+                      "error": {
+                        "message": "Insufficient permissions for this operation",
+                        "type": "OAuthException",
+                        "code": 403,
+                        "error_subcode": 1234569
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded. Note: Error responses are returned unencrypted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "Rate Limit Exceeded": {
+                    "summary": "Rate limit exceeded",
+                    "value": {
+                      "error": {
+                        "message": "Rate limit exceeded",
+                        "type": "OAuthException",
+                        "code": 4,
+                        "error_subcode": 2018001
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Note: Error responses are returned unencrypted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "Internal Server Error": {
+                    "summary": "Internal server error",
+                    "value": {
+                      "error": {
+                        "message": "An internal error occurred",
+                        "type": "OAuthException",
+                        "code": 2,
+                        "error_subcode": 1675030
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    }
+  }
+}

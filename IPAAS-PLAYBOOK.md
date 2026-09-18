@@ -622,6 +622,10 @@ Retorna `status` (`DONE`/`ERROR`), `executionTime`, `initialComponent`, `finalCo
 
 Cuidado ao interpretar o campo `message`: numa execução `DONE` ele carrega o **payload enviado**, não um erro. Só trate como erro junto com `status: ERROR` ou `errorStack` preenchido.
 
+**`DONE` não prova efeito no mundo real — prova que a chamada foi aceita.** O iPaaS considera sucesso o HTTP 2xx do fornecedor, e plataformas de mensagem aceitam e descartam. No WhatsApp, todos os envios responderam `200` com `message_status: accepted` e **nenhum** foi entregue, por restrição da conta (erro `130497`, ver `whatsapp/README.md`); o diagrama executou `DONE` do mesmo jeito.
+
+Para app de mensageria, trate o `DONE` como validação de **cadastro, contrato e autenticação**, e busque a confirmação de entrega na fonte do fornecedor — webhook de status, relatório ou painel. O mesmo ponto cego vale para o SMS da Brevo, que ficou sem validação por falta de crédito; ali o sintoma foi 500, mais honesto que um 200 que não entrega.
+
 Não encontrei endpoint público de detalhamento por componente (`/components`, `/steps`, `/traceability` retornam 500 ou 403). Para validar recurso por recurso, inclua todos os steps na resposta síncrona e verifique os payloads.
 
 **A tela de detalhe da mensagem (rastreabilidade) pode ficar presa em skeleton.** No Monitor (`/ipaas/monitor`) a listagem carrega e mostra as execuções `DONE` normalmente. Ao abrir uma execução (ícone de olho, rota `/message/{id}`), se a página ficar só com os placeholders de carregamento, a causa mais provável é o nó `WEBHOOK_RESPONSE` sem `originalComponentId` (ver abaixo) — não uma limitação da plataforma. A listagem que funciona usa `GET /v4/messages?sourceTypes=ORIGINAL&status=DONE&status=ERROR&initialDate=<ISO Z>&finalDate=<ISO Z>` (as datas em ISO com `Z` e `sourceTypes` são obrigatórias; sem elas dá 400).
@@ -892,7 +896,7 @@ Primeiro app com o modelo `TOKEN`. Spec oficial da Meta em `github.com/facebook/
 | Serviço `Grupos` (12 recursos) | `d0b78ea7-69f0-4167-80b0-2cb2ec4a4210` |
 | Diagrama `Valida WhatsApp` (`integrationId`) | `bbec9bcc-1983-4466-b690-bfc64253d06d` |
 
-Os 70 recursos foram importados e conferidos: contagem por serviço bate com a spec e o `responseBody` traz os campos do objeto, não um `response` string. O diagrama de validação encadeia um recurso de cada serviço e executou `DONE` em **11,4s**, com os cinco payloads reais agregados na resposta síncrona — incluindo `POST /messages`, que entregou mensagem de template de verdade no celular do destinatário.
+Os 70 recursos foram importados e conferidos: contagem por serviço bate com a spec e o `responseBody` traz os campos do objeto, não um `response` string. O diagrama de validação encadeia um recurso de cada serviço e executou `DONE` em **11,4s**, com os cinco payloads reais agregados na resposta síncrona. O `POST /messages` recebeu `accepted` da Meta, mas **a mensagem não chega ao aparelho**: o número de teste é americano e a Meta restringe mensagem cross-country para destinatário no Brasil em conta sem verificação de negócio (erro `130497`, só visível no webhook de status). A execução valida cadastro, contrato e autenticação — não valida entrega. Para entregar a um número brasileiro é preciso número próprio na WABA com o negócio verificado.
 
 **A credencial é o token de usuário do sistema, não o do painel.** O token oferecido em Configuração da API é `type: USER` e expira no mesmo dia; o correto é `type: SYSTEM_USER` com `expires_at: 0`. Confira antes de cadastrar:
 

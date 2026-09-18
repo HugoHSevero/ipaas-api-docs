@@ -84,7 +84,7 @@ O importador exigiu duas descobertas que valem para qualquer app e estão na se�
 
 Executado contra a API real em 2026-09-18, com o número de teste da Meta. Nenhum identificador real está neste repositório — ele é público.
 
-**Diagrama `Valida WhatsApp`: execução `DONE` em 11,4s**, com os cinco serviços em cadeia e os payloads reais agregados na resposta síncrona. `errorStack` nulo e os 7 steps com status `DONE`. O step de envio entregou mensagem de template no celular do destinatário.
+**Diagrama `Valida WhatsApp`: execução `DONE` em 11,4s**, com os cinco serviços em cadeia e os payloads reais agregados na resposta síncrona. `errorStack` nulo e os 7 steps com status `DONE`. O step de envio recebeu `accepted` da Meta — mas **a mensagem não foi entregue no aparelho**, por restrição da conta de teste descrita abaixo. A execução valida o cadastro, o contrato e a autenticação; não valida a entrega.
 
 **`POST /{Phone-Number-ID}/messages`** — HTTP 200 também em chamada direta. A resposta real confere **campo por campo** com o schema gerado, incluindo `messages[].message_status`:
 
@@ -99,6 +99,21 @@ Também em HTTP 200: `GET /{Phone-Number-ID}` (serviço `numeros`), `GET /{Phone
 Os cinco serviços têm ao menos uma operação exercitada contra a API real.
 
 `v23.0` e `v25.0` devolvem resposta idêntica no mesmo GET. A versão da URL foi mantida em `v23.0` por ser a que a spec oficial documenta — a Meta versiona o arquivo bem atrás da API disponível, e no momento só existe `business-messaging-api_v23.0.yaml` no repositório dela.
+
+### O número de teste da Meta não entrega no Brasil
+
+**Os envios são aceitos e nunca entregues.** A API responde `200` com `message_status: accepted`, o diagrama do iPaaS executa `DONE`, e a mensagem não chega ao aparelho. O motivo só aparece no webhook de status:
+
+```json
+"errors": [{ "code": 130497,
+  "title": "Business account is restricted from messaging users in this country." }]
+```
+
+A causa é a restrição de mensagens **cross-country** da Meta: o número de teste é sempre americano (`+1 555-...`), o destinatário está no Brasil, e a Meta bloqueia esse tráfego para contas novas e sem verificação de negócio — a WABA de teste vem com `business_verification_status: not_verified`. O Brasil está entre os países com restrição adicional, junto com a Indonésia.
+
+Nenhuma configuração do lado do iPaaS ou da spec contorna isso. Não é lista de permissão, não é template, e não é o nono dígito do número brasileiro — a Meta resolve `55DD9NNNNNNNN` para um `wa_id` de 12 dígitos, sem o 9 extra, mas isso é normalização normal e não impede a entrega. Para entregar de verdade a um destinatário brasileiro é preciso **registrar um número próprio na WABA e completar a verificação do negócio**.
+
+Consequência para quem for validar um app de mensageria aqui: **`DONE` no diagrama não prova entrega.** O iPaaS considera sucesso o HTTP 200 e a Meta considera sucesso o `accepted`; nenhum dos dois vê o que acontece depois. Para saber, é obrigatório ler o evento `statuses` no webhook. A WABA de teste já vem inscrita no app **WA DevX Webhook Events**, visível no painel da Meta — foi ali que o `130497` apareceu.
 
 ### O que não foi validado
 

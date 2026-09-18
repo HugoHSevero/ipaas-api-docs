@@ -219,6 +219,22 @@ GET /ipaas/api/v2/environments/?applicationId={appId}&expand=accounts&expand=aut
 
 Para atualizar a credencial depois (troca de token, rotação): `PUT /ipaas/api/v3/accounts/{id}`.
 
+**O `PUT` sem `active: true` desativa a conta.** O campo não é preservado: omiti-lo grava `active: false`, e aqui não é só o retorno — a listagem confirma `false`. Uma conta inativa não autentica os steps do diagrama. Mande o corpo completo, com `active: true` explícito:
+
+```json
+{
+  "authType": "TOKEN",
+  "componentId": "<componentId do app>",
+  "environmentId": "<id do ambiente>",
+  "name": "Produção",
+  "modelId": "<id do auth model>",
+  "active": true,
+  "config": { "outputSchema": { "token": "<token>" } }
+}
+```
+
+Depois de qualquer `PUT`, confira `active` na listagem antes de executar. Aconteceu aqui ao trocar o token do WhatsApp: o `PUT` respondeu 200, gravou o token certo e deixou a conta desativada.
+
 #### testAccount tem uso limitado
 
 `GET /ipaas/api/v3/accounts/testAccount/{id}` **não funciona para `API_KEY` sem parâmetro**: retorna `400 FLUIG_CONNECTOR_ACCOUNT_TEST_URL_NEEDED` com o tipo de auth em `args`. Com `?authUrl=<url>` ele passa a chamar a URL, mas retornou `500 / "400 Bad Request"` mesmo com credencial comprovadamente válida (a mesma chave respondia `200` via curl e funcionou na execução do diagrama).
@@ -724,7 +740,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Brevo | `API_KEY` (header `api-key`) | 68 em 4 serviços | 68 recursos importados a partir da spec oficial convertida de Swagger 2.0; conta criada; diagrama com 6 steps em 3 serviços executado `DONE`, incluindo `POST /smtp/email` em modo sandbox. Serviço `SMS Transacional` **não validado**: plano gratuito não tem crédito de SMS e todos os endpoints respondem 500 |
 | Trello | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | 151 recursos importados; exigiu injetar `tags` (a spec oficial não tem nenhuma) e remover `securitySchemes` em query, que quebrava o importador; conta com **duas** chaves em query criada; diagrama com 6 steps em 4 serviços executado `DONE`, criando cartão real e encadeando `{{{id4.id}}}` |
 | Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
-| WhatsApp | `TOKEN` (Bearer) | 70 em 5 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 70; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 5 domínios; 70 recursos importados e conferidos campo a campo. Duas armadilhas novas achadas por bissecção: **import assíncrono** (200 não significa concluído) e **`array` sem `items` no `requestBody`**, que zerava a spec inteira em silêncio. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real. **Não validado em diagrama**: falta o token permanente de usuário do sistema |
+| WhatsApp | `TOKEN` (Bearer) | 70 em 5 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 70; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 5 domínios; 70 recursos importados e conferidos campo a campo. Diagrama com 5 steps (um por serviço) executado `DONE` em 11,4s, entregando mensagem de template real no WhatsApp do destinatário. Três armadilhas novas achadas: **import assíncrono** (200 não significa concluído), **`array` sem `items` no `requestBody`** zerando a spec em silêncio, e **`PUT` de conta sem `active: true`** desativando a credencial. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real |
 
 ---
 
@@ -860,7 +876,7 @@ A API aceitou a escrita num app de outro tenant sem erro. **Não foi verificado*
 
 Isso torna a BrasilAPI **duplicada** no tenant: o app custom `BrasilAPI` (`a7b79983`) e o serviço novo no app nativo. Decidir qual manter.
 
-### WhatsApp — `TOKEN` (Bearer) — **conta pendente**
+### WhatsApp — `TOKEN` (Bearer)
 
 Primeiro app com o modelo `TOKEN`. Spec oficial da Meta em `github.com/facebook/openapi` (`business-messaging-api_v23.0.yaml`), rebaixada de 3.1.0 para 3.0.3 e recortada em 5 serviços.
 
@@ -868,18 +884,25 @@ Primeiro app com o modelo `TOKEN`. Spec oficial da Meta em `github.com/facebook/
 |---|---|
 | App (`componentId`) | `1a7e0d94-acb9-4542-8fbb-814f7e68cc83` |
 | Ambiente `Produção` (`https://graph.facebook.com/v23.0`) | `e4a5e785-1399-418d-9e87-e766349c4092` |
+| Conta `Produção` (token de usuário do sistema) | `5b141001-9878-4a7f-92fc-41ab0a9d351b` |
 | Serviço `Mensagens` (11 recursos) | `dc62547f-b583-4cbe-a426-cabdca845f2a` |
 | Serviço `Templates` (5 recursos) | `afb4ea78-d8bb-4630-83eb-5168e2296f21` |
 | Serviço `Números` (29 recursos) | `b36e6257-6a63-4c78-9c1f-3ce53825d59b` |
 | Serviço `Contas` (13 recursos) | `1139b793-bdbc-4902-9b86-f24edc056e6d` |
 | Serviço `Grupos` (12 recursos) | `d0b78ea7-69f0-4167-80b0-2cb2ec4a4210` |
-| Conta `Produção` (**token temporário — trocar**) | `5b141001-9878-4a7f-92fc-41ab0a9d351b` |
+| Diagrama `Valida WhatsApp` (`integrationId`) | `bbec9bcc-1983-4466-b690-bfc64253d06d` |
 
-Os 70 recursos foram importados e conferidos: contagem por serviço bate com a spec e o `responseBody` traz os campos do objeto, não um `response` string. O `POST /messages` chegou com `contacts`, `messages` e `messaging_product`, iguais à resposta real da API.
+Os 70 recursos foram importados e conferidos: contagem por serviço bate com a spec e o `responseBody` traz os campos do objeto, não um `response` string. O diagrama de validação encadeia um recurso de cada serviço e executou `DONE` em **11,4s**, com os cinco payloads reais agregados na resposta síncrona — incluindo `POST /messages`, que entregou mensagem de template de verdade no celular do destinatário.
 
-**A conta existe mas está com um token que já expirou.** Ela foi criada para verificar o payload de `TOKEN` (seção 2.3) usando o token temporário do painel, que é `type: USER` e vale poucas horas. Antes de qualquer execução, troque o valor com `PUT /ipaas/api/v3/accounts/5b141001-9878-4a7f-92fc-41ab0a9d351b` pelo token **permanente de usuário do sistema**, com os escopos `whatsapp_business_messaging`, `whatsapp_business_management` e `business_management`. Confira o token antes com `GET /v23.0/debug_token?input_token=$T&access_token=$T`: se vier `expires_at` com data próxima, é o temporário errado.
+**A credencial é o token de usuário do sistema, não o do painel.** O token oferecido em Configuração da API é `type: USER` e expira no mesmo dia; o correto é `type: SYSTEM_USER` com `expires_at: 0`. Confira antes de cadastrar:
 
-**Falta a validação em diagrama**, que depende dessa troca. Diagrama novo só nasce pela interface (seção 6.2).
+```
+GET https://graph.facebook.com/v23.0/debug_token?input_token=$T&access_token=$T
+```
+
+Para gerar o certo, o usuário do sistema precisa ter o **app** atribuído como ativo com `Gerenciar app`, além da WABA. Sem o app atribuído, a tela de gerar token mostra "Nenhuma permissão disponível — atribua uma função do app ao usuário do sistema": o token é emitido para um app, e sem função nele não há permissão para oferecer. Se o app não aparecer na lista de ativos, ele não está no portfólio empresarial (Contas → Aplicativos → Adicionar um app).
+
+`phone_number_id` e WABA ID **não** são configuração do ambiente: entram como parâmetro de caminho em cada operação, via `configurations.inPath`. A mesma conta atende vários números.
 
 A versão da Graph API está na **URL do ambiente**, não em parâmetro, porque os paths da spec tiveram o `/{Version}` removido. Trocar de versão exige regerar as specs, não reconfigurar o ambiente.
 

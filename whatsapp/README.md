@@ -66,9 +66,13 @@ Total: **70 operações** das 113 da spec oficial.
 
 ## Cadastro no iPaaS
 
-Importado no tenant `iPaaS Gateway`, com os 70 recursos conferidos. Os IDs estão na seção 10 do [playbook](../IPAAS-PLAYBOOK.md).
+Importado e **validado em diagrama** no tenant `iPaaS Gateway`. Os IDs estão na seção 10 do [playbook](../IPAAS-PLAYBOOK.md).
 
-A conta existe, mas **com um token temporário já expirado** — ela foi criada para verificar o payload de `TOKEN`. Troque o valor pelo permanente com `PUT /ipaas/api/v3/accounts/{id}` antes de executar qualquer coisa. Falta a validação em diagrama, que depende dessa troca.
+O diagrama `Valida WhatsApp` encadeia um recurso de cada um dos cinco serviços e executou `DONE` em 11,4s, com os cinco payloads reais na resposta síncrona. O primeiro step é `POST /messages`, que entregou uma mensagem de template de verdade no celular do destinatário.
+
+A conta usa o token de **usuário do sistema** (`type: SYSTEM_USER`, `expires_at: 0`). Ao gerá-lo, se a Meta disser "Nenhuma permissão disponível — atribua uma função do app ao usuário do sistema", falta atribuir o **app** como ativo com `Gerenciar app`: o token é emitido para um app, e sem função nele não há permissão a oferecer. Se o app não aparecer na lista de ativos, ele não está no portfólio empresarial (Contas → Aplicativos → Adicionar um app).
+
+O `phone_number_id` e o WABA ID entram nos steps via `configurations.inPath`, não na configuração do ambiente.
 
 O importador exigiu duas descobertas que valem para qualquer app e estão na seção 4 do playbook:
 
@@ -78,9 +82,11 @@ O importador exigiu duas descobertas que valem para qualquer app e estão na se�
 
 ## Validação
 
-Executado contra a API real em 2026-09-18, com token temporário do painel e o número de teste da Meta. Nenhum identificador real está neste repositório — ele é público.
+Executado contra a API real em 2026-09-18, com o número de teste da Meta. Nenhum identificador real está neste repositório — ele é público.
 
-**`POST /{Phone-Number-ID}/messages`** — HTTP 200, mensagem de template entregue. A resposta real confere **campo por campo** com o schema gerado, incluindo `messages[].message_status`:
+**Diagrama `Valida WhatsApp`: execução `DONE` em 11,4s**, com os cinco serviços em cadeia e os payloads reais agregados na resposta síncrona. `errorStack` nulo e os 7 steps com status `DONE`. O step de envio entregou mensagem de template no celular do destinatário.
+
+**`POST /{Phone-Number-ID}/messages`** — HTTP 200 também em chamada direta. A resposta real confere **campo por campo** com o schema gerado, incluindo `messages[].message_status`:
 
 ```json
 { "messaging_product": "whatsapp",
@@ -100,7 +106,7 @@ Os cinco serviços têm ao menos uma operação exercitada contra a API real.
 
 **Todas as operações de escrita, exceto o envio de mensagem.** Criar template, criar QR code, bloquear usuário, criar grupo, registrar número e assinar webhook não foram exercitados. Só `POST /{Phone-Number-ID}/messages` foi.
 
-**`GET /me/businesses`** responde `(#100) Missing Permission` com token que não tem `business_management`. Sem ele não é possível descobrir a WABA a partir do token — o ID tem que vir do painel.
+**`GET /me/businesses` depende do escopo `business_management`.** Com o token temporário do painel, que não o tem, responde `(#100) Missing Permission`; com o de usuário do sistema responde 200 — no caso desta conta, com `data` vazio, então o WABA ID continuou vindo do painel.
 
 ### A spec oficial documenta menos do que a API devolve
 
@@ -118,7 +124,7 @@ Ao acrescentar campo em spec com `$ref`, aplique o complemento **no destino** do
 
 ## Atenção ao token
 
-O token oferecido no painel em **Configuração da API** é temporário: o `debug_token` mostra `type: USER` com `expires_at` no mesmo dia. Não serve para a conta do iPaaS, que pararia de funcionar em horas. Use o permanente de usuário do sistema, descrito acima.
+O token oferecido no painel em **Configuração da API** é temporário: o `debug_token` mostra `type: USER` com `expires_at` no mesmo dia. Não serve para a conta do iPaaS, que pararia de funcionar em horas. Use o de usuário do sistema, descrito acima.
 
 Para conferir qualquer token antes de cadastrar:
 
@@ -126,7 +132,15 @@ Para conferir qualquer token antes de cadastrar:
 curl -s "https://graph.facebook.com/v23.0/debug_token?input_token=$T&access_token=$T"
 ```
 
-Interessa `type`, `expires_at` e `scopes`. Um token de usuário do sistema não traz `expires_at` com data próxima.
+O certo tem `type: SYSTEM_USER` e `expires_at: 0` (nunca expira). O errado tem `type: USER` e uma data próxima. Confira também `scopes`: o do painel vem sem `business_management`.
+
+### "Nenhuma permissão disponível" ao gerar o token
+
+Mensagem completa: *"Atribua uma função do app ao usuário do sistema ou selecione outro app para continuar."* A causa é a ordem do fluxo — o token é emitido **para um app**, e o usuário do sistema precisa ter função nesse app **antes** de gerar.
+
+Em Configurações do negócio → Usuários do sistema → selecione o usuário → **Adicionar ativos** (não "Gerar token") → aba **Aplicativos** → marque o app → ative **Gerenciar app**. Repita em **Contas do WhatsApp** para a WABA, com **Gerenciar contas do WhatsApp Business**. Só então "Gerar token" oferece as permissões.
+
+Se o app não aparecer na lista de ativos, ele não está no portfólio empresarial: Contas → Aplicativos → Adicionar → Adicionar um app. Apps criados pela conta de desenvolvedor pessoal não entram no portfólio automaticamente. O app e a WABA precisam estar no **mesmo** portfólio.
 
 ## Observações
 

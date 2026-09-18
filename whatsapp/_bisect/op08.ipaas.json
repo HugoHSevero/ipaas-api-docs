@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "bisect op08 GET /{Media-ID}",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "mensagens",
+      "description": "Envio de mensagens, mídia, chamadas e histórico de conversas."
+    }
+  ],
+  "paths": {
+    "/{Media-ID}": {
+      "parameters": [
+        {
+          "name": "Media-ID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "mensagens"
+        ],
+        "summary": "Retrieve Media URL",
+        "description": "To retrieve your media’s URL, make a **GET** call to **`/{{Media-ID}}`**. Use the returned URL to download the media file. Note that clicking this URL (i.e. performing a generic GET) will not return the media; you must include an access token. For more information, see [Download Media](https://developers.facebook.com/docs/business-messaging/whatsapp/business-phone-numbers/media#download-media).\n\nYou can also use the optional query **`?phone_number_id`** for **`Retrieve Media URL`** and **`Delete Media`**. This parameter checks to make sure the media belongs to the phone number before retrieval or deletion.\n\n#### Response\n\nA successful response includes an object with a media URL. The URL is only valid for 5 minutes. To use this URL, see [Download Media](https://developers.facebook.com/docs/business-messaging/whatsapp/business-phone-numbers/media#download-media).",
+        "operationId": "retrieveMediaUrl",
+        "parameters": [
+          {
+            "name": "phone_number_id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "<PHONE_NUMBER_ID>"
+            },
+            "description": "Specifies that this action only be performed if the media belongs to the provided phone number."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieve Media URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file_size": {
+                      "type": "string",
+                      "example": "303833"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "2621233374848975"
+                    },
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    },
+                    "mime_type": {
+                      "type": "string",
+                      "example": "image/jpeg"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "example": "<HASH>"
+                    },
+                    "url": {
+                      "type": "string",
+                      "example": "<URL>"
+                    }
+                  }
+                },
+                "examples": {
+                  "Retrieve Media URL": {
+                    "value": {
+                      "file_size": "303833",
+                      "id": "2621233374848975",
+                      "messaging_product": "whatsapp",
+                      "mime_type": "image/jpeg",
+                      "sha256": "<HASH>",
+                      "url": "<URL>"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    }
+  }
+}

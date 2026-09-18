@@ -1,0 +1,715 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "bisect op03 POST /{Phone-Number-ID}/marketing_messages",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "mensagens",
+      "description": "Envio de mensagens, mídia, chamadas e histórico de conversas."
+    }
+  ],
+  "paths": {
+    "/{Phone-Number-ID}/marketing_messages": {
+      "post": {
+        "tags": [
+          "mensagens"
+        ],
+        "summary": "Send Marketing Template Message",
+        "description": "Send marketing template messages using pre-approved templates. Supports optional product policy controls and message activity sharing settings.",
+        "operationId": "sendMarketingMessage",
+        "parameters": [
+          {
+            "name": "Phone-Number-ID",
+            "in": "path",
+            "required": true,
+            "description": "WhatsApp Business Phone Number ID",
+            "schema": {
+              "type": "string",
+              "example": "102290129340398"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "description": "Messaging service used. Must be \"whatsapp\"",
+                    "enum": [
+                      "whatsapp"
+                    ],
+                    "example": "whatsapp"
+                  },
+                  "recipient_type": {
+                    "type": "string",
+                    "description": "Type of recipient. Must be \"individual\"",
+                    "enum": [
+                      "individual"
+                    ],
+                    "example": "individual"
+                  },
+                  "to": {
+                    "type": "string",
+                    "description": "WhatsApp ID or phone number of the message recipient",
+                    "example": "16315552222"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Type of message. Must be \"template\" for marketing messages",
+                    "enum": [
+                      "template"
+                    ]
+                  },
+                  "template": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "language"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the template.",
+                        "example": "TEMPLATE_NAME"
+                      },
+                      "language": {
+                        "type": "object",
+                        "required": [
+                          "policy",
+                          "code"
+                        ],
+                        "properties": {
+                          "policy": {
+                            "type": "string",
+                            "description": "The language policy the message should follow.",
+                            "enum": [
+                              "deterministic"
+                            ],
+                            "example": "deterministic"
+                          },
+                          "code": {
+                            "type": "string",
+                            "description": "The code of the language or locale to use (e.g., `\"en\"`, `\"en_US\"`).",
+                            "example": "en_US"
+                          }
+                        },
+                        "description": "Contains a `language` object. Specifies the language the template may be rendered in"
+                      },
+                      "components": {
+                        "type": "array",
+                        "description": "Array of `components` objects containing the parameters of the message.",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "type"
+                          ],
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "description": "Describes the component type.",
+                              "enum": [
+                                "header",
+                                "body",
+                                "button"
+                              ]
+                            },
+                            "sub_type": {
+                              "type": "string",
+                              "description": "Required when `type=button`. Not used for other types. Type of button to create.",
+                              "enum": [
+                                "quick_reply",
+                                "url",
+                                "catalog"
+                              ]
+                            },
+                            "parameters": {
+                              "type": "array",
+                              "description": "Array of parameter objects with the content of the message."
+                            },
+                            "index": {
+                              "type": "string",
+                              "description": "Required when `type=button`. Not used for other types. Position index of the button (0-9).",
+                              "pattern": "^[2-6, 11-14]$",
+                              "example": "0"
+                            }
+                          }
+                        },
+                        "example": [
+                          {
+                            "type": "header",
+                            "parameters": [
+                              {
+                                "type": "image",
+                                "image": {
+                                  "link": "http(s)://example.com/image.jpg"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "body",
+                            "parameters": [
+                              {
+                                "type": "text",
+                                "text": "Hello {{1}}! Your order of {{2}} is confirmed for {{3}}."
+                              }
+                            ]
+                          },
+                          {
+                            "type": "button",
+                            "sub_type": "quick_reply",
+                            "index": "0",
+                            "parameters": [
+                              {
+                                "type": "payload",
+                                "payload": "ORDER_DETAILS_CLICKED"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "product_policy": {
+                    "type": "string",
+                    "description": "Optional product policy setting",
+                    "enum": [
+                      "CLOUD_API_FALLBACK",
+                      "STRICT"
+                    ],
+                    "example": "CLOUD_API_FALLBACK"
+                  },
+                  "message_activity_sharing": {
+                    "type": "boolean",
+                    "description": "Optional flag to control message activity sharing",
+                    "example": true
+                  }
+                },
+                "required": [
+                  "messaging_product",
+                  "recipient_type",
+                  "to",
+                  "type",
+                  "template"
+                ]
+              },
+              "examples": {
+                "Simple Template Message": {
+                  "summary": "Basic marketing template message",
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "16315552222",
+                    "type": "template",
+                    "template": {
+                      "name": "hello_world",
+                      "language": {
+                        "code": "en"
+                      }
+                    }
+                  }
+                },
+                "Template with Product Policy": {
+                  "summary": "Template message with optional product policy",
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "16315552222",
+                    "type": "template",
+                    "template": {
+                      "name": "welcome_offer",
+                      "language": {
+                        "code": "en_US"
+                      }
+                    },
+                    "product_policy": "CLOUD_API_FALLBACK",
+                    "message_activity_sharing": true
+                  }
+                },
+                "Parameterized Template": {
+                  "summary": "Template message with parameters",
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "16315552222",
+                    "type": "template",
+                    "template": {
+                      "name": "promotional_offer",
+                      "language": {
+                        "code": "en"
+                      },
+                      "components": [
+                        {
+                          "type": "body",
+                          "parameters": [
+                            {
+                              "type": "text",
+                              "text": "John Doe"
+                            },
+                            {
+                              "type": "currency",
+                              "currency": {
+                                "fallback_value": "$25.00",
+                                "code": "USD",
+                                "amount_1000": 25000
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "product_policy": "STRICT",
+                    "message_activity_sharing": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Marketing message sent successfully",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Connection-Quality": {
+                "schema": {
+                  "type": "string",
+                  "example": "EXCELLENT; q=0.9, rtt=7, rtx=0, c=10, mss=1380, tbw=372, tp=-1, tpl=-1, uplat=527, ullat=0"
+                },
+                "description": "Facebook connection quality metrics"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contacts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "input": {
+                            "type": "string",
+                            "example": "16315552222"
+                          },
+                          "wa_id": {
+                            "type": "string",
+                            "example": "16315552222"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "input": "16315552222",
+                          "wa_id": "16315552222"
+                        }
+                      ]
+                    },
+                    "messages": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                          },
+                          "message_status": {
+                            "type": "string",
+                            "enum": [
+                              "accepted",
+                              "held_for_quality_assessment",
+                              "paused"
+                            ],
+                            "description": "The status of a WhatsApp message:\n- `accepted`: The message has been accepted by WhatsApp and is being processed\n- `held_for_quality_assessment`: The message is being held for quality assessment before delivery\n- `paused`: The message delivery has been paused\n"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww",
+                          "message_status": "accepted"
+                        }
+                      ]
+                    },
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    }
+                  }
+                },
+                "examples": {
+                  "Successful Response": {
+                    "summary": "Successful marketing message response",
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "16315552222",
+                          "wa_id": "16315552222"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp",
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid request parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "InvalidTemplateParameters": {
+                    "summary": "Invalid template name or parameters",
+                    "value": {
+                      "error": {
+                        "message": "Invalid template name or parameters",
+                        "type": "OAuthException",
+                        "code": 100
+                      }
+                    }
+                  },
+                  "MalformedRequest": {
+                    "summary": "Malformed request body",
+                    "value": {
+                      "error": {
+                        "message": "Invalid JSON in request body",
+                        "type": "OAuthException",
+                        "code": 100
+                      }
+                    }
+                  },
+                  "MissingFeatureSetting": {
+                    "summary": "One feature setting must be specified",
+                    "value": {
+                      "error": {
+                        "message": "One feature setting must be specified",
+                        "type": "OAuthException",
+                        "code": 100
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "InvalidAccessToken": {
+                    "summary": "Invalid OAuth access token",
+                    "value": {
+                      "error": {
+                        "message": "Invalid OAuth access token",
+                        "type": "OAuthException",
+                        "code": 190
+                      }
+                    }
+                  },
+                  "MissingAccessToken": {
+                    "summary": "Missing access token",
+                    "value": {
+                      "error": {
+                        "message": "An access token is required to request this resource",
+                        "type": "OAuthException",
+                        "code": 104
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Template not approved or insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Human-readable description of the error"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Error type classification"
+                        },
+                        "code": {
+                          "type": "integer",
+                          "description": "Numeric error code"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "type",
+                        "code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "TemplateNotApproved": {
+                    "summary": "Template not approved for marketing use",
+                    "value": {
+                      "error": {
+                        "message": "Template not approved for marketing use",
+                        "type": "OAuthException",
+                        "code": 200
+                      }
+                    }
+                  },
+                  "InsufficientPermissions": {
+                    "summary": "Insufficient permissions for this operation",
+                    "value": {
+                      "error": {
+                        "message": "This operation requires additional permissions",
+                        "type": "OAuthException",
+                        "code": 200
+                      }
+                    }
+                  },
+                  "FeatureNotSupported": {
+                    "summary": "Feature not supported",
+                    "value": {
+                      "error": {
+                        "message": "Not supported",
+                        "type": "OAuthException",
+                        "code": 10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "bisect op10 GET /{Media-URL}",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "mensagens",
+      "description": "Envio de mensagens, mídia, chamadas e histórico de conversas."
+    }
+  ],
+  "paths": {
+    "/{Media-URL}": {
+      "parameters": [
+        {
+          "name": "Media-URL",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "mensagens"
+        ],
+        "summary": "Download Media",
+        "description": "Download media files using URLs obtained from media retrieval endpoints.\nRequires User Access Token with whatsapp_business_messaging permission.\nMedia URLs expire after 5 minutes and must be re-retrieved if expired.\nReturns binary content with appropriate MIME type headers.\n",
+        "operationId": "downloadMedia",
+        "responses": {
+          "200": {
+            "description": "Download Media",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Download Media": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    }
+  }
+}

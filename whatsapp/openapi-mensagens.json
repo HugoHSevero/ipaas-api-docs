@@ -5987,7 +5987,93 @@
           },
           "parameters": {
             "type": "array",
-            "description": "Array of parameter objects with the content of the message."
+            "description": "Array of parameter objects with the content of the message.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "text",
+                    "currency",
+                    "date_time",
+                    "image",
+                    "document",
+                    "video",
+                    "location",
+                    "button",
+                    "payload"
+                  ]
+                },
+                "parameter_name": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "payload": {
+                  "type": "string"
+                },
+                "currency": {
+                  "type": "object",
+                  "properties": {
+                    "fallback_value": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "amount_1000": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "date_time": {
+                  "type": "object",
+                  "properties": {
+                    "fallback_value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "image": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "link": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "document": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "link": {
+                      "type": "string"
+                    },
+                    "filename": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "video": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "index": {
             "type": "string",

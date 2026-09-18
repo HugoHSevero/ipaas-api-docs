@@ -230,6 +230,71 @@ def complementar(spec, schema, patches, rotulo, avisos):
             destino[nome] = json.loads(json.dumps(sub))
 
 
+# `items` que a spec da Meta esquece de declarar. Um `type: array` sem `items`
+# faz o importador do iPaaS responder HTTP 200 e não criar recurso nenhum — uma
+# ocorrência zera a spec inteira, sem mensagem de erro. Isolado por bissecção:
+# era isso que derrubava as 11 operações do serviço de mensagens.
+#
+# A chave é o nome da propriedade cujo array está sem `items`.
+ITEMS_FALTANDO = {
+    # parâmetros de componente de template (POST /messages e /marketing_messages).
+    # Forma confirmada em envio real: {"type": "text", "text": "..."}.
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string",
+                "enum": ["text", "currency", "date_time", "image", "document",
+                         "video", "location", "button", "payload"],
+            },
+            "parameter_name": STRING,
+            "text": STRING,
+            "payload": STRING,
+            "currency": {
+                "type": "object",
+                "properties": {
+                    "fallback_value": STRING,
+                    "code": STRING,
+                    "amount_1000": {"type": "integer"},
+                },
+            },
+            "date_time": {"type": "object", "properties": {"fallback_value": STRING}},
+            "image": {"type": "object", "properties": {"id": STRING, "link": STRING}},
+            "document": {
+                "type": "object",
+                "properties": {"id": STRING, "link": STRING, "filename": STRING},
+            },
+            "video": {"type": "object", "properties": {"id": STRING, "link": STRING}},
+        },
+    },
+}
+
+
+def preencher_items(no, nome_prop=None, aplicados=None, sem_mapa=None):
+    """Declara `items` em todo `type: array` que não tem."""
+    if aplicados is None:
+        aplicados, sem_mapa = [], []
+    if isinstance(no, dict):
+        if no.get("type") == "array" and "items" not in no:
+            modelo = ITEMS_FALTANDO.get(nome_prop)
+            if modelo is None:
+                no["items"] = {"type": "object"}
+                sem_mapa.append(nome_prop or "(sem nome)")
+            else:
+                no["items"] = json.loads(json.dumps(modelo))
+                aplicados.append(nome_prop)
+        for k, v in no.items():
+            if k == "properties" and isinstance(v, dict):
+                for pn, pv in v.items():
+                    preencher_items(pv, pn, aplicados, sem_mapa)
+            else:
+                preencher_items(v, nome_prop, aplicados, sem_mapa)
+    elif isinstance(no, list):
+        for v in no:
+            preencher_items(v, nome_prop, aplicados, sem_mapa)
+    return aplicados, sem_mapa
+
+
 def limpar_parametros(lista):
     """Remove Version e os parâmetros de plumbing HTTP."""
     saida = []
@@ -332,6 +397,7 @@ def main():
         complementar(spec, alvo, patches, chave, avisos)
 
     spec = const_para_enum(spec)
+    aplicados, sem_mapa = preencher_items(spec)
 
     Path(destino).write_text(
         json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
@@ -357,6 +423,10 @@ def main():
         len(p) for p in COMPLEMENTOS_PATHS.values()
     )
     print(f"  {n} complementos de schema aplicados (campos observados em resposta real)")
+    if aplicados:
+        print(f"  items declarados com schema conhecido: {', '.join(sorted(set(aplicados)))}")
+    if sem_mapa:
+        print(f"  items preenchidos com 'object' genérico (sem mapa): {', '.join(sorted(set(sem_mapa)))}")
     return 0
 
 

@@ -107,7 +107,37 @@ def validar_para_ipaas(spec):
                 problemas.append(f"{alvo}: sem 'tags' — o import falha com HTTP 500")
             if not op.get("summary"):
                 problemas.append(f"{alvo}: sem 'summary' — recurso fica sem nome descritivo")
+            for onde in arrays_sem_items(op):
+                problemas.append(
+                    f"{alvo}: 'type: array' sem 'items' em {onde} — o import responde"
+                    " HTTP 200 e não cria recurso nenhum (falha silenciosa)"
+                )
     return problemas
+
+
+def arrays_sem_items(no, caminho="", out=None):
+    """Localiza `type: array` sem `items`.
+
+    `items` é obrigatório em array no OpenAPI 3.0, e o importador do iPaaS não
+    tolera a ausência: ele responde **HTTP 200 com corpo vazio** e não importa
+    **nenhuma** operação da spec — uma ocorrência derruba o arquivo inteiro, não
+    só a operação afetada. Não há mensagem de erro em lugar nenhum.
+
+    Verificado por bissecção na spec da Meta (WhatsApp): `template.components
+    []. parameters` vinha sem `items` e zerava a importação das 11 operações do
+    serviço de mensagens.
+    """
+    if out is None:
+        out = []
+    if isinstance(no, dict):
+        if no.get("type") == "array" and "items" not in no:
+            out.append(caminho.lstrip(".") or "(raiz)")
+        for k, v in no.items():
+            arrays_sem_items(v, caminho + "." + k, out)
+    elif isinstance(no, list):
+        for i, v in enumerate(no):
+            arrays_sem_items(v, f"{caminho}[{i}]", out)
+    return out
 
 
 def remover_esquemas_em_query(spec):
@@ -173,10 +203,12 @@ def processar(pasta: Path):
     ok = True
     for origem in origens:
         spec = json.loads(origem.read_text(encoding="utf-8"))
-        problemas = validar_para_ipaas(spec)
 
         plano = dereferenciar(spec, spec)
         plano = remover_discriminators(plano)
+        # valida o plano, nao a fonte: na fonte os schemas estao atras de $ref e
+        # uma checagem estrutural (ex.: array sem items) nao os alcanca
+        problemas = validar_para_ipaas(plano)
         em_query = remover_esquemas_em_query(plano)
         if em_query:
             print(f"    securitySchemes em query removidos: {', '.join(em_query)}"

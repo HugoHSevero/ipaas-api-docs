@@ -1,0 +1,2505 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "bisect w05c_dois_membros",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "mensagens",
+      "description": "Envio de mensagens, mídia, chamadas e histórico de conversas."
+    }
+  ],
+  "paths": {
+    "/{Phone-Number-ID}/messages": {
+      "parameters": [
+        {
+          "name": "Phone-Number-ID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "mensagens"
+        ],
+        "summary": "Send Message.",
+        "description": "Send Message.",
+        "operationId": "sendMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "messaging_product": {
+                        "type": "string",
+                        "example": "whatsapp"
+                      },
+                      "recipient_type": {
+                        "type": "string",
+                        "enum": [
+                          "individual",
+                          "group"
+                        ],
+                        "description": "The type of recipient.",
+                        "example": "individual"
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "The recipient's phone number for individual messages, and group-id for group message.",
+                        "example": "19505550005"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text"
+                        ]
+                      },
+                      "context": {
+                        "type": "object",
+                        "description": "Context information for replying to a message",
+                        "properties": {
+                          "message_id": {
+                            "type": "string",
+                            "description": "The ID of the message to which this message is a reply.",
+                            "example": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                          }
+                        }
+                      },
+                      "text": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "body": {
+                            "type": "string",
+                            "description": "The text of the message.",
+                            "example": "Hello World!"
+                          },
+                          "preview_url": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "description": "Common properties shared by all message types",
+                    "required": [
+                      "messaging_product",
+                      "recipient_type",
+                      "text",
+                      "to",
+                      "type"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "messaging_product": {
+                        "type": "string",
+                        "example": "whatsapp"
+                      },
+                      "recipient_type": {
+                        "type": "string",
+                        "enum": [
+                          "individual",
+                          "group"
+                        ],
+                        "description": "The type of recipient.",
+                        "example": "individual"
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "The recipient's phone number for individual messages, and group-id for group message.",
+                        "example": "19505550005"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "audio"
+                        ]
+                      },
+                      "context": {
+                        "type": "object",
+                        "description": "Context information for replying to a message",
+                        "properties": {
+                          "message_id": {
+                            "type": "string",
+                            "description": "The ID of the message to which this message is a reply.",
+                            "example": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                          }
+                        }
+                      },
+                      "audio": {
+                        "type": "object",
+                        "description": "A media object. Either `id` or `link` is required.",
+                        "oneOf": [
+                          {
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "The media object ID. **Required when `link` is not used.**",
+                                "example": "MEDIA_OBJECT_ID"
+                              }
+                            }
+                          },
+                          {
+                            "required": [
+                              "link"
+                            ],
+                            "properties": {
+                              "link": {
+                                "type": "string",
+                                "format": "url",
+                                "description": "The protocol and URL of the media to be sent (HTTP/HTTPS only).",
+                                "example": "http(s)://example.com/media.mp4"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "description": "Common properties shared by all message types",
+                    "required": [
+                      "audio",
+                      "messaging_product",
+                      "recipient_type",
+                      "to",
+                      "type"
+                    ]
+                  }
+                ]
+              },
+              "examples": {
+                "Send Audio Message by ID": {
+                  "value": {
+                    "audio": {
+                      "id": "<AUDIO_OBJECT_ID>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "audio"
+                  }
+                },
+                "Send Audio Message by URL": {
+                  "value": {
+                    "audio": {
+                      "link": "<http(s)://audio-url>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "audio"
+                  }
+                },
+                "Send Catalog Message": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "name": "catalog_message",
+                        "parameters": {
+                          "thumbnail_product_retailer_id": "2lc20305pt"
+                        }
+                      },
+                      "body": {
+                        "text": "Hello! Thanks for your interest. Ordering is easy. Just visit our catalog and add items to purchase."
+                      },
+                      "footer": {
+                        "text": "Best grocery deals on WhatsApp!"
+                      },
+                      "type": "catalog_message"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "+16505551234",
+                    "type": "interactive"
+                  }
+                },
+                "Send Catalog Template Message": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "template": {
+                      "components": [
+                        {
+                          "parameters": [
+                            {
+                              "text": "100",
+                              "type": "text"
+                            },
+                            {
+                              "text": "400",
+                              "type": "text"
+                            },
+                            {
+                              "text": "3",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "body"
+                        },
+                        {
+                          "index": 0,
+                          "parameters": [
+                            {
+                              "action": {
+                                "thumbnail_product_retailer_id": "2lc20305pt"
+                              },
+                              "type": "action"
+                            }
+                          ],
+                          "sub_type": "CATALOG",
+                          "type": "button"
+                        }
+                      ],
+                      "language": {
+                        "code": "en_US"
+                      },
+                      "name": "intro_catalog_offer"
+                    },
+                    "to": "+16505551234",
+                    "type": "template"
+                  }
+                },
+                "Send Contact Message": {
+                  "value": {
+                    "contacts": [
+                      {
+                        "addresses": [
+                          {
+                            "city": "Menlo Park",
+                            "country": "United States",
+                            "country_code": "us",
+                            "state": "CA",
+                            "street": "1 Hacker Way",
+                            "type": "HOME",
+                            "zip": "94025"
+                          },
+                          {
+                            "city": "Menlo Park",
+                            "country": "United States",
+                            "country_code": "us",
+                            "state": "CA",
+                            "street": "200 Jefferson Dr",
+                            "type": "WORK",
+                            "zip": "94025"
+                          }
+                        ],
+                        "birthday": "2012-08-18",
+                        "emails": [
+                          {
+                            "email": "test@fb.com",
+                            "type": "WORK"
+                          },
+                          {
+                            "email": "test@whatsapp.com",
+                            "type": "HOME"
+                          }
+                        ],
+                        "name": {
+                          "first_name": "John",
+                          "formatted_name": "John Smith",
+                          "last_name": "Smith",
+                          "middle_name": "D.",
+                          "prefix": "Dr",
+                          "suffix": "Jr"
+                        },
+                        "org": {
+                          "company": "WhatsApp",
+                          "department": "Design",
+                          "title": "Manager"
+                        },
+                        "phones": [
+                          {
+                            "phone": "+1 (940) 555-1234",
+                            "type": "HOME"
+                          },
+                          {
+                            "phone": "+1 (650) 555-1234",
+                            "type": "WORK",
+                            "wa_id": "16505551234"
+                          }
+                        ],
+                        "urls": [
+                          {
+                            "type": "WORK",
+                            "url": "https://www.facebook.com"
+                          },
+                          {
+                            "type": "HOME",
+                            "url": "https://www.whatsapp.com"
+                          }
+                        ]
+                      }
+                    ],
+                    "messaging_product": "whatsapp",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "contacts"
+                  }
+                },
+                "Send Document Message by ID": {
+                  "value": {
+                    "document": {
+                      "caption": "<DOCUMENT_CAPTION_TO_SEND>",
+                      "filename": "<DOCUMENT_FILENAME>",
+                      "id": "<DOCUMENT_OBJECT_ID>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "document"
+                  }
+                },
+                "Send Document Message by URL": {
+                  "value": {
+                    "document": {
+                      "caption": "<DOCUMENT-CAPTION-TEXT>",
+                      "link": "<http(s)://document-url>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "document"
+                  }
+                },
+                "Send Draft Flow by ID": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "name": "flow",
+                        "parameters": {
+                          "flow_action": "navigate",
+                          "flow_action_payload": {
+                            "data": {
+                              "<CUSTOM_KEY>": "<CUSTOM_VALUE>"
+                            },
+                            "screen": "<SCREEN_ID>"
+                          },
+                          "flow_cta": "Not shown in draft mode",
+                          "flow_id": "{{Flow-ID}}",
+                          "flow_message_version": "3",
+                          "flow_token": "<FLOW_TOKEN>",
+                          "mode": "draft"
+                        }
+                      },
+                      "body": {
+                        "text": "Not shown in draft mode"
+                      },
+                      "footer": {
+                        "text": "Not shown in draft mode"
+                      },
+                      "header": {
+                        "text": "Not shown in draft mode",
+                        "type": "text"
+                      },
+                      "type": "flow"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Draft Flow by Name": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "name": "flow",
+                        "parameters": {
+                          "flow_action": "navigate",
+                          "flow_action_payload": {
+                            "data": {
+                              "<CUSTOM_KEY>": "<CUSTOM_VALUE>"
+                            },
+                            "screen": "<SCREEN_ID>"
+                          },
+                          "flow_cta": "Not shown in draft mode",
+                          "flow_message_version": "3",
+                          "flow_name": "{{Flow-Name}}",
+                          "flow_token": "<FLOW_TOKEN>",
+                          "mode": "draft"
+                        }
+                      },
+                      "body": {
+                        "text": "Not shown in draft mode"
+                      },
+                      "footer": {
+                        "text": "Not shown in draft mode"
+                      },
+                      "header": {
+                        "text": "Not shown in draft mode",
+                        "type": "text"
+                      },
+                      "type": "flow"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Flow Template Message": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "template": {
+                      "components": [
+                        {
+                          "index": "0",
+                          "parameters": [
+                            {
+                              "action": {
+                                "flow_action_data": {
+                                  "<CUSTOM_KEY>": "<CUSTOM_VALUE>"
+                                },
+                                "flow_token": "<FLOW_TOKEN>"
+                              },
+                              "type": "action"
+                            }
+                          ],
+                          "sub_type": "flow",
+                          "type": "button"
+                        }
+                      ],
+                      "language": {
+                        "code": "en_US"
+                      },
+                      "name": "<TEMPLATE_NAME>"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "template"
+                  }
+                },
+                "Send Image Message by ID": {
+                  "value": {
+                    "image": {
+                      "id": "<IMAGE_OBJECT_ID>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "image"
+                  }
+                },
+                "Send Image Message by URL": {
+                  "value": {
+                    "image": {
+                      "link": "http(s)://image-url"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "image"
+                  }
+                },
+                "Send List Message": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "button": "<BUTTON_TEXT>",
+                        "sections": [
+                          {
+                            "rows": [
+                              {
+                                "description": "<SECTION_1_ROW_1_DESC>",
+                                "id": "<LIST_SECTION_1_ROW_1_ID>",
+                                "title": "<SECTION_1_ROW_1_TITLE>"
+                              },
+                              {
+                                "description": "<SECTION_1_ROW_2_DESC>",
+                                "id": "<LIST_SECTION_1_ROW_2_ID>",
+                                "title": "<SECTION_1_ROW_2_TITLE>"
+                              }
+                            ],
+                            "title": "<LIST_SECTION_1_TITLE>"
+                          },
+                          {
+                            "rows": [
+                              {
+                                "description": "<SECTION_2_ROW_1_DESC>",
+                                "id": "<LIST_SECTION_2_ROW_1_ID>",
+                                "title": "<SECTION_2_ROW_1_TITLE>"
+                              },
+                              {
+                                "description": "<SECTION_2_ROW_2_DESC>",
+                                "id": "<LIST_SECTION_2_ROW_2_ID>",
+                                "title": "<SECTION_2_ROW_2_TITLE>"
+                              }
+                            ],
+                            "title": "<LIST_SECTION_2_TITLE>"
+                          }
+                        ]
+                      },
+                      "body": {
+                        "text": "<BODY_TEXT>"
+                      },
+                      "footer": {
+                        "text": "<FOOTER_TEXT>"
+                      },
+                      "header": {
+                        "text": "<HEADER_TEXT>",
+                        "type": "text"
+                      },
+                      "type": "list"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Location Message": {
+                  "value": {
+                    "location": {
+                      "address": "1 Hacker Way, Menlo Park, CA 94025",
+                      "latitude": 37.758056,
+                      "longitude": -122.425332,
+                      "name": "META HQ"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "location"
+                  }
+                },
+                "Send Message Template Interactive": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "template": {
+                      "components": [
+                        {
+                          "parameters": [
+                            {
+                              "image": {
+                                "link": "http(s)://the-image-url"
+                              },
+                              "type": "image"
+                            }
+                          ],
+                          "type": "header"
+                        },
+                        {
+                          "parameters": [
+                            {
+                              "text": "text-string",
+                              "type": "text"
+                            },
+                            {
+                              "currency": {
+                                "amount_1000": 100990,
+                                "code": "USD",
+                                "fallback_value": "$100.99"
+                              },
+                              "type": "currency"
+                            },
+                            {
+                              "date_time": {
+                                "calendar": "GREGORIAN",
+                                "day_of_month": 25,
+                                "day_of_week": 5,
+                                "fallback_value": "February 25, 1977",
+                                "hour": 15,
+                                "minute": 33,
+                                "month": 2,
+                                "year": 1977
+                              },
+                              "type": "date_time"
+                            }
+                          ],
+                          "type": "body"
+                        },
+                        {
+                          "index": "0",
+                          "parameters": [
+                            {
+                              "payload": "aGlzIHRoaXMgaXMgY29v",
+                              "type": "payload"
+                            }
+                          ],
+                          "sub_type": "quick_reply",
+                          "type": "button"
+                        },
+                        {
+                          "index": "1",
+                          "parameters": [
+                            {
+                              "payload": "9rwnB8RbYmPF5t2Mn09x4h",
+                              "type": "payload"
+                            }
+                          ],
+                          "sub_type": "quick_reply",
+                          "type": "button"
+                        }
+                      ],
+                      "language": {
+                        "code": "language-and-locale-code"
+                      },
+                      "name": "template-name"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "template"
+                  }
+                },
+                "Send Message Template Media": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "template": {
+                      "components": [
+                        {
+                          "parameters": [
+                            {
+                              "image": {
+                                "link": "http(s)://the-image-url"
+                              },
+                              "type": "image"
+                            }
+                          ],
+                          "type": "header"
+                        },
+                        {
+                          "parameters": [
+                            {
+                              "text": "text-string",
+                              "type": "text"
+                            },
+                            {
+                              "currency": {
+                                "amount_1000": 100990,
+                                "code": "USD",
+                                "fallback_value": "$100.99"
+                              },
+                              "type": "currency"
+                            },
+                            {
+                              "date_time": {
+                                "calendar": "GREGORIAN",
+                                "day_of_month": 25,
+                                "day_of_week": 5,
+                                "fallback_value": "February 25, 1977",
+                                "hour": 15,
+                                "minute": 33,
+                                "month": 2,
+                                "year": 1977
+                              },
+                              "type": "date_time"
+                            }
+                          ],
+                          "type": "body"
+                        }
+                      ],
+                      "language": {
+                        "code": "language-and-locale-code"
+                      },
+                      "name": "template-name"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "template"
+                  }
+                },
+                "Send Message Template Text": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "template": {
+                      "components": [
+                        {
+                          "parameters": [
+                            {
+                              "text": "text-string",
+                              "type": "text"
+                            },
+                            {
+                              "currency": {
+                                "amount_1000": 100990,
+                                "code": "USD",
+                                "fallback_value": "$100.99"
+                              },
+                              "type": "currency"
+                            },
+                            {
+                              "date_time": {
+                                "calendar": "GREGORIAN",
+                                "day_of_month": 25,
+                                "day_of_week": 5,
+                                "fallback_value": "February 25, 1977",
+                                "hour": 15,
+                                "minute": 33,
+                                "month": 2,
+                                "year": 1977
+                              },
+                              "type": "date_time"
+                            }
+                          ],
+                          "type": "body"
+                        }
+                      ],
+                      "language": {
+                        "code": "language-and-locale-code"
+                      },
+                      "name": "template-name"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "template"
+                  }
+                },
+                "Send Multi-Product Message": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "catalog_id": "146265584024623",
+                        "sections": [
+                          {
+                            "product_items": [
+                              {
+                                "product_retailer_id": "<YOUR_PRODUCT1_SKU_IN_CATALOG>"
+                              },
+                              {
+                                "product_retailer_id": "<YOUR_SECOND_PRODUCT1_SKU_IN_CATALOG>"
+                              }
+                            ],
+                            "title": "<SECTION1_TITLE>"
+                          },
+                          {
+                            "product_items": [
+                              {
+                                "product_retailer_id": "<YOUR_PRODUCT2_SKU_IN_CATALOG>"
+                              },
+                              {
+                                "product_retailer_id": "<YOUR_SECOND_PRODUCT2_SKU_IN_CATALOG>"
+                              }
+                            ],
+                            "title": "<SECTION2_TITLE>"
+                          }
+                        ]
+                      },
+                      "body": {
+                        "text": "<YOUR_TEXT_BODY_CONTENT>"
+                      },
+                      "footer": {
+                        "text": "<YOUR_TEXT_FOOTER_CONTENT>"
+                      },
+                      "header": {
+                        "text": "<YOUR_TEXT_HEADER_CONTENT>",
+                        "type": "<HEADER_TYPE>"
+                      },
+                      "type": "product_list"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Order Details Message": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "name": "review_and_pay",
+                        "parameters": {
+                          "currency": "INR",
+                          "order": {
+                            "discount": {
+                              "description": "optional_text",
+                              "discount_program_name": "optional_text",
+                              "offset": 100,
+                              "value": 100
+                            },
+                            "items": [
+                              {
+                                "amount": {
+                                  "offset": 100,
+                                  "value": 1500
+                                },
+                                "name": "bread",
+                                "quantity": 1,
+                                "retailer_id": "1234567",
+                                "sale_amount": {
+                                  "offset": 100,
+                                  "value": 1000
+                                }
+                              }
+                            ],
+                            "shipping": {
+                              "description": "optional_text",
+                              "offset": 100,
+                              "value": 100
+                            },
+                            "status": "pending",
+                            "subtotal": {
+                              "offset": 100,
+                              "value": 1000
+                            },
+                            "tax": {
+                              "description": "optional_text",
+                              "offset": 100,
+                              "value": 100
+                            }
+                          },
+                          "payment_configuration": "my-payment-config-name",
+                          "payment_type": "upi",
+                          "reference_id": "unique-reference-id",
+                          "total_amount": {
+                            "offset": 100,
+                            "value": 1100
+                          },
+                          "type": "digital-goods"
+                        }
+                      },
+                      "body": {
+                        "text": "your-text-body-content"
+                      },
+                      "footer": {
+                        "text": "your-text-footer-content"
+                      },
+                      "header": {
+                        "image": {
+                          "link": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Home_made_sour_dough_bread.jpg/640px-Home_made_sour_dough_bread.jpg"
+                        },
+                        "type": "image"
+                      },
+                      "type": "order_details"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-WA-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Order Status Message": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "name": "review_order",
+                        "parameters": {
+                          "order": {
+                            "description": "optional-text",
+                            "status": "processing"
+                          },
+                          "reference_id": "unique-reference-id-from-order-details-msg"
+                        }
+                      },
+                      "body": {
+                        "text": "your-text-body-content"
+                      },
+                      "type": "order_status"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-WA-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Published Flow by ID": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "name": "flow",
+                        "parameters": {
+                          "flow_action": "navigate",
+                          "flow_action_payload": {
+                            "data": {
+                              "<CUSTOM_KEY>": "<CUSTOM_VALUE>"
+                            },
+                            "screen": "<SCREEN_ID>"
+                          },
+                          "flow_cta": "Open Flow!",
+                          "flow_id": "{{Flow-ID}}",
+                          "flow_message_version": "3",
+                          "flow_token": "<FLOW_TOKEN>"
+                        }
+                      },
+                      "body": {
+                        "text": "<BODY_TEXT>"
+                      },
+                      "footer": {
+                        "text": "<FOOTER_TEXT>"
+                      },
+                      "header": {
+                        "text": "<HEADER_TEXT>",
+                        "type": "text"
+                      },
+                      "type": "flow"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Published Flow by Name": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "name": "flow",
+                        "parameters": {
+                          "flow_action": "navigate",
+                          "flow_action_payload": {
+                            "data": {
+                              "<CUSTOM_KEY>": "<CUSTOM_VALUE>"
+                            },
+                            "screen": "<SCREEN_ID>"
+                          },
+                          "flow_cta": "Open Flow!",
+                          "flow_message_version": "3",
+                          "flow_name": "{{Flow-Name}}",
+                          "flow_token": "<FLOW_TOKEN>"
+                        }
+                      },
+                      "body": {
+                        "text": "<BODY_TEXT>"
+                      },
+                      "footer": {
+                        "text": "<FOOTER_TEXT>"
+                      },
+                      "header": {
+                        "text": "<HEADER_TEXT>",
+                        "type": "text"
+                      },
+                      "type": "flow"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Reply Button": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "buttons": [
+                          {
+                            "reply": {
+                              "id": "<UNIQUE_BUTTON_ID_1>",
+                              "title": "<BUTTON_TITLE_1>"
+                            },
+                            "type": "reply"
+                          },
+                          {
+                            "reply": {
+                              "id": "<UNIQUE_BUTTON_ID_2>",
+                              "title": "<BUTTON_TITLE_2>"
+                            },
+                            "type": "reply"
+                          }
+                        ]
+                      },
+                      "body": {
+                        "text": "<BUTTON_TEXT>"
+                      },
+                      "type": "button"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Reply to Audio Message by ID": {
+                  "value": {
+                    "audio": {
+                      "id": "<AUDIO_OBJECT_ID>"
+                    },
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "audio"
+                  }
+                },
+                "Send Reply to Audio Message by URL": {
+                  "value": {
+                    "audio": {
+                      "link": "http(s)://audio-url"
+                    },
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "audio"
+                  }
+                },
+                "Send Reply to Contact Message": {
+                  "value": {
+                    "contacts": [
+                      {
+                        "addresses": [
+                          {
+                            "city": "Menlo Park",
+                            "country": "United States",
+                            "country_code": "us",
+                            "state": "CA",
+                            "street": "1 Hacker Way",
+                            "type": "HOME",
+                            "zip": "94025"
+                          },
+                          {
+                            "city": "Menlo Park",
+                            "country": "United States",
+                            "country_code": "us",
+                            "state": "CA",
+                            "street": "200 Jefferson Dr",
+                            "type": "WORK",
+                            "zip": "94025"
+                          }
+                        ],
+                        "birthday": "2012-08-18",
+                        "emails": [
+                          {
+                            "email": "test@fb.com",
+                            "type": "WORK"
+                          },
+                          {
+                            "email": "test@whatsapp.com",
+                            "type": "HOME"
+                          }
+                        ],
+                        "name": {
+                          "first_name": "John",
+                          "formatted_name": "John Smith",
+                          "last_name": "Smith",
+                          "middle_name": "D.",
+                          "prefix": "Dr",
+                          "suffix": "Jr"
+                        },
+                        "org": {
+                          "company": "WhatsApp",
+                          "department": "Design",
+                          "title": "Manager"
+                        },
+                        "phones": [
+                          {
+                            "phone": "+1 (940) 555-1234",
+                            "type": "HOME"
+                          },
+                          {
+                            "phone": "+1 (650) 555-1234",
+                            "type": "WORK",
+                            "wa_id": "16505551234"
+                          }
+                        ],
+                        "urls": [
+                          {
+                            "type": "WORK",
+                            "url": "https://www.facebook.com"
+                          },
+                          {
+                            "type": "HOME",
+                            "url": "https://www.whatsapp.com"
+                          }
+                        ]
+                      }
+                    ],
+                    "context": {
+                      "message_id": "<MSGID_OF_PREV_MSG>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "contacts"
+                  }
+                },
+                "Send Reply to Document Message by ID": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "document": {
+                      "caption": "<DOCUMENT_CAPTION_TO_SEND>",
+                      "filename": "<DOCUMENT_FILENAME>",
+                      "id": "<DOCUMENT_OBJECT_ID>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "document"
+                  }
+                },
+                "Send Reply to Document Message by URL": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "document": {
+                      "caption": "<DOCUMENT_CAPTION_TEXT>",
+                      "link": "<http(s)://document-url>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "document"
+                  }
+                },
+                "Send Reply to Image Message by ID": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_PREV_MSG>"
+                    },
+                    "image": {
+                      "id": "<IMAGE_OBJECT_ID>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "image"
+                  }
+                },
+                "Send Reply to Image Message by URL": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_PREV_MSG>"
+                    },
+                    "image": {
+                      "link": "http(s)://image-url"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "image"
+                  }
+                },
+                "Send Reply to List Message": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_PREV_MSG>"
+                    },
+                    "interactive": {
+                      "action": {
+                        "button": "<BUTTON_TEXT>",
+                        "sections": [
+                          {
+                            "rows": [
+                              {
+                                "description": "<SECTION_1_ROW_1_DESC>",
+                                "id": "<LIST_SECTION_1_ROW_1_ID>",
+                                "title": "<SECTION_1_ROW_1_TITLE>"
+                              },
+                              {
+                                "description": "<SECTION_1_ROW_2_DESC>",
+                                "id": "<LIST_SECTION_1_ROW_2_ID>",
+                                "title": "<SECTION_1_ROW_2_TITLE>"
+                              }
+                            ],
+                            "title": "<LIST_SECTION_1_TITLE>"
+                          },
+                          {
+                            "rows": [
+                              {
+                                "description": "<SECTION_2_ROW_1_DESC>",
+                                "id": "<LIST_SECTION_2_ROW_1_ID>",
+                                "title": "<SECTION_2_ROW_1_TITLE>"
+                              },
+                              {
+                                "description": "<SECTION_2_ROW_2_DESC>",
+                                "id": "<LIST_SECTION_2_ROW_2_ID>",
+                                "title": "<SECTION_2_ROW_2_TITLE>"
+                              }
+                            ],
+                            "title": "<LIST_SECTION_2_TITLE>"
+                          }
+                        ]
+                      },
+                      "body": {
+                        "text": "<BODY_TEXT>"
+                      },
+                      "footer": {
+                        "text": "<FOOTER_TEXT>"
+                      },
+                      "header": {
+                        "text": "<HEADER_TEXT>",
+                        "type": "text"
+                      },
+                      "type": "list"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}"
+                  }
+                },
+                "Send Reply to Location Message": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_PREV_MSG>"
+                    },
+                    "location": {
+                      "address": "1 Hacker Way, Menlo Park, CA 94025",
+                      "latitude": 37.758056,
+                      "longitude": -122.425332,
+                      "name": "META HQ"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "location"
+                  }
+                },
+                "Send Reply to Sticker Message by ID": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "sticker": {
+                      "id": "<MEDIA_OBJECT_ID>"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "sticker"
+                  }
+                },
+                "Send Reply to Sticker Message by URL": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "sticker": {
+                      "link": "<http(s)://sticker-url>"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "sticker"
+                  }
+                },
+                "Send Reply to Text Message": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_PREV_MSG>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "text": {
+                      "body": "<TEXT_MSG_CONTENT>",
+                      "preview_url": false
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "text"
+                  }
+                },
+                "Send Reply to Video Message by ID": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "video",
+                    "video": {
+                      "caption": "<VIDEO_CAPTION_TEXT>",
+                      "id": "<VIDEO_OBJECT_ID>"
+                    }
+                  }
+                },
+                "Send Reply to Video Message by URL": {
+                  "value": {
+                    "context": {
+                      "message_id": "<MSGID_OF_MSG_YOU_ARE_REPLYING_TO>"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "video",
+                    "video": {
+                      "caption": "<VIDEO_CAPTION_TEXT>",
+                      "link": "<http(s)://video-url>"
+                    }
+                  }
+                },
+                "Send Reply with Reaction Message": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "reaction": {
+                      "emoji": "😀",
+                      "message_id": "wamid.HBgLM..."
+                    },
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "reaction"
+                  }
+                },
+                "Send Sample Issue Resolution Template": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "template": {
+                      "components": [
+                        {
+                          "parameters": [
+                            {
+                              "text": "*Mr. Jones*",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "body"
+                        },
+                        {
+                          "index": 0,
+                          "parameters": [
+                            {
+                              "text": true,
+                              "type": "text"
+                            }
+                          ],
+                          "sub_type": "quick_reply",
+                          "type": "button"
+                        },
+                        {
+                          "index": 1,
+                          "parameters": [
+                            {
+                              "text": false,
+                              "type": "text"
+                            }
+                          ],
+                          "sub_type": "quick_reply",
+                          "type": "button"
+                        }
+                      ],
+                      "language": {
+                        "code": "en_US",
+                        "policy": "deterministic"
+                      },
+                      "name": "sample_issue_resolution"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "template"
+                  }
+                },
+                "Send Sample Shipping Confirmation Template": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "template": {
+                      "components": [
+                        {
+                          "parameters": [
+                            {
+                              "text": "text-string",
+                              "type": "text"
+                            },
+                            {
+                              "currency": {
+                                "amount_1000": 100990,
+                                "code": "USD",
+                                "fallback_value": "$100.99"
+                              },
+                              "type": "currency"
+                            },
+                            {
+                              "date_time": {
+                                "calendar": "GREGORIAN",
+                                "day_of_month": 25,
+                                "day_of_week": 5,
+                                "fallback_value": "February 25, 1977",
+                                "hour": 15,
+                                "minute": 33,
+                                "month": 2,
+                                "year": 1977
+                              },
+                              "type": "date_time"
+                            }
+                          ],
+                          "type": "body"
+                        }
+                      ],
+                      "language": {
+                        "code": "language-and-locale-code"
+                      },
+                      "name": "template-name"
+                    },
+                    "to": "16315555555",
+                    "type": "template"
+                  }
+                },
+                "Send Sample Text Message": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "template": {
+                      "components": [
+                        {
+                          "parameters": [
+                            {
+                              "text": "text-string",
+                              "type": "text"
+                            },
+                            {
+                              "currency": {
+                                "amount_1000": 100990,
+                                "code": "USD",
+                                "fallback_value": "$100.99"
+                              },
+                              "type": "currency"
+                            },
+                            {
+                              "date_time": {
+                                "calendar": "GREGORIAN",
+                                "day_of_month": 25,
+                                "day_of_week": 5,
+                                "fallback_value": "February 25, 1977",
+                                "hour": 15,
+                                "minute": 33,
+                                "month": 2,
+                                "year": 1977
+                              },
+                              "type": "date_time"
+                            }
+                          ],
+                          "type": "body"
+                        }
+                      ],
+                      "language": {
+                        "code": "language-and-locale-code"
+                      },
+                      "name": "template-name"
+                    },
+                    "to": "16315555555",
+                    "type": "template"
+                  }
+                },
+                "Send Single Product Message": {
+                  "value": {
+                    "interactive": {
+                      "action": {
+                        "catalog_id": "367025965434465",
+                        "product_retailer_id": "<ID_TEST_ITEM_1>"
+                      },
+                      "body": {
+                        "text": "<OPTIONAL_BODY_TEXT>"
+                      },
+                      "footer": {
+                        "text": "<OPTIONAL_FOOTER_TEXT>"
+                      },
+                      "type": "product"
+                    },
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "interactive"
+                  }
+                },
+                "Send Sticker Message by ID": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "sticker": {
+                      "id": "<MEDIA_OBJECT_ID>"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "sticker"
+                  }
+                },
+                "Send Sticker Message by URL": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "sticker": {
+                      "link": "<http(s)://sticker-url>"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "sticker"
+                  }
+                },
+                "Send Test Message": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "template": {
+                      "language": {
+                        "code": "en_US"
+                      },
+                      "name": "hello_world"
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "template"
+                  }
+                },
+                "Send Text Message": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "text": {
+                      "body": "text-message-content",
+                      "preview_url": false
+                    },
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "text"
+                  }
+                },
+                "Send Text Message with Preview URL": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "text": {
+                      "body": "Please visit https://youtu.be/hpltvTEiRrY.",
+                      "preview_url": true
+                    },
+                    "to": "{{Recipient-Phone-Number}}"
+                  }
+                },
+                "Send Video Message by ID": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "video",
+                    "video": {
+                      "caption": "<VIDEO_CAPTION_TEXT>",
+                      "id": "<VIDEO_OBJECT_ID>"
+                    }
+                  }
+                },
+                "Send Video Message by URL": {
+                  "value": {
+                    "messaging_product": "whatsapp",
+                    "recipient_type": "individual",
+                    "to": "{{Recipient-Phone-Number}}",
+                    "type": "video",
+                    "video": {
+                      "caption": "<VIDEO_CAPTION_TEXT>",
+                      "link": "<http(s)://video-url>"
+                    }
+                  }
+                },
+                "Send typing indicator and read receipt": {
+                  "value": {
+                    "message_id": "wamid.HBgLMTY1MDM4Nzk0MzkVAgASGBQzQUYzMjEzNDM2RTZGQ0MzMDJBRgA=",
+                    "messaging_product": "whatsapp",
+                    "status": "read",
+                    "typing_indicator": {
+                      "type": "text"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send Test Message / Send Text Message / Send Reply to Text Message / Send Reply with Reaction Message / Send Image Message by ID / Send Reply to Image Message by ID / Send Image Message by URL / Send Reply to Image Message by URL / Send Audio Message by ID / Send Reply to Audio Message by ID / Send Audio Message By URL / Send Reply to Audio Message by URL / Send Document Message by ID / Send Reply to Document Message by ID / Send Document Message by URL / Send Reply to Document Message by URL / Send Sticker Message By ID / Send Reply to Sticker Message by ID / Send Sticker Message By URL / Send Reply to Sticker Message by URL / Send Video Message By ID / Send Reply to Video Message by ID / Send Video Message By URL / Send Reply to Video Message by URL / Send Contact Message / Send Reply to Contact Message / Send Location Messages / Send Reply to Location Message / Send Message Template Text / Send Message Template Media / Send Interactive Message Template / Send List Message / Send Reply to List Message / Send Reply Button / Send Single Product Message / Example response / Example response / Send Draft Flow by Name / Send Draft Flow by ID / Send Published Flow by Name / Send Published Flow by ID / Send Flow Template Message / Send typing indicator and read receipt / Send Sample Text message / Send Sample Shipping Confirmation Template / Send Sample Issue Resolution Template",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Connection-Quality": {
+                "schema": {
+                  "type": "string",
+                  "example": "EXCELLENT; q=0.9, rtt=7, rtx=0, c=10, mss=1380, tbw=372, tp=-1, tpl=-1, uplat=527, ullat=0"
+                },
+                "description": "Facebook connection quality metrics"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contacts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "input": {
+                            "type": "string",
+                            "example": "48XXXXXXXXX"
+                          },
+                          "wa_id": {
+                            "type": "string",
+                            "example": "48XXXXXXXXX "
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ]
+                    },
+                    "messages": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                          },
+                          "message_status": {
+                            "type": "string",
+                            "enum": [
+                              "accepted",
+                              "held_for_quality_assessment",
+                              "paused"
+                            ],
+                            "description": "The status of a WhatsApp message:\n- `accepted`: The message has been accepted by WhatsApp and is being processed\n- `held_for_quality_assessment`: The message is being held for quality assessment before delivery\n- `paused`: The message delivery has been paused\n"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww",
+                          "message_status": "accepted"
+                        }
+                      ]
+                    },
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example response": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "+16505551234",
+                          "wa_id": "16505551234"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.HBgLMTY1MDM4Nzk0MzkVAgARGBJCOTY3NDc0NDFDRUI3NTA0Q0UA"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Audio Message By URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Audio Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Contact Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Document Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Document Message by URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Draft Flow by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "18055555555",
+                          "wa_id": "18055555555"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.HBgL..."
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Draft Flow by Name": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "18055555555",
+                          "wa_id": "18055555555"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.HBgL..."
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Flow Template Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "18055555555",
+                          "wa_id": "18055555555"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.HBgL..."
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Image Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Image Message by URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Interactive Message Template": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send List Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "15555551234",
+                          "wa_id": "<WHATSAPP_ID>"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.ID"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Location Messages": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Message Template Media": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Message Template Text": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Published Flow by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "18055555555",
+                          "wa_id": "18055555555"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.HBgL..."
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Published Flow by Name": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "18055555555",
+                          "wa_id": "18055555555"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.HBgL..."
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply Button": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "PHONE_NUMBER",
+                          "wa_id": "WHATSAPP_ID"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.ID"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Audio Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Audio Message by URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Contact Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Document Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Document Message by URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Image Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Image Message by URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to List Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "15555551234",
+                          "wa_id": "<WHATSAPP_ID>"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.ID"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Location Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Sticker Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Sticker Message by URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Text Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Video Message by ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply to Video Message by URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Reply with Reaction Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "<PHONE_NUMBER>",
+                          "wa_id": "<WHATSAPP_ID>"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.HBgLM..."
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Sample Shipping Confirmation Template": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Sample Text message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Single Product Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "+1-631-555-5555",
+                          "wa_id": "16315555555"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGFlaCGg0xcvAdgmZ9plHrf2Mh-o"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Sticker Message By ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Sticker Message By URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Test Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Text Message": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Video Message By ID": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send Video Message By URL": {
+                    "value": {
+                      "contacts": [
+                        {
+                          "input": "48XXXXXXXXX",
+                          "wa_id": "48XXXXXXXXX "
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "id": "wamid.gBGGSFcCNEOPAgkO_KJ55r4w_ww"
+                        }
+                      ],
+                      "messaging_product": "whatsapp"
+                    }
+                  },
+                  "Send typing indicator and read receipt": {
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    }
+  }
+}

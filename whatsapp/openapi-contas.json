@@ -1,0 +1,4406 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "WhatsApp Business Cloud API - contas",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "contas",
+      "description": "WhatsApp Business Account: dados, usuários, agendamentos e webhooks."
+    }
+  ],
+  "paths": {
+    "/{Business-ID}/owned_whatsapp_business_accounts": {
+      "get": {
+        "summary": "Get Owned WhatsApp Business Accounts",
+        "description": "Retrieve WhatsApp Business Accounts owned by the specified business. This endpoint\nprovides comprehensive information about all WABAs owned by the business, including\naccount details, configuration, and status information.\n\n**Use Cases:**\n- Retrieve all WhatsApp Business Accounts owned by a business\n- Filter accounts by business type\n- Find specific accounts by ID\n- Monitor business portfolio of WhatsApp Business Accounts\n- Manage account access and permissions across multiple WABAs\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n\n**Caching:**\nAccount information can be cached for short periods, but status and configuration\nmay change frequently. Implement appropriate cache invalidation strategies.\n",
+        "operationId": "getOwnedWhatsAppBusinessAccounts",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "Business-ID",
+            "in": "path",
+            "required": true,
+            "description": "Your Business ID. This ID represents the business portfolio that owns the\nWhatsApp Business Accounts and can be found in your Business Manager settings.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          },
+          {
+            "name": "business_type",
+            "in": "query",
+            "required": false,
+            "description": "Filter accounts by business type. Can specify multiple types as comma-separated values.\nUse this to filter between enterprise and small-medium business accounts.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/WhatsAppBusinessType"
+              }
+            },
+            "style": "form",
+            "explode": false,
+            "example": [
+              "ENTERPRISE",
+              "SMB"
+            ]
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for forward pagination. Use the cursor from the previous response\nto get the next page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "QVFIUjBrRUs5QVJuUDhDSmZARMlc2dXRYNXBmMjMtRUt3SmFlbk9PRk43azdiN1VQaW1HcnRkejFzZATNoNDdTdGVWMDhjamVvY25HWnI4WjIzX0hYSk40NHhB"
+          },
+          {
+            "name": "first",
+            "in": "query",
+            "required": false,
+            "description": "Number of results to return in forward pagination. Maximum value is 100.\nUse with 'after' cursor for forward pagination.\n",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 25
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for backward pagination. Use the cursor from the previous response\nto get the previous page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "QVFIUnpPVXRnY3BPN19rTVItOG51T291YURjV3BaeXRXU29adDVreS04ekhSNl9YWTlfdmN3SHlyTEk1a2FRdnlWanBqM1FuQm1uZAHhfYl9UMTNCYjM3MWV3"
+          },
+          {
+            "name": "last",
+            "in": "query",
+            "required": false,
+            "description": "Number of results to return in backward pagination. Maximum value is 100.\nUse with 'before' cursor for backward pagination.\n",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 25
+          },
+          {
+            "name": "find",
+            "in": "query",
+            "required": false,
+            "description": "Find a specific WhatsApp Business Account by ID within the owned accounts.\nUse this to quickly locate a specific account.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "104996122399160"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved owned WhatsApp Business Accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhatsAppBusinessAccountsConnection"
+                },
+                "examples": {
+                  "multiple_accounts": {
+                    "summary": "Multiple owned WhatsApp Business Accounts",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "104996122399160",
+                          "name": "Lucky Shrub",
+                          "message_template_namespace": "58e6d318_b627_4112_b9c7_2961197553ea",
+                          "timezone_id": "1"
+                        },
+                        {
+                          "id": "102290129340398",
+                          "name": "Test WhatsApp Business Account",
+                          "message_template_namespace": "ba30dd89_2ebd_41e4_b805_f2c05ae04cc9",
+                          "timezone_id": "1"
+                        }
+                      ],
+                      "paging": {
+                        "cursors": {
+                          "after": "QVFIUjBrRUs5QVJuUDhDSmZARMlc2dXRYNXBmMjMtRUt3SmFlbk9PRk43azdiN1VQaW1HcnRkejFzZATNoNDdTdGVWMDhjamVvY25HWnI4WjIzX0hYSk40NHhB",
+                          "before": "QVFIUnpPVXRnY3BPN19rTVItOG51T291YURjV3BaeXRXU29adDVreS04ekhSNl9YWTlfdmN3SHlyTEk1a2FRdnlWanBqM1FuQm1uZAHhfYl9UMTNCYjM3MWV3"
+                        }
+                      }
+                    }
+                  },
+                  "single_account": {
+                    "summary": "Single owned WhatsApp Business Account",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "104996122399160",
+                          "name": "Lucky Shrub",
+                          "message_template_namespace": "58e6d318_b627_4112_b9c7_2961197553ea",
+                          "timezone_id": "1"
+                        }
+                      ]
+                    }
+                  },
+                  "empty_result": {
+                    "summary": "No owned accounts found",
+                    "value": {
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: business_id must be a valid numeric string",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to access this business's WhatsApp Business Accounts",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Business ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Business not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The requested filter combination is not supported",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{User-ID}/assigned_whatsapp_business_accounts": {
+      "get": {
+        "summary": "Get Assigned WhatsApp Business Accounts",
+        "description": "Retrieve WhatsApp Business Accounts that have been assigned to a specific user.\nThis endpoint provides information about account assignments, permissions, and\ncurrent status corresponding to the GraphAssignedWhatsAppBusinessAccountsEdge node.\n\n\n**Use Cases:**\n- Retrieve all WhatsApp Business Accounts assigned to a user\n- Check user permissions for specific accounts\n- Monitor account assignment status and changes\n- Validate user access before performing business operations\n\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n\n\n**Caching:**\nAssignment information can be cached for short periods, but permissions and status\nmay change frequently. Implement appropriate cache invalidation strategies.\n",
+        "operationId": "getAssignedWhatsAppBusinessAccounts",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "User-ID",
+            "in": "path",
+            "required": true,
+            "description": "The user ID for whom to retrieve assigned WhatsApp Business Accounts.\nThis must be a valid user ID within your solution or partnership.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated list of fields to include in the response. If not specified,\ndefault fields will be returned (id, name, status).\nAvailable fields: id, name, status, assignment_date, permissions, business_id, phone_numbers\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "id,name,status,permissions"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of accounts to return per page. Default is 25, maximum is 100.\n",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "example": 25
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination. Use this to get the next page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "MTAxNTExOTQ1MjAwNzI5NDE="
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination. Use this to get the previous page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "NDMyNzQyODI3OTQw"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved assigned WhatsApp Business Accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssignedAccountsResponse"
+                },
+                "examples": {
+                  "multiple_accounts": {
+                    "summary": "User with multiple assigned accounts",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123456",
+                          "name": "Primary Business Account",
+                          "status": "ACTIVE",
+                          "assignment_date": "2023-10-15T14:30:00Z",
+                          "permissions": [
+                            "MANAGE",
+                            "DEVELOP",
+                            "MANAGE_TEMPLATES"
+                          ],
+                          "business_id": "9876543210987654",
+                          "phone_numbers": [
+                            {
+                              "id": "1234567890",
+                              "display_phone_number": "+1 (555) 123-4567",
+                              "verified_name": "Primary Business",
+                              "status": "CONNECTED"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2345678901234567",
+                          "name": "Secondary Business Account",
+                          "status": "ACTIVE",
+                          "assignment_date": "2023-10-20T09:15:00Z",
+                          "permissions": [
+                            "VIEW_INSIGHTS",
+                            "MESSAGING"
+                          ],
+                          "business_id": "8765432109876543"
+                        }
+                      ]
+                    }
+                  },
+                  "single_account": {
+                    "summary": "User with single assigned account",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123456",
+                          "name": "Business Account",
+                          "status": "ACTIVE",
+                          "assignment_date": "2023-10-15T14:30:00Z",
+                          "permissions": [
+                            "FULL_CONTROL"
+                          ],
+                          "business_id": "9876543210987654"
+                        }
+                      ]
+                    }
+                  },
+                  "no_accounts": {
+                    "summary": "User with no assigned accounts",
+                    "value": {
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: user_id must be a valid numeric string",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to access assigned WhatsApp Business Accounts for this user",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - User ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "User not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The requested fields are not available for this user",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{WhatsApp-Business-Account-ID}/assigned_users": {
+      "get": {
+        "summary": "List Assigned Users",
+        "description": "Retrieve a list of users assigned to the WhatsApp Business Account with their permissions\nand user details. This endpoint supports pagination and filtering capabilities.\n\n\n**Use Cases:**\n- Audit user access to WhatsApp Business Account\n- Retrieve user permission assignments for compliance\n- List all users with access for management purposes\n- Monitor user access patterns and assignments\n\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n\n\n**Caching:**\nUser assignment data can be cached for short periods, but permission changes may occur\nfrequently. Implement appropriate cache invalidation strategies.\n",
+        "operationId": "getAssignedUsers",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WhatsApp-Business-Account-ID",
+            "in": "path",
+            "required": true,
+            "description": "Your WhatsApp Business Account ID. This ID is provided when you create the account\nand can be found in your Business Manager or through account management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          },
+          {
+            "name": "business",
+            "in": "query",
+            "required": true,
+            "description": "Business ID that owns or has access to the WhatsApp Business Account.\nThis parameter is required to specify the business context for user assignments.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "9876543210987654"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated list of fields to include in the response. If not specified,\ndefault fields will be returned (id, name). Available fields: id, name, business, user_type\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "id,name,business,user_type"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of assigned users to return per page. Default is 25, maximum is 100.\n",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 25
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination. Use this to get the next page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "QVFIUjJ5M2wwdmtONVFHbDZAMVQ4OGJBQUFBQQ"
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination. Use this to get the previous page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "QVFIUmx1WTBpMGpJWXprYzVYaVhabW9PVVhF"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved assigned users list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssignedUsersResponse"
+                },
+                "examples": {
+                  "multiple_users": {
+                    "summary": "Multiple assigned users with different types",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123456",
+                          "name": "John Smith",
+                          "business": {
+                            "id": "9876543210987654",
+                            "name": "Example Business Inc"
+                          },
+                          "user_type": "BUSINESS_USER"
+                        },
+                        {
+                          "id": "2345678901234567",
+                          "name": "System User Bot",
+                          "business": {
+                            "id": "9876543210987654",
+                            "name": "Example Business Inc"
+                          },
+                          "user_type": "SYSTEM_USER"
+                        }
+                      ],
+                      "paging": {
+                        "cursors": {
+                          "after": "QVFIUjJ5M2wwdmtONVFHbDZAMVQ4OGJBQUFBQQ",
+                          "before": "QVFIUmx1WTBpMGpJWXprYzVYaVhabW9PVVhF"
+                        },
+                        "next": "https://graph.facebook.com/v23.0/1234567890123456/assigned_users?access_token=YOUR_SYSTEM_USER_ACCESS_TOKEN&limit=25&after=QVFIUjJ5M2wwdmtONVFHbDZAMVQ4OGJBQUFBQQ"
+                      },
+                      "summary": {
+                        "total_count": 15
+                      }
+                    }
+                  },
+                  "single_user": {
+                    "summary": "Single assigned user",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123456",
+                          "name": "Jane Doe",
+                          "user_type": "BUSINESS_USER"
+                        }
+                      ],
+                      "summary": {
+                        "total_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The parameter business is required to specify a business",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Need permission on WhatsAppBusinessAccount or this Business",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The requested fields are not available for this account",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add User to WhatsApp Business Account",
+        "description": "Add a user to the WhatsApp Business Account with specified permission tasks.\nThis operation grants the user access to perform specific actions on the account\nbased on the provided permission tasks.\n\n\n**Use Cases:**\n- Grant user access to WhatsApp Business Account management\n- Assign specific permission tasks for granular access control\n- Add new team members to WhatsApp Business Account operations\n- Configure user permissions for different business roles\n\n\n**Permission Tasks:**\nDifferent permission tasks grant access to different WhatsApp Business Account features:\n- MANAGE: General account management permissions\n- DEVELOP: Development and API access permissions\n- MANAGE_TEMPLATES: Message template management\n- MANAGE_PHONE: Phone number management\n- MESSAGING: Send and receive messages\n- FULL_CONTROL: Complete access to all account features\n\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n",
+        "operationId": "addAssignedUser",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WhatsApp-Business-Account-ID",
+            "in": "path",
+            "required": true,
+            "description": "Your WhatsApp Business Account ID. This ID is provided when you create the account\nand can be found in your Business Manager or through account management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user",
+                  "tasks"
+                ],
+                "properties": {
+                  "user": {
+                    "type": "string",
+                    "description": "User ID of the person to add to the WhatsApp Business Account.\nThis must be a valid Facebook user ID.\n",
+                    "pattern": "^[0-9]+$",
+                    "example": "2345678901234567"
+                  },
+                  "tasks": {
+                    "type": "array",
+                    "description": "Array of permission tasks to grant to the user. These tasks determine\nwhat actions the user can perform on the WhatsApp Business Account.\n",
+                    "items": {
+                      "$ref": "#/components/schemas/WhatsAppBusinessAccountPermissionTask"
+                    },
+                    "minItems": 1,
+                    "maxItems": 16,
+                    "example": [
+                      "MANAGE",
+                      "DEVELOP",
+                      "MANAGE_TEMPLATES"
+                    ]
+                  }
+                }
+              },
+              "examples": {
+                "basic_permissions": {
+                  "summary": "Add user with basic management permissions",
+                  "value": {
+                    "user": "2345678901234567",
+                    "tasks": [
+                      "MANAGE",
+                      "VIEW_INSIGHTS"
+                    ]
+                  }
+                },
+                "developer_permissions": {
+                  "summary": "Add user with development permissions",
+                  "value": {
+                    "user": "3456789012345678",
+                    "tasks": [
+                      "DEVELOP",
+                      "MANAGE_TEMPLATES",
+                      "VIEW_TEMPLATES"
+                    ]
+                  }
+                },
+                "full_access": {
+                  "summary": "Add user with full control",
+                  "value": {
+                    "user": "4567890123456789",
+                    "tasks": [
+                      "FULL_CONTROL"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully added user to WhatsApp Business Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: user must be a valid user ID",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to add users to this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID or User ID does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "User is already assigned to this WhatsApp Business Account",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Remove User from WhatsApp Business Account",
+        "description": "Remove a user's access from the WhatsApp Business Account. This operation revokes\nall permissions and access rights for the specified user on the account.\n\n\n**Use Cases:**\n- Revoke user access when they leave the organization\n- Remove temporary access grants\n- Clean up user permissions for security compliance\n- Manage user lifecycle and access control\n\n\n**Important Notes:**\n- This operation removes ALL permissions for the user on this WhatsApp Business Account\n- The user will lose access to all account features and data\n- This action cannot be undone - the user must be re-added if access is needed again\n- Webhooks may be triggered to notify of user access changes\n\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n",
+        "operationId": "removeAssignedUser",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WhatsApp-Business-Account-ID",
+            "in": "path",
+            "required": true,
+            "description": "Your WhatsApp Business Account ID. This ID is provided when you create the account\nand can be found in your Business Manager or through account management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user"
+                ],
+                "properties": {
+                  "user": {
+                    "type": "string",
+                    "description": "User ID of the person to remove from the WhatsApp Business Account.\nThis must be a valid Facebook user ID that is currently assigned to the account.\n",
+                    "pattern": "^[0-9]+$",
+                    "example": "2345678901234567"
+                  }
+                }
+              },
+              "examples": {
+                "remove_user": {
+                  "summary": "Remove user access",
+                  "value": {
+                    "user": "2345678901234567"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully removed user from WhatsApp Business Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: user must be a valid user ID",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to remove users from this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID or User ID does not exist or is not assigned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "User is not assigned to this WhatsApp Business Account",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Cannot remove user due to business asset group permissions",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{WABA-ID}/schedules": {
+      "get": {
+        "summary": "Get WhatsApp Business Account Schedules",
+        "description": "Retrieve all schedules associated with a WhatsApp Business Account, including their\nconfiguration, status, and execution details.\n\n**Use Cases:**\n- List all schedules in a WhatsApp Business Account\n- Monitor schedule status and performance\n- Check schedule configuration and timing details\n- Retrieve schedule execution history and metrics\n\n**Filtering:**\nYou can filter results using the `filtering` parameter with JSON-encoded filter conditions.\nSupported filters include status, schedule_type, and is_active.\n\n**Sorting:**\nResults can be sorted by created_time or updated_time in ascending or descending order.\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n\n**Caching:**\nSchedule data can be cached for short periods, but status information may change\nfrequently. Implement appropriate cache invalidation strategies.\n",
+        "operationId": "getWhatsAppBusinessAccountSchedules",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "WhatsApp Business Account ID. This ID can be found in your WhatsApp Manager\nor through the business management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated list of fields to include in the response. If not specified,\ndefault fields will be returned. Available fields include: id, name, status,\nschedule_type, description, start_time, end_time, timezone, days_of_week,\ncreated_time, updated_time, is_active, recurrence_pattern\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "id,name,status,schedule_type,start_time,end_time"
+          },
+          {
+            "name": "filtering",
+            "in": "query",
+            "required": false,
+            "description": "JSON-encoded array of filter conditions. Each filter should specify field, operator, and value.\nSupported fields: status, schedule_type, is_active\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "[{\"field\":\"status\",\"operator\":\"EQUAL\",\"value\":\"ACTIVE\"}]"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "description": "Sort field and direction. Format: field_name.asc or field_name.desc\nSupported fields: created_time, updated_time\n",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "created_time.asc",
+                "created_time.desc",
+                "updated_time.asc",
+                "updated_time.desc"
+              ]
+            },
+            "example": "created_time.desc"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of schedules to return per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "example": 25
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination - retrieve records after this cursor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination - retrieve records before this cursor",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved WhatsApp Business Account schedules",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhatsAppBusinessAccountSchedulesConnection"
+                },
+                "examples": {
+                  "multiple_schedules": {
+                    "summary": "Multiple schedules with various types",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123456",
+                          "name": "Business Hours Schedule",
+                          "status": "ACTIVE",
+                          "schedule_type": "BUSINESS_HOURS",
+                          "description": "Standard business operating hours",
+                          "start_time": "09:00",
+                          "end_time": "17:00",
+                          "timezone": "America/New_York",
+                          "days_of_week": [
+                            "MONDAY",
+                            "TUESDAY",
+                            "WEDNESDAY",
+                            "THURSDAY",
+                            "FRIDAY"
+                          ],
+                          "created_time": "2024-01-15T10:30:00Z",
+                          "updated_time": "2024-01-20T14:45:00Z",
+                          "is_active": true,
+                          "recurrence_pattern": {
+                            "frequency": "WEEKLY",
+                            "interval": 1
+                          }
+                        },
+                        {
+                          "id": "2345678901234567",
+                          "name": "Weekend Maintenance",
+                          "status": "INACTIVE",
+                          "schedule_type": "MAINTENANCE_WINDOW",
+                          "description": "System maintenance window",
+                          "start_time": "02:00",
+                          "end_time": "04:00",
+                          "timezone": "UTC",
+                          "days_of_week": [
+                            "SATURDAY",
+                            "SUNDAY"
+                          ],
+                          "created_time": "2024-01-10T08:00:00Z",
+                          "updated_time": "2024-01-15T12:00:00Z",
+                          "is_active": false
+                        }
+                      ],
+                      "paging": {
+                        "cursors": {
+                          "after": "MTAxNTExOTQ1MjAwNzI5NDE="
+                        }
+                      }
+                    }
+                  },
+                  "single_schedule": {
+                    "summary": "Single schedule response",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123456",
+                          "name": "Business Hours Schedule",
+                          "status": "ACTIVE",
+                          "schedule_type": "BUSINESS_HOURS",
+                          "start_time": "09:00",
+                          "end_time": "17:00",
+                          "is_active": true
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: filtering must be valid JSON",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to access this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The requested fields are not available for this account",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create WhatsApp Business Account Schedule",
+        "description": "Create a new schedule configuration within a WhatsApp Business Account. This endpoint\nallows businesses to set up automated scheduling for various operations such as business hours,\nautomated responses, and maintenance windows.\n\n**Use Cases:**\n- Create business hours schedules for automated responses\n- Set up maintenance windows for system operations\n- Configure automated message campaigns with timing\n- Establish recurring schedule patterns for business operations\n\n**Prerequisites:**\n- WhatsApp Business Account must have scheduling feature enabled\n- Appropriate permissions for schedule management\n- Valid timezone and time format specifications\n- Business must meet WhatsApp Business API requirements\n\n**Process Flow:**\n1. Submit schedule configuration with timing and recurrence details\n2. System validates schedule parameters and conflicts\n3. Schedule is created and activated based on is_active flag\n4. Monitor schedule status through GET endpoint\n\n**Rate Limiting:**\nSchedule creation is subject to rate limits to prevent abuse.\nStandard Graph API rate limits also apply.\n\n**Validation:**\n- Start time must be before end time\n- Timezone must be valid IANA timezone identifier\n- Days of week must be valid if specified\n- Recurrence pattern must be consistent with schedule type\n",
+        "operationId": "createWhatsAppBusinessAccountSchedule",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "WhatsApp Business Account ID where the schedule will be created.\nThis ID can be found in your WhatsApp Manager or through business management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleCreateRequest"
+              },
+              "examples": {
+                "business_hours_schedule": {
+                  "summary": "Business hours schedule creation",
+                  "value": {
+                    "name": "Business Hours Schedule",
+                    "schedule_type": "BUSINESS_HOURS",
+                    "description": "Standard business operating hours",
+                    "start_time": "09:00",
+                    "end_time": "17:00",
+                    "timezone": "America/New_York",
+                    "days_of_week": [
+                      "MONDAY",
+                      "TUESDAY",
+                      "WEDNESDAY",
+                      "THURSDAY",
+                      "FRIDAY"
+                    ],
+                    "is_active": true,
+                    "recurrence_pattern": {
+                      "frequency": "WEEKLY",
+                      "interval": 1
+                    }
+                  }
+                },
+                "maintenance_window": {
+                  "summary": "Maintenance window schedule",
+                  "value": {
+                    "name": "Weekend Maintenance",
+                    "schedule_type": "MAINTENANCE_WINDOW",
+                    "description": "System maintenance during off-hours",
+                    "start_time": "02:00",
+                    "end_time": "04:00",
+                    "timezone": "UTC",
+                    "days_of_week": [
+                      "SATURDAY",
+                      "SUNDAY"
+                    ],
+                    "is_active": false
+                  }
+                },
+                "automated_response": {
+                  "summary": "Automated response schedule",
+                  "value": {
+                    "name": "After Hours Auto-Reply",
+                    "schedule_type": "AUTOMATED_RESPONSE",
+                    "description": "Automated responses outside business hours",
+                    "start_time": "18:00",
+                    "end_time": "08:00",
+                    "timezone": "America/Los_Angeles",
+                    "days_of_week": [
+                      "MONDAY",
+                      "TUESDAY",
+                      "WEDNESDAY",
+                      "THURSDAY",
+                      "FRIDAY",
+                      "SATURDAY",
+                      "SUNDAY"
+                    ],
+                    "is_active": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created schedule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleCreateResponse"
+                },
+                "examples": {
+                  "successful_creation": {
+                    "summary": "Schedule successfully created",
+                    "value": {
+                      "id": "1234567890123456"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: start_time must be before end_time",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or schedule limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Schedule limit exceeded for this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349175,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Limit Exceeded",
+                    "error_user_msg": "You have reached the maximum number of schedules for this account"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - Schedule name already exists or time conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Schedule name already exists in this WhatsApp Business Account",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Schedule validation failed: invalid timezone identifier",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Schedule creation rate limit exceeded",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446080,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{WABA-ID}/subscribed_apps": {
+      "get": {
+        "summary": "Get All Subscriptions for a WABA",
+        "description": "Retrieve a list of all applications currently subscribed to webhook events\nfor the specified WhatsApp Business Account.\n\n\n**Use Cases:**\n- Monitor which apps are subscribed to WABA webhook events\n- Audit subscription configurations and permissions\n- Verify subscription status before making changes\n- Retrieve subscription details for troubleshooting\n\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n\n\n**Caching:**\nSubscription data can be cached for short periods, but may change when apps\nsubscribe or unsubscribe. Implement appropriate cache invalidation strategies.\n",
+        "operationId": "getAllSubscriptionsForAWaba",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "WhatsApp Business Account ID. This ID can be found in your WhatsApp Manager\nor through business management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated list of fields to include in the response. If not specified,\ndefault fields will be returned. Available fields: id, name, link\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "id,name,link"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of subscribed applications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscribedAppsResponse"
+                },
+                "examples": {
+                  "multiple_subscriptions": {
+                    "summary": "Multiple apps subscribed to WABA",
+                    "value": {
+                      "data": [
+                        {
+                          "whatsapp_business_api_data": {
+                            "id": "1234567890123456",
+                            "name": "Business Messaging App",
+                            "link": "https://www.facebook.com/games/?app_id=1234567890123456"
+                          }
+                        },
+                        {
+                          "whatsapp_business_api_data": {
+                            "id": "2345678901234567",
+                            "name": "Customer Support Bot",
+                            "link": "https://www.facebook.com/games/?app_id=2345678901234567"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "no_subscriptions": {
+                    "summary": "No apps subscribed to WABA",
+                    "value": {
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: WABA-ID must be a valid numeric string",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to access this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WABA ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The requested fields are not available for this subscription",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Subscribe to WABA Webhooks",
+        "description": "Subscribe your application to webhook events for the specified WhatsApp Business Account.\nThis enables your app to receive real-time notifications for events such as message\ndeliveries, status updates, and other WABA activities.\n\n\n**Use Cases:**\n- Enable webhook notifications for your app\n- Configure custom callback URLs for webhook delivery\n- Set up webhook verification tokens for security\n- Override default app webhook settings for specific WABAs\n\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Subscription operations may have additional\nthrottling to prevent abuse.\n\n\n**Security:**\nAlways use HTTPS endpoints for webhook callbacks. Verify webhook authenticity\nusing the provided verification tokens and signature validation.\n",
+        "operationId": "subscribeToWabaWebhooks",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "WhatsApp Business Account ID. This ID can be found in your WhatsApp Manager\nor through business management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "description": "Optional configuration for webhook subscription",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionRequest"
+              },
+              "examples": {
+                "basic_subscription": {
+                  "summary": "Basic subscription without custom configuration",
+                  "value": {}
+                },
+                "custom_callback": {
+                  "summary": "Subscription with custom callback URL",
+                  "value": {
+                    "override_callback_uri": "https://your-webhook-endpoint.com/webhook",
+                    "verify_token": "YOUR_VERIFY_TOKEN_PLACEHOLDER"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully subscribed to WABA webhooks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                },
+                "examples": {
+                  "basic_subscription_success": {
+                    "summary": "Basic subscription successful",
+                    "value": {
+                      "success": true
+                    }
+                  },
+                  "custom_callback_success": {
+                    "summary": "Custom callback subscription successful",
+                    "value": {
+                      "success": true,
+                      "data": [
+                        {
+                          "override_callback_uri": "https://your-webhook-endpoint.com/webhook",
+                          "whatsapp_business_api_data": {
+                            "id": "1234567890123456",
+                            "name": "Business Messaging App",
+                            "link": "https://www.facebook.com/games/?app_id=1234567890123456"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid callback URI format",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to subscribe to this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WABA ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Webhook callback URL is not reachable or invalid",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Unsubscribe from WABA Webhooks",
+        "description": "Unsubscribe your application from webhook events for the specified WhatsApp Business Account.\nThis will stop your app from receiving webhook notifications for this WABA.\n\n\n**Use Cases:**\n- Disable webhook notifications when no longer needed\n- Clean up subscriptions during app decommissioning\n- Temporarily disable webhooks for maintenance\n- Remove subscriptions for WABAs no longer managed by your app\n\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Unsubscription operations are typically\nprocessed immediately.\n\n\n**Important:**\nUnsubscribing will immediately stop all webhook deliveries for this WABA.\nEnsure your application can handle the cessation of webhook events gracefully.\n",
+        "operationId": "unsubscribeFromWabaWebhooks",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "WhatsApp Business Account ID. This ID can be found in your WhatsApp Manager\nor through business management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully unsubscribed from WABA webhooks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                },
+                "examples": {
+                  "unsubscribe_success": {
+                    "summary": "Unsubscription successful",
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: WABA-ID must be a valid numeric string",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to unsubscribe from this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WABA ID does not exist or subscription not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found or not subscribed",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Cannot unsubscribe: subscription is required for active integrations",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{WABA-ID}/activities": {
+      "get": {
+        "summary": "Get WhatsApp Business Account Activities",
+        "description": "Retrieve activity logs and audit trails for a WhatsApp Business Account.\nThis endpoint returns a chronological list of activities performed on the account,\nincluding administrative actions, configuration changes, and operational events.\n\n**Use Cases:**\n- Monitor account configuration changes and administrative actions\n- Generate compliance and audit reports for regulatory requirements\n- Track user activities and permission modifications\n- Investigate security incidents and unauthorized access attempts\n- Monitor API usage patterns and operational events\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n\n**Caching:**\nActivity data can be cached for short periods, but recent activities may change\nfrequently. Implement appropriate cache invalidation strategies.\n",
+        "operationId": "getWhatsAppBusinessAccountActivities",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "Your WhatsApp Business Account ID. This ID can be found in your WhatsApp Manager\nor through the business account management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated list of fields to include in the response. If not specified,\ndefault fields will be returned (id, activity_type, timestamp, actor_type).\nAvailable fields: id, activity_type, timestamp, actor_type, actor_id, actor_name, description, details, ip_address, user_agent\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "id,activity_type,timestamp,actor_name,description"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of activity records to return per page. Default is 25, maximum is 100.\n",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "example": 50
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination. Use this to get the next page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "NDMyNzQyODI3OTQw"
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "description": "Cursor for pagination. Use this to get the previous page of results.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "MTAxNTExOTQ1MjAwNzI5NDE="
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "required": false,
+            "description": "Unix timestamp or ISO 8601 date string. Only return activities that occurred after this time.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "2023-10-01T00:00:00Z"
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "required": false,
+            "description": "Unix timestamp or ISO 8601 date string. Only return activities that occurred before this time.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "2023-10-31T23:59:59Z"
+          },
+          {
+            "name": "activity_type",
+            "in": "query",
+            "required": false,
+            "description": "Filter activities by type. Can be a single type or comma-separated list of types.\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "PHONE_NUMBER_VERIFIED,USER_ADDED"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved WhatsApp Business Account activities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityList"
+                },
+                "examples": {
+                  "recent_activities": {
+                    "summary": "Recent account activities",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123456",
+                          "activity_type": "PHONE_NUMBER_VERIFIED",
+                          "timestamp": "2023-10-15T14:30:00Z",
+                          "actor_type": "USER",
+                          "actor_id": "9876543210987654",
+                          "actor_name": "John Smith",
+                          "description": "Phone number +1234567890 was successfully verified",
+                          "details": {
+                            "phone_number": "+1234567890",
+                            "verification_method": "SMS"
+                          },
+                          "ip_address": "192.168.1.100"
+                        },
+                        {
+                          "id": "1234567890123457",
+                          "activity_type": "USER_ADDED",
+                          "timestamp": "2023-10-15T13:15:00Z",
+                          "actor_type": "ADMIN",
+                          "actor_id": "1111222233334444",
+                          "actor_name": "Admin User",
+                          "description": "New user Jane Doe was added to the account",
+                          "details": {
+                            "user_id": "5555666677778888",
+                            "user_name": "Jane Doe",
+                            "role": "DEVELOPER"
+                          }
+                        }
+                      ],
+                      "paging": {
+                        "cursors": {
+                          "after": "NDMyNzQyODI3OTQw",
+                          "before": "MTAxNTExOTQ1MjAwNzI5NDE="
+                        },
+                        "next": "https://graph.facebook.com/v23.0/1234567890123456/activities?limit=25&after=NDMyNzQyODI3OTQw"
+                      }
+                    }
+                  },
+                  "filtered_activities": {
+                    "summary": "Filtered activities by type",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1234567890123458",
+                          "activity_type": "TEMPLATE_CREATED",
+                          "timestamp": "2023-10-14T16:45:00Z",
+                          "actor_type": "USER",
+                          "actor_id": "9876543210987654",
+                          "actor_name": "Marketing Team",
+                          "description": "New message template 'welcome_message' was created",
+                          "details": {
+                            "template_name": "welcome_message",
+                            "template_language": "en_US",
+                            "template_category": "MARKETING"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: limit must be between 1 and 100",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to access WhatsApp Business Account activities",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The requested date range is too large. Maximum range is 90 days",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{WABA-ID}": {
+      "get": {
+        "summary": "Get WhatsApp Business Account Details",
+        "description": "Retrieve comprehensive details about a WhatsApp Business Account, including its\nconfiguration, status, and settings.\n\n**Use Cases:**\n- Retrieve WhatsApp Business Account configuration and details\n- Monitor account status and verification state\n- Check account ownership and business information\n- Validate account state before messaging operations\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n\n**Caching:**\nAccount details can be cached for moderate periods, but verification status may change.\nImplement appropriate cache invalidation strategies.\n",
+        "operationId": "getWhatsAppBusinessAccountDetails",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "Your WhatsApp Business Account ID. This ID is provided when you create the account\nand can be found in your WhatsApp Manager or through business management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated list of fields to include in the response. If not specified,\ndefault fields will be returned (id, name). Available fields: id, name, timezone_id,\nmessage_template_namespace, account_review_status, business_verification_status,\ncountry, ownership_type, primary_business_location\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "id,name,timezone_id,account_review_status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved WhatsApp Business Account details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhatsAppBusinessAccount"
+                },
+                "examples": {
+                  "verified_account": {
+                    "summary": "Verified WhatsApp Business Account with full details",
+                    "value": {
+                      "id": "1234567890123456",
+                      "name": "My Business WhatsApp Account",
+                      "timezone_id": "1",
+                      "message_template_namespace": "ba30dd89_2ebd_41e4_b805_f2c05ae04cc9",
+                      "account_review_status": "APPROVED",
+                      "business_verification_status": "VERIFIED",
+                      "country": "US",
+                      "ownership_type": "SELF_OWNED",
+                      "primary_business_location": "US"
+                    }
+                  },
+                  "basic_account": {
+                    "summary": "Basic WhatsApp Business Account with minimal details",
+                    "value": {
+                      "id": "2345678901234567",
+                      "name": "Test Business Account",
+                      "timezone_id": "1",
+                      "account_review_status": "PENDING",
+                      "business_verification_status": "UNVERIFIED"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: whatsapp_business_account_id must be a valid numeric string",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to access this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to access this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The requested fields are not available for this account",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Update WhatsApp Business Account",
+        "description": "Update configuration and settings for a WhatsApp Business Account.\n\n**Use Cases:**\n- Update WhatsApp Business Account name and configuration\n- Modify account settings and preferences\n- Update business information and verification details\n\n**Rate Limiting:**\nStandard Graph API rate limits apply. Use appropriate retry logic with exponential backoff.\n",
+        "operationId": "updateWhatsAppBusinessAccount",
+        "tags": [
+          "contas"
+        ],
+        "parameters": [
+          {
+            "name": "WABA-ID",
+            "in": "path",
+            "required": true,
+            "description": "Your WhatsApp Business Account ID. This ID is provided when you create the account\nand can be found in your WhatsApp Manager or through business management APIs.\n",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": "1234567890123456"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Updated name for the WhatsApp Business Account",
+                    "minLength": 1,
+                    "maxLength": 100,
+                    "example": "Updated Business Name"
+                  },
+                  "timezone_id": {
+                    "type": "string",
+                    "description": "Updated timezone identifier for the WhatsApp Business Account",
+                    "example": "2"
+                  }
+                }
+              },
+              "examples": {
+                "update_name": {
+                  "summary": "Update account name",
+                  "value": {
+                    "name": "Updated Business Name"
+                  }
+                },
+                "update_timezone": {
+                  "summary": "Update timezone",
+                  "value": {
+                    "timezone_id": "2"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated WhatsApp Business Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                },
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters or malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid parameter: name must be a non-empty string",
+                    "type": "OAuthException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190,
+                    "error_subcode": 463,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions or access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Your app doesn't have permission to modify this WhatsApp Business Account",
+                    "type": "OAuthException",
+                    "code": 200,
+                    "error_subcode": 1349174,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "error_user_title": "Permission Denied",
+                    "error_user_msg": "Your app doesn't have permission to modify this resource"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - WhatsApp Business Account ID does not exist or is not accessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "WhatsApp Business Account not found",
+                    "type": "GraphMethodException",
+                    "code": 803,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request parameters are valid but cannot be processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "The account cannot be updated at this time",
+                    "type": "GraphMethodException",
+                    "code": 100,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "Application request limit reached",
+                    "type": "OAuthException",
+                    "code": 4,
+                    "error_subcode": 2446079,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphAPIError"
+                },
+                "example": {
+                  "error": {
+                    "message": "An unexpected error occurred. Please retry your request",
+                    "type": "GraphMethodException",
+                    "code": 2,
+                    "fbtrace_id": "AXsgnV2Cm3ZMGF3dF_cfYIn",
+                    "is_transient": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    },
+    "schemas": {
+      "AccountReviewStatus": {
+        "type": "string",
+        "description": "Review status of the WhatsApp Business Account",
+        "enum": [
+          "APPROVED",
+          "PENDING",
+          "REJECTED",
+          "RESTRICTED"
+        ],
+        "example": "APPROVED"
+      },
+      "ActivityList": {
+        "type": "object",
+        "description": "Paginated list of WhatsApp Business Account activities",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array of activity records",
+            "items": {
+              "$ref": "#/components/schemas/WhatsAppBusinessAccountActivity"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/Paging"
+          }
+        }
+      },
+      "ActivityType": {
+        "type": "string",
+        "description": "Type of activity performed on the WhatsApp Business Account",
+        "enum": [
+          "ACCOUNT_CREATED",
+          "ACCOUNT_UPDATED",
+          "ACCOUNT_DELETED",
+          "PHONE_NUMBER_ADDED",
+          "PHONE_NUMBER_REMOVED",
+          "PHONE_NUMBER_VERIFIED",
+          "USER_ADDED",
+          "USER_REMOVED",
+          "USER_ROLE_CHANGED",
+          "PERMISSION_GRANTED",
+          "PERMISSION_REVOKED",
+          "TEMPLATE_CREATED",
+          "TEMPLATE_UPDATED",
+          "TEMPLATE_DELETED",
+          "WEBHOOK_CONFIGURED",
+          "API_ACCESS_GRANTED",
+          "API_ACCESS_REVOKED",
+          "BILLING_UPDATED",
+          "COMPLIANCE_ACTION",
+          "SECURITY_EVENT"
+        ],
+        "example": "PHONE_NUMBER_VERIFIED"
+      },
+      "ActorType": {
+        "type": "string",
+        "description": "Type of entity that performed the activity",
+        "enum": [
+          "USER",
+          "SYSTEM",
+          "API",
+          "ADMIN",
+          "AUTOMATED_PROCESS"
+        ],
+        "example": "USER"
+      },
+      "AssignedAccountsResponse": {
+        "type": "object",
+        "description": "Response containing assigned WhatsApp Business Accounts",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "List of assigned WhatsApp Business Accounts",
+            "items": {
+              "$ref": "#/components/schemas/AssignedWhatsAppBusinessAccount"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/PagingInfo"
+          }
+        }
+      },
+      "AssignedUser": {
+        "type": "object",
+        "description": "User assigned to WhatsApp Business Account with permissions",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the assigned user",
+            "example": "1234567890123456"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the assigned user",
+            "example": "John Smith"
+          },
+          "business": {
+            "$ref": "#/components/schemas/BusinessNode"
+          },
+          "user_type": {
+            "$ref": "#/components/schemas/AssignedUserType"
+          }
+        }
+      },
+      "AssignedUserType": {
+        "type": "string",
+        "description": "Type of user assignment",
+        "enum": [
+          "BUSINESS_USER",
+          "SYSTEM_USER",
+          "PERSONAL_USER"
+        ],
+        "example": "BUSINESS_USER"
+      },
+      "AssignedUsersResponse": {
+        "type": "object",
+        "description": "Response containing list of assigned users with pagination",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array of assigned users",
+            "items": {
+              "$ref": "#/components/schemas/AssignedUser"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/CursorPaging"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/AssignedUsersSummary"
+          }
+        }
+      },
+      "AssignedUsersSummary": {
+        "type": "object",
+        "description": "Summary information about assigned users",
+        "properties": {
+          "total_count": {
+            "type": "integer",
+            "description": "Total number of assigned users",
+            "example": 25
+          }
+        }
+      },
+      "AssignedWhatsAppBusinessAccount": {
+        "type": "object",
+        "description": "WhatsApp Business Account assigned to a user",
+        "required": [
+          "id",
+          "name",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the WhatsApp Business Account",
+            "example": "1234567890123456"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the WhatsApp Business Account",
+            "minLength": 1,
+            "maxLength": 100,
+            "example": "Business Account Name"
+          },
+          "status": {
+            "$ref": "#/components/schemas/WhatsAppBusinessAccountStatus"
+          },
+          "assignment_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the account was assigned to the user",
+            "example": "2023-10-15T14:30:00Z"
+          },
+          "permissions": {
+            "type": "array",
+            "description": "List of permissions granted to the user for this account",
+            "items": {
+              "$ref": "#/components/schemas/WhatsAppBusinessAccountPermission"
+            },
+            "example": [
+              "MANAGE",
+              "DEVELOP",
+              "MANAGE_TEMPLATES"
+            ]
+          },
+          "business_id": {
+            "type": "string",
+            "description": "Business ID that owns this WhatsApp Business Account",
+            "example": "9876543210987654"
+          },
+          "phone_numbers": {
+            "type": "array",
+            "description": "Phone numbers associated with this WhatsApp Business Account",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberInfo"
+            }
+          }
+        }
+      },
+      "BusinessNode": {
+        "type": "object",
+        "description": "Business entity associated with the user",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the business",
+            "example": "9876543210987654"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the business",
+            "example": "Example Business Inc"
+          }
+        }
+      },
+      "BusinessSchedule": {
+        "type": "object",
+        "description": "Business hours schedule information",
+        "properties": {
+          "day_of_week": {
+            "type": "string",
+            "enum": [
+              "MONDAY",
+              "TUESDAY",
+              "WEDNESDAY",
+              "THURSDAY",
+              "FRIDAY",
+              "SATURDAY",
+              "SUNDAY"
+            ],
+            "example": "MONDAY"
+          },
+          "open_time": {
+            "type": "string",
+            "description": "Opening time in HH:MM format",
+            "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "example": "09:00"
+          },
+          "close_time": {
+            "type": "string",
+            "description": "Closing time in HH:MM format",
+            "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
+            "example": "17:00"
+          }
+        }
+      },
+      "BusinessVerificationStatus": {
+        "type": "string",
+        "description": "Verification status of the connected client business",
+        "enum": [
+          "VERIFIED",
+          "UNVERIFIED",
+          "PENDING",
+          "REJECTED"
+        ],
+        "example": "VERIFIED"
+      },
+      "CursorPaging": {
+        "type": "object",
+        "description": "Cursor-based pagination information",
+        "properties": {
+          "cursors": {
+            "type": "object",
+            "properties": {
+              "before": {
+                "type": "string",
+                "description": "Cursor pointing to the start of the page of data",
+                "example": "QVFIUjNpUWpVWmRBd0dn"
+              },
+              "after": {
+                "type": "string",
+                "description": "Cursor pointing to the end of the page of data",
+                "example": "QVFIUjNpUWpVWmRBd0Rn"
+              }
+            }
+          },
+          "previous": {
+            "type": "string",
+            "description": "URL for the previous page of results",
+            "example": "https://graph.facebook.com/v23.0/1234567890/connected_client_businesses?before=QVFIUjNpUWpVWmRBd0Dn"
+          },
+          "next": {
+            "type": "string",
+            "description": "URL for the next page of results",
+            "example": "https://graph.facebook.com/v23.0/1234567890/connected_client_businesses?after=QVFIUjNpUWpVWmRBd0Rn"
+          }
+        }
+      },
+      "DCCConfig": {
+        "type": "object",
+        "description": "Data and Content Control configuration",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether DCC is enabled",
+            "example": true
+          },
+          "policy_url": {
+            "type": "string",
+            "description": "URL to the DCC policy",
+            "example": "https://example.com/dcc-policy"
+          }
+        }
+      },
+      "DayOfWeek": {
+        "type": "string",
+        "description": "Day of the week",
+        "enum": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY"
+        ],
+        "example": "MONDAY"
+      },
+      "GraphAPIError": {
+        "type": "object",
+        "description": "Standard Graph API error response",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "message",
+              "type",
+              "code"
+            ],
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Human-readable error message",
+                "example": "Invalid parameter"
+              },
+              "type": {
+                "type": "string",
+                "description": "Error category type",
+                "example": "OAuthException"
+              },
+              "code": {
+                "type": "integer",
+                "description": "Numeric error code",
+                "example": 100
+              },
+              "error_subcode": {
+                "type": "integer",
+                "description": "More specific error subcode when available",
+                "example": 33
+              },
+              "fbtrace_id": {
+                "type": "string",
+                "description": "Unique identifier for debugging and support requests with Meta",
+                "example": "AXsgnV2Cm3ZMGF3dF_cfYIn"
+              },
+              "is_transient": {
+                "type": "boolean",
+                "description": "Indicates whether this error is temporary and the request should be retried",
+                "example": false
+              },
+              "error_user_title": {
+                "type": "string",
+                "description": "User-friendly error title for display purposes",
+                "example": "Permission Denied"
+              },
+              "error_user_msg": {
+                "type": "string",
+                "description": "User-friendly error message for display purposes",
+                "example": "Your app doesn't have permission to access this resource"
+              }
+            }
+          }
+        }
+      },
+      "MessageTemplate": {
+        "type": "object",
+        "description": "Message template information",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Template ID",
+            "example": "template_123456"
+          },
+          "name": {
+            "type": "string",
+            "description": "Template name",
+            "example": "welcome_message"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "APPROVED",
+              "PENDING",
+              "REJECTED",
+              "DISABLED"
+            ],
+            "example": "APPROVED"
+          }
+        }
+      },
+      "OnBehalfOfBusinessInfo": {
+        "type": "object",
+        "description": "Information about the business on whose behalf the WABA operates",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Business ID",
+            "example": "5678901234567890"
+          },
+          "name": {
+            "type": "string",
+            "description": "Business name",
+            "example": "Partner Business Inc"
+          }
+        }
+      },
+      "OwnershipType": {
+        "type": "string",
+        "description": "Type of ownership for the WhatsApp Business Account",
+        "enum": [
+          "SELF_OWNED",
+          "CLIENT_OWNED",
+          "AGENCY_OWNED"
+        ],
+        "example": "CLIENT_OWNED"
+      },
+      "PaginationCursors": {
+        "type": "object",
+        "properties": {
+          "after": {
+            "type": "string",
+            "example": "eyJvZAmZAzZAXQiOjAsInZAlcnNpb25JZACI6IjE3Mzc2Nzk2ODgzODM1ODQifQZDZD"
+          },
+          "before": {
+            "type": "string",
+            "example": "eyJvZAmZAzZAXQiOjAsInZAlcnNpb25JZACI6IjE3Mzc2Nzk2ODgzODM1ODQifQZDZD"
+          }
+        }
+      },
+      "Paging": {
+        "type": "object",
+        "properties": {
+          "cursors": {
+            "$ref": "#/components/schemas/PaginationCursors"
+          }
+        }
+      },
+      "PagingInfo": {
+        "type": "object",
+        "properties": {
+          "cursors": {
+            "type": "object",
+            "properties": {
+              "before": {
+                "type": "string",
+                "description": "Before cursor"
+              },
+              "after": {
+                "type": "string",
+                "description": "After cursor"
+              }
+            }
+          },
+          "previous": {
+            "type": "string",
+            "description": "Previous page URL"
+          },
+          "next": {
+            "type": "string",
+            "description": "Next page URL"
+          }
+        }
+      },
+      "PhoneNumber": {
+        "type": "object",
+        "description": "Phone number associated with the WABA",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Phone number ID",
+            "example": "1234567890123456"
+          },
+          "display_phone_number": {
+            "type": "string",
+            "description": "Formatted phone number for display",
+            "example": "+1 (555) 123-4567"
+          },
+          "verified_name": {
+            "type": "string",
+            "description": "Verified business name for the phone number",
+            "example": "Example Business"
+          }
+        }
+      },
+      "PhoneNumberInfo": {
+        "type": "object",
+        "description": "Phone number information and status",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID associated with the phone number",
+            "example": "1906385232743451"
+          },
+          "display_phone_number": {
+            "type": "string",
+            "description": "The string representation of the phone number",
+            "example": "+1 631-555-5555"
+          },
+          "verified_name": {
+            "type": "string",
+            "description": "The verified name associated with the phone number",
+            "example": "Jasper's Market"
+          },
+          "quality_rating": {
+            "type": "string",
+            "enum": [
+              "GREEN",
+              "YELLOW",
+              "RED",
+              "NA"
+            ],
+            "description": "The quality rating of the phone number based on how messages have been received by recipients in recent days.\n- GREEN: High Quality\n- YELLOW: Medium Quality\n- RED: Low Quality\n- NA: Quality has not been determined\n",
+            "example": "GREEN"
+          },
+          "code_verification_status": {
+            "type": "string",
+            "enum": [
+              "VERIFIED",
+              "UNVERIFIED"
+            ],
+            "description": "The two-step verification status for the phone number indicating whether the number has completed two-step verification.\n- VERIFIED: Phone number has completed two-step verification\n- UNVERIFIED: Two-step verification is pending or incomplete\n",
+            "example": "VERIFIED"
+          },
+          "name_status": {
+            "type": "string",
+            "enum": [
+              "APPROVED",
+              "AVAILABLE_WITHOUT_REVIEW",
+              "DECLINED",
+              "EXPIRED",
+              "PENDING_REVIEW",
+              "NONE"
+            ],
+            "description": "The status of a display name associated with a specific phone number.\n- APPROVED: The display name has been approved and is ready to use.\n- AVAILABLE_WITHOUT_REVIEW: The display name is ready to use without review.\n- DECLINED: The display name has not been approved.\n- EXPIRED: The display name approval has expired.\n- PENDING_REVIEW: The display name is under review.\n- NONE: No display name verification request exists.\n",
+            "example": "AVAILABLE_WITHOUT_REVIEW"
+          }
+        }
+      },
+      "RecurrencePattern": {
+        "type": "object",
+        "description": "Pattern for recurring schedules",
+        "properties": {
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "DAILY",
+              "WEEKLY",
+              "MONTHLY",
+              "YEARLY"
+            ],
+            "example": "WEEKLY"
+          },
+          "interval": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Interval between recurrences",
+            "example": 1
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "End date for the recurrence pattern",
+            "example": "2024-12-31"
+          }
+        }
+      },
+      "ScheduleCreateRequest": {
+        "type": "object",
+        "description": "Request payload for creating a new schedule",
+        "required": [
+          "name",
+          "schedule_type",
+          "start_time",
+          "end_time"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for the schedule",
+            "minLength": 1,
+            "maxLength": 100,
+            "example": "Business Hours Schedule"
+          },
+          "schedule_type": {
+            "$ref": "#/components/schemas/WhatsAppScheduleType"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description of the schedule purpose",
+            "maxLength": 500,
+            "example": "Automated responses during business hours"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "time",
+            "description": "Schedule start time in HH:MM format",
+            "example": "09:00"
+          },
+          "end_time": {
+            "type": "string",
+            "format": "time",
+            "description": "Schedule end time in HH:MM format",
+            "example": "17:00"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "Timezone identifier for the schedule",
+            "default": "UTC",
+            "example": "America/New_York"
+          },
+          "days_of_week": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DayOfWeek"
+            },
+            "description": "Days of the week when the schedule is active",
+            "example": [
+              "MONDAY",
+              "TUESDAY",
+              "WEDNESDAY",
+              "THURSDAY",
+              "FRIDAY"
+            ]
+          },
+          "is_active": {
+            "type": "boolean",
+            "description": "Whether the schedule should be active upon creation",
+            "default": true
+          },
+          "recurrence_pattern": {
+            "$ref": "#/components/schemas/RecurrencePattern"
+          }
+        }
+      },
+      "ScheduleCreateResponse": {
+        "type": "object",
+        "description": "Response after successfully creating a schedule",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the created schedule",
+            "example": "1234567890123456"
+          }
+        }
+      },
+      "SubscribedApp": {
+        "type": "object",
+        "description": "Application subscribed to the WABA",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Application ID",
+            "example": "9876543210987654"
+          },
+          "name": {
+            "type": "string",
+            "description": "Application name",
+            "example": "WhatsApp Integration App"
+          }
+        }
+      },
+      "SubscribedAppsResponse": {
+        "type": "object",
+        "description": "Response containing list of subscribed applications",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array of subscribed applications",
+            "items": {
+              "$ref": "#/components/schemas/SubscribedApp"
+            }
+          }
+        }
+      },
+      "SubscriptionRequest": {
+        "type": "object",
+        "description": "Request body for subscribing to WABA webhooks",
+        "properties": {
+          "override_callback_uri": {
+            "type": "string",
+            "description": "Custom webhook callback URL to override app default",
+            "example": "https://your-webhook-endpoint.com/webhook"
+          },
+          "verify_token": {
+            "type": "string",
+            "description": "Verification token for webhook security",
+            "example": "YOUR_VERIFY_TOKEN_PLACEHOLDER"
+          }
+        }
+      },
+      "SubscriptionResponse": {
+        "type": "object",
+        "description": "Response after successful subscription operation",
+        "required": [
+          "success"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Indicates whether the subscription operation was successful",
+            "example": true
+          },
+          "data": {
+            "type": "array",
+            "description": "Array containing subscription details",
+            "items": {
+              "$ref": "#/components/schemas/SubscribedApp"
+            }
+          }
+        }
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "description": "Generic success response",
+        "required": [
+          "success"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Operation success status",
+            "example": true
+          }
+        }
+      },
+      "WhatsAppBusinessAccount": {
+        "type": "object",
+        "description": "WhatsApp Business Account details and configuration",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the WhatsApp Business Account",
+            "example": "1234567890123456"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name of the WhatsApp Business Account",
+            "minLength": 1,
+            "maxLength": 255,
+            "example": "My WhatsApp Business Account"
+          },
+          "account_review_status": {
+            "$ref": "#/components/schemas/AccountReviewStatus"
+          },
+          "purchase_order_number": {
+            "type": "string",
+            "description": "Purchase order number associated with the account",
+            "example": "PO-2023-001234"
+          },
+          "audiences": {
+            "type": "array",
+            "description": "List of audience segments associated with the account",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "customers",
+              "prospects"
+            ]
+          },
+          "ownership_type": {
+            "$ref": "#/components/schemas/OwnershipType"
+          },
+          "subscribed_apps": {
+            "type": "array",
+            "description": "List of applications subscribed to this WABA",
+            "items": {
+              "$ref": "#/components/schemas/SubscribedApp"
+            }
+          },
+          "business_verification_status": {
+            "$ref": "#/components/schemas/BusinessVerificationStatus"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country code where the WABA is registered",
+            "pattern": "^[A-Z]{2}$",
+            "example": "US"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency code for the WABA",
+            "pattern": "^[A-Z]{3}$",
+            "example": "USD"
+          },
+          "timezone_id": {
+            "type": "string",
+            "description": "Timezone identifier for the WABA",
+            "example": "1"
+          },
+          "on_behalf_of_business_info": {
+            "$ref": "#/components/schemas/OnBehalfOfBusinessInfo"
+          },
+          "schedules": {
+            "type": "array",
+            "description": "Business hours and scheduling information",
+            "items": {
+              "$ref": "#/components/schemas/BusinessSchedule"
+            }
+          },
+          "is_enabled_for_insights": {
+            "type": "boolean",
+            "description": "Whether insights are enabled for this WABA",
+            "example": true
+          },
+          "dcc_config": {
+            "$ref": "#/components/schemas/DCCConfig"
+          },
+          "message_templates": {
+            "type": "array",
+            "description": "Message templates associated with the WABA",
+            "items": {
+              "$ref": "#/components/schemas/MessageTemplate"
+            }
+          },
+          "phone_numbers": {
+            "type": "array",
+            "description": "Phone numbers associated with the WABA",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumber"
+            }
+          },
+          "message_template_namespace": {
+            "type": "string"
+          }
+        }
+      },
+      "WhatsAppBusinessAccountActivity": {
+        "type": "object",
+        "description": "WhatsApp Business Account activity record",
+        "required": [
+          "id",
+          "activity_type",
+          "timestamp",
+          "actor_type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the activity record",
+            "example": "1234567890123456"
+          },
+          "activity_type": {
+            "$ref": "#/components/schemas/ActivityType"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when the activity occurred",
+            "example": "2023-10-15T14:30:00Z"
+          },
+          "actor_type": {
+            "$ref": "#/components/schemas/ActorType"
+          },
+          "actor_id": {
+            "type": "string",
+            "description": "ID of the user or system that performed the activity",
+            "example": "9876543210987654"
+          },
+          "actor_name": {
+            "type": "string",
+            "description": "Name of the user or system that performed the activity",
+            "example": "John Smith"
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the activity",
+            "example": "Phone number configuration updated"
+          },
+          "details": {
+            "type": "object",
+            "description": "Additional structured details about the activity",
+            "additionalProperties": true,
+            "example": {
+              "phone_number": "+1234567890",
+              "previous_status": "UNVERIFIED",
+              "new_status": "VERIFIED"
+            }
+          },
+          "ip_address": {
+            "type": "string",
+            "description": "IP address from which the activity was performed (when available)",
+            "example": "192.168.1.100"
+          },
+          "user_agent": {
+            "type": "string",
+            "description": "User agent string from the client that performed the activity",
+            "example": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      },
+      "WhatsAppBusinessAccountPermission": {
+        "type": "string",
+        "description": "Permission level for WhatsApp Business Account access",
+        "enum": [
+          "MANAGE",
+          "DEVELOP",
+          "MANAGE_TEMPLATES",
+          "MANAGE_PHONE",
+          "VIEW_COST",
+          "MANAGE_EXTENSIONS",
+          "VIEW_PHONE_ASSETS",
+          "MANAGE_PHONE_ASSETS",
+          "VIEW_TEMPLATES",
+          "VIEW_INSIGHTS",
+          "RECEIVE_INCOMING_MESSAGES",
+          "MANAGE_BILLING",
+          "MANAGE_USERS",
+          "MESSAGING",
+          "FULL_CONTROL"
+        ],
+        "example": "MANAGE"
+      },
+      "WhatsAppBusinessAccountPermissionTask": {
+        "type": "string",
+        "description": "Granular permission tasks for WhatsApp Business Account access",
+        "enum": [
+          "MANAGE",
+          "DEVELOP",
+          "MANAGE_TEMPLATES",
+          "MANAGE_PHONE",
+          "VIEW_COST",
+          "MANAGE_EXTENSIONS",
+          "VIEW_PHONE_ASSETS",
+          "MANAGE_PHONE_ASSETS",
+          "VIEW_TEMPLATES",
+          "VIEW_INSIGHTS",
+          "RECEIVE_INCOMING_MESSAGES",
+          "MANAGE_BILLING",
+          "MANAGE_USERS",
+          "MESSAGING",
+          "FULL_CONTROL"
+        ],
+        "example": "MANAGE"
+      },
+      "WhatsAppBusinessAccountSchedule": {
+        "type": "object",
+        "description": "WhatsApp Business Account schedule configuration and details",
+        "required": [
+          "id",
+          "name",
+          "status",
+          "schedule_type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the schedule",
+            "example": "1234567890123456"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for the schedule",
+            "minLength": 1,
+            "maxLength": 100,
+            "example": "Daily Business Hours Schedule"
+          },
+          "status": {
+            "$ref": "#/components/schemas/WhatsAppScheduleStatus"
+          },
+          "schedule_type": {
+            "$ref": "#/components/schemas/WhatsAppScheduleType"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description of the schedule purpose",
+            "maxLength": 500,
+            "example": "Automated responses during business hours"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "time",
+            "description": "Schedule start time in HH:MM format",
+            "example": "09:00"
+          },
+          "end_time": {
+            "type": "string",
+            "format": "time",
+            "description": "Schedule end time in HH:MM format",
+            "example": "17:00"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "Timezone identifier for the schedule",
+            "example": "America/New_York"
+          },
+          "days_of_week": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DayOfWeek"
+            },
+            "description": "Days of the week when the schedule is active",
+            "example": [
+              "MONDAY",
+              "TUESDAY",
+              "WEDNESDAY",
+              "THURSDAY",
+              "FRIDAY"
+            ]
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when the schedule was created",
+            "example": "2024-01-15T10:30:00Z"
+          },
+          "updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when the schedule was last updated",
+            "example": "2024-01-20T14:45:00Z"
+          },
+          "is_active": {
+            "type": "boolean",
+            "description": "Whether the schedule is currently active",
+            "example": true
+          },
+          "recurrence_pattern": {
+            "$ref": "#/components/schemas/RecurrencePattern"
+          }
+        }
+      },
+      "WhatsAppBusinessAccountSchedulesConnection": {
+        "type": "object",
+        "description": "Paginated collection of WhatsApp Business Account schedules",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WhatsAppBusinessAccountSchedule"
+            },
+            "description": "Array of schedule records"
+          },
+          "paging": {
+            "$ref": "#/components/schemas/CursorPaging"
+          }
+        }
+      },
+      "WhatsAppBusinessAccountStatus": {
+        "type": "string",
+        "description": "Current status of the WhatsApp Business Account",
+        "enum": [
+          "ACTIVE",
+          "PENDING",
+          "RESTRICTED",
+          "DISABLED"
+        ],
+        "example": "ACTIVE"
+      },
+      "WhatsAppBusinessAccountsConnection": {
+        "type": "object",
+        "description": "Paginated collection of owned WhatsApp Business Accounts",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WhatsAppBusinessAccount"
+            },
+            "description": "Array of owned WhatsApp Business Account records"
+          },
+          "paging": {
+            "$ref": "#/components/schemas/CursorPaging"
+          }
+        }
+      },
+      "WhatsAppBusinessType": {
+        "type": "string",
+        "description": "Type of WhatsApp Business Account",
+        "enum": [
+          "ENTERPRISE",
+          "SMB"
+        ],
+        "example": "ENTERPRISE"
+      },
+      "WhatsAppScheduleStatus": {
+        "type": "string",
+        "description": "Current status of the schedule",
+        "enum": [
+          "ACTIVE",
+          "INACTIVE",
+          "PAUSED",
+          "EXPIRED",
+          "DRAFT"
+        ],
+        "example": "ACTIVE"
+      },
+      "WhatsAppScheduleType": {
+        "type": "string",
+        "description": "Type of schedule configuration",
+        "enum": [
+          "BUSINESS_HOURS",
+          "AUTOMATED_RESPONSE",
+          "MESSAGE_CAMPAIGN",
+          "MAINTENANCE_WINDOW",
+          "CUSTOM"
+        ],
+        "example": "BUSINESS_HOURS"
+      }
+    }
+  }
+}

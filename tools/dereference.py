@@ -20,7 +20,11 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-LIMITE_PROFUNDIDADE = 40
+# Conta profundidade de aninhamento, nao de saltos de $ref. Specs grandes e
+# legitimamente profundas estouram um limite baixo: a da Meta (WhatsApp) exige
+# mais de 40 sem ter um unico ciclo. A protecao contra $ref circular e o
+# conjunto `vistos` em dereferenciar(), que e independente deste limite.
+LIMITE_PROFUNDIDADE = 200
 METODOS = ("get", "post", "put", "delete", "patch", "head", "options")
 
 
@@ -138,6 +142,24 @@ def remover_esquemas_em_query(spec):
     return removidos
 
 
+def remover_discriminators(no):
+    """Remove `discriminator`, cujo `mapping` aponta para `components.schemas`.
+
+    A dereferência embute os schemas e descarta `components.schemas`, então o
+    `mapping` de um discriminator fica apontando para caminhos que não existem
+    mais no documento — OpenAPI inválido e, no caso do importador do iPaaS,
+    referência pendurada sem serventia. O `oneOf` ao lado dele continua
+    completo, com os membros já expandidos, então nenhuma informação de campo
+    se perde. Apareceu primeiro na spec da Meta (WhatsApp): `Message` é um
+    `oneOf` de onze tipos de mensagem discriminados por `type`.
+    """
+    if isinstance(no, dict):
+        return {k: remover_discriminators(v) for k, v in no.items() if k != "discriminator"}
+    if isinstance(no, list):
+        return [remover_discriminators(i) for i in no]
+    return no
+
+
 def processar(pasta: Path):
     """Processa todas as specs fonte da pasta (openapi.json e openapi-*.json)."""
     origens = sorted(
@@ -154,6 +176,7 @@ def processar(pasta: Path):
         problemas = validar_para_ipaas(spec)
 
         plano = dereferenciar(spec, spec)
+        plano = remover_discriminators(plano)
         em_query = remover_esquemas_em_query(plano)
         if em_query:
             print(f"    securitySchemes em query removidos: {', '.join(em_query)}"
@@ -169,6 +192,12 @@ def processar(pasta: Path):
 
         if json.dumps(plano, ensure_ascii=False).count('"$ref"'):
             problemas.append("ainda restam $ref após a dereferência")
+        pendurados = json.dumps(plano, ensure_ascii=False).count("#/components/schemas/")
+        if pendurados:
+            problemas.append(
+                f"{pendurados} referências penduradas a '#/components/schemas/' em strings"
+                " (não são $ref, então passam pela checagem acima)"
+            )
 
         destino = pasta / (origem.stem + ".ipaas.json")
         destino.write_text(json.dumps(plano, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

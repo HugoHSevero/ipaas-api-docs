@@ -1,0 +1,64 @@
+{
+  "app": {
+    "name": "WhatsApp",
+    "description": "WhatsApp Business Cloud API, hospedada pela Meta: envio de mensagens, templates, mídia, gestão de números, contas (WABA) e grupos."
+  },
+  "environments": [
+    {
+      "name": "Produção",
+      "type": "REST",
+      "baseURL": "https://graph.facebook.com/v23.0",
+      "authModels": ["TOKEN"]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Produção",
+      "environment": "Produção",
+      "authModel": "TOKEN",
+      "token": "<token permanente de usuário do sistema, cadastrar na interface>"
+    }
+  ],
+  "services": [
+    {
+      "name": "Mensagens",
+      "description": "Envio de mensagens, mídia, chamadas e histórico de conversas",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "chat",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/whatsapp/openapi-mensagens.ipaas.json"
+    },
+    {
+      "name": "Templates",
+      "description": "Criação, consulta e remoção de templates de mensagem",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "file",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/whatsapp/openapi-templates.ipaas.json"
+    },
+    {
+      "name": "Números",
+      "description": "Números de telefone: registro, verificação, perfil, QR codes e bloqueios",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "phone",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/whatsapp/openapi-numeros.ipaas.json"
+    },
+    {
+      "name": "Contas",
+      "description": "WhatsApp Business Account: dados, usuários, agendamentos e webhooks",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "briefcase",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/whatsapp/openapi-contas.ipaas.json"
+    },
+    {
+      "name": "Grupos",
+      "description": "Grupos do WhatsApp: criação, participantes, convites e solicitações",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "users",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/whatsapp/openapi-grupos.ipaas.json"
+    }
+  ]
+}

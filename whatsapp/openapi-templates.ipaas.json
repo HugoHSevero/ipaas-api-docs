@@ -1,0 +1,2000 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "WhatsApp Business Cloud API - templates",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "templates",
+      "description": "Criação, consulta e remoção de templates de mensagem."
+    }
+  ],
+  "paths": {
+    "/{TEMPLATE_ID}": {
+      "parameters": [
+        {
+          "name": "TEMPLATE_ID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "templates"
+        ],
+        "summary": "Get template by ID (default fields)",
+        "description": "- Guide: [Message Templates](https://developers.facebook.com/docs/business-messaging/whatsapp/templates/overview)\n- Guide: [How To Monitor Quality Signals](https://developers.facebook.com/docs/whatsapp/guides/how-to-monitor-quality-signals)\n- Endpoint reference: [WhatsApp Message Template](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-hsm/)",
+        "operationId": "getTemplateByIdDefaultFields",
+        "responses": {
+          "200": {
+            "description": "Example response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "\"eb11a43a8f1e633acc57540de90158ed9ede1eb6\""
+                },
+                "description": "Entity tag for caching and conditional requests"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "example": "MARKETING"
+                    },
+                    "components": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "buttons": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "type": "string",
+                                  "example": "Stop promotions"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "QUICK_REPLY"
+                                }
+                              }
+                            },
+                            "example": [
+                              {
+                                "text": "Stop promotions",
+                                "type": "QUICK_REPLY"
+                              }
+                            ]
+                          },
+                          "example": {
+                            "type": "object",
+                            "properties": {
+                              "body_text": {
+                                "type": "array",
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "Mark"
+                                  },
+                                  "example": [
+                                    "Mark",
+                                    "FALL25"
+                                  ]
+                                },
+                                "example": [
+                                  [
+                                    "Mark",
+                                    "FALL25"
+                                  ]
+                                ]
+                              }
+                            }
+                          },
+                          "format": {
+                            "type": "string",
+                            "example": "TEXT"
+                          },
+                          "text": {
+                            "type": "string",
+                            "example": "Fall Sale"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "HEADER"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "format": "TEXT",
+                          "text": "Fall Sale",
+                          "type": "HEADER"
+                        },
+                        {
+                          "example": {
+                            "body_text": [
+                              [
+                                "Mark",
+                                "FALL25"
+                              ]
+                            ]
+                          },
+                          "text": "Hi {{1}}, our Fall Sale is on! Use promo code {{2}} Get an extra 25% off every order above $350!",
+                          "type": "BODY"
+                        },
+                        {
+                          "text": "Not interested in any of our sales? Tap Stop Promotions",
+                          "type": "FOOTER"
+                        },
+                        {
+                          "buttons": [
+                            {
+                              "text": "Stop promotions",
+                              "type": "QUICK_REPLY"
+                            }
+                          ],
+                          "type": "BUTTONS"
+                        }
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "920070352646140"
+                    },
+                    "language": {
+                      "type": "string",
+                      "example": "en_US"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "2023_april_promo"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "APPROVED"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example response": {
+                    "value": {
+                      "category": "MARKETING",
+                      "components": [
+                        {
+                          "format": "TEXT",
+                          "text": "Fall Sale",
+                          "type": "HEADER"
+                        },
+                        {
+                          "example": {
+                            "body_text": [
+                              [
+                                "Mark",
+                                "FALL25"
+                              ]
+                            ]
+                          },
+                          "text": "Hi {{1}}, our Fall Sale is on! Use promo code {{2}} Get an extra 25% off every order above $350!",
+                          "type": "BODY"
+                        },
+                        {
+                          "text": "Not interested in any of our sales? Tap Stop Promotions",
+                          "type": "FOOTER"
+                        },
+                        {
+                          "buttons": [
+                            {
+                              "text": "Stop promotions",
+                              "type": "QUICK_REPLY"
+                            }
+                          ],
+                          "type": "BUTTONS"
+                        }
+                      ],
+                      "id": "920070352646140",
+                      "language": "en_US",
+                      "name": "2023_april_promo",
+                      "status": "APPROVED"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "templates"
+        ],
+        "summary": "Edit template",
+        "description": "- Guide: [Message Templates](https://developers.facebook.com/docs/business-messaging/whatsapp/templates/overview)\n- Guide: [How To Monitor Quality Signals](https://developers.facebook.com/docs/whatsapp/guides/how-to-monitor-quality-signals)\n- Endpoint reference: [WhatsApp Message Template](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-hsm/)",
+        "operationId": "editTemplate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "example": "MARKETING"
+                  },
+                  "components": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "buttons": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "type": "string",
+                                "example": "Stop promotions"
+                              },
+                              "type": {
+                                "type": "string",
+                                "example": "QUICK_REPLY"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "text": "Stop promotions",
+                              "type": "QUICK_REPLY"
+                            }
+                          ]
+                        },
+                        "example": {
+                          "type": "object",
+                          "properties": {
+                            "body_text": {
+                              "type": "array",
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "example": "Mark"
+                                },
+                                "example": [
+                                  "Mark",
+                                  "FALL25"
+                                ]
+                              },
+                              "example": [
+                                [
+                                  "Mark",
+                                  "FALL25"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "format": {
+                          "type": "string",
+                          "example": "TEXT"
+                        },
+                        "text": {
+                          "type": "string",
+                          "example": "Fall Sale"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "HEADER"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "format": "TEXT",
+                        "text": "Fall Sale",
+                        "type": "HEADER"
+                      },
+                      {
+                        "example": {
+                          "body_text": [
+                            [
+                              "Mark",
+                              "FALL25"
+                            ]
+                          ]
+                        },
+                        "text": "Hi {{1}}, our Fall Sale is on! Use promo code {{2}} Get an extra 25% off every order above $350!",
+                        "type": "BODY"
+                      },
+                      {
+                        "text": "Not interested in any of our sales? Tap Stop Promotions",
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "text": "Stop promotions",
+                            "type": "QUICK_REPLY"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ]
+                  },
+                  "language": {
+                    "type": "string",
+                    "example": "en_US"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "2023_april_promo"
+                  }
+                }
+              },
+              "examples": {
+                "Edit template": {
+                  "value": {
+                    "category": "MARKETING",
+                    "components": [
+                      {
+                        "format": "TEXT",
+                        "text": "Fall Sale",
+                        "type": "HEADER"
+                      },
+                      {
+                        "example": {
+                          "body_text": [
+                            [
+                              "Mark",
+                              "FALL25"
+                            ]
+                          ]
+                        },
+                        "text": "Hi {{1}}, our Fall Sale is on! Use promo code {{2}} Get an extra 25% off every order above $350!",
+                        "type": "BODY"
+                      },
+                      {
+                        "text": "Not interested in any of our sales? Tap Stop Promotions",
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "text": "Stop promotions",
+                            "type": "QUICK_REPLY"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "2023_april_promo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Example response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                },
+                "examples": {
+                  "Example response": {
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{WABA-ID}/message_templates": {
+      "parameters": [
+        {
+          "name": "WABA-ID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "templates"
+        ],
+        "summary": "Get template by name (default fields)",
+        "description": "- Guide: [Message Templates](https://developers.facebook.com/docs/business-messaging/whatsapp/templates/overview)\n- Guide: [How To Monitor Quality Signals](https://developers.facebook.com/docs/whatsapp/guides/how-to-monitor-quality-signals)\n- Endpoint reference: [WhatsApp Business Account > Message Templates](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_templates/)",
+        "operationId": "getTemplateByNameDefaultFields",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "<TEMPLATE_NAME>"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example response / Example response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "\"eb11a43a8f1e633acc57540de90158ed9ede1eb6\""
+                },
+                "description": "Entity tag for caching and conditional requests"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string",
+                            "example": "MARKETING"
+                          },
+                          "components": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "buttons": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "text": {
+                                        "type": "string",
+                                        "example": "Stop promotions"
+                                      },
+                                      "type": {
+                                        "type": "string",
+                                        "example": "QUICK_REPLY"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "example": [
+                                    {
+                                      "text": "Stop promotions",
+                                      "type": "QUICK_REPLY"
+                                    }
+                                  ]
+                                },
+                                "example": {
+                                  "type": "object",
+                                  "properties": {
+                                    "body_text": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "example": "Mark"
+                                        },
+                                        "example": [
+                                          "Mark",
+                                          "FALL25"
+                                        ]
+                                      },
+                                      "example": [
+                                        [
+                                          "Mark",
+                                          "FALL25"
+                                        ]
+                                      ]
+                                    }
+                                  }
+                                },
+                                "format": {
+                                  "type": "string",
+                                  "example": "TEXT"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "example": "Fall Sale"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "HEADER"
+                                },
+                                "cards": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "components": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "type": {
+                                              "type": "string"
+                                            },
+                                            "format": {
+                                              "type": "string"
+                                            },
+                                            "text": {
+                                              "type": "string"
+                                            },
+                                            "buttons": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "type": {
+                                                    "type": "string"
+                                                  },
+                                                  "text": {
+                                                    "type": "string"
+                                                  },
+                                                  "url": {
+                                                    "type": "string"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "example": [
+                              {
+                                "format": "TEXT",
+                                "text": "Fall Sale",
+                                "type": "HEADER"
+                              },
+                              {
+                                "example": {
+                                  "body_text": [
+                                    [
+                                      "Mark",
+                                      "FALL25"
+                                    ]
+                                  ]
+                                },
+                                "text": "Hi {{1}}, our Fall Sale is on! Use promo code {{2}} Get an extra 25% off every order above $350!",
+                                "type": "BODY"
+                              },
+                              {
+                                "text": "Not interested in any of our sales? Tap Stop Promotions",
+                                "type": "FOOTER"
+                              },
+                              {
+                                "buttons": [
+                                  {
+                                    "text": "Stop promotions",
+                                    "type": "QUICK_REPLY"
+                                  }
+                                ],
+                                "type": "BUTTONS"
+                              }
+                            ]
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "920070352646140"
+                          },
+                          "language": {
+                            "type": "string",
+                            "example": "en_US"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "2023_april_promo"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "REJECTED"
+                          },
+                          "parameter_format": {
+                            "type": "string"
+                          },
+                          "disable_ios_autofill": {
+                            "type": "boolean"
+                          },
+                          "is_primary_device_delivery_only": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "category": "MARKETING",
+                          "components": [
+                            {
+                              "format": "TEXT",
+                              "text": "Fall Sale",
+                              "type": "HEADER"
+                            },
+                            {
+                              "example": {
+                                "body_text": [
+                                  [
+                                    "Mark",
+                                    "FALL25"
+                                  ]
+                                ]
+                              },
+                              "text": "Hi {{1}}, our Fall Sale is on! Use promo code {{2}} Get an extra 25% off every order above $350!",
+                              "type": "BODY"
+                            },
+                            {
+                              "text": "Not interested in any of our sales? Tap Stop Promotions",
+                              "type": "FOOTER"
+                            },
+                            {
+                              "buttons": [
+                                {
+                                  "text": "Stop promotions",
+                                  "type": "QUICK_REPLY"
+                                }
+                              ],
+                              "type": "BUTTONS"
+                            }
+                          ],
+                          "id": "920070352646140",
+                          "language": "en_US",
+                          "name": "2023_april_promo",
+                          "status": "REJECTED"
+                        }
+                      ]
+                    },
+                    "paging": {
+                      "type": "object",
+                      "properties": {
+                        "cursors": {
+                          "type": "object",
+                          "properties": {
+                            "after": {
+                              "type": "string",
+                              "example": "MjQZD"
+                            },
+                            "before": {
+                              "type": "string",
+                              "example": "MAZDZD"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example response": {
+                    "value": {
+                      "data": [
+                        {
+                          "category": "MARKETING",
+                          "components": [
+                            {
+                              "format": "TEXT",
+                              "text": "Hello World",
+                              "type": "HEADER"
+                            },
+                            {
+                              "text": "Welcome and congratulations!! This message demonstrates your ability to send a message notification from WhatsApp Business Platform’s Cloud API. Thank you for taking the time to test with us.",
+                              "type": "BODY"
+                            },
+                            {
+                              "text": "WhatsApp Business API Team",
+                              "type": "FOOTER"
+                            }
+                          ],
+                          "id": "1192339204654487",
+                          "language": "en_US",
+                          "name": "hello_world",
+                          "previous_category": "ACCOUNT_UPDATE",
+                          "status": "APPROVED"
+                        },
+                        {
+                          "category": "MARKETING",
+                          "components": [
+                            {
+                              "format": "TEXT",
+                              "text": "Fall Sale",
+                              "type": "HEADER"
+                            },
+                            {
+                              "example": {
+                                "body_text": [
+                                  [
+                                    "Mark",
+                                    "FALL25"
+                                  ]
+                                ]
+                              },
+                              "text": "Hi {{1}}, our Fall Sale is on! Use promo code {{2}} Get an extra 25% off every order above $350!",
+                              "type": "BODY"
+                            },
+                            {
+                              "text": "Not interested in any of our sales? Tap Stop Promotions",
+                              "type": "FOOTER"
+                            },
+                            {
+                              "buttons": [
+                                {
+                                  "text": "Stop promotions",
+                                  "type": "QUICK_REPLY"
+                                }
+                              ],
+                              "type": "BUTTONS"
+                            }
+                          ],
+                          "id": "920070352646140",
+                          "language": "en_US",
+                          "name": "2023_april_promo",
+                          "status": "APPROVED"
+                        }
+                      ],
+                      "paging": {
+                        "cursors": {
+                          "after": "MjQZD",
+                          "before": "MAZDZD"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "templates"
+        ],
+        "summary": "Create authentication template w/ OTP copy code button",
+        "description": "- Guide: [Authentication Templates with OTP Buttons](https://developers.facebook.com/docs/business-messaging/whatsapp/templates/authentication-templates/authentication-templates)\n- Guide: [Message Templates](https://developers.facebook.com/docs/business-messaging/whatsapp/templates/overview)\n- Guide: [How To Monitor Quality Signals](https://developers.facebook.com/docs/whatsapp/guides/how-to-monitor-quality-signals)\n- Endpoint reference: [WhatsApp Business Account > Message Templates](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_templates/)",
+        "operationId": "createAuthenticationTemplateWOtpCopyCodeButton",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "example": "MARKETING"
+                  },
+                  "components": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "buttons": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "flow_action": {
+                                "type": "string",
+                                "example": "navigate"
+                              },
+                              "flow_id": {
+                                "type": "string",
+                                "example": "{{Flow-ID}}"
+                              },
+                              "navigate_screen": {
+                                "type": "string",
+                                "example": "<SCREEN_ID>"
+                              },
+                              "text": {
+                                "type": "string",
+                                "example": "Check out this offer!"
+                              },
+                              "type": {
+                                "type": "string",
+                                "example": "FLOW"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "flow_action": "navigate",
+                              "flow_id": "{{Flow-ID}}",
+                              "navigate_screen": "<SCREEN_ID>",
+                              "text": "Check out this offer!",
+                              "type": "FLOW"
+                            }
+                          ]
+                        },
+                        "text": {
+                          "type": "string",
+                          "example": "Check out this new offer"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "body"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "text": "Check out this new offer",
+                        "type": "body"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "flow_action": "navigate",
+                            "flow_id": "{{Flow-ID}}",
+                            "navigate_screen": "<SCREEN_ID>",
+                            "text": "Check out this offer!",
+                            "type": "FLOW"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ]
+                  },
+                  "language": {
+                    "type": "string",
+                    "example": "en_US"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "<TEMPLATE_NAME>"
+                  }
+                }
+              },
+              "examples": {
+                "Create Flow Template Message by Flow JSON": {
+                  "value": {
+                    "category": "MARKETING",
+                    "components": [
+                      {
+                        "text": "Check out this new offer",
+                        "type": "body"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "flow_action": "navigate",
+                            "flow_json": "{\"version\":\"5.0\",\"screens\":[{\"id\":\"WELCOME_SCREEN\",\"layout\":{\"type\":\"SingleColumnLayout\",\"children\":[{\"type\":\"TextHeading\",\"text\":\"Hello World\"},{\"type\":\"Footer\",\"label\":\"Complete\",\"on-click-action\":{\"name\":\"complete\",\"payload\":{}}}]},\"title\":\"Welcome\",\"terminal\":true,\"success\":true,\"data\":{}}]}",
+                            "navigate_screen": "WELCOME_SCREEN",
+                            "text": "Check out this offer!",
+                            "type": "FLOW"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "<TEMPLATE_NAME>"
+                  }
+                },
+                "Create Flow Template Message by ID": {
+                  "value": {
+                    "category": "MARKETING",
+                    "components": [
+                      {
+                        "text": "Check out this new offer",
+                        "type": "body"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "flow_action": "navigate",
+                            "flow_id": "{{Flow-ID}}",
+                            "navigate_screen": "<SCREEN_ID>",
+                            "text": "Check out this offer!",
+                            "type": "FLOW"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "<TEMPLATE_NAME>"
+                  }
+                },
+                "Create Flow Template Message by Name": {
+                  "value": {
+                    "category": "MARKETING",
+                    "components": [
+                      {
+                        "text": "Check out this new offer",
+                        "type": "body"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "flow_action": "navigate",
+                            "flow_name": "{{Flow-Name}}",
+                            "navigate_screen": "<SCREEN_ID>",
+                            "text": "Check out this offer!",
+                            "type": "FLOW"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "<TEMPLATE_NAME>"
+                  }
+                },
+                "Create authentication template w/ OTP copy code button": {
+                  "value": {
+                    "category": "AUTHENTICATION",
+                    "components": [
+                      {
+                        "add_security_recommendation": true,
+                        "type": "BODY"
+                      },
+                      {
+                        "code_expiration_minutes": 10,
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "otp_type": "COPY_CODE",
+                            "text": "Copy Code",
+                            "type": "OTP"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "authentication_code_copy_code_button"
+                  }
+                },
+                "Create authentication template w/ OTP one-tap autofill button": {
+                  "value": {
+                    "category": "AUTHENTICATION",
+                    "components": [
+                      {
+                        "add_security_recommendation": true,
+                        "type": "BODY"
+                      },
+                      {
+                        "code_expiration_minutes": 10,
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "autofill_text": "Autofill",
+                            "otp_type": "ONE_TAP",
+                            "package_name": "com.example.luckyshrub",
+                            "signature_hash": "K8a%2FAINcGX7",
+                            "text": "Copy Code",
+                            "type": "OTP"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "authentication_code_autofill_button"
+                  }
+                },
+                "Create catalog template": {
+                  "value": {
+                    "category": "AUTHENTICATION",
+                    "components": [
+                      {
+                        "add_security_recommendation": true,
+                        "type": "BODY"
+                      },
+                      {
+                        "code_expiration_minutes": 10,
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "autofill_text": "Autofill",
+                            "otp_type": "ONE_TAP",
+                            "package_name": "com.example.luckyshrub",
+                            "signature_hash": "K8a%2FAINcGX7",
+                            "text": "Copy Code",
+                            "type": "OTP"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "authentication_code_autofill_button"
+                  }
+                },
+                "Create multi-product message template": {
+                  "value": {
+                    "category": "MARKETING",
+                    "components": [
+                      {
+                        "example": {
+                          "header_text": [
+                            "Pablo"
+                          ]
+                        },
+                        "format": "TEXT",
+                        "text": "Forget something {{1}}?",
+                        "type": "HEADER"
+                      },
+                      {
+                        "example": {
+                          "body_text": [
+                            [
+                              "10OFF"
+                            ]
+                          ]
+                        },
+                        "text": "Looks like you left some items in your cart! Use code {{1}} and you can get 10% off of all of them!",
+                        "type": "BODY"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "text": "View items",
+                            "type": "MPM"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "abandoned_cart"
+                  }
+                },
+                "Create template w/ document header, text body, a phone number button, and a URL button": {
+                  "value": {
+                    "category": "UTILITY",
+                    "components": [
+                      {
+                        "example": {
+                          "header_handle": [
+                            "4::YXBwbGljYXRpb24vcGRm:ARZVv4zuogJMxmAdS3_6T4o_K4ll2806avA7rWpikisTzYPsXXUeKk0REjS-hIM1rYrizHD7rQXj951TKgUFblgd_BDWVROCwRkg9Vhjj-cHNQ:e:1681237341:634974688087057:100089620928913:ARa1ZDhwbLZM3EENeeg"
+                          ]
+                        },
+                        "format": "DOCUMENT",
+                        "type": "HEADER"
+                      },
+                      {
+                        "example": {
+                          "body_text": [
+                            [
+                              "Mark",
+                              "860198-230332"
+                            ]
+                          ]
+                        },
+                        "text": "Thank you for your order, {{1}}! Your order number is {{2}}. Tap the PDF linked above to view your receipt. If you have any questions, please use the buttons below to contact support. Thanks again!",
+                        "type": "BODY"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "phone_number": "16467043595",
+                            "text": "Call",
+                            "type": "PHONE_NUMBER"
+                          },
+                          {
+                            "text": "Contact Support",
+                            "type": "URL",
+                            "url": "https://www.examplesite.com/support"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "order_confirmation"
+                  }
+                },
+                "Create template w/ image header, text body, text footer, and 2 call-to-action buttons": {
+                  "value": {
+                    "category": "MARKETING",
+                    "components": [
+                      {
+                        "example": {
+                          "header_handle": [
+                            "4::aW1hZ2UvanBn:ARYytyb0kLp5htbBB8vWlclG5M9gMBxiEyt4FNCvrueWBOmFmRAztEuNtPGUnEC22Etc_SAAVU0YJOk3B7A-JuR1241_nq7gfITFxXKdDGnfvw:e:1681000441:634974688087057:100089620928913:ARbB4l0IPRncfMF-1sE\n4::aW1hZ2UvanBn:ARZewDmbZuoq3rGUO1WgXjJEYcI1Tt7jr_Z6o2-oD5rg4--AQarBV_S1BYEcR8INJkctK0lNJmQ5v7PsBo-vqB-N0DSTe2-G6jHOlxKc12KSSg:e:1681000441:634974688087057:100089620928913:ARZQmT7tfO0sW--3oLo\n4::aW1hZ2UvanBn:ARZkcJXFoEMa0YMMd2WQT8aVMJFaUPlSYW9xXshyh1bP-Pd6JP4t2VbrZezqGOEfC-acYkRZA5Q31FX7dEE_hQ9a-0i-b-RaueQrWO6vWk-7bQ:e:1681000441:634974688087057:100089620928913:ARYlgv7ErOQGsZYClfs"
+                          ]
+                        },
+                        "format": "IMAGE",
+                        "type": "HEADER"
+                      },
+                      {
+                        "example": {
+                          "body_text": [
+                            [
+                              "Mark",
+                              "Tuscan Getaway package",
+                              "800"
+                            ]
+                          ]
+                        },
+                        "text": "Hi {{1}}! For a limited time only you can get our {{2}} for as low as {{3}}. Tap the Offer Details button for more information.",
+                        "type": "BODY"
+                      },
+                      {
+                        "text": "Offer valid until May 31, 2023",
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "phone_number": "16467043595",
+                            "text": "Call",
+                            "type": "PHONE_NUMBER"
+                          },
+                          {
+                            "example": [
+                              "summer2023"
+                            ],
+                            "text": "Shop Now",
+                            "type": "URL",
+                            "url": "https://damp-sea-63235.herokuapp.com/shop?promo={{1}}"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "limited_time_offer_tuscan_getaway_2023"
+                  }
+                },
+                "Create template w/ location header, text body, text footer, and a website buttons": {
+                  "value": {
+                    "category": "UTILITY",
+                    "components": [
+                      {
+                        "format": "LOCATION",
+                        "type": "HEADER"
+                      },
+                      {
+                        "example": {
+                          "body_text": [
+                            [
+                              "Mark",
+                              "566701"
+                            ]
+                          ]
+                        },
+                        "text": "Good news {{1}}! Your order #{{2}} is on its way to the location above. Thank you for your order!",
+                        "type": "BODY"
+                      },
+                      {
+                        "text": "To stop receiving delivery updates, tap the button below.",
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "text": "Stop Delivery Updates",
+                            "type": "QUICK_REPLY"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en_US",
+                    "name": "order_delivery_update"
+                  }
+                },
+                "Create template w/ text header, text body, text footer, and 2 quick reply buttons": {
+                  "value": {
+                    "category": "MARKETING",
+                    "components": [
+                      {
+                        "example": {
+                          "header_text": [
+                            "Summer Sale"
+                          ]
+                        },
+                        "format": "TEXT",
+                        "text": "Our {{1}} is on!",
+                        "type": "HEADER"
+                      },
+                      {
+                        "example": {
+                          "body_text": [
+                            [
+                              "the end of August",
+                              "25OFF",
+                              "25%"
+                            ]
+                          ]
+                        },
+                        "text": "Shop now through {{1}} and use code {{2}} to get {{3}} off of all merchandise.",
+                        "type": "BODY"
+                      },
+                      {
+                        "text": "Use the buttons below to manage your marketing subscriptions",
+                        "type": "FOOTER"
+                      },
+                      {
+                        "buttons": [
+                          {
+                            "text": "Unsubcribe from Promos",
+                            "type": "QUICK_REPLY"
+                          },
+                          {
+                            "text": "Unsubscribe from All",
+                            "type": "QUICK_REPLY"
+                          }
+                        ],
+                        "type": "BUTTONS"
+                      }
+                    ],
+                    "language": "en",
+                    "name": "seasonal_promotion_text_only"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Example response / Example response / Example response / Example response / Example response / Example response / Example response / Example response / Create Flow Template Message by Name / Create Flow Template Message by Flow JSON / Create Flow Template Message by ID",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "example": "AUTHENTICATION"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "1473688840035974"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "APPROVED"
+                    }
+                  }
+                },
+                "examples": {
+                  "Create Flow Template Message by Flow JSON": {
+                    "value": {
+                      "category": "MARKETING",
+                      "id": "template-1",
+                      "status": "PENDING"
+                    }
+                  },
+                  "Create Flow Template Message by ID": {
+                    "value": {
+                      "category": "MARKETING",
+                      "id": "template-1",
+                      "status": "PENDING"
+                    }
+                  },
+                  "Create Flow Template Message by Name": {
+                    "value": {
+                      "category": "MARKETING",
+                      "id": "template-1",
+                      "status": "PENDING"
+                    }
+                  },
+                  "Example response": {
+                    "value": {
+                      "category": "UTILITY",
+                      "id": "1689556908129832",
+                      "status": "PENDING"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "templates"
+        ],
+        "summary": "Delete template by name",
+        "description": "- Guide: [Message Templates](https://developers.facebook.com/docs/business-messaging/whatsapp/templates/overview)\n- Guide: [How To Monitor Quality Signals](https://developers.facebook.com/docs/whatsapp/guides/how-to-monitor-quality-signals)\n- Endpoint reference: [WhatsApp Business Account > Message Templates](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_templates/)",
+        "operationId": "deleteTemplateByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "<TEMPLATE_NAME>"
+            }
+          },
+          {
+            "name": "hsm_id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "<HSM_ID>"
+            },
+            "description": "Template ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example response / Example response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                },
+                "description": "CORS policy allowing access from any origin"
+              },
+              "Alt-Svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                },
+                "description": "Alternative service advertisement for HTTP/3"
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private, no-cache, no-store, must-revalidate"
+                },
+                "description": "Cache control directives for the response"
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                },
+                "description": "Connection management directive"
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "25"
+                },
+                "description": "Size of the response body in bytes"
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 24 Jan 2025 00:48:41 GMT"
+                },
+                "description": "Date and time when the response was generated"
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 01 Jan 2000 00:00:00 GMT"
+                },
+                "description": "Expiration date for cached responses"
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-cache"
+                },
+                "description": "Legacy cache control directive"
+              },
+              "Strict-Transport-Security": {
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=15552000; preload"
+                },
+                "description": "HSTS header enforcing HTTPS connections"
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                },
+                "description": "Headers that affect caching and content negotiation"
+              },
+              "X-FB-Debug": {
+                "schema": {
+                  "type": "string",
+                  "example": "52zkUgodnaVRhbBE+3RiGz6TnmjmDEGunwYd+vKSc4synE+Xii//dy6twB/7yKgOJiMUuV0OF248UAZ1qL3v0A=="
+                },
+                "description": "Facebook debug information for troubleshooting"
+              },
+              "facebook-api-version": {
+                "schema": {
+                  "type": "string",
+                  "example": "v22.0"
+                },
+                "description": "Facebook Graph API version used for the request"
+              },
+              "x-business-use-case-usage": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"102290129340398\":[{\"type\":\"whatsapp_business_management\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+                },
+                "description": "Business use case usage metrics and rate limiting information"
+              },
+              "x-fb-request-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "AGaOBl2yM-g8gdON-dhzl5y"
+                },
+                "description": "Unique identifier for the request for debugging purposes"
+              },
+              "x-fb-rev": {
+                "schema": {
+                  "type": "string",
+                  "example": "1019544279"
+                },
+                "description": "Facebook internal revision number"
+              },
+              "x-fb-trace-id": {
+                "schema": {
+                  "type": "string",
+                  "example": "E7riEe9OW2e"
+                },
+                "description": "Facebook trace identifier for request tracking"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                },
+                "examples": {
+                  "Example response": {
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    }
+  }
+}

@@ -18,6 +18,41 @@ Em resumo, o caminho é:
 Aplicativo → Ambiente → [Conta] → Serviço → Importar Swagger → Validar → Diagrama
 ```
 
+### Pré-requisito: MCP do Chrome
+
+O cadastro **não é feito por API pura**. Diagrama novo só nasce pela interface (seção 6.2 do playbook) e o token de autenticação vem do cookie `jwt.token` de uma página já logada (seção 1). Sem navegador controlável, o agente não passa da metade do caminho.
+
+Configure o [`chrome-devtools-mcp`](https://github.com/ChromeDevTools/chrome-devtools-mcp) em `~/.kiro/settings/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--autoConnect"],
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+O `--autoConnect` é o que faz a coisa funcionar em desktop Linux moderno. Sem ele o servidor tenta **lançar** um Chrome próprio, não herda o `DISPLAY` da sessão e morre com `Missing X server to start the headful browser` — verificado em Ubuntu 26.04 / Wayland. Com `--autoConnect` ele **anexa** ao Chrome que já está aberto, o que também preserva seus logins do TOTVS Identity e da Meta entre sessões.
+
+Para habilitar o lado do Chrome, abra `chrome://inspect/#remote-debugging` e ligue o Remote Debugging. Requer Chrome 144+.
+
+Alternativa, se você não quiser que o agente compartilhe a janela que você usa: suba uma instância dedicada e conecte por porta fixa. Trocar o argumento por `"--browserUrl", "http://127.0.0.1:9222"` — dois itens separados no array, senão o servidor recebe a flag sem valor e não conecta — e subir o Chrome com:
+
+```bash
+setsid -f google-chrome --remote-debugging-port=9222 \
+  --user-data-dir=~/.cache/chrome-kiro \
+  --no-first-run --no-default-browser-check about:blank
+```
+
+Use `setsid -f`, não `nohup ... &`. Com `nohup` o Chrome sobe, escreve o `DevTools listening on ws://...` no log e **morre** quando o comando do agente termina, porque vai junto com o grupo de processos — verificado. Mantenha o mesmo `--user-data-dir` entre sessões para não ter que refazer os logins de SSO.
+
+Não use `--headless`: o login no TOTVS Identity é SSO com MFA e precisa ser feito por você, à mão, na janela visível.
+
 ### Prompt inicial
 
 O cadastro é feito com um agente operando o navegador e a API do iPaaS. Cole o prompt abaixo no começo da sessão, trocando o nome do app:
@@ -67,6 +102,7 @@ confirme comigo antes de começar.
 | [brevo](./brevo) | `API_KEY` (header `api-key`) | 68 em 4 serviços | importado e validado em diagrama |
 | [trello](./trello) | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | importado e validado em diagrama |
 | [open-meteo](./open-meteo) | `NO_AUTH` | 9 em 9 serviços | importado e validado em diagrama |
+| [whatsapp](./whatsapp) | `TOKEN` (Bearer) | 70 em 5 serviços | spec validada contra a API real; cadastro no iPaaS pendente |
 
 ## Estrutura
 
@@ -80,6 +116,7 @@ IPAAS-PLAYBOOK.md            # referência de cadastro no iPaaS
 tools/
 ├── tag_by_path.py           # injeta tags derivadas do path, quando a spec não tem
 ├── slice_spec.py            # recorta uma spec grande em specs menores, por tag
+├── prepare_whatsapp.py      # normaliza a spec oficial da Meta (ver whatsapp/README.md)
 └── dereference.py           # gera os *.ipaas.json a partir das specs fonte
 ```
 

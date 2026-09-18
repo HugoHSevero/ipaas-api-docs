@@ -14,6 +14,7 @@ Se você está começando uma sessão nova, siga esta ordem. O prompt inicial pr
 
 2. **Abra o navegador e garanta a sessão.** Todas as chamadas de API saem de dentro da página autenticada, usando o token do cookie (seção 1) — sem isso, nada funciona.
 
+   - **Confira que o MCP do Chrome está no ar** antes de qualquer coisa. O cadastro depende dele: o token vem do cookie de uma página logada e diagrama novo só nasce pela interface (seção 6.2). A configuração está no [README](./README.md#pré-requisito-mcp-do-chrome). Em desktop Linux, use `--autoConnect` e habilite o Remote Debugging em `chrome://inspect/#remote-debugging`; sem isso o servidor tenta lançar o próprio Chrome e falha com `Missing X server to start the headful browser` (verificado em Ubuntu 26.04 / Wayland).
    - Abra `https://ipaas.totvs.app`. O iPaaS redireciona para o TOTVS Identity (`app.fluigidentity.com/ui/login`).
    - **Peça ao usuário para logar e espere a confirmação dele.** Não tente automatizar SSO/MFA, não leia credenciais de arquivo e não preencha o formulário de login.
    - Depois da confirmação, valide a sessão com uma **chamada real à API**, não pela URL da página:

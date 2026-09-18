@@ -1,0 +1,1204 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "WhatsApp Business Cloud API - grupos",
+    "version": "v23.0",
+    "description": "API for retrieving connected client businesses associated with a Meta application.\n\n\nThis endpoint allows applications to retrieve information about businesses that have\nestablished client connections through the application. This is essential for managing\nbusiness relationships and understanding client business configurations.\n",
+    "contact": {
+      "name": "Meta Business Platform Team",
+      "url": "https://developers.facebook.com/support"
+    },
+    "license": {
+      "name": "Meta Platform Terms",
+      "url": "https://developers.facebook.com/terms"
+    },
+    "termsOfService": "https://developers.facebook.com/terms"
+  },
+  "servers": [
+    {
+      "url": "https://graph.facebook.com/v23.0",
+      "description": "WhatsApp Business Cloud API (v23.0)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "grupos",
+      "description": "Grupos do WhatsApp: criação, participantes, convites e solicitações."
+    }
+  ],
+  "paths": {
+    "/{Phone-Number-ID}/groups": {
+      "post": {
+        "summary": "Create Group",
+        "description": "Create a new group and get an invite link",
+        "operationId": "createGroup",
+        "parameters": [
+          {
+            "name": "Phone-Number-ID",
+            "in": "path",
+            "required": true,
+            "description": "Business phone number ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "12784358810"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product",
+                  "subject"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ],
+                    "description": "Messaging product"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "maxLength": 128,
+                    "description": "Group subject. Maximum 128 characters. Whitespace is trimmed.",
+                    "example": "New Purchase Inquiry"
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 2048,
+                    "description": "Group description. Maximum 2048 characters.",
+                    "example": "Jim, an existing client, would like to learn about new car purchase options for current year models."
+                  },
+                  "join_approval_mode": {
+                    "type": "string",
+                    "enum": [
+                      "approval_required",
+                      "auto_approve"
+                    ],
+                    "default": "auto_approve",
+                    "description": "Indicates if WhatsApp users who click the invitation link can join the group with or without being approved first.\n- approval_required: WhatsApp users must be approved via join request before they can access the group\n- auto_approve: WhatsApp users can join the group without approval\n"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Group creation request submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    },
+                    "request_id": {
+                      "type": "string",
+                      "description": "Group creation request ID",
+                      "example": "106540352242922"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      },
+      "get": {
+        "summary": "Get Active Groups",
+        "description": "Retrieve a list of active groups for a given business phone number",
+        "operationId": "getActiveGroups",
+        "parameters": [
+          {
+            "name": "Phone-Number-ID",
+            "in": "path",
+            "required": true,
+            "description": "Business phone number ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of groups to fetch in the request",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1024,
+              "default": 25
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "Cursor that points to the end of a page of data",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "Cursor that points to the beginning of a page of data",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of active groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "groups": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Group ID"
+                              },
+                              "subject": {
+                                "type": "string",
+                                "description": "Group subject"
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "description": "Group creation timestamp"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "paging": {
+                      "$ref": "#/components/schemas/PagingInfo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      }
+    },
+    "/{group_id}/invite_link": {
+      "post": {
+        "summary": "Create Group Invite Link",
+        "description": "Create a new group invite link",
+        "operationId": "createGroupInviteLink",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Group invite link created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    },
+                    "invite_link": {
+                      "type": "string",
+                      "description": "Group invite link",
+                      "example": "https://chat.whatsapp.com/LINK_ID"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Group Invite Link",
+        "description": "Delete an existing group invite link",
+        "operationId": "deleteGroupInviteLink",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Group invite link deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    },
+                    "success": {
+                      "type": "string",
+                      "example": "true"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      }
+    },
+    "/{group_id}/join_requests": {
+      "get": {
+        "summary": "Get Join Requests",
+        "description": "Get a list of open join requests for a group",
+        "operationId": "getJoinRequests",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of join requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "join_request_id": {
+                            "type": "string",
+                            "description": "Join request ID",
+                            "example": "MTY0NjcwNDM1OTU6MTIwMzYzNDA0Njk0MjMzODIw"
+                          },
+                          "wa_id": {
+                            "type": "string",
+                            "description": "WhatsApp user ID",
+                            "example": "16505551234"
+                          },
+                          "creation_timestamp": {
+                            "type": "integer",
+                            "description": "Unix timestamp indicating when the join request was created",
+                            "example": 1755548877
+                          }
+                        }
+                      }
+                    },
+                    "paging": {
+                      "$ref": "#/components/schemas/PagingInfo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      },
+      "post": {
+        "summary": "Approve Join Requests",
+        "description": "Approve one or more join requests",
+        "operationId": "approveJoinRequests",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product",
+                  "join_requests"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  },
+                  "join_requests": {
+                    "type": "array",
+                    "description": "Array of join request IDs to approve",
+                    "items": {
+                      "type": "string",
+                      "description": "Join request ID",
+                      "example": "MTY0NjcwNDM1OTU6MTIwMzYzNDA0Njk0MjMzODIw"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Join requests approval response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    },
+                    "approved_join_requests": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "ID of approved join request"
+                      }
+                    },
+                    "failed_join_requests": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "join_request_id": {
+                            "type": "string"
+                          },
+                          "errors": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/Error"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Error"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      },
+      "delete": {
+        "summary": "Reject Join Requests",
+        "description": "Reject one or more join requests",
+        "operationId": "rejectJoinRequests",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product",
+                  "join_requests"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  },
+                  "join_requests": {
+                    "type": "array",
+                    "description": "Array of join request IDs to reject",
+                    "items": {
+                      "type": "string",
+                      "description": "Join request ID"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Join requests rejection response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messaging_product": {
+                      "type": "string",
+                      "example": "whatsapp"
+                    },
+                    "rejected_join_requests": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "ID of rejected join request"
+                      }
+                    },
+                    "failed_join_requests": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "join_request_id": {
+                            "type": "string"
+                          },
+                          "errors": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/Error"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Error"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      }
+    },
+    "/{group_id}/participants": {
+      "post": {
+        "summary": "Add Group Participants",
+        "description": "Add participants to group",
+        "operationId": "addGroupParticipants",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product",
+                  "participants"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  },
+                  "participants": {
+                    "type": "array",
+                    "maxItems": 8,
+                    "minItems": 1,
+                    "description": "Array of phone numbers or WhatsApp IDs to remove (max 8 participants)",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "user"
+                      ],
+                      "properties": {
+                        "user": {
+                          "type": "string",
+                          "description": "WhatsApp user phone number or WhatsApp user ID",
+                          "example": "+17865347866"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Participants addition request processed"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      },
+      "delete": {
+        "summary": "Remove Group Participants",
+        "description": "Remove participants from group",
+        "operationId": "removeGroupParticipants",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product",
+                  "participants"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  },
+                  "participants": {
+                    "type": "array",
+                    "maxItems": 8,
+                    "minItems": 1,
+                    "description": "Array of phone numbers or WhatsApp IDs to remove (max 8 participants)",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "user"
+                      ],
+                      "properties": {
+                        "user": {
+                          "type": "string",
+                          "description": "WhatsApp user phone number or WhatsApp user ID",
+                          "example": "+17865347866"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Participants removal request processed"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      }
+    },
+    "/{group_id}": {
+      "get": {
+        "summary": "Get Group Info",
+        "description": "Retrieve metadata about a single group",
+        "operationId": "getGroupInfo",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Y2FwaV9ncm91cDoxOTUwNTU1MDA3OToxMjAzNjMzOTQzMjAdOTY0MTUZD"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Comma-separated list of fields to return",
+            "schema": {
+              "type": "string"
+            },
+            "example": "subject,description,participants,join_approval_mode"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupInfo"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Group",
+        "description": "Delete the group and remove all participants, including the business",
+        "operationId": "deleteGroup",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group deletion successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      },
+      "post": {
+        "summary": "Update Group Settings",
+        "description": "Update the subject, description, and photo of a group",
+        "operationId": "updateGroupSettings",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messaging_product"
+                ],
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  },
+                  "subject": {
+                    "type": "string",
+                    "maxLength": 128,
+                    "description": "The new subject for the group",
+                    "example": "Watch Enthusiasts"
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 2048,
+                    "description": "The new description for the group",
+                    "example": "Join our community to discuss the latest timepieces, share watch reviews, and connect with fellow horology enthusiasts."
+                  },
+                  "profile_picture_file": {
+                    "type": "string",
+                    "description": "Path to an image file for group profile picture"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messaging_product": {
+                    "type": "string",
+                    "enum": [
+                      "whatsapp"
+                    ]
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Image file for group profile picture (JPEG, max 5MB, square format, min 192x192)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Group settings updated successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "grupos"
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "System user access token with whatsapp_business_management permission. Format: Bearer YOUR_SYSTEM_USER_ACCESS_TOKEN\n"
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request - Invalid request parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "InvalidTemplateParameters": {
+                "summary": "Invalid template name or parameters",
+                "value": {
+                  "error": {
+                    "message": "Invalid template name or parameters",
+                    "type": "OAuthException",
+                    "code": 100
+                  }
+                }
+              },
+              "MalformedRequest": {
+                "summary": "Malformed request body",
+                "value": {
+                  "error": {
+                    "message": "Invalid JSON in request body",
+                    "type": "OAuthException",
+                    "code": 100
+                  }
+                }
+              },
+              "MissingFeatureSetting": {
+                "summary": "One feature setting must be specified",
+                "value": {
+                  "error": {
+                    "message": "One feature setting must be specified",
+                    "type": "OAuthException",
+                    "code": 100
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error - An unexpected error occurred",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "UnexpectedError": {
+                "summary": "Unexpected server error",
+                "value": {
+                  "error": {
+                    "message": "An unexpected error occurred",
+                    "type": "OAuthException",
+                    "code": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid or missing access token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "InvalidAccessToken": {
+                "summary": "Invalid OAuth access token",
+                "value": {
+                  "error": {
+                    "message": "Invalid OAuth access token",
+                    "type": "OAuthException",
+                    "code": 190
+                  }
+                }
+              },
+              "MissingAccessToken": {
+                "summary": "Missing access token",
+                "value": {
+                  "error": {
+                    "message": "An access token is required to request this resource",
+                    "type": "OAuthException",
+                    "code": 104
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "title": {
+            "type": "string",
+            "description": "Error title"
+          },
+          "error_data": {
+            "type": "object",
+            "properties": {
+              "details": {
+                "type": "string",
+                "description": "Error details"
+              }
+            }
+          }
+        }
+      },
+      "ErrorObject": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Human-readable description of the error"
+          },
+          "type": {
+            "type": "string",
+            "description": "Error type classification"
+          },
+          "code": {
+            "type": "integer",
+            "description": "Numeric error code"
+          }
+        },
+        "required": [
+          "message",
+          "type",
+          "code"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorObject"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "GroupInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Group ID"
+          },
+          "messaging_product": {
+            "type": "string",
+            "example": "whatsapp"
+          },
+          "join_approval_mode": {
+            "type": "string",
+            "enum": [
+              "approval_required",
+              "auto_approve"
+            ],
+            "description": "Join approval mode for the group"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Group subject",
+            "example": "Artificial Intelligence Insights"
+          },
+          "description": {
+            "type": "string",
+            "description": "Group description",
+            "example": "Explore AI developments, share knowledge, and discuss the future of artificial intelligence with fellow enthusiasts and experts."
+          },
+          "suspended": {
+            "type": "boolean",
+            "description": "Returns true if the group has been suspended by WhatsApp"
+          },
+          "creation_timestamp": {
+            "type": "integer",
+            "description": "UNIX timestamp in seconds at which the group was created",
+            "example": 683731200
+          },
+          "participants": {
+            "type": "array",
+            "description": "List of participants in the group",
+            "items": {
+              "type": "object",
+              "properties": {
+                "wa_id": {
+                  "type": "string",
+                  "description": "WhatsApp user ID"
+                }
+              }
+            }
+          },
+          "total_participant_count": {
+            "type": "integer",
+            "description": "Total number of participants in the group, excluding your business",
+            "example": 6
+          }
+        }
+      },
+      "PagingInfo": {
+        "type": "object",
+        "properties": {
+          "cursors": {
+            "type": "object",
+            "properties": {
+              "before": {
+                "type": "string",
+                "description": "Before cursor"
+              },
+              "after": {
+                "type": "string",
+                "description": "After cursor"
+              }
+            }
+          },
+          "previous": {
+            "type": "string",
+            "description": "Previous page URL"
+          },
+          "next": {
+            "type": "string",
+            "description": "Next page URL"
+          }
+        }
+      }
+    }
+  }
+}

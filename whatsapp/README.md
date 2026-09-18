@@ -71,7 +71,7 @@ Todos os seis serviços usam o **mesmo ambiente e a mesma conta**: a base URL e 
 
 Importado e **validado em diagrama** no tenant `iPaaS Gateway`. Os IDs estão na seção 10 do [playbook](../IPAAS-PLAYBOOK.md).
 
-O diagrama `Valida WhatsApp` encadeia um recurso de cada um dos cinco serviços e executou `DONE` em 11,4s, com os cinco payloads reais na resposta síncrona. O primeiro step é `POST /messages`, que entregou uma mensagem de template de verdade no celular do destinatário.
+O diagrama `Valida WhatsApp` encadeia um recurso de cada serviço e executou `DONE` em 11,4s, com os payloads reais na resposta síncrona. O primeiro step é `POST /messages`, que recebeu `accepted` da Meta — mas **a mensagem não chega ao aparelho**, por restrição de país descrita abaixo. A execução valida cadastro, contrato e autenticação; não valida entrega.
 
 A conta usa o token de **usuário do sistema** (`type: SYSTEM_USER`, `expires_at: 0`). Ao gerá-lo, se a Meta disser "Nenhuma permissão disponível — atribua uma função do app ao usuário do sistema", falta atribuir o **app** como ativo com `Gerenciar app`: o token é emitido para um app, e sem função nele não há permissão a oferecer. Se o app não aparecer na lista de ativos, ele não está no portfólio empresarial (Contas → Aplicativos → Adicionar um app).
 

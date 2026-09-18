@@ -160,6 +160,29 @@ Em Configurações do negócio → Usuários do sistema → selecione o usuário
 
 Se o app não aparecer na lista de ativos, ele não está no portfólio empresarial: Contas → Aplicativos → Adicionar → Adicionar um app. Apps criados pela conta de desenvolvedor pessoal não entram no portfólio automaticamente. O app e a WABA precisam estar no **mesmo** portfólio.
 
+## Coexistência: manter o número no app e na API
+
+A Meta permite o mesmo número funcionando no app do WhatsApp Business **e** na Cloud API ao mesmo tempo, com histórico sincronizado. O recurso aparece na documentação como "Onboard WhatsApp Business app users" e em canais de suporte como *Coexistence*.
+
+O onboarding **não é REST e não é autoatendimento do dono do número**: acontece pelo Cadastro Incorporado (Embedded Signup), um fluxo de navegador com SDK de Login do Facebook, e a documentação exige explicitamente **já ser Solution Partner ou Tech Provider**. Também pede app do WhatsApp Business 2.24.17+, webhook capaz de processar eventos e Cadastro Incorporado com session logging.
+
+Virar **Tech Provider é autosserviço**, no painel do app em Casos de uso → Personalizar → Tech Provider onboarding, em dois passos: verificação do negócio com a Meta, e App Review com ícone, política de privacidade, categoria e **dois vídeos** — um de mensagem enviada e recebida no WhatsApp, outro de criação de template (a Meta aceita gravação do cURL da Configuração da API e do WhatsApp Manager no lugar).
+
+**A ordem importa e resolve um impasse aparente.** O vídeo do App Review exige uma mensagem sendo recebida, o que é impossível enquanto o `130497` estiver ativo — e o `130497` é restrição para conta **não verificada**. Como a verificação do negócio é o passo 1 do Tech Provider, ela vem antes naturalmente, e é provável que só ela já destrave a entrega, dispensando coexistência para quem só precisa enviar de um número próprio.
+
+Limites que mudam decisão de arquitetura:
+
+| Item | Efeito na coexistência |
+|---|---|
+| Grupos | **não suportados** e não sincronizados — o serviço `grupos` deste app não se aplica |
+| Vazão | fixa em 20 mensagens por segundo |
+| Ferramentas de negócio e de mensagem | catálogo, pedidos, respostas rápidas, etiquetas, ausência, perfil e canais ficam fora da Cloud API |
+| Recursos desligados no app | mensagens temporárias, ver uma vez, localização em tempo real; listas de transmissão viram somente leitura |
+| Histórico | até 6 meses de conversas 1:1 sincronizáveis, com consentimento |
+| Cobrança | mensagens pelo app seguem grátis; pela Cloud API, tarifadas |
+
+Para quem só quer enviar de um número próprio, sem manter o app no celular, o caminho curto é registrar um número dedicado — aí não há coexistência, não há Tech Provider, e o serviço `grupos` funciona.
+
 ## Observações
 
 O número de teste gratuito da Meta só envia para até **5 destinatários pré-verificados**, e a janela de atendimento de 24 horas precisa estar aberta (o destinatário respondeu) para mensagens fora de template. Para enviar a qualquer número é necessário verificação do negócio e um número próprio registrado.

@@ -1,0 +1,1536 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Calendly - Roteamento e Webhooks",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.calendly.com",
+      "description": "Production Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Routing Forms",
+      "description": "Endpoints for listing and retrieving routing forms and their submissions."
+    },
+    {
+      "name": "Webhook Subscriptions",
+      "description": "Endpoints for creating, listing, retrieving, and deleting webhook subscriptions that receive real-time event notifications."
+    }
+  ],
+  "paths": {
+    "/routing_forms": {
+      "get": {
+        "operationId": "listRoutingForms",
+        "summary": "List routing forms",
+        "description": "Returns a paginated list of routing forms for the specified organization. Routing forms are questionnaires that direct invitees to the appropriate scheduling page based on their responses.",
+        "tags": [
+          "Routing Forms"
+        ],
+        "parameters": [
+          {
+            "name": "organization",
+            "in": "query",
+            "required": true,
+            "description": "The URI of the organization whose routing forms to list.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved routing forms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A routing form is a questionnaire that directs invitees to the appropriate scheduling page based on their responses.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the routing form resource."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the routing form."
+                          },
+                          "organization": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the organization that owns the routing form."
+                          },
+                          "questions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "uuid": {
+                                  "type": "string",
+                                  "description": "The UUID of the question."
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "The text of the question."
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of question."
+                                },
+                                "required": {
+                                  "type": "boolean",
+                                  "description": "Whether an answer is required."
+                                },
+                                "answer_choices": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "answer_choice_id": {
+                                        "type": "string",
+                                        "description": "The ID of the answer choice."
+                                      },
+                                      "label": {
+                                        "type": "string",
+                                        "description": "The display label."
+                                      }
+                                    }
+                                  },
+                                  "description": "The available answer choices."
+                                }
+                              }
+                            },
+                            "description": "The questions in the routing form."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the routing form was created."
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the routing form was last updated."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routing_forms/{uuid}": {
+      "get": {
+        "operationId": "getRoutingForm",
+        "summary": "Get routing form",
+        "description": "Returns detailed information about a specific routing form, including its questions and routing rules.",
+        "tags": [
+          "Routing Forms"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the routing form.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the routing form",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "A routing form is a questionnaire that directs invitees to the appropriate scheduling page based on their responses.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the routing form resource."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The name of the routing form."
+                        },
+                        "organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the organization that owns the routing form."
+                        },
+                        "questions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "description": "The UUID of the question."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The text of the question."
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "The type of question."
+                              },
+                              "required": {
+                                "type": "boolean",
+                                "description": "Whether an answer is required."
+                              },
+                              "answer_choices": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "answer_choice_id": {
+                                      "type": "string",
+                                      "description": "The ID of the answer choice."
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "description": "The display label."
+                                    }
+                                  }
+                                },
+                                "description": "The available answer choices."
+                              }
+                            }
+                          },
+                          "description": "The questions in the routing form."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the routing form was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the routing form was last updated."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routing_form_submissions": {
+      "get": {
+        "operationId": "listRoutingFormSubmissions",
+        "summary": "List routing form submissions",
+        "description": "Returns a paginated list of submissions for a specific routing form, including the answers provided by each submitter.",
+        "tags": [
+          "Routing Forms"
+        ],
+        "parameters": [
+          {
+            "name": "routing_form",
+            "in": "query",
+            "required": true,
+            "description": "The URI of the routing form whose submissions to list.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved routing form submissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A submission to a routing form, capturing the answers provided by a respondent.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the routing form submission resource."
+                          },
+                          "routing_form": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the routing form that was submitted."
+                          },
+                          "questions_and_answers": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "question_uuid": {
+                                  "type": "string",
+                                  "description": "The UUID of the question."
+                                },
+                                "question": {
+                                  "type": "string",
+                                  "description": "The text of the question."
+                                },
+                                "answer": {
+                                  "type": "string",
+                                  "description": "The respondents answer."
+                                }
+                              }
+                            },
+                            "description": "The questions and answers from the submission."
+                          },
+                          "tracking": {
+                            "type": "object",
+                            "description": "UTM and tracking parameters captured at submission time.",
+                            "properties": {
+                              "utm_campaign": {
+                                "type": "string",
+                                "description": "The UTM campaign parameter."
+                              },
+                              "utm_source": {
+                                "type": "string",
+                                "description": "The UTM source parameter."
+                              },
+                              "utm_medium": {
+                                "type": "string",
+                                "description": "The UTM medium parameter."
+                              }
+                            }
+                          },
+                          "submitter": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the invitee created from this submission."
+                          },
+                          "submitter_type": {
+                            "type": "string",
+                            "description": "The type of submitter."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the submission was created."
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the submission was last updated."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routing_form_submissions/{uuid}": {
+      "get": {
+        "operationId": "getRoutingFormSubmission",
+        "summary": "Get routing form submission",
+        "description": "Returns detailed information about a specific routing form submission.",
+        "tags": [
+          "Routing Forms"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the routing form submission.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the routing form submission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "A submission to a routing form, capturing the answers provided by a respondent.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the routing form submission resource."
+                        },
+                        "routing_form": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the routing form that was submitted."
+                        },
+                        "questions_and_answers": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "question_uuid": {
+                                "type": "string",
+                                "description": "The UUID of the question."
+                              },
+                              "question": {
+                                "type": "string",
+                                "description": "The text of the question."
+                              },
+                              "answer": {
+                                "type": "string",
+                                "description": "The respondents answer."
+                              }
+                            }
+                          },
+                          "description": "The questions and answers from the submission."
+                        },
+                        "tracking": {
+                          "type": "object",
+                          "description": "UTM and tracking parameters captured at submission time.",
+                          "properties": {
+                            "utm_campaign": {
+                              "type": "string",
+                              "description": "The UTM campaign parameter."
+                            },
+                            "utm_source": {
+                              "type": "string",
+                              "description": "The UTM source parameter."
+                            },
+                            "utm_medium": {
+                              "type": "string",
+                              "description": "The UTM medium parameter."
+                            }
+                          }
+                        },
+                        "submitter": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the invitee created from this submission."
+                        },
+                        "submitter_type": {
+                          "type": "string",
+                          "description": "The type of submitter."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the submission was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the submission was last updated."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions": {
+      "get": {
+        "operationId": "listWebhookSubscriptions",
+        "summary": "List webhook subscriptions",
+        "description": "Returns a paginated list of webhook subscriptions for the specified user or organization. Each subscription defines the events to listen for and the callback URL to notify.",
+        "tags": [
+          "Webhook Subscriptions"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "The URI of the user whose webhook subscriptions to list.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "organization",
+            "in": "query",
+            "required": true,
+            "description": "The URI of the organization whose webhook subscriptions to list.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": true,
+            "description": "The scope of the webhook subscription. Use user for subscriptions scoped to a specific user, or organization for organization-wide subscriptions.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "user",
+                "organization"
+              ]
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved webhook subscriptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A webhook subscription that receives real-time notifications when scheduling events occur in Calendly.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the webhook subscription resource."
+                          },
+                          "callback_url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URL where webhook payloads are delivered."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the subscription was created."
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the subscription was last updated."
+                          },
+                          "retry_started_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when retry attempts started, if applicable."
+                          },
+                          "state": {
+                            "type": "string",
+                            "enum": [
+                              "active",
+                              "disabled"
+                            ],
+                            "description": "The current state of the webhook subscription."
+                          },
+                          "events": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "invitee.created",
+                                "invitee.canceled",
+                                "routing_form_submission.created"
+                              ]
+                            },
+                            "description": "The list of event types this subscription listens for."
+                          },
+                          "scope": {
+                            "type": "string",
+                            "enum": [
+                              "user",
+                              "organization"
+                            ],
+                            "description": "The scope of the subscription."
+                          },
+                          "organization": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the associated organization."
+                          },
+                          "user": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the associated user for user-scoped subscriptions."
+                          },
+                          "creator": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the user who created the subscription."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createWebhookSubscription",
+        "summary": "Create webhook subscription",
+        "description": "Creates a new webhook subscription to receive real-time notifications when scheduling events occur. You can subscribe to invitee.created, invitee.canceled, and routing_form_submission.created events.",
+        "tags": [
+          "Webhook Subscriptions"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url",
+                  "events",
+                  "organization",
+                  "scope"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL where webhook payloads will be delivered."
+                  },
+                  "events": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "invitee.created",
+                        "invitee.canceled",
+                        "routing_form_submission.created"
+                      ]
+                    },
+                    "description": "The list of event types to subscribe to.",
+                    "minItems": 1
+                  },
+                  "organization": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URI of the organization for the subscription."
+                  },
+                  "user": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URI of the user for user-scoped subscriptions."
+                  },
+                  "scope": {
+                    "type": "string",
+                    "enum": [
+                      "user",
+                      "organization"
+                    ],
+                    "description": "The scope of the webhook subscription."
+                  },
+                  "signing_key": {
+                    "type": "string",
+                    "description": "A secret key used to sign webhook payloads for verification."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created the webhook subscription",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "A webhook subscription that receives real-time notifications when scheduling events occur in Calendly.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the webhook subscription resource."
+                        },
+                        "callback_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL where webhook payloads are delivered."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the subscription was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the subscription was last updated."
+                        },
+                        "retry_started_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when retry attempts started, if applicable."
+                        },
+                        "state": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "disabled"
+                          ],
+                          "description": "The current state of the webhook subscription."
+                        },
+                        "events": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "invitee.created",
+                              "invitee.canceled",
+                              "routing_form_submission.created"
+                            ]
+                          },
+                          "description": "The list of event types this subscription listens for."
+                        },
+                        "scope": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "organization"
+                          ],
+                          "description": "The scope of the subscription."
+                        },
+                        "organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the associated organization."
+                        },
+                        "user": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the associated user for user-scoped subscriptions."
+                        },
+                        "creator": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the user who created the subscription."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or malformed. Check the request body and parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions/{uuid}": {
+      "get": {
+        "operationId": "getWebhookSubscription",
+        "summary": "Get webhook subscription",
+        "description": "Returns detailed information about a specific webhook subscription by its UUID, including the callback URL, subscribed events, and scope.",
+        "tags": [
+          "Webhook Subscriptions"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the webhook subscription.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the webhook subscription",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "A webhook subscription that receives real-time notifications when scheduling events occur in Calendly.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the webhook subscription resource."
+                        },
+                        "callback_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL where webhook payloads are delivered."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the subscription was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the subscription was last updated."
+                        },
+                        "retry_started_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when retry attempts started, if applicable."
+                        },
+                        "state": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "disabled"
+                          ],
+                          "description": "The current state of the webhook subscription."
+                        },
+                        "events": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "invitee.created",
+                              "invitee.canceled",
+                              "routing_form_submission.created"
+                            ]
+                          },
+                          "description": "The list of event types this subscription listens for."
+                        },
+                        "scope": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "organization"
+                          ],
+                          "description": "The scope of the subscription."
+                        },
+                        "organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the associated organization."
+                        },
+                        "user": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the associated user for user-scoped subscriptions."
+                        },
+                        "creator": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the user who created the subscription."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteWebhookSubscription",
+        "summary": "Delete webhook subscription",
+        "description": "Deletes a webhook subscription by its UUID. Once deleted, the subscription will no longer receive event notifications.",
+        "tags": [
+          "Webhook Subscriptions"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the webhook subscription.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the webhook subscription"
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Personal access token or OAuth 2.1 access token. Include in the Authorization header as Bearer {token}."
+      }
+    }
+  }
+}

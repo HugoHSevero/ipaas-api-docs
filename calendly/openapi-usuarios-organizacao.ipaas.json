@@ -1,0 +1,2140 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Calendly - Usuários e Organização",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.calendly.com",
+      "description": "Production Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Endpoints for retrieving user information and managing user accounts within Calendly."
+    },
+    {
+      "name": "Organizations",
+      "description": "Endpoints for managing organization memberships, invitations, and organization-level settings."
+    },
+    {
+      "name": "Groups",
+      "description": "Endpoints for listing and retrieving organization groups."
+    },
+    {
+      "name": "Activity Log",
+      "description": "Endpoints for retrieving activity log entries for an organization."
+    },
+    {
+      "name": "Data Compliance",
+      "description": "Endpoints for handling data compliance requests such as deletion and retrieval of invitee data."
+    }
+  ],
+  "paths": {
+    "/users/me": {
+      "get": {
+        "operationId": "getCurrentUser",
+        "summary": "Get current user",
+        "description": "Returns information about the currently authenticated user, including their URI, name, email, scheduling URL, timezone, and organization membership.",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "A Calendly user account with scheduling and organization information.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the user resource."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The full name of the user."
+                        },
+                        "slug": {
+                          "type": "string",
+                          "description": "The URL-friendly slug for the users scheduling page."
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "description": "The email address of the user."
+                        },
+                        "scheduling_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the users Calendly scheduling page."
+                        },
+                        "timezone": {
+                          "type": "string",
+                          "description": "The IANA timezone of the user."
+                        },
+                        "avatar_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the users avatar image."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the user was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the user was last updated."
+                        },
+                        "current_organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the users current organization."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{uuid}": {
+      "get": {
+        "operationId": "getUser",
+        "summary": "Get user",
+        "description": "Returns information about a specific user by their UUID, including name, email, scheduling URL, timezone, and organization.",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the user.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "A Calendly user account with scheduling and organization information.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the user resource."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The full name of the user."
+                        },
+                        "slug": {
+                          "type": "string",
+                          "description": "The URL-friendly slug for the users scheduling page."
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "description": "The email address of the user."
+                        },
+                        "scheduling_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the users Calendly scheduling page."
+                        },
+                        "timezone": {
+                          "type": "string",
+                          "description": "The IANA timezone of the user."
+                        },
+                        "avatar_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the users avatar image."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the user was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the user was last updated."
+                        },
+                        "current_organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the users current organization."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organization_memberships": {
+      "get": {
+        "operationId": "listOrganizationMemberships",
+        "summary": "List organization memberships",
+        "description": "Returns a paginated list of organization memberships. Each membership represents a users role and status within an organization.",
+        "tags": [
+          "Organizations"
+        ],
+        "parameters": [
+          {
+            "name": "organization",
+            "in": "query",
+            "required": true,
+            "description": "The URI of the organization whose memberships to list.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Filter by user URI.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Filter by user email address.",
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved organization memberships",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A membership record representing a users role and status within a Calendly organization.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the organization membership resource."
+                          },
+                          "role": {
+                            "type": "string",
+                            "enum": [
+                              "user",
+                              "admin",
+                              "owner"
+                            ],
+                            "description": "The users role within the organization."
+                          },
+                          "user": {
+                            "type": "object",
+                            "description": "A Calendly user account with scheduling and organization information.",
+                            "properties": {
+                              "uri": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "The canonical URI of the user resource."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The full name of the user."
+                              },
+                              "slug": {
+                                "type": "string",
+                                "description": "The URL-friendly slug for the users scheduling page."
+                              },
+                              "email": {
+                                "type": "string",
+                                "format": "email",
+                                "description": "The email address of the user."
+                              },
+                              "scheduling_url": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "The URL of the users Calendly scheduling page."
+                              },
+                              "timezone": {
+                                "type": "string",
+                                "description": "The IANA timezone of the user."
+                              },
+                              "avatar_url": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "The URL of the users avatar image."
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "The timestamp when the user was created."
+                              },
+                              "updated_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "The timestamp when the user was last updated."
+                              },
+                              "current_organization": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "The URI of the users current organization."
+                              }
+                            }
+                          },
+                          "organization": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the organization."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the membership was created."
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the membership was last updated."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organization_memberships/{uuid}": {
+      "get": {
+        "operationId": "getOrganizationMembership",
+        "summary": "Get organization membership",
+        "description": "Returns detailed information about a specific organization membership, including the users role and status within the organization.",
+        "tags": [
+          "Organizations"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the organization membership.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the organization membership",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "A membership record representing a users role and status within a Calendly organization.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the organization membership resource."
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "admin",
+                            "owner"
+                          ],
+                          "description": "The users role within the organization."
+                        },
+                        "user": {
+                          "type": "object",
+                          "description": "A Calendly user account with scheduling and organization information.",
+                          "properties": {
+                            "uri": {
+                              "type": "string",
+                              "format": "uri",
+                              "description": "The canonical URI of the user resource."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "The full name of the user."
+                            },
+                            "slug": {
+                              "type": "string",
+                              "description": "The URL-friendly slug for the users scheduling page."
+                            },
+                            "email": {
+                              "type": "string",
+                              "format": "email",
+                              "description": "The email address of the user."
+                            },
+                            "scheduling_url": {
+                              "type": "string",
+                              "format": "uri",
+                              "description": "The URL of the users Calendly scheduling page."
+                            },
+                            "timezone": {
+                              "type": "string",
+                              "description": "The IANA timezone of the user."
+                            },
+                            "avatar_url": {
+                              "type": "string",
+                              "format": "uri",
+                              "description": "The URL of the users avatar image."
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "The timestamp when the user was created."
+                            },
+                            "updated_at": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "The timestamp when the user was last updated."
+                            },
+                            "current_organization": {
+                              "type": "string",
+                              "format": "uri",
+                              "description": "The URI of the users current organization."
+                            }
+                          }
+                        },
+                        "organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the organization."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the membership was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the membership was last updated."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteOrganizationMembership",
+        "summary": "Remove organization membership",
+        "description": "Removes a user from an organization by deleting their membership. This action cannot be undone.",
+        "tags": [
+          "Organizations"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the organization membership to remove.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully removed the organization membership"
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{uuid}/invitations": {
+      "get": {
+        "operationId": "listOrganizationInvitations",
+        "summary": "List organization invitations",
+        "description": "Returns a paginated list of pending invitations for the specified organization.",
+        "tags": [
+          "Organizations"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the organization.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter invitations by status.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "accepted",
+                "declined"
+              ]
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved organization invitations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "An invitation for a user to join a Calendly organization.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the invitation resource."
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email",
+                            "description": "The email address the invitation was sent to."
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "accepted",
+                              "declined"
+                            ],
+                            "description": "The current status of the invitation."
+                          },
+                          "organization": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the organization."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the invitation was created."
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the invitation was last updated."
+                          },
+                          "last_sent_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the invitation was last sent."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "inviteToOrganization",
+        "summary": "Invite user to organization",
+        "description": "Sends an invitation to a user to join the organization. The invitee will receive an email with instructions to accept the invitation.",
+        "tags": [
+          "Organizations"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the organization.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the person to invite."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created the invitation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "An invitation for a user to join a Calendly organization.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the invitation resource."
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "description": "The email address the invitation was sent to."
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "accepted",
+                            "declined"
+                          ],
+                          "description": "The current status of the invitation."
+                        },
+                        "organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the organization."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the invitation was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the invitation was last updated."
+                        },
+                        "last_sent_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the invitation was last sent."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request was invalid or malformed. Check the request body and parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{org_uuid}/invitations/{invitation_uuid}": {
+      "get": {
+        "operationId": "getOrganizationInvitation",
+        "summary": "Get organization invitation",
+        "description": "Returns detailed information about a specific organization invitation.",
+        "tags": [
+          "Organizations"
+        ],
+        "parameters": [
+          {
+            "name": "org_uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the organization.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the invitation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the invitation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "object",
+                      "description": "An invitation for a user to join a Calendly organization.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The canonical URI of the invitation resource."
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "description": "The email address the invitation was sent to."
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "accepted",
+                            "declined"
+                          ],
+                          "description": "The current status of the invitation."
+                        },
+                        "organization": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URI of the organization."
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the invitation was created."
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the invitation was last updated."
+                        },
+                        "last_sent_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The timestamp when the invitation was last sent."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "revokeOrganizationInvitation",
+        "summary": "Revoke organization invitation",
+        "description": "Revokes a pending organization invitation. The invitee will no longer be able to accept the invitation.",
+        "tags": [
+          "Organizations"
+        ],
+        "parameters": [
+          {
+            "name": "org_uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the organization.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_uuid",
+            "in": "path",
+            "required": true,
+            "description": "The UUID of the invitation to revoke.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully revoked the invitation"
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found. Verify the UUID or URI is correct.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "operationId": "listGroups",
+        "summary": "List groups",
+        "description": "Returns a paginated list of groups within the specified organization. Groups allow organizing users into teams for scheduling purposes.",
+        "tags": [
+          "Groups"
+        ],
+        "parameters": [
+          {
+            "name": "organization",
+            "in": "query",
+            "required": true,
+            "description": "The URI of the organization whose groups to list.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A group within an organization for organizing users into teams.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the group resource."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the group."
+                          },
+                          "organization": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the organization."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the group was created."
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the group was last updated."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group_relationships": {
+      "get": {
+        "operationId": "listGroupRelationships",
+        "summary": "List group relationships",
+        "description": "Returns a paginated list of group memberships, showing which users belong to which groups within an organization.",
+        "tags": [
+          "Groups"
+        ],
+        "parameters": [
+          {
+            "name": "group",
+            "in": "query",
+            "description": "The URI of the group to list relationships for.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "organization",
+            "in": "query",
+            "required": true,
+            "description": "The URI of the organization.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved group relationships",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A relationship between a user and a group within an organization.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the group relationship."
+                          },
+                          "owner": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the user who is a member of the group."
+                          },
+                          "group": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the group."
+                          },
+                          "organization": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the organization."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the relationship was created."
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the relationship was last updated."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activity_log_entries": {
+      "get": {
+        "operationId": "listActivityLogEntries",
+        "summary": "List activity log entries",
+        "description": "Returns a paginated list of activity log entries for the specified organization. Activity logs record actions taken by users within the organization.",
+        "tags": [
+          "Activity Log"
+        ],
+        "parameters": [
+          {
+            "name": "organization",
+            "in": "query",
+            "required": true,
+            "description": "The URI of the organization whose activity log to retrieve.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "min_occurred_at",
+            "in": "query",
+            "description": "Only return entries that occurred on or after this time.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "max_occurred_at",
+            "in": "query",
+            "description": "Only return entries that occurred before this time.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "search_term",
+            "in": "query",
+            "description": "Filter entries by a search term.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort order for results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of results to return per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "A token for fetching the next page of results from a previous paginated response.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved activity log entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collection": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "An entry in the organization activity log recording an action taken by a user.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The canonical URI of the activity log entry."
+                          },
+                          "occurred_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the activity occurred."
+                          },
+                          "organization": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The URI of the organization."
+                          },
+                          "actor": {
+                            "type": "object",
+                            "description": "The user who performed the action.",
+                            "properties": {
+                              "uri": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "The URI of the actor."
+                              },
+                              "display_name": {
+                                "type": "string",
+                                "description": "The display name of the actor."
+                              },
+                              "organization": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "The URI of the actors organization."
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "The type of actor."
+                              }
+                            }
+                          },
+                          "action": {
+                            "type": "string",
+                            "description": "The action that was performed."
+                          },
+                          "namespace": {
+                            "type": "string",
+                            "description": "The namespace or category of the action."
+                          },
+                          "details": {
+                            "type": "object",
+                            "description": "Additional details about the action."
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "description": "Pagination information for paginated list responses.",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "The number of results in the current page."
+                        },
+                        "next_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the next page of results, if available."
+                        },
+                        "previous_page": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "The URL of the previous page of results, if available."
+                        },
+                        "next_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the next page of results."
+                        },
+                        "previous_page_token": {
+                          "type": "string",
+                          "description": "The token to fetch the previous page of results."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data_compliance/deletion/invitees": {
+      "post": {
+        "operationId": "deleteInviteeData",
+        "summary": "Delete invitee data",
+        "description": "Submits a request to delete invitee data for data compliance purposes such as GDPR. The deletion is processed asynchronously.",
+        "tags": [
+          "Data Compliance"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "emails"
+                ],
+                "properties": {
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "description": "The list of invitee email addresses to delete data for."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Deletion request accepted and will be processed"
+          },
+          "400": {
+            "description": "The request was invalid or malformed. Check the request body and parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed. Verify that a valid access token is provided in the Authorization header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An error response from the Calendly API.",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "A short summary of the error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A detailed description of the error."
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "parameter": {
+                            "type": "string",
+                            "description": "The parameter that caused the error."
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A description of what was wrong with the parameter."
+                          }
+                        }
+                      },
+                      "description": "Specific details about validation errors."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Personal access token or OAuth 2.1 access token. Include in the Authorization header as Bearer {token}."
+      }
+    }
+  }
+}

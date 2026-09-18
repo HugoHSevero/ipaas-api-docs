@@ -1,0 +1,56 @@
+{
+  "app": {
+    "name": "Calendly",
+    "description": "Plataforma de agendamento: usuários e organização, tipos de evento e disponibilidade, eventos agendados e convidados, formulários de roteamento e webhooks."
+  },
+  "environments": [
+    {
+      "name": "Produção",
+      "type": "REST",
+      "baseURL": "https://api.calendly.com",
+      "authModels": ["TOKEN"]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Produção",
+      "environment": "Produção",
+      "authModel": "TOKEN",
+      "keys": [{ "key": "token", "value": "<personal access token, cadastrar na interface>" }]
+    }
+  ],
+  "services": [
+    {
+      "name": "Usuários e Organização",
+      "description": "Usuários, organização, memberships, convites, grupos, log de atividade e conformidade de dados",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "user",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/calendly/openapi-usuarios-organizacao.ipaas.json"
+    },
+    {
+      "name": "Agendamentos",
+      "description": "Eventos agendados (reuniões marcadas), cancelamento e convidados",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/calendly/openapi-agendamentos.ipaas.json"
+    },
+    {
+      "name": "Tipos de Evento e Disponibilidade",
+      "description": "Tipos de evento, horários disponíveis, agendas de disponibilidade e links compartilháveis",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "light-bulb",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/calendly/openapi-tipos-evento-disponibilidade.ipaas.json"
+    },
+    {
+      "name": "Roteamento e Webhooks",
+      "description": "Formulários de roteamento, submissões e assinaturas de webhook",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "refresh",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/calendly/openapi-roteamento-webhooks.ipaas.json"
+    }
+  ]
+}

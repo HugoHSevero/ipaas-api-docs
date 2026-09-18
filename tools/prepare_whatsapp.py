@@ -57,6 +57,8 @@ DOMINIOS = {
     "numeros": "Números de telefone: registro, verificação, perfil, QR codes e bloqueios.",
     "contas": "WhatsApp Business Account: dados, usuários, agendamentos e webhooks.",
     "grupos": "Grupos do WhatsApp: criação, participantes, convites e solicitações.",
+    "parceiros": "Tech Provider e Solution Partner: soluções multiparceiro, WABAs de clientes, "
+                 "números pré-verificados, portfólio empresarial e linha de crédito.",
 }
 
 # Mapa explícito path -> domínio, aplicado ao path já sem o prefixo /{Version}.
@@ -109,6 +111,41 @@ MAPA = {
     "/{group_id}/invite_link": "grupos",
     "/{group_id}/join_requests": "grupos",
     "/{group_id}/participants": "grupos",
+
+    # Tech Provider / Solution Partner. Fora do recorte inicial por ser de
+    # revenda, reincluído porque a **coexistência** (manter o número no app do
+    # WhatsApp Business e na Cloud API ao mesmo tempo) só é onboardada por
+    # Cadastro Incorporado, e isso exige ser Tech Provider. O fluxo de cadastro
+    # em si é navegador, não REST; o que entra aqui é a gestão em volta dele.
+    "/{Application-ID}/connected_client_businesses": "parceiros",
+    "/{Application-ID}/whatsapp_business_solution": "parceiros",
+    "/{Application-ID}/whatsapp_business_solutions": "parceiros",
+    "/{Business-ID}": "parceiros",
+    "/{Business-ID}/add_phone_numbers": "parceiros",
+    "/{Business-ID}/client_whatsapp_business_accounts": "parceiros",
+    "/{Business-ID}/extendedcredits": "parceiros",
+    "/{Business-ID}/onboard_partners_to_mm_lite": "parceiros",
+    "/{Business-ID}/preverified_numbers": "parceiros",
+    "/{Business-ID}/share_preverified_numbers": "parceiros",
+    "/{Migration-Intent-ID}": "parceiros",
+    "/{OBO-Mobility-Intent-ID}": "parceiros",
+    "/{Pre-Verified-Phone-Number-ID}": "parceiros",
+    "/{Pre-Verified-Phone-Number-ID}/partners": "parceiros",
+    "/{Pre-Verified-Phone-Number-ID}/request_code": "parceiros",
+    "/{Pre-Verified-Phone-Number-ID}/verify_code": "parceiros",
+    "/{Solution-ID}": "parceiros",
+    "/{Solution-ID}/accept": "parceiros",
+    "/{Solution-ID}/accept_deactivation_request": "parceiros",
+    "/{Solution-ID}/access_token": "parceiros",
+    "/{Solution-ID}/reject": "parceiros",
+    "/{Solution-ID}/reject_deactivation_request": "parceiros",
+    "/{Solution-ID}/send_deactivation_request": "parceiros",
+    "/{WABA-Bot-ID}": "parceiros",
+    "/{WABA-ID}/in_progress_onbehalf_request": "parceiros",
+    "/{WABA-ID}/obo_mobility_intent": "parceiros",
+    "/{WABA-ID}/set_obo_mobility_intent": "parceiros",
+    "/{WABA-ID}/set_solution_migration_intent": "parceiros",
+    "/{WABA-ID}/solutions": "parceiros",
 }
 
 

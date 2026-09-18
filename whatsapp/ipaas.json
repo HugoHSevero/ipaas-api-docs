@@ -59,6 +59,14 @@
       "resourceType": "REST",
       "icon": "users",
       "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/whatsapp/openapi-grupos.ipaas.json"
+    },
+    {
+      "name": "Parceiros",
+      "description": "Tech Provider: soluções multiparceiro, WABAs de clientes, números pré-verificados, portfólio e crédito",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/whatsapp/openapi-parceiros.ipaas.json"
     }
   ]
 }

@@ -53,16 +53,19 @@ O `prepare_whatsapp.py` existe porque a spec da Meta precisa de quatro tratament
 | `numeros` | 29 | registro, verificação, configurações, perfil comercial, QR codes, bloqueio de usuários, commerce, compliance |
 | `contas` | 13 | WABA, usuários atribuídos, atividades, agendamentos, assinaturas de webhook |
 | `grupos` | 12 | criação, participantes, link de convite, solicitações de entrada |
+| `parceiros` | 30 | soluções multiparceiro, WABAs de clientes, números pré-verificados, portfólio empresarial, linha de crédito, intents de migração e OBO |
 
-Total: **70 operações** das 113 da spec oficial.
+Total: **100 operações** das 113 da spec oficial.
+
+O serviço `parceiros` ficou fora do recorte inicial, por ser superfície de revenda. Foi reincluído porque a **coexistência** — manter o número funcionando no app do WhatsApp Business e na Cloud API ao mesmo tempo — só é onboardada por Cadastro Incorporado, e isso exige ser Tech Provider ou Solution Partner da Meta. O fluxo de cadastro em si **não é REST**: é navegador, com SDK de Login do Facebook, seleção de portfólio e leitura de QR code pelo app. O que este serviço cataloga é a gestão em volta dele.
+
+Todos os seis serviços usam o **mesmo ambiente e a mesma conta**: a base URL e o modelo de autenticação são idênticos, então não há motivo para ambiente separado.
 
 ## Domínios deixados de fora
 
-**Flows** (21 operações: `Flows`, `Create Flow`, `Update Flow`, `Business Encryption`) — formulários interativos dentro da conversa. É um domínio grande e coerente, com ciclo de vida próprio (rascunho, publicação, depreciação) e criptografia de endpoint próprio. Cabe como um sexto serviço quando houver caso de uso; para adicionar, inclua os paths de `{Flow-ID}` e `{WABA-ID}/flows` no `MAPA` do `prepare_whatsapp.py`.
+**Flows** (13 operações: `Flows`, `Create Flow`, `Update Flow`, `Business Encryption`) — formulários interativos dentro da conversa. É um domínio grande e coerente, com ciclo de vida próprio (rascunho, publicação, depreciação) e criptografia de endpoint próprio. Cabe como um sétimo serviço quando houver caso de uso; para adicionar, inclua os paths de `{Flow-ID}` e `{WABA-ID}/flows` no `MAPA` do `prepare_whatsapp.py`.
 
-**Tudo de BSP/parceiro** (22 operações) — `Multi-Partner Solutions`, `OBO Mobility Intent`, `Pre-Verified Phone Numbers`, `MM Lite Onboarding`, `Solution Migration`, `Migration Intent`, `Application Business Connections`, `Client WhatsApp Business Accounts`, `Business Portfolio`, `Billing`. Só faz sentido para quem revende a plataforma para outras empresas, o oposto do caso de uso deste cadastro.
-
-**`POST /whatsapp/webhooks`** — não é endpoint chamável: é a documentação do **payload que a Meta envia** para o seu servidor. Importar viraria um recurso que o iPaaS tentaria chamar na Graph API. Para receber webhooks no iPaaS, o caminho é um gatilho de webhook no diagrama, não um recurso REST.
+**`POST /whatsapp/webhooks`** — não é endpoint chamável: é a documentação do **payload que a Meta envia** para o seu servidor. Importar viraria um recurso que o iPaaS tentaria chamar na Graph API. Para receber webhooks, o caminho é um receptor que responda ao handshake `GET` com `hub.challenge` — o webhook do iPaaS **não serve** para isso: ele só aceita `POST` e responde `403` no `GET`, verificado.
 
 ## Cadastro no iPaaS
 

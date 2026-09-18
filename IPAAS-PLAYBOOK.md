@@ -186,6 +186,39 @@ Os valores da credencial vão em `config.outputSchema`, com as chaves do `inputS
 
 Ao vincular a conta a um ambiente **custom**, ela passa a valer também para os ambientes filhos.
 
+#### Payload para `TOKEN` — verificado
+
+O `config.outputSchema` segue o `inputSchema` do auth model, que para `TOKEN` tem uma única chave `token`:
+
+```json
+{
+  "authType": "TOKEN",
+  "componentId": "<componentId do app>",
+  "environmentId": "<id do ambiente>",
+  "name": "Produção",
+  "modelId": "3ce568bb-e05a-4186-b650-9faa63c46041",
+  "config": { "outputSchema": { "token": "<token>" } }
+}
+```
+
+→ **201**. Verificado no WhatsApp (seção 10). Confirme a gravação pela listagem: o `config.outputSchema.token` volta preenchido e a conta aparece em `accounts` ao expandir o ambiente.
+
+#### Não existe GET de conta individual
+
+`GET /ipaas/api/v3/accounts/{id}` responde **500** com `FLUIG_CORE_000` e `Request method 'GET' is not supported` — a rota existe só para escrita. Para ler uma conta, use a listagem filtrada:
+
+```
+GET /ipaas/api/v3/accounts?componentId={appId}&page=1&pageSize=100
+```
+
+Ou expanda pelo ambiente, que traz as contas junto com o `inputSchema` do auth model — útil para descobrir as chaves que o `outputSchema` precisa:
+
+```
+GET /ipaas/api/v2/environments/?applicationId={appId}&expand=accounts&expand=authModels
+```
+
+Para atualizar a credencial depois (troca de token, rotação): `PUT /ipaas/api/v3/accounts/{id}`.
+
 #### testAccount tem uso limitado
 
 `GET /ipaas/api/v3/accounts/testAccount/{id}` **não funciona para `API_KEY` sem parâmetro**: retorna `400 FLUIG_CONNECTOR_ACCOUNT_TEST_URL_NEEDED` com o tipo de auth em `args`. Com `?authUrl=<url>` ele passa a chamar a URL, mas retornou `500 / "400 Bad Request"` mesmo com credencial comprovadamente válida (a mesma chave respondia `200` via curl e funcionou na execução do diagrama).
@@ -840,10 +873,13 @@ Primeiro app com o modelo `TOKEN`. Spec oficial da Meta em `github.com/facebook/
 | Serviço `Números` (29 recursos) | `b36e6257-6a63-4c78-9c1f-3ce53825d59b` |
 | Serviço `Contas` (13 recursos) | `1139b793-bdbc-4902-9b86-f24edc056e6d` |
 | Serviço `Grupos` (12 recursos) | `d0b78ea7-69f0-4167-80b0-2cb2ec4a4210` |
+| Conta `Produção` (**token temporário — trocar**) | `5b141001-9878-4a7f-92fc-41ab0a9d351b` |
 
 Os 70 recursos foram importados e conferidos: contagem por serviço bate com a spec e o `responseBody` traz os campos do objeto, não um `response` string. O `POST /messages` chegou com `contacts`, `messages` e `messaging_product`, iguais à resposta real da API.
 
-**Falta a conta e, portanto, a validação em diagrama.** A conta exige o token **permanente de usuário do sistema** da Meta, com os escopos `whatsapp_business_messaging`, `whatsapp_business_management` e `business_management`. O token que o painel oferece em Configuração da API é `type: USER` e expira no mesmo dia — cadastrar com ele deixaria o app quebrado em horas. Confira sempre com `GET /v23.0/debug_token?input_token=$T&access_token=$T` antes de cadastrar.
+**A conta existe mas está com um token que já expirou.** Ela foi criada para verificar o payload de `TOKEN` (seção 2.3) usando o token temporário do painel, que é `type: USER` e vale poucas horas. Antes de qualquer execução, troque o valor com `PUT /ipaas/api/v3/accounts/5b141001-9878-4a7f-92fc-41ab0a9d351b` pelo token **permanente de usuário do sistema**, com os escopos `whatsapp_business_messaging`, `whatsapp_business_management` e `business_management`. Confira o token antes com `GET /v23.0/debug_token?input_token=$T&access_token=$T`: se vier `expires_at` com data próxima, é o temporário errado.
+
+**Falta a validação em diagrama**, que depende dessa troca. Diagrama novo só nasce pela interface (seção 6.2).
 
 A versão da Graph API está na **URL do ambiente**, não em parâmetro, porque os paths da spec tiveram o `/{Version}` removido. Trocar de versão exige regerar as specs, não reconfigurar o ambiente.
 

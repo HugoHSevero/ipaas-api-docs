@@ -66,7 +66,9 @@ Total: **70 operações** das 113 da spec oficial.
 
 ## Cadastro no iPaaS
 
-Importado no tenant `iPaaS Gateway`, com os 70 recursos conferidos. Os IDs estão na seção 10 do [playbook](../IPAAS-PLAYBOOK.md). **Falta a conta**, que exige o token permanente — e portanto falta a validação em diagrama.
+Importado no tenant `iPaaS Gateway`, com os 70 recursos conferidos. Os IDs estão na seção 10 do [playbook](../IPAAS-PLAYBOOK.md).
+
+A conta existe, mas **com um token temporário já expirado** — ela foi criada para verificar o payload de `TOKEN`. Troque o valor pelo permanente com `PUT /ipaas/api/v3/accounts/{id}` antes de executar qualquer coisa. Falta a validação em diagrama, que depende dessa troca.
 
 O importador exigiu duas descobertas que valem para qualquer app e estão na seção 4 do playbook:
 

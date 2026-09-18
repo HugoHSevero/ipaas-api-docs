@@ -102,7 +102,7 @@ confirme comigo antes de começar.
 | [brevo](./brevo) | `API_KEY` (header `api-key`) | 68 em 4 serviços | importado e validado em diagrama |
 | [trello](./trello) | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | importado e validado em diagrama |
 | [open-meteo](./open-meteo) | `NO_AUTH` | 9 em 9 serviços | importado e validado em diagrama |
-| [whatsapp](./whatsapp) | `TOKEN` (Bearer) | 70 em 5 serviços | 70 recursos importados e conferidos; falta a conta (token permanente) e a validação em diagrama |
+| [whatsapp](./whatsapp) | `TOKEN` (Bearer) | 70 em 5 serviços | 70 recursos importados e conferidos; conta com token temporário, falta trocar pelo permanente e validar em diagrama |
 
 ## Estrutura
 

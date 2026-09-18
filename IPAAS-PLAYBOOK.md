@@ -745,6 +745,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Trello | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | 151 recursos importados; exigiu injetar `tags` (a spec oficial não tem nenhuma) e remover `securitySchemes` em query, que quebrava o importador; conta com **duas** chaves em query criada; diagrama com 6 steps em 4 serviços executado `DONE`, criando cartão real e encadeando `{{{id4.id}}}` |
 | Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
 | WhatsApp | `TOKEN` (Bearer) | 100 em 6 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 100; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 6 domínios; 100 recursos importados e conferidos campo a campo. Diagrama com 5 steps executado `DONE` em 11,4s, com os payloads reais de cada serviço — mas **sem entrega no aparelho**: o número de teste é americano e a Meta bloqueia mensagem cross-country para o Brasil em conta sem verificação de negócio (erro `130497`, só visível no webhook de status). Três armadilhas novas achadas: **import assíncrono** (200 não significa concluído), **`array` sem `items` no `requestBody`** zerando a spec em silêncio, e **`PUT` de conta sem `active: true`** desativando a credencial. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real |
+| Calendly | `TOKEN` (Bearer) | 35 em 4 serviços | Segundo app `TOKEN`. Sem spec oficial baixável (a doc migrou para o ReadMe/SPA); usada a spec espelhada em `apis.io` (`github.com/api-evangelist/calendly`), 12 domínios OpenAPI 3.1.0 agrupados em 4 serviços e rebaixados para 3.0.3. `bearerAuth` (`type: http`) fica no header, então importou sem a armadilha do `in: query`. 35 recursos importados e conferidos por contagem (13/6/8/8); conta criada com Personal Access Token; diagrama com 3 steps (`GET /users/me` → `GET /event_types?user=` → `GET /scheduled_events?user=`) executado, os 3 steps confirmados na rastreabilidade, encadeando o `uri` do usuário via `{{{id1.resource.uri}}}` em `inQuery`. Sem armadilha nova no importador — a conversão 3.1→3.0 e o `bearerAuth` header passaram limpos |
 
 ---
 
@@ -913,6 +914,32 @@ A versão da Graph API está na **URL do ambiente**, não em parâmetro, porque 
 
 A serviço da rastreabilidade: a bissecção que achou a armadilha do `array` sem `items` (seção 4) criou 56 serviços `ZZ ...` neste app, todos removidos depois com `DELETE /v3/application-services/{id}`.
 
+### Calendly — `TOKEN` (Bearer)
+
+Segundo app com o modelo `TOKEN`. Sem spec oficial baixável (a doc do Calendly migrou para o ReadMe, uma SPA sem arquivo OpenAPI público); usada a spec espelhada em `apis.io` (`github.com/api-evangelist/calendly`), 12 domínios OpenAPI 3.1.0 agrupados em 4 serviços e rebaixados para 3.0.3.
+
+| Item | Id |
+|---|---|
+| App (`componentId`) | `5dd4db3e-1885-4f26-b648-635f140f09c8` |
+| Ambiente `Produção` (`https://api.calendly.com`) | `db6d6b4e-c4b3-41e8-ba3f-57972e97b736` |
+| Serviço `Usuários e Organização` (13 recursos) | `884223e6-088d-476d-939e-704857b92b10` |
+| Serviço `Agendamentos` (6 recursos) | `a38caf91-0f4a-4169-a351-05ad32a320ee` |
+| Serviço `Tipos de Evento e Disponibilidade` (8 recursos) | `3c75c958-f969-4af0-81be-8bc61e5bea15` |
+| Serviço `Roteamento e Webhooks` (8 recursos) | `7e9fc3fc-5439-48c9-a49f-e8518973e198` |
+
+| Conta `Produção` (Personal Access Token) | `f30adc7c-dc11-4f01-bb66-ed25e503b926` |
+| Diagrama `Valida Calendly` (`integrationId`) | `9b961c04-e6c3-472c-9a3f-325e311ed364` |
+
+Os 35 recursos foram importados e conferidos por contagem (13/6/8/8, bate com a spec). O `bearerAuth` é `type: http` (header), então importou sem a armadilha do `securityScheme` em query. A conversão 3.1→3.0.3 (mesmo tratamento do Open-Meteo e WhatsApp) passou limpa.
+
+**Validado em diagrama.** Conta criada com o auth model `TOKEN` (`config.outputSchema.token`). O diagrama de validação tem 3 steps de leitura em série: `GET /users/me` (Usuários e Organização) → `GET /event_types?user=` (Tipos de Evento e Disponibilidade) → `GET /scheduled_events?user=` (Agendamentos). Os dois últimos exigem `user` como parâmetro obrigatório, encadeado do primeiro step com `{{{id1.resource.uri}}}` em `inQuery`. Publicado e executado; os 3 steps confirmados na tela de rastreabilidade.
+
+A maioria das listagens do Calendly exige `user` ou `organization` como **URI** (não ID) em query — o `uri` sai de `GET /users/me` no campo `resource.uri` (e a organização em `resource.current_organization`). As respostas seguem `{ "resource": {...} }` (item único) ou `{ "collection": [...], "pagination": {...} }` (listas).
+
+O Personal Access Token usado foi **compartilhado em chat** e deve ser rotacionado. Se a execução começar a dar 401, é provável que tenha sido trocado — peça o novo e atualize com `PUT /ipaas/api/v3/accounts/{id}` (lembrando do `active: true`, senão a conta é desativada).
+
+Specs publicadas no fork `HugoHSevero/ipaas-api-docs` (branch `add-calendly`), importadas por URL raw do fork por SHA enquanto o PR para `dugabriel:main` não é mergeado. As URLs em `calendly/ipaas.json` já apontam para `dugabriel/.../main/` (valem após o merge).
+
 ---
 
 ## 11. Fila de próximos apps
@@ -926,6 +953,8 @@ Ordenada por custo de integração. O critério é o modelo de autenticação (s
 | `BASIC` | Jira Cloud, Twilio, Zendesk | Jira Cloud é o mais barato: plano free permanente, API token instantâneo em `id.atlassian.com`, spec oficial em `developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json` (grande, exige recorte) |
 
 `API_KEY` em `query` foi coberto pelo **Trello** e `TOKEN` pelo **WhatsApp** (seção 10) — resta só `BASIC` para fechar os quatro padrões viáveis. Clicksign v1 e Pipedrive seguem como alternativas em query, se houver interesse específico.
+
+O **Calendly** foi cadastrado como segundo app `TOKEN` (seção 10), **importado e validado em diagrama**.
 
 Candidatos `TOKEN` que ficaram na fila, caso queira mais um: HubSpot (token de private app em developer test account free, spec oficial por objeto), ZapSign (API Token estático, conta free, sem spec oficial, alta relevância BR), SendGrid, Notion, Airtable, Asana.
 

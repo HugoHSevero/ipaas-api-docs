@@ -94,18 +94,20 @@ O `bearerAuth` é `type: http`, `scheme: bearer` — fica **no header**, então 
 
 ## Validação
 
-**Ainda não validado em diagrama.** Cadastro no iPaaS e execução `DONE` dependem de sessão autenticada e de um Personal Access Token — pendentes. Sem execução `DONE`, o app não está validado.
+**Validado em diagrama** (`Valida Calendly`, projeto `Validação apps`). Conta criada com Personal Access Token; 3 steps de leitura em série, os três confirmados na rastreabilidade:
 
-Roteiro sugerido para a validação (só leitura, sem efeito colateral):
+| Step | Operação | Serviço |
+|---|---|---|
+| 1 | `GET /users/me` | Usuários e Organização |
+| 2 | `GET /event_types?user={uri}` | Tipos de Evento e Disponibilidade |
+| 3 | `GET /scheduled_events?user={uri}` | Agendamentos |
 
-- `GET /users/me` (serviço Usuários e Organização) — retorna o usuário autenticado, com `uri` e `current_organization`. É o ponto de partida: várias outras chamadas precisam do `uri` do usuário ou da organização como parâmetro de query.
-- `GET /event_types?user={uri}` (Tipos de Evento e Disponibilidade) — encadear `{{{...uri}}}` do step anterior.
-- `GET /scheduled_events?user={uri}` (Agendamentos).
+Os steps 2 e 3 exigem `user` como parâmetro obrigatório, encadeado do step 1 com `{{{id1.resource.uri}}}` em `configurations.inQuery`. O `uri` do usuário vem em `resource.uri` do `GET /users/me` (a organização em `resource.current_organization`).
 
-Encadeamento entre steps: o `uri` do usuário/organização vem no corpo do `GET /users/me` e é reaproveitado nos filtros de query dos demais (`configurations.inQuery`).
+O Personal Access Token usado foi compartilhado em chat e **deve ser rotacionado**. Se a execução passar a dar 401, é provável que tenha sido trocado — gere um novo e atualize a conta com `PUT /ipaas/api/v3/accounts/{id}` (com `active: true`, senão a conta é desativada).
 
 ## Observações
 
-Os schemas vêm do espelho apis.io, não confirmados contra respostas reais — fazer isso na validação. O Calendly usa **URIs** (não IDs simples) para referenciar recursos: a maioria dos endpoints de listagem exige `user` ou `organization` como URI em query. As respostas seguem o padrão `{ "resource": {...} }` (item único) ou `{ "collection": [...], "pagination": {...} }` (listas).
+Os schemas vêm do espelho apis.io. Os retornos de `GET /users/me`, `GET /event_types` e `GET /scheduled_events` foram confirmados na execução do diagrama; os demais não foram conferidos contra respostas reais. O Calendly usa **URIs** (não IDs simples) para referenciar recursos: a maioria dos endpoints de listagem exige `user` ou `organization` como URI em query. As respostas seguem o padrão `{ "resource": {...} }` (item único) ou `{ "collection": [...], "pagination": {...} }` (listas).
 
 Domínios da API v2 não cobertos por não terem spec no espelho ou serem de nicho: nenhum relevante ficou de fora — os 12 domínios publicados foram todos incluídos nos 4 serviços.

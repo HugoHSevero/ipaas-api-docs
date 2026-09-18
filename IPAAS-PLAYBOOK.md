@@ -209,6 +209,8 @@ Ou seja: **não use o `testAccount` como critério de validação da credencial.
 
 Ícones vistos em uso: `product`, `light-bulb`, `adb`. A lista completa de valores válidos não foi levantada.
 
+Para remover um serviço: `DELETE /ipaas/api/v3/application-services/{id}` → **204** com corpo vazio — verificado, inclusive em serviço que já tinha recursos importados. Útil para limpar serviços de teste; a bissecção desta sessão criou 56 deles e todos saíram por aqui.
+
 ### 2.5 Importar o Swagger — verificado
 
 `POST /ipaas/api/v3/rest-resources/import-swagger` → **200** com corpo vazio
@@ -341,6 +343,39 @@ https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/<sha>/<app>/openapi.i
 **O repositório precisa ser público.** O iPaaS baixa a spec anonimamente.
 
 **A importação aceita apenas URL, não upload de arquivo.** É a razão de existir este repositório.
+
+**A importação é assíncrona: `200` não significa que terminou.** O `import-swagger` responde HTTP 200 com corpo vazio e continua processando em segundo plano. Listar os recursos imediatamente devolve **zero** e parece falha. Nos testes o tempo até os recursos aparecerem ficou em torno de **1,9 segundo**, consistente entre specs de 2 KB e 340 KB.
+
+Isso produz falso negativo com facilidade e contamina qualquer bissecção. Faça polling em vez de uma leitura só:
+
+```js
+for (let i = 0; i < 10; i++) {
+  await new Promise(r => setTimeout(r, 1500));
+  const n = (await listarRecursos(serviceId)).length;
+  if (n > 0) break;
+}
+```
+
+Custou várias rodadas de investigação nesta sessão: quatro operações foram diagnosticadas como quebradas e duas delas só estavam sendo medidas cedo demais.
+
+**`type: array` sem `items` no `requestBody` zera a importação inteira, em silêncio.** Responde HTTP 200 com corpo vazio e **não cria recurso nenhum** — nem os das outras operações. Uma única ocorrência derruba o arquivo todo, e não há mensagem de erro em log, corpo ou status.
+
+O comportamento é **assimétrico**, o que engana:
+
+| Onde está o array sem `items` | Resultado |
+|---|---|
+| `requestBody` | 200 e **zero** recursos na spec inteira |
+| `responses` | tolerado, importa normalmente |
+
+Verificado por bissecção com uma spec de uma operação por arquivo: na spec da Meta, `template.components[].parameters` vinha sem `items` e zerava as 11 operações do serviço de mensagens do WhatsApp. O lado tolerado está confirmado pelo Trello, que importa as 45 operações de `membros` tendo um array sem `items` na resposta de `GET /members/{id}/notifications`.
+
+`items` é obrigatório em array no OpenAPI 3.0, então specs oficiais com essa falha não são raras. O `dereference.py` acusa o caso do `requestBody` em `validar_para_ipaas`.
+
+**A validação tem que rodar na spec dereferenciada, não na fonte.** Na fonte os schemas estão atrás de `$ref` e uma checagem estrutural não os alcança — o array sem `items` do WhatsApp estava dentro de `#/components/schemas/Message` e passava batido.
+
+**`discriminator` sobrevive à dereferência e vira referência pendurada.** O `mapping` aponta para `#/components/schemas/...`, que o `dereference.py` descarta do arquivo. Como os valores são strings e não chaves `$ref`, a checagem de `$ref` restante não os pega. O `oneOf` ao lado já tem os membros expandidos, então remover o `discriminator` não perde campo nenhum.
+
+**OpenAPI 3.1 continua não verificado.** A spec da Meta é 3.1.0 e foi **rebaixada para 3.0.3** antes de importar, com sucesso. Como o rebaixamento veio primeiro, não se sabe se o importador aceitaria 3.1 direto. Rebaixar é barato quando a spec não usa recursos de 3.1 de fato (a da Meta não usava: nenhum `type` como lista, nenhum `$defs`, e usava até `nullable`, que é de 3.0).
 
 ---
 
@@ -656,6 +691,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Brevo | `API_KEY` (header `api-key`) | 68 em 4 serviços | 68 recursos importados a partir da spec oficial convertida de Swagger 2.0; conta criada; diagrama com 6 steps em 3 serviços executado `DONE`, incluindo `POST /smtp/email` em modo sandbox. Serviço `SMS Transacional` **não validado**: plano gratuito não tem crédito de SMS e todos os endpoints respondem 500 |
 | Trello | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | 151 recursos importados; exigiu injetar `tags` (a spec oficial não tem nenhuma) e remover `securitySchemes` em query, que quebrava o importador; conta com **duas** chaves em query criada; diagrama com 6 steps em 4 serviços executado `DONE`, criando cartão real e encadeando `{{{id4.id}}}` |
 | Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
+| WhatsApp | `TOKEN` (Bearer) | 70 em 5 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 70; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 5 domínios; 70 recursos importados e conferidos campo a campo. Duas armadilhas novas achadas por bissecção: **import assíncrono** (200 não significa concluído) e **`array` sem `items` no `requestBody`**, que zerava a spec inteira em silêncio. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real. **Não validado em diagrama**: falta o token permanente de usuário do sistema |
 
 ---
 
@@ -791,6 +827,28 @@ A API aceitou a escrita num app de outro tenant sem erro. **Não foi verificado*
 
 Isso torna a BrasilAPI **duplicada** no tenant: o app custom `BrasilAPI` (`a7b79983`) e o serviço novo no app nativo. Decidir qual manter.
 
+### WhatsApp — `TOKEN` (Bearer) — **conta pendente**
+
+Primeiro app com o modelo `TOKEN`. Spec oficial da Meta em `github.com/facebook/openapi` (`business-messaging-api_v23.0.yaml`), rebaixada de 3.1.0 para 3.0.3 e recortada em 5 serviços.
+
+| Item | Id |
+|---|---|
+| App (`componentId`) | `1a7e0d94-acb9-4542-8fbb-814f7e68cc83` |
+| Ambiente `Produção` (`https://graph.facebook.com/v23.0`) | `e4a5e785-1399-418d-9e87-e766349c4092` |
+| Serviço `Mensagens` (11 recursos) | `dc62547f-b583-4cbe-a426-cabdca845f2a` |
+| Serviço `Templates` (5 recursos) | `afb4ea78-d8bb-4630-83eb-5168e2296f21` |
+| Serviço `Números` (29 recursos) | `b36e6257-6a63-4c78-9c1f-3ce53825d59b` |
+| Serviço `Contas` (13 recursos) | `1139b793-bdbc-4902-9b86-f24edc056e6d` |
+| Serviço `Grupos` (12 recursos) | `d0b78ea7-69f0-4167-80b0-2cb2ec4a4210` |
+
+Os 70 recursos foram importados e conferidos: contagem por serviço bate com a spec e o `responseBody` traz os campos do objeto, não um `response` string. O `POST /messages` chegou com `contacts`, `messages` e `messaging_product`, iguais à resposta real da API.
+
+**Falta a conta e, portanto, a validação em diagrama.** A conta exige o token **permanente de usuário do sistema** da Meta, com os escopos `whatsapp_business_messaging`, `whatsapp_business_management` e `business_management`. O token que o painel oferece em Configuração da API é `type: USER` e expira no mesmo dia — cadastrar com ele deixaria o app quebrado em horas. Confira sempre com `GET /v23.0/debug_token?input_token=$T&access_token=$T` antes de cadastrar.
+
+A versão da Graph API está na **URL do ambiente**, não em parâmetro, porque os paths da spec tiveram o `/{Version}` removido. Trocar de versão exige regerar as specs, não reconfigurar o ambiente.
+
+A serviço da rastreabilidade: a bissecção que achou a armadilha do `array` sem `items` (seção 4) criou 56 serviços `ZZ ...` neste app, todos removidos depois com `DELETE /v3/application-services/{id}`.
+
 ---
 
 ## 11. Fila de próximos apps
@@ -801,14 +859,15 @@ Ordenada por custo de integração. O critério é o modelo de autenticação (s
 
 | Padrão | Candidatos | Observação |
 |---|---|---|
-| `TOKEN` | HubSpot, ZapSign, SendGrid, Notion, Airtable, Asana | HubSpot: token de private app em developer test account free, spec oficial por objeto. ZapSign: API Token estático, conta free, sem spec oficial (API pequena), alta relevância BR |
 | `BASIC` | Jira Cloud, Twilio, Zendesk | Jira Cloud é o mais barato: plano free permanente, API token instantâneo em `id.atlassian.com`, spec oficial em `developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json` (grande, exige recorte) |
 
-`API_KEY` em `query` foi coberto pelo **Trello** (seção 10) — restam `TOKEN` e `BASIC` para fechar os quatro padrões viáveis. Clicksign v1 e Pipedrive seguem como alternativas em query, se houver interesse específico.
+`API_KEY` em `query` foi coberto pelo **Trello** e `TOKEN` pelo **WhatsApp** (seção 10) — resta só `BASIC` para fechar os quatro padrões viáveis. Clicksign v1 e Pipedrive seguem como alternativas em query, se houver interesse específico.
+
+Candidatos `TOKEN` que ficaram na fila, caso queira mais um: HubSpot (token de private app em developer test account free, spec oficial por objeto), ZapSign (API Token estático, conta free, sem spec oficial, alta relevância BR), SendGrid, Notion, Airtable, Asana.
 
 Levantado em 2026-09-03 a partir da documentação dos fornecedores; a facilidade de obter credencial muda com o tempo, reconfirme antes de começar.
 
-Fechar `TOKEN` e `BASIC` cobriria os quatro padrões viáveis, deixando o catálogo pronto para escalar.
+Fechar `BASIC` cobriria os quatro padrões viáveis, deixando o catálogo pronto para escalar.
 
 ### Brasileiros relevantes
 

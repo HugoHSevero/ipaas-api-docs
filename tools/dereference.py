@@ -107,10 +107,10 @@ def validar_para_ipaas(spec):
                 problemas.append(f"{alvo}: sem 'tags' — o import falha com HTTP 500")
             if not op.get("summary"):
                 problemas.append(f"{alvo}: sem 'summary' — recurso fica sem nome descritivo")
-            for onde in arrays_sem_items(op):
+            for onde in arrays_sem_items(op.get("requestBody") or {}):
                 problemas.append(
-                    f"{alvo}: 'type: array' sem 'items' em {onde} — o import responde"
-                    " HTTP 200 e não cria recurso nenhum (falha silenciosa)"
+                    f"{alvo}: 'type: array' sem 'items' no requestBody, em {onde}"
+                    " — o import responde HTTP 200 e não cria recurso nenhum"
                 )
     return problemas
 
@@ -118,14 +118,19 @@ def validar_para_ipaas(spec):
 def arrays_sem_items(no, caminho="", out=None):
     """Localiza `type: array` sem `items`.
 
-    `items` é obrigatório em array no OpenAPI 3.0, e o importador do iPaaS não
-    tolera a ausência: ele responde **HTTP 200 com corpo vazio** e não importa
-    **nenhuma** operação da spec — uma ocorrência derruba o arquivo inteiro, não
-    só a operação afetada. Não há mensagem de erro em lugar nenhum.
+    `items` é obrigatório em array no OpenAPI 3.0. O importador do iPaaS trata
+    a ausência de forma assimétrica, verificado por bissecção:
 
-    Verificado por bissecção na spec da Meta (WhatsApp): `template.components
-    []. parameters` vinha sem `items` e zerava a importação das 11 operações do
-    serviço de mensagens.
+    - **no `requestBody`**: responde HTTP 200 com corpo vazio e não importa
+      **nenhuma** operação da spec. Uma ocorrência derruba o arquivo inteiro,
+      não só a operação afetada, e não há mensagem de erro em lugar nenhum. Era
+      isso que zerava as 11 operações do serviço de mensagens do WhatsApp
+      (`template.components[].parameters`).
+    - **em `responses`**: tolerado. O Trello importa as 45 operações de
+      `membros` tendo um array sem `items` na resposta de
+      `GET /members/{id}/notifications`.
+
+    Por isso só o caso do `requestBody` é reportado como problema.
     """
     if out is None:
         out = []

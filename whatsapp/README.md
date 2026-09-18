@@ -64,6 +64,16 @@ Total: **70 operações** das 113 da spec oficial.
 
 **`POST /whatsapp/webhooks`** — não é endpoint chamável: é a documentação do **payload que a Meta envia** para o seu servidor. Importar viraria um recurso que o iPaaS tentaria chamar na Graph API. Para receber webhooks no iPaaS, o caminho é um gatilho de webhook no diagrama, não um recurso REST.
 
+## Cadastro no iPaaS
+
+Importado no tenant `iPaaS Gateway`, com os 70 recursos conferidos. Os IDs estão na seção 10 do [playbook](../IPAAS-PLAYBOOK.md). **Falta a conta**, que exige o token permanente — e portanto falta a validação em diagrama.
+
+O importador exigiu duas descobertas que valem para qualquer app e estão na seção 4 do playbook:
+
+**A importação é assíncrona.** `POST /import-swagger` responde HTTP 200 com corpo vazio e continua processando; listar os recursos na hora devolve zero e parece falha. O tempo medido até aparecerem foi de cerca de 1,9 segundo, igual para specs de 2 KB e de 340 KB. Faça polling.
+
+**`type: array` sem `items` no `requestBody` zera a importação inteira, em silêncio.** HTTP 200, corpo vazio, nenhum recurso criado — nem os das outras operações. Na spec da Meta, `template.components[].parameters` vinha sem `items` e derrubava as 11 operações deste serviço de mensagens. O comportamento é assimétrico: em `responses` o mesmo defeito é tolerado (o Trello importa 45 operações tendo um). O `prepare_whatsapp.py` declara o schema correto em `ITEMS_FALTANDO` e o `dereference.py` passou a acusar o caso.
+
 ## Validação
 
 Executado contra a API real em 2026-09-18, com token temporário do painel e o número de teste da Meta. Nenhum identificador real está neste repositório — ele é público.

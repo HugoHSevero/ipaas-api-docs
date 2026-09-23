@@ -52,4 +52,10 @@ O `tools/dereference.mjs` replica o comportamento do `tools/dereference.py` (res
 
 ## Status
 
-Specs escritas e `.ipaas.json` gerados (12 operações, sem avisos de validação). Cadastro no iPaaS e validação em diagrama: ver seção 10 do playbook conforme forem concluídos.
+Importado e validado em diagrama. Cadastrado no tenant `iPaaS Gateway` (produção), ambiente **Sandbox**, 12 recursos em 3 serviços. Diagrama `Valida BioDoc` executado `DONE` (4,1s) com `GET /integrations/justify`. IDs na seção 10 do playbook.
+
+**O que a execução `DONE` provou e o que não provou.** A validação usou `GET /integrations/justify` (leitura, sem efeito colateral) e comprova **cadastro, contrato e autenticação (o token TOKEN) de ponta a ponta**. Ela **não** valida a comparação facial em si: os endpoints de verificação (`/card/integration/verify`, `/integrations/verify`) e de cartão (`/card/register`, `/card/integration/mainimage`) exigem um `idCard` válido no sandbox e uma imagem base64 de rosto real, que não estavam disponíveis nesta sessão. Mesmo que respondessem `2xx`, um `DONE` só confirmaria a chamada aceita, não o acerto biométrico — o mesmo ponto cego dos apps de mensageria (WhatsApp). Para validar o match facial de verdade, é preciso um beneficiário de teste cadastrado e a confirmação do resultado na própria BioDoc.
+
+**Serviços exercitados:** só `Justificativas e Auditoria` (via `justify`). `Cartões` e `Verificação` importaram e conferiram na contagem, mas **não foram executados** por dependerem de dado biométrico de teste.
+
+**`verify` e `requestnewimage` são `multipart/form-data`**, não JSON. Como o importador não traz o corpo, isso não afeta a importação, mas ao montar esses steps no diagrama o corpo vai em `inBody` e **não foi verificado** como o iPaaS trata `multipart/form-data` em execução (o `justify` validado é GET, sem corpo).

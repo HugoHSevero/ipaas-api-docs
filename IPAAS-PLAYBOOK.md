@@ -745,6 +745,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Trello | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | 151 recursos importados; exigiu injetar `tags` (a spec oficial não tem nenhuma) e remover `securitySchemes` em query, que quebrava o importador; conta com **duas** chaves em query criada; diagrama com 6 steps em 4 serviços executado `DONE`, criando cartão real e encadeando `{{{id4.id}}}` |
 | Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
 | WhatsApp | `TOKEN` (Bearer) | 100 em 6 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 100; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 6 domínios; 100 recursos importados e conferidos campo a campo. Diagrama com 5 steps executado `DONE` em 11,4s, com os payloads reais de cada serviço — mas **sem entrega no aparelho**: o número de teste é americano e a Meta bloqueia mensagem cross-country para o Brasil em conta sem verificação de negócio (erro `130497`, só visível no webhook de status). Três armadilhas novas achadas: **import assíncrono** (200 não significa concluído), **`array` sem `items` no `requestBody`** zerando a spec em silêncio, e **`PUT` de conta sem `active: true`** desativando a credencial. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real |
+| BioDoc | `TOKEN` (Bearer) | 12 em 3 serviços | Reconhecimento facial para saúde. **Sem OpenAPI oficial** — a doc (`docs.biodoc.com.br`) é textual; specs escritas à mão a partir dela, recortadas em Cartões (6), Verificação (2) e Justificativas e Auditoria (4). 12 recursos importados e conferidos. Diagrama com 1 step executado `DONE` em 4,1s via `GET /integrations/justify`. **Validação parcial**: só o serviço de auditoria foi exercitado em execução; Cartões e Verificação dependem de `idCard` de teste e imagem base64 de rosto no sandbox, indisponíveis na sessão — o `DONE` valida cadastro/contrato/auth, não o match facial (mesmo ponto cego da mensageria). Ambiente Sandbox só; Produção não cadastrada. Duas descobertas de ambiente: **máquina sem Python** (só Node) — criada a porta `tools/dereference.mjs`; e o **cadastro rodou por JS colado no console do navegador** (F12), sem MCP do Chrome, em Windows |
 
 ---
 
@@ -912,6 +913,31 @@ Para gerar o certo, o usuário do sistema precisa ter o **app** atribuído como 
 A versão da Graph API está na **URL do ambiente**, não em parâmetro, porque os paths da spec tiveram o `/{Version}` removido. Trocar de versão exige regerar as specs, não reconfigurar o ambiente.
 
 A serviço da rastreabilidade: a bissecção que achou a armadilha do `array` sem `items` (seção 4) criou 56 serviços `ZZ ...` neste app, todos removidos depois com `DELETE /v3/application-services/{id}`.
+
+### BioDoc — `TOKEN` (Bearer)
+
+Plataforma de reconhecimento facial para saúde. Sem OpenAPI oficial: specs escritas à mão a partir de `docs.biodoc.com.br`. Cadastrado só no ambiente **Sandbox**; Produção (`https://api.biodoc.com.br/api`) ainda não criada.
+
+| Item | Id |
+|---|---|
+| App (`componentId`) | `447d7705-9ce0-468e-a80a-8b1cbf268bed` |
+| Ambiente `Sandbox` (`https://api.sandbox.biodoc.com.br/api`) | `4df750df-5a2a-4cd7-892c-22c5c779536f` |
+| Conta `Sandebox` (TOKEN) | `c7df13a5-d28d-4bdd-886b-5d2510f3a1b3` |
+| Serviço `Cartões` (6 recursos) | `b00919b4-ca78-4880-be85-005e066792f3` |
+| Serviço `Verificação` (2 recursos) | `ebb8a253-a57c-4cd5-8bd6-cc97b1660cfe` |
+| Serviço `Justificativas e Auditoria` (4 recursos) | `883bfca9-91eb-489d-85a7-da0c263cc68b` |
+| Diagrama `Valida BioDoc` (`integrationId`) | `fd3e344b-b213-48fb-ad95-3fedf45e1198` |
+
+O token da conta foi colado pelo usuário direto na interface/console e **deve ser rotacionado**. O nome da conta ficou `Sandebox` (typo, criada à mão) — cosmético, corrigir por `PUT /v3/accounts/{id}` com o corpo completo e `active: true` se incomodar.
+
+**Validação parcial, por design.** O diagrama executou `DONE` (4,1s) com `GET /integrations/justify`, que só lê. Isso valida cadastro, contrato e o token. Os outros dois serviços **não foram exercitados em execução**: `POST /card/register`, `/card/integration/mainimage` e os dois `verify` exigem um `idCard` de teste cadastrado no sandbox e uma imagem base64 de rosto real, que não estavam à mão. Como em app de mensageria, um `DONE` nesses endpoints comprovaria a chamada aceita, não o acerto biométrico — a confirmação do match tem que vir da própria BioDoc.
+
+**7 das 12 operações são POST com corpo** — importador não traz `requestBody` (seção 4), então o corpo vai em `configurations.inBody` no diagrama. `POST /card/integration/verify` e `POST /requestnewimage` são `multipart/form-data`, não JSON; **não verificado** como o iPaaS monta o corpo `multipart` em execução (o step validado é GET, sem corpo).
+
+**Descobertas de ambiente desta sessão:**
+
+- **Máquina sem Python, só Node.** O `dereference.py` não roda. Foi criada uma porta em Node, `tools/dereference.mjs`, que replica o comportamento (resolve `$ref`, mescla `allOf`, remove `discriminator` e `securitySchemes` em query, valida os requisitos do importador). Uso: `node tools/dereference.mjs <app>`. Onde houver Python, o `.py` continua valendo e produz o mesmo resultado.
+- **Cadastro sem MCP do Chrome, por JS no console.** O setup do MCP do README (seção "Pré-requisito") só cobre Linux e depende de instalar/ligar o `chrome-devtools-mcp`. Nesta sessão (Windows) o MCP não estava disponível e o usuário preferiu operar à mão: o agente forneceu trechos de JS colados no **Console do navegador** (F12) da aba já logada, e o próprio script leu o token do cookie `jwt.token` e fez as chamadas de API. Funciona bem para tudo, menos criar a integração — que continua sendo pela interface (seção 6.2). Vale como caminho alternativo quando não há navegador controlável: **não precisa de MCP para cadastrar**, só para automatizar cliques.
 
 ---
 

@@ -121,6 +121,49 @@ function removerDiscriminators(no) {
   return no;
 }
 
+// Colapsa `oneOf`/`anyOf` em um único schema. Verificado no Mailchimp: um
+// `oneOf` de 41 membros (tipos de condição de segmento), aninhado fundo na
+// resposta de GET /lists e GET /campaigns, faz o import-swagger responder
+// HTTP 200 e criar ZERO recurso — a spec inteira do serviço não importa, sem
+// mensagem de erro (mesmo padrão silencioso do array sem items). Os serviços
+// sem esse construto (Relatórios, Templates) importaram normais.
+//
+// O iPaaS não usa a discriminação em tempo de mapeamento de campos, então
+// unir os membros num objeto (união das properties) preserva os campos e
+// remove o ramo profundo que quebra o importador. Membros escalares ou
+// mistos caem no primeiro membro. Roda após dereferência (os membros já
+// estão expandidos) e após remover discriminator (o `mapping` já saiu).
+function colapsarOneOf(no) {
+  if (Array.isArray(no)) return no.map(colapsarOneOf);
+  if (no && typeof no === 'object') {
+    let atual = no;
+    for (const chave of ['oneOf', 'anyOf']) {
+      if (Array.isArray(atual[chave])) {
+        const membros = atual[chave].map(colapsarOneOf);
+        const resto = Object.fromEntries(Object.entries(atual).filter(([k]) => k !== chave));
+        const objetos = membros.filter((m) => m && typeof m === 'object' && (m.properties || m.type === 'object'));
+        if (objetos.length) {
+          const props = {};
+          const req = [];
+          for (const m of objetos) {
+            Object.assign(props, m.properties || {});
+            if (Array.isArray(m.required)) req.push(...m.required);
+          }
+          const uniao = { type: 'object' };
+          if (Object.keys(props).length) uniao.properties = props;
+          if (req.length) uniao.required = [...new Set(req)].sort();
+          atual = { ...uniao, ...resto };
+        } else {
+          // sem membros-objeto: usa o primeiro membro e descarta o resto do ramo
+          atual = { ...(membros[0] || {}), ...resto };
+        }
+      }
+    }
+    return Object.fromEntries(Object.entries(atual).map(([k, v]) => [k, colapsarOneOf(v)]));
+  }
+  return no;
+}
+
 function processar(pasta) {
   const origens = fs.readdirSync(pasta)
     .filter((f) => f.startsWith('openapi') && f.endsWith('.json') && !f.endsWith('.ipaas.json'))
@@ -135,6 +178,7 @@ function processar(pasta) {
     const spec = JSON.parse(fs.readFileSync(origem, 'utf-8'));
     let plano = dereferenciar(spec, spec);
     plano = removerDiscriminators(plano);
+    plano = colapsarOneOf(plano);
     const problemas = validarParaIpaas(plano);
     const emQuery = removerEsquemasEmQuery(plano);
     if (emQuery.length) console.log(`    securitySchemes em query removidos: ${emQuery.join(', ')} (quebram o importador; a conta do iPaaS injeta os parâmetros)`);

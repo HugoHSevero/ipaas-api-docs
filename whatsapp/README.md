@@ -9,6 +9,8 @@ WhatsApp Business Cloud API, hospedada pela Meta. Permite que a empresa fale com
 
 A Meta publica OpenAPI oficial em repositório próprio, o que coloca este app no caminho do recorte automatizado (como Asaas e Brevo) em vez de spec escrita à mão (como BrasilAPI). O link para o repositório está no fim da página de get-started e **não aparece no HTML servido por `curl`** — a página é renderizada por JavaScript, então é preciso abrir no navegador para achá-lo.
 
+> **Já quer só colocar um número para enviar?** Este README documenta como o conector foi construído (geração da spec, importação, modelagem) — trabalho feito uma vez. Para o fluxo recorrente de **cadastrar um número próprio na conta da Meta e usá-lo no iPaaS**, veja o [CADASTRO-NUMERO.md](./CADASTRO-NUMERO.md): passo a passo no painel da Meta, os IDs a coletar, a regra de template vs. texto livre e como apontar o diagrama para o número novo sem recriar ambiente ou conta.
+
 ## Obter o token permanente
 
 O token que o painel oferece no fluxo de introdução é **temporário** e não serve para cadastrar a conta no iPaaS. O permanente sai por outro caminho:

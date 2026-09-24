@@ -84,6 +84,12 @@ https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/mailchimp/openap
 https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/mailchimp/openapi-conta.ipaas.json
 ```
 
+As URLs acima apontam para `dugabriel/.../main` e valem **após o merge** do PR. A validação desta sessão foi feita a partir do fork `HugoHSevero/ipaas-api-docs` (branch `add-mailchimp`), importando por SHA — mesmo esquema que o Open-Meteo usou enquanto o PR não era mergeado:
+
+```
+https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/40304e606ed85946a3bc4d65364a23ab2f843113/mailchimp/openapi-<slug>.ipaas.json
+```
+
 O serviço `Audiências` tem 70 operações, acima do limite de 60 sugerido pelo `slice_spec`. Foi mantido inteiro porque a tag `lists` do Mailchimp concentra tudo (membros, tags, segmentos, merge fields) em `lists/{list_id}/...` e dividir divergiria da tag oficial. O importador suporta o volume; o custo é uma lista mais longa na interface.
 
 ## Como as specs foram geradas
@@ -95,12 +101,13 @@ A spec oficial está em **Swagger 2.0** (`swagger: "2.0"`, `info.version: 3.0.91
 curl -sL "https://raw.githubusercontent.com/mailchimp/mailchimp-client-lib-codegen/main/spec/marketing.json" -o mailchimp/_marketing_source.json
 
 # 2. normalizar `type: ["string","integer"]` -> `type: "string"`
-#    (8 ocorrências em variant_ids de ecommerce; o swagger2openapi rejeita type-array)
+#    (8 ocorrências em variant_ids de ecommerce; o swagger2openapi rejeita type-array,
+#     mesmo em spec Swagger 2.0, com "schema type must not be an array")
 
 # 3. converter Swagger 2.0 -> OpenAPI 3.0.3
 npx -y swagger2openapi@7 --outfile mailchimp/_marketing_oas3.json --targetVersion 3.0.3 mailchimp/_marketing_source_norm.json
 
-# 4. recortar por tag (port Node do slice_spec.py)
+# 4. recortar por tag (port Node do slice_spec.py, para máquina sem Python)
 node tools/slice_spec.mjs mailchimp/_marketing_oas3.json mailchimp \
     "lists=audiencias" \
     "campaigns=campanhas" \
@@ -115,18 +122,30 @@ node tools/dereference.mjs mailchimp
 
 O `dereference.mjs` não emitiu nenhum aviso: as 140 operações têm `tags` e `summary`, não há `type: array` sem `items` no `requestBody` e não sobrou `$ref`.
 
+**Duas descobertas custaram tempo aqui (registradas no playbook, seção 4):**
+
+1. **`swagger2openapi` rejeita `type` como array.** A spec, apesar de `swagger: "2.0"`, tem 8 esquemas com `type: ["string","integer"]` (todos em `variant_ids` de `ecommerce`). A conversão falha com `schema type must not be an array` até esses serem colapsados para um tipo único (passo 2).
+
+2. **Um `oneOf` grande e profundo em resposta zera o import em silêncio.** As respostas de `GET /lists` e `GET /campaigns` trazem `segment_opts.conditions` como um `oneOf` de **41 membros** (os tipos de condição de segmento). Com ele, o `import-swagger` responde **HTTP 200 e cria zero recursos** — a spec inteira do serviço não importa, sem mensagem de erro nenhuma. Os serviços sem esse construto (Relatórios, Templates, Conta) importaram de primeira. A correção foi um passo novo no `dereference` (`.mjs` e `.py`) que **colapsa `oneOf`/`anyOf`** unindo os membros num objeto; depois disso os 6 serviços importaram 140/140.
+
 ## Validação
 
-> Preencher após a execução do diagrama de validação (`Valida Mailchimp`, projeto `Validação apps`).
+Validado em diagrama (`Valida Mailchimp`, projeto `Validação apps`): 5 steps em série, todos de **leitura**, cobrindo 5 dos 6 serviços. Execução `DONE` em **3,6s**, com os payloads reais agregados na resposta síncrona.
 
-O plano é encadear operações de **leitura** que provam cadastro, contrato e autenticação `BASIC`:
+| Step | Operação | Serviço | Resultado |
+|---|---|---|---|
+| 1 | `GET /ping` | Conta e Ping | `health_status: "Everything's Chimpy!"` |
+| 2 | `GET /` | Conta e Ping | dados da conta (`role: owner`, `pricing_plan_type: forever_free`) |
+| 3 | `GET /lists` | Audiências | audiências da conta |
+| 4 | `GET /campaigns` | Campanhas | campanhas da conta |
+| 5 | `GET /reports` | Relatórios | relatórios de campanhas |
 
-- `GET /ping` (serviço Conta e Ping) — health check, resposta pequena.
-- `GET /` (serviço Conta e Ping) — dados da conta, confirma a credencial.
-- `GET /lists` (Audiências) — lista as audiências da conta.
-- `GET /campaigns` (Campanhas) e `GET /reports` (Relatórios) — leituras adicionais.
+O `DONE` com `finalComponent` no nó de resposta prova que os 5 steps executaram — valida **cadastro, contrato e a autenticação `BASIC`** contra a API real. O `GET /ping` respondendo também confirma que o data center (`us1`) e a credencial estão corretos (a tentativa de chamar a Mailchimp direto do navegador dá `Failed to fetch` por CORS, não é conclusiva; a execução no iPaaS é a prova).
 
-Como o importador do iPaaS **não traz o corpo de POST/PUT** (playbook, seção 4), qualquer operação de escrita (criar lista, criar campanha) precisa do corpo montado em `configurations.inBody` no diagrama.
+### O que não foi validado em execução
+
+- **Operações de escrita** (criar lista, criar campanha). O importador do iPaaS **não traz o corpo de POST/PUT** (playbook, seção 4), então escrita precisa do corpo montado em `configurations.inBody` no diagrama. Não foi exercitado.
+- Os serviços **Templates** e **Automações** não entraram no diagrama de validação; estão importados e conferidos por contagem e schema, mas não foram executados.
 
 ## Domínios ainda não importados
 

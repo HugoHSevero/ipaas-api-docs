@@ -43,3 +43,9 @@ meio = n // 2
 print("\nGerando metades:")
 monta(list(range(meio)), "h1")
 monta(list(range(meio, n)), "h2")
+
+# refino dentro de h2 (ops 3,4,5,6): uma spec por operacao isolada
+print("\nGerando operacoes isoladas de h2:")
+for i in (3, 4, 5, 6):
+    _, m, _ = ops[i]
+    monta([i], f"op{i}")

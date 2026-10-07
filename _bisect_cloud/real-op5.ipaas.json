@@ -1,0 +1,236 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bisect op5",
+    "description": "Admin API do Cloudinary: gerenciamento dos assets (recursos) armazenados no product environment — listagem, detalhes, busca, atualização, exclusão em lote e restauração. API rate-limited, autenticada por HTTP Basic Auth (api_key:api_secret). Base URL: https://api.cloudinary.com/v1_1/{cloud_name}.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.cloudinary.com/v1_1",
+      "description": "Produção (US). Para EU/AP use api-eu/api-ap."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Recursos"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Auth com api_key como usuário e api_secret como senha."
+      }
+    }
+  },
+  "paths": {
+    "/{cloud_name}/resources/search": {
+      "post": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Buscar assets",
+        "description": "Filtra e retorna informações dos assets do product environment usando a linguagem de expressão de busca do Cloudinary.",
+        "operationId": "search-resources",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expression": {
+                    "type": "string",
+                    "description": "Expressão de busca, ex.: resource_type:image AND tags=logo."
+                  },
+                  "sort_by": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "description": "Campo de ordenação (ex.: created_at)."
+                        },
+                        "direction": {
+                          "type": "string",
+                          "description": "Direção: asc ou desc."
+                        }
+                      }
+                    },
+                    "description": "Critérios de ordenação. Na API da Cloudinary o formato é [{\"created_at\":\"desc\"}]; monte via inBody no diagrama."
+                  },
+                  "max_results": {
+                    "type": "integer",
+                    "description": "Máximo de resultados (até 500). Default: 50."
+                  },
+                  "next_cursor": {
+                    "type": "string",
+                    "description": "Cursor para a próxima página."
+                  },
+                  "with_field": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Campos extras a incluir, ex.: tags, context, image_metadata."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultado da busca",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_count": {
+                      "type": "integer"
+                    },
+                    "time": {
+                      "type": "integer"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "asset_id": {
+                            "type": "string"
+                          },
+                          "public_id": {
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "integer"
+                          },
+                          "resource_type": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer"
+                          },
+                          "width": {
+                            "type": "integer"
+                          },
+                          "height": {
+                            "type": "integer"
+                          },
+                          "folder": {
+                            "type": "string"
+                          },
+                          "asset_folder": {
+                            "type": "string"
+                          },
+                          "display_name": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "secure_url": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "context": {
+                            "type": "object"
+                          },
+                          "next_cursor": {
+                            "type": "string"
+                          },
+                          "derived": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "transformation": {
+                                  "type": "string"
+                                },
+                                "format": {
+                                  "type": "string"
+                                },
+                                "bytes": {
+                                  "type": "integer"
+                                },
+                                "url": {
+                                  "type": "string"
+                                },
+                                "secure_url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

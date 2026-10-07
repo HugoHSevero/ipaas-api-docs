@@ -957,9 +957,19 @@
                   "sort_by": {
                     "type": "array",
                     "items": {
-                      "type": "object"
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "description": "Campo de ordenação (ex.: created_at)."
+                        },
+                        "direction": {
+                          "type": "string",
+                          "description": "Direção: asc ou desc."
+                        }
+                      }
                     },
-                    "description": "Critérios de ordenação, ex.: [{\"created_at\":\"desc\"}]."
+                    "description": "Critérios de ordenação. Na API da Cloudinary o formato é [{\"created_at\":\"desc\"}]; monte via inBody no diagrama."
                   },
                   "max_results": {
                     "type": "integer",

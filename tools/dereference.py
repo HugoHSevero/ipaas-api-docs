@@ -16,6 +16,7 @@ Uso:
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -98,6 +99,8 @@ def validar_para_ipaas(spec):
     """Checa os requisitos que o importador do iPaaS impõe."""
     problemas = []
     for caminho, metodos in spec.get("paths", {}).items():
+        # placeholders {x} declarados no template do path
+        no_template = set(re.findall(r"{([^}]+)}", caminho))
         for metodo, op in metodos.items():
             # o path item tambem carrega chaves que nao sao metodo (ex.: `parameters`)
             if metodo not in METODOS:
@@ -111,6 +114,20 @@ def validar_para_ipaas(spec):
                 problemas.append(
                     f"{alvo}: 'type: array' sem 'items' no requestBody, em {onde}"
                     " — o import responde HTTP 200 e não cria recurso nenhum"
+                )
+            # path param declarado no template mas ausente em `parameters`:
+            # OpenAPI invalido; o import responde HTTP 200 e zera a spec inteira
+            # em silencio (verificado no Cloudinary: DELETE com {public_id} no
+            # path e so `public_ids` em query zerava as 7 operacoes do servico).
+            declarados = {
+                p.get("name") for p in op.get("parameters", [])
+                if isinstance(p, dict) and p.get("in") == "path"
+            }
+            orfaos = no_template - declarados
+            if orfaos:
+                problemas.append(
+                    f"{alvo}: path param {sorted(orfaos)} no template mas não declarado em 'parameters'"
+                    " — o import responde HTTP 200 e não cria recurso nenhum (zera a spec)"
                 )
     return problemas
 

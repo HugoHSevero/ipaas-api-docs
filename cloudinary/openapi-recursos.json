@@ -83,11 +83,13 @@
           "200": { "description": "Asset atualizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Resource" } } } },
           "400": { "description": "Bad request", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } } }
         }
-      },
+      }
+    },
+    "/{cloud_name}/resources/{resource_type}/{type}": {
       "delete": {
         "tags": ["Recursos"],
         "summary": "Excluir assets em lote",
-        "description": "Exclui assets do product environment por tipo de recurso e entrega. Pode filtrar por public_ids, prefixo ou todos. Opera em blocos de até 1000.",
+        "description": "Exclui assets do product environment por tipo de recurso e entrega. A seleção vem por query: public_ids, prefixo ou todos. Opera em blocos de até 1000.",
         "operationId": "delete-resources",
         "parameters": [
           { "name": "cloud_name", "in": "path", "required": true, "description": "Nome do product environment (cloud name).", "schema": { "type": "string", "example": "demo" } },

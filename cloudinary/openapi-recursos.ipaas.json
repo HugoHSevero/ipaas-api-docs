@@ -621,13 +621,15 @@
             }
           }
         }
-      },
+      }
+    },
+    "/{cloud_name}/resources/{resource_type}/{type}": {
       "delete": {
         "tags": [
           "Recursos"
         ],
         "summary": "Excluir assets em lote",
-        "description": "Exclui assets do product environment por tipo de recurso e entrega. Pode filtrar por public_ids, prefixo ou todos. Opera em blocos de até 1000.",
+        "description": "Exclui assets do product environment por tipo de recurso e entrega. A seleção vem por query: public_ids, prefixo ou todos. Opera em blocos de até 1000.",
         "operationId": "delete-resources",
         "parameters": [
           {

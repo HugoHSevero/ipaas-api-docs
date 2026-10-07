@@ -1,0 +1,41 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Bisect A", "description": "paths parametrizados", "version": "1.0.0" },
+  "servers": [{ "url": "https://api.cloudinary.com/v1_1" }],
+  "tags": [{ "name": "Recursos" }],
+  "paths": {
+    "/{cloud_name}/resources/{resource_type}": {
+      "get": {
+        "tags": ["Recursos"], "summary": "Listar assets por tipo", "operationId": "list-resources",
+        "parameters": [
+          { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "resource_type", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "next_cursor": { "type": "string" } } } } } } }
+      }
+    },
+    "/{cloud_name}/resources/{resource_type}/{type}/{public_id}": {
+      "get": {
+        "tags": ["Recursos"], "summary": "Detalhes do asset", "operationId": "get-resource",
+        "parameters": [
+          { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "resource_type", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "type", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "public_id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "public_id": { "type": "string" } } } } } } }
+      }
+    },
+    "/{cloud_name}/resources/{resource_type}/tags/{tag}": {
+      "get": {
+        "tags": ["Recursos"], "summary": "Listar assets por tag", "operationId": "list-resources-by-tag",
+        "parameters": [
+          { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "resource_type", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "tag", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "next_cursor": { "type": "string" } } } } } } }
+      }
+    }
+  }
+}

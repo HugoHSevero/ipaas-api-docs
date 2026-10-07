@@ -49,3 +49,33 @@ print("\nGerando operacoes isoladas de h2:")
 for i in (3, 4, 5, 6):
     _, m, _ = ops[i]
     monta([i], f"op{i}")
+
+# variantes cirurgicas da op3 (DELETE) para isolar o campo culpado
+import copy
+print("\nGerando variantes da op3:")
+_, _, op3 = ops[3]
+
+def salva_variante(op, nome):
+    novo = {k: v for k, v in spec.items() if k != "paths"}
+    novo["paths"] = {"/{cloud_name}/resources/{resource_type}/{type}/{public_id}": {"delete": op}}
+    novo["info"] = {**spec.get("info", {}), "title": f"Bisect {nome}"}
+    (AQUI / f"{nome}.ipaas.json").write_text(json.dumps(novo, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"  {nome}.ipaas.json")
+
+# v1: remove query params 'all' e 'invalidate' (boolean)
+v1 = copy.deepcopy(op3)
+v1["parameters"] = [p for p in v1["parameters"] if p["name"] not in ("all", "invalidate")]
+salva_variante(v1, "op3-noboolq")
+
+# v2: substitui objetos vazios da resposta por string
+v2 = copy.deepcopy(op3)
+props = v2["responses"]["200"]["content"]["application/json"]["schema"]["properties"]
+for k in ("deleted", "deleted_counts"):
+    if k in props:
+        props[k] = {"type": "string"}
+salva_variante(v2, "op3-noemptyobj")
+
+# v3: remove o parametro 'all' apenas (nome potencialmente reservado)
+v3 = copy.deepcopy(op3)
+v3["parameters"] = [p for p in v3["parameters"] if p["name"] != "all"]
+salva_variante(v3, "op3-noall")

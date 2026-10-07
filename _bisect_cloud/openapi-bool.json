@@ -1,0 +1,27 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Bisect boolean query", "description": "testa query param boolean", "version": "1.0.0" },
+  "servers": [{ "url": "https://api.cloudinary.com/v1_1" }],
+  "tags": [{ "name": "Recursos" }],
+  "paths": {
+    "/{cloud_name}/things/{id}": {
+      "get": {
+        "tags": ["Recursos"], "summary": "Com query boolean", "operationId": "thing-bool",
+        "parameters": [
+          { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "all", "in": "query", "description": "flag", "schema": { "type": "boolean" } },
+          { "name": "invalidate", "in": "query", "description": "flag", "schema": { "type": "boolean" } }
+        ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "result": { "type": "string" } } } } } } }
+      }
+    },
+    "/{cloud_name}/things": {
+      "get": {
+        "tags": ["Recursos"], "summary": "Controle sem boolean", "operationId": "thing-ctrl",
+        "parameters": [ { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "count": { "type": "integer" } } } } } } }
+      }
+    }
+  }
+}

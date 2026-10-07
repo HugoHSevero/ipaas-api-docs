@@ -1,0 +1,636 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bisect h1",
+    "description": "Admin API do Cloudinary: gerenciamento dos assets (recursos) armazenados no product environment — listagem, detalhes, busca, atualização, exclusão em lote e restauração. API rate-limited, autenticada por HTTP Basic Auth (api_key:api_secret). Base URL: https://api.cloudinary.com/v1_1/{cloud_name}.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.cloudinary.com/v1_1",
+      "description": "Produção (US). Para EU/AP use api-eu/api-ap."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Recursos"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Auth com api_key como usuário e api_secret como senha."
+      }
+    }
+  },
+  "paths": {
+    "/{cloud_name}/resources/{resource_type}": {
+      "get": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Listar assets por tipo",
+        "description": "Lista os assets armazenados no product environment, filtrando por tipo de recurso e, opcionalmente, por tipo de entrega.",
+        "operationId": "list-resources",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Tipo de entrega: upload, private, authenticated.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prefix",
+            "in": "query",
+            "description": "Filtra por prefixo do public_id (modo fixed folder).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "Máximo de resultados (até 500). Default: 10.",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "name": "next_cursor",
+            "in": "query",
+            "description": "Cursor para a próxima página de resultados.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Incluir as tags de cada asset na resposta.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "description": "Incluir metadados contextuais na resposta.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de assets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "asset_id": {
+                            "type": "string"
+                          },
+                          "public_id": {
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "integer"
+                          },
+                          "resource_type": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer"
+                          },
+                          "width": {
+                            "type": "integer"
+                          },
+                          "height": {
+                            "type": "integer"
+                          },
+                          "folder": {
+                            "type": "string"
+                          },
+                          "asset_folder": {
+                            "type": "string"
+                          },
+                          "display_name": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "secure_url": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "context": {
+                            "type": "object"
+                          },
+                          "next_cursor": {
+                            "type": "string"
+                          },
+                          "derived": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "transformation": {
+                                  "type": "string"
+                                },
+                                "format": {
+                                  "type": "string"
+                                },
+                                "bytes": {
+                                  "type": "integer"
+                                },
+                                "url": {
+                                  "type": "string"
+                                },
+                                "secure_url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    },
+                    "rate_limit_allowed": {
+                      "type": "integer"
+                    },
+                    "rate_limit_remaining": {
+                      "type": "integer"
+                    },
+                    "rate_limit_reset_at": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/resources/{resource_type}/{type}/{public_id}": {
+      "get": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Detalhes do asset por public_id",
+        "description": "Retorna os detalhes do asset identificado por public_id, resource_type e tipo de entrega, além de seus assets derivados.",
+        "operationId": "get-resource",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de entrega: upload, private, authenticated.",
+            "schema": {
+              "type": "string",
+              "example": "upload"
+            }
+          },
+          {
+            "name": "public_id",
+            "in": "path",
+            "required": true,
+            "description": "public_id do asset.",
+            "schema": {
+              "type": "string",
+              "example": "sample"
+            }
+          },
+          {
+            "name": "colors",
+            "in": "query",
+            "description": "Incluir cores predominantes na resposta.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "image_metadata",
+            "in": "query",
+            "description": "Incluir metadados EXIF/IPTC/XMP.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "exif",
+            "in": "query",
+            "description": "Incluir dados EXIF (deprecado em favor de image_metadata).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do asset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "asset_id": {
+                      "type": "string"
+                    },
+                    "public_id": {
+                      "type": "string"
+                    },
+                    "format": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "integer"
+                    },
+                    "resource_type": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer"
+                    },
+                    "width": {
+                      "type": "integer"
+                    },
+                    "height": {
+                      "type": "integer"
+                    },
+                    "folder": {
+                      "type": "string"
+                    },
+                    "asset_folder": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "secure_url": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "context": {
+                      "type": "object"
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    },
+                    "derived": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "transformation": {
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "secure_url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Atualizar asset por public_id",
+        "description": "Atualiza um ou mais atributos de um asset identificado por public_id (tags, contexto, moderação, metadados estruturados).",
+        "operationId": "update-resource",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de entrega: upload, private, authenticated.",
+            "schema": {
+              "type": "string",
+              "example": "upload"
+            }
+          },
+          {
+            "name": "public_id",
+            "in": "path",
+            "required": true,
+            "description": "public_id do asset.",
+            "schema": {
+              "type": "string",
+              "example": "sample"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tags": {
+                    "type": "string",
+                    "description": "Tags separadas por vírgula."
+                  },
+                  "context": {
+                    "type": "string",
+                    "description": "Metadados contextuais key=value|key2=value2."
+                  },
+                  "moderation_status": {
+                    "type": "string",
+                    "description": "Status de moderação: approved, rejected, pending."
+                  },
+                  "asset_folder": {
+                    "type": "string",
+                    "description": "Pasta do asset (modo dynamic folder)."
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "description": "Nome de exibição do asset."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Asset atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "asset_id": {
+                      "type": "string"
+                    },
+                    "public_id": {
+                      "type": "string"
+                    },
+                    "format": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "integer"
+                    },
+                    "resource_type": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer"
+                    },
+                    "width": {
+                      "type": "integer"
+                    },
+                    "height": {
+                      "type": "integer"
+                    },
+                    "folder": {
+                      "type": "string"
+                    },
+                    "asset_folder": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "secure_url": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "context": {
+                      "type": "object"
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    },
+                    "derived": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "transformation": {
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "secure_url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

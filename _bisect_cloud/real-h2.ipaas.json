@@ -1,0 +1,700 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bisect h2",
+    "description": "Admin API do Cloudinary: gerenciamento dos assets (recursos) armazenados no product environment — listagem, detalhes, busca, atualização, exclusão em lote e restauração. API rate-limited, autenticada por HTTP Basic Auth (api_key:api_secret). Base URL: https://api.cloudinary.com/v1_1/{cloud_name}.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.cloudinary.com/v1_1",
+      "description": "Produção (US). Para EU/AP use api-eu/api-ap."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Recursos"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Auth com api_key como usuário e api_secret como senha."
+      }
+    }
+  },
+  "paths": {
+    "/{cloud_name}/resources/{resource_type}/{type}/{public_id}": {
+      "delete": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Excluir assets em lote",
+        "description": "Exclui assets do product environment por tipo de recurso e entrega. Pode filtrar por public_ids, prefixo ou todos. Opera em blocos de até 1000.",
+        "operationId": "delete-resources",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de entrega: upload, private, authenticated.",
+            "schema": {
+              "type": "string",
+              "example": "upload"
+            }
+          },
+          {
+            "name": "public_ids",
+            "in": "query",
+            "description": "Lista de public_ids a excluir (separados por vírgula; até 100).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prefix",
+            "in": "query",
+            "description": "Exclui todos os assets cujo public_id começa com o prefixo.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "all",
+            "in": "query",
+            "description": "Exclui todos os assets do tipo especificado.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "invalidate",
+            "in": "query",
+            "description": "Invalidar cópias em cache no CDN.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "next_cursor",
+            "in": "query",
+            "description": "Cursor para continuar a exclusão em blocos.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado da exclusão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "object",
+                      "description": "Mapa de public_id para resultado (deleted, not_found)."
+                    },
+                    "deleted_counts": {
+                      "type": "object"
+                    },
+                    "partial": {
+                      "type": "boolean"
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/resources/{resource_type}/tags/{tag}": {
+      "get": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Listar assets por tag",
+        "description": "Lista os assets que possuem a tag especificada.",
+        "operationId": "list-resources-by-tag",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          },
+          {
+            "name": "tag",
+            "in": "path",
+            "required": true,
+            "description": "Nome da tag.",
+            "schema": {
+              "type": "string",
+              "example": "logo"
+            }
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "Máximo de resultados (até 500). Default: 10.",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "name": "next_cursor",
+            "in": "query",
+            "description": "Cursor para a próxima página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de assets com a tag",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "asset_id": {
+                            "type": "string"
+                          },
+                          "public_id": {
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "integer"
+                          },
+                          "resource_type": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer"
+                          },
+                          "width": {
+                            "type": "integer"
+                          },
+                          "height": {
+                            "type": "integer"
+                          },
+                          "folder": {
+                            "type": "string"
+                          },
+                          "asset_folder": {
+                            "type": "string"
+                          },
+                          "display_name": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "secure_url": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "context": {
+                            "type": "object"
+                          },
+                          "next_cursor": {
+                            "type": "string"
+                          },
+                          "derived": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "transformation": {
+                                  "type": "string"
+                                },
+                                "format": {
+                                  "type": "string"
+                                },
+                                "bytes": {
+                                  "type": "integer"
+                                },
+                                "url": {
+                                  "type": "string"
+                                },
+                                "secure_url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    },
+                    "rate_limit_allowed": {
+                      "type": "integer"
+                    },
+                    "rate_limit_remaining": {
+                      "type": "integer"
+                    },
+                    "rate_limit_reset_at": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/resources/search": {
+      "post": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Buscar assets",
+        "description": "Filtra e retorna informações dos assets do product environment usando a linguagem de expressão de busca do Cloudinary.",
+        "operationId": "search-resources",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expression": {
+                    "type": "string",
+                    "description": "Expressão de busca, ex.: resource_type:image AND tags=logo."
+                  },
+                  "sort_by": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "description": "Campo de ordenação (ex.: created_at)."
+                        },
+                        "direction": {
+                          "type": "string",
+                          "description": "Direção: asc ou desc."
+                        }
+                      }
+                    },
+                    "description": "Critérios de ordenação. Na API da Cloudinary o formato é [{\"created_at\":\"desc\"}]; monte via inBody no diagrama."
+                  },
+                  "max_results": {
+                    "type": "integer",
+                    "description": "Máximo de resultados (até 500). Default: 50."
+                  },
+                  "next_cursor": {
+                    "type": "string",
+                    "description": "Cursor para a próxima página."
+                  },
+                  "with_field": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Campos extras a incluir, ex.: tags, context, image_metadata."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultado da busca",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_count": {
+                      "type": "integer"
+                    },
+                    "time": {
+                      "type": "integer"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "asset_id": {
+                            "type": "string"
+                          },
+                          "public_id": {
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "integer"
+                          },
+                          "resource_type": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer"
+                          },
+                          "width": {
+                            "type": "integer"
+                          },
+                          "height": {
+                            "type": "integer"
+                          },
+                          "folder": {
+                            "type": "string"
+                          },
+                          "asset_folder": {
+                            "type": "string"
+                          },
+                          "display_name": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "secure_url": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "context": {
+                            "type": "object"
+                          },
+                          "next_cursor": {
+                            "type": "string"
+                          },
+                          "derived": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "transformation": {
+                                  "type": "string"
+                                },
+                                "format": {
+                                  "type": "string"
+                                },
+                                "bytes": {
+                                  "type": "integer"
+                                },
+                                "url": {
+                                  "type": "string"
+                                },
+                                "secure_url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/resources/restore": {
+      "post": {
+        "tags": [
+          "Recursos"
+        ],
+        "summary": "Restaurar assets do backup",
+        "description": "Restaura um ou mais assets a partir do backup, identificados pelo public_id. Requer backup habilitado no product environment.",
+        "operationId": "restore-resources",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "public_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "public_ids dos assets a restaurar."
+                  },
+                  "versions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Versões específicas a restaurar (opcional)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assets restaurados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "asset_id": {
+                      "type": "string"
+                    },
+                    "public_id": {
+                      "type": "string"
+                    },
+                    "format": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "integer"
+                    },
+                    "resource_type": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer"
+                    },
+                    "width": {
+                      "type": "integer"
+                    },
+                    "height": {
+                      "type": "integer"
+                    },
+                    "folder": {
+                      "type": "string"
+                    },
+                    "asset_folder": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "secure_url": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "context": {
+                      "type": "object"
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    },
+                    "derived": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "transformation": {
+                            "type": "string"
+                          },
+                          "format": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "secure_url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

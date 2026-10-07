@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Bisect DELETE verb", "description": "um unico DELETE trivial", "version": "1.0.0" },
+  "servers": [{ "url": "https://api.cloudinary.com/v1_1" }],
+  "tags": [{ "name": "Recursos" }],
+  "paths": {
+    "/{cloud_name}/widgets/{id}": {
+      "delete": {
+        "tags": ["Recursos"], "summary": "Excluir widget", "operationId": "delete-widget",
+        "parameters": [
+          { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "result": { "type": "string" } } } } } } }
+      }
+    },
+    "/{cloud_name}/widgets": {
+      "get": {
+        "tags": ["Recursos"], "summary": "Listar widgets", "operationId": "list-widgets",
+        "parameters": [ { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "count": { "type": "integer" } } } } } } }
+      }
+    }
+  }
+}

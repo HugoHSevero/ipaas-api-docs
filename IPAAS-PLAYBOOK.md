@@ -420,6 +420,12 @@ Verificado por bissecção com uma spec de uma operação por arquivo: na spec d
 
 `items` é obrigatório em array no OpenAPI 3.0, então specs oficiais com essa falha não são raras. O `dereference.py` acusa o caso do `requestBody` em `validar_para_ipaas`.
 
+**Path param declarado no template mas ausente em `parameters` zera a importação, em silêncio.** Um path tipo `/resources/{resource_type}/{type}/{public_id}` cujo `operation.parameters` não declara o `public_id` (como `in: path`) é OpenAPI inválido. O `import-swagger` responde **HTTP 200 com corpo vazio e não cria recurso nenhum** — nem os das outras operações do arquivo. Mesmo sintoma do `array` sem `items`: falso negativo que parece problema de cache ou de timing.
+
+Verificado por bissecção no Cloudinary: o serviço de recursos (7 operações) importava **zero**. Isolada operação a operação, a culpada era um `DELETE` que herdou o path de 4 segmentos do `GET`/`POST` vizinhos (`.../{type}/{public_id}`) mas só declarava `public_ids` em query — o `{public_id}` do template ficou órfão. Reproduções manuais da mesma operação com os 4 path params declarados importavam normalmente; só o arquivo real falhava. A correção foi mover o `DELETE` para o path correto do fornecedor (`/resources/{resource_type}/{type}`, delete em lote por query). O `dereference.py` passou a acusar o caso em `validar_para_ipaas` (compara os `{placeholders}` do path com os parâmetros `in: path` declarados).
+
+Diagnóstico prático: quando o import der 200 e zero recursos, a lista de suspeitos é **`array` sem `items` no requestBody** e **path param do template não declarado**. Os dois dão o mesmo silêncio.
+
 **A validação tem que rodar na spec dereferenciada, não na fonte.** Na fonte os schemas estão atrás de `$ref` e uma checagem estrutural não os alcança — o array sem `items` do WhatsApp estava dentro de `#/components/schemas/Message` e passava batido.
 
 **`discriminator` sobrevive à dereferência e vira referência pendurada.** O `mapping` aponta para `#/components/schemas/...`, que o `dereference.py` descarta do arquivo. Como os valores são strings e não chaves `$ref`, a checagem de `$ref` restante não os pega. O `oneOf` ao lado já tem os membros expandidos, então remover o `discriminator` não perde campo nenhum.
@@ -744,6 +750,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Brevo | `API_KEY` (header `api-key`) | 68 em 4 serviços | 68 recursos importados a partir da spec oficial convertida de Swagger 2.0; conta criada; diagrama com 6 steps em 3 serviços executado `DONE`, incluindo `POST /smtp/email` em modo sandbox. Serviço `SMS Transacional` **não validado**: plano gratuito não tem crédito de SMS e todos os endpoints respondem 500 |
 | Trello | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | 151 recursos importados; exigiu injetar `tags` (a spec oficial não tem nenhuma) e remover `securitySchemes` em query, que quebrava o importador; conta com **duas** chaves em query criada; diagrama com 6 steps em 4 serviços executado `DONE`, criando cartão real e encadeando `{{{id4.id}}}` |
 | Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
+| Cloudinary | `BASIC` (api_key:api_secret) | 28 em 4 serviços | Primeiro app `BASIC`, fechando os quatro padrões viáveis. Sem spec oficial (doc web/SDK): specs escritas à mão da referência (Admin API + Upload API), recortadas em Upload/Recursos/Pastas/Metadados. `cloud_name` como path param (`inPath`), não no baseURL. 28 recursos importados; conta `BASIC` criada; diagrama com ping + upload por URL + upload por **base64 (Data URI)** + detalhe encadeando `{{{id3.public_id}}}` executado `DONE` em 4,0s, criando duas imagens reais. Confirmado que o iPaaS entrega o corpo do Upload API (form-encoded na origem) via `inBody`. Armadilha nova achada por bissecção: **path param do template não declarado em `parameters`** zera a importação em silêncio (um `DELETE` com `{public_id}` órfão zerava as 7 operações do serviço) |
 | WhatsApp | `TOKEN` (Bearer) | 100 em 6 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 100; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 6 domínios; 100 recursos importados e conferidos campo a campo. Diagrama com 5 steps executado `DONE` em 11,4s, com os payloads reais de cada serviço. A entrega **passou a funcionar** depois que um número próprio brasileiro verificado (`VERIFIED`/`LIVE`) substituiu o número de teste americano e a WABA ficou `account_review_status: APPROVED`: template (primeiro contato) e texto livre (janela de 24h aberta) chegaram no aparelho, tanto por chamada direta quanto pelo diagrama. Antes, com o número de teste, os envios recebiam `accepted` e **não entregavam** (erro `130497`, cross-country para o Brasil em conta sem verificação de negócio, só visível no webhook de status). Trocar de número **não** exigiu recriar ambiente/conta nem reimportar: só mudar `phone_number_id`/`WABA-ID` no `inPath` dos steps (ver `whatsapp/CADASTRO-NUMERO.md`). Três armadilhas novas achadas: **import assíncrono** (200 não significa concluído), **`array` sem `items` no `requestBody`** zerando a spec em silêncio, e **`PUT` de conta sem `active: true`** desativando a credencial. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real |
 
 ---
@@ -915,25 +922,46 @@ A versão da Graph API está na **URL do ambiente**, não em parâmetro, porque 
 
 A serviço da rastreabilidade: a bissecção que achou a armadilha do `array` sem `items` (seção 4) criou 56 serviços `ZZ ...` neste app, todos removidos depois com `DELETE /v3/application-services/{id}`.
 
+### Cloudinary — `BASIC` (api_key:api_secret)
+
+Primeiro app com o modelo `BASIC`. Sem spec oficial do fornecedor (doc web/SDK): specs escritas à mão da referência (Admin API + Upload API), recortadas em 4 serviços.
+
+| Item | Id |
+|---|---|
+| App (`componentId`) | `3230d94e-64ce-45d2-85a0-2f937d0c045b` |
+| Ambiente `Produção` (`https://api.cloudinary.com/v1_1`) | `bae51566-ae3f-4d77-9e70-71e1af049e67` |
+| Conta `Produção` (`BASIC`) | `65090553-82ea-40d7-9be0-5cb92cc08c36` |
+| Serviço `Upload` (6 recursos) | `cc428be6-51da-4252-8b02-0164d8a1e1e9` |
+| Serviço `Recursos` (7 recursos) | `9b8ce73b-a9ec-4e5d-bc3b-8305265e1299` |
+| Serviço `Pastas` (5 recursos) | `44a8162e-9219-422f-ab8f-6ff0f6a9e637` |
+| Serviço `Metadados e Conta` (10 recursos) | `ed936eb3-ce24-4e9a-96f3-741ddb80cca6` |
+| Diagrama `Valida Cloudinary` (`integrationId`) | `5dd03c5f-d6e9-4548-a4ff-5b94114707a6` |
+
+Na conta `BASIC`, `username` = API Key e `password` = API Secret (o modelo expõe esses dois campos no `outputSchema`). O **cloud name** (`z1hdjfbz` na validação) **não** entra no ambiente nem na conta: é parâmetro de caminho (`{cloud_name}`), preenchido em `configurations.inPath` de cada step. A mesma conta atende qualquer cloud name.
+
+O diagrama de validação encadeia ping → upload por URL → upload por **base64 (Data URI)** → detalhe do asset, executou `DONE` em 4,0s e criou duas imagens reais (`ipaas_validacao_url.jpg` e `ipaas_validacao_b64.png`). Isso confirmou de uma vez: `BASIC`, `cloud_name` no `inPath`, corpo via `inBody` e **o iPaaS entregando o corpo do Upload API (form-encoded na origem) corretamente** — dúvida que estava aberta no README do app.
+
+A credencial usada (API Key `353984244296654` + API Secret) foi exercitada em chat e **deve ser rotacionada**. Se a execução começar a dar 401, provavelmente foi trocada — peça a nova e atualize com `PUT /ipaas/api/v3/accounts/{id}` (com `active: true` explícito, senão desativa a conta — seção 2.3).
+
+A bissecção que isolou a armadilha do **path param órfão** (seção 4) criou 16 serviços `ZZ ...` neste app, todos removidos com `DELETE /v3/application-services/{id}`.
+
 ---
 
 ## 11. Fila de próximos apps
 
 Ordenada por custo de integração. O critério é o modelo de autenticação (seção 3) e a existência de spec oficial.
 
-### Padrões de auth ainda não exercitados
+### Padrões de auth — todos os quatro viáveis já exercitados
 
-| Padrão | Candidatos | Observação |
-|---|---|---|
-| `BASIC` | Jira Cloud, Twilio, Zendesk | Jira Cloud é o mais barato: plano free permanente, API token instantâneo em `id.atlassian.com`, spec oficial em `developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json` (grande, exige recorte) |
+`NO_AUTH` (BrasilAPI/Open-Meteo), `API_KEY` em header (Asaas/Brevo) e em query (Trello), `TOKEN` (WhatsApp) e `BASIC` (**Cloudinary**) estão todos cobertos (seção 10). O catálogo está pronto para escalar em qualquer um deles.
 
-`API_KEY` em `query` foi coberto pelo **Trello** e `TOKEN` pelo **WhatsApp** (seção 10) — resta só `BASIC` para fechar os quatro padrões viáveis. Clicksign v1 e Pipedrive seguem como alternativas em query, se houver interesse específico.
+Candidatos `BASIC` que ficam de reserva, se quiser mais um do tipo: Jira Cloud é o mais barato (plano free permanente, API token instantâneo em `id.atlassian.com`, spec oficial em `developer.atlassian.com/cloud/jira/platform/swagger-v3.v3.json`, grande, exige recorte), além de Twilio e Zendesk. Clicksign v1 e Pipedrive seguem como alternativas em query.
 
 Candidatos `TOKEN` que ficaram na fila, caso queira mais um: HubSpot (token de private app em developer test account free, spec oficial por objeto), ZapSign (API Token estático, conta free, sem spec oficial, alta relevância BR), SendGrid, Notion, Airtable, Asana.
 
 Levantado em 2026-09-03 a partir da documentação dos fornecedores; a facilidade de obter credencial muda com o tempo, reconfirme antes de começar.
 
-Fechar `BASIC` cobriria os quatro padrões viáveis, deixando o catálogo pronto para escalar.
+Com o Cloudinary (`BASIC`), os quatro padrões viáveis estão fechados. A fila agora é por relevância, não mais por cobrir padrão de auth.
 
 ### Brasileiros relevantes
 

@@ -19,7 +19,7 @@ O `cloud_name` **não** entra no base path do ambiente: ele é parâmetro de cam
 
 O Cloudinary **não publica** uma spec OpenAPI para download. A documentação é web + SDKs. As specs deste diretório foram montadas à mão a partir da referência oficial (Admin API e Upload API), cobrindo o núcleo de gestão de mídia. Isso difere do Asaas/Brevo (spec oficial) e se aproxima da BrasilAPI (endpoints derivados da documentação).
 
-**Não verificado em execução.** As specs foram escritas e dereferenciadas, mas o app ainda não foi cadastrado nem validado em diagrama (a sessão de cadastro depende do MCP do navegador). Trate os schemas de resposta como hipótese derivada da documentação até uma execução `DONE` confirmar os campos.
+**Validado em execução.** App cadastrado no tenant `iPaaS Gateway` (produção), conta `BASIC` criada e diagrama `Valida Cloudinary` executado `DONE` (4,0s, `errorStack` nulo): ping, upload por URL, upload por base64 (Data URI) e detalhe do asset encadeando `{{{id3.public_id}}}`. As duas imagens foram criadas de verdade no cloud. Confirmado também que o iPaaS entrega o corpo do Upload API (form-encoded na origem) corretamente via `inBody` — ver IDs e detalhes abaixo.
 
 ## Obter as credenciais
 
@@ -115,4 +115,19 @@ Fora do recorte atual, da documentação oficial: `metadata_rules`, `people`, `r
 
 - **Data centers EU/AP.** Contas premium podem usar `api-eu` ou `api-ap`. Se for o caso, troque o base path do ambiente — as specs são agnósticas quanto a isso.
 
-- **Validação pendente.** Falta cadastrar o app, criar a conta `BASIC`, importar os serviços e validar num diagrama com execução `DONE`. Sugestão de fluxo de validação: `POST /image/upload` (enviar por URL) → `GET /resources/image/upload/{public_id}` (detalhar o que foi criado, encadeando `{{{id1.public_id}}}`) → `GET /{cloud_name}/ping`. Isso exercita `BASIC`, corpo via `inBody` e encadeamento entre steps.
+- **Path param órfão zera a importação (armadilha nova).** A primeira versão do serviço `Recursos` tinha o `DELETE` no path `.../{type}/{public_id}` mas declarava só `public_ids` (query) nos parâmetros — o `{public_id}` do template ficou sem o parâmetro `in: path` correspondente. OpenAPI inválido, e o importador do iPaaS responde HTTP 200 e **zera as 7 operações do serviço em silêncio**, mesmo sintoma do `array` sem `items`. Custou uma bissecção inteira para isolar. Corrigido movendo o `DELETE` para `.../{resource_type}/{type}` (o endpoint real de delete em lote, que seleciona por query). O `tools/dereference.py` agora detecta path params não declarados.
+
+## Estado no tenant (iPaaS Gateway, produção)
+
+| Item | Id |
+|---|---|
+| App `Cloudinary` (`componentId`) | `3230d94e-64ce-45d2-85a0-2f937d0c045b` |
+| Ambiente `Produção` (`https://api.cloudinary.com/v1_1`) | `bae51566-ae3f-4d77-9e70-71e1af049e67` |
+| Conta `Produção` (`BASIC`) | `65090553-82ea-40d7-9be0-5cb92cc08c36` |
+| Serviço `Upload` (6 recursos) | `cc428be6-51da-4252-8b02-0164d8a1e1e9` |
+| Serviço `Recursos` (7 recursos) | `9b8ce73b-a9ec-4e5d-bc3b-8305265e1299` |
+| Serviço `Pastas` (5 recursos) | `44a8162e-9219-422f-ab8f-6ff0f6a9e637` |
+| Serviço `Metadados e Conta` (10 recursos) | `ed936eb3-ce24-4e9a-96f3-741ddb80cca6` |
+| Diagrama `Valida Cloudinary` (`integrationId`) | `5dd03c5f-d6e9-4548-a4ff-5b94114707a6` |
+
+Cloud name usado na validação: `z1hdjfbz` (vai no `configurations.inPath.cloud_name` dos steps, não na conta nem no ambiente). A credencial `BASIC` da conta (API Key `353984244296654` + API Secret) foi usada na validação e **deve ser rotacionada** — a API Key passou por chat.

@@ -1,0 +1,30 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Bisect DELETE + resposta 400", "description": "DELETE que funcionava, agora com resposta 400", "version": "1.0.0" },
+  "servers": [{ "url": "https://api.cloudinary.com/v1_1" }],
+  "tags": [{ "name": "Recursos" }],
+  "paths": {
+    "/{cloud_name}/d400/{resource_type}/{type}/{public_id}": {
+      "delete": {
+        "tags": ["Recursos"], "summary": "DELETE com 200 e 400", "operationId": "d400",
+        "parameters": [
+          { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "resource_type", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "type", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "public_id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "result": { "type": "string" } } } } } },
+          "400": { "description": "bad", "content": { "application/json": { "schema": { "type": "object", "properties": { "error": { "type": "object", "properties": { "message": { "type": "string" } } } } } } } }
+        }
+      }
+    },
+    "/{cloud_name}/ctrl": {
+      "get": {
+        "tags": ["Recursos"], "summary": "controle", "operationId": "ctrl4",
+        "parameters": [ { "name": "cloud_name", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "responses": { "200": { "description": "ok", "content": { "application/json": { "schema": { "type": "object", "properties": { "count": { "type": "integer" } } } } } } }
+      }
+    }
+  }
+}

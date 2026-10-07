@@ -1,0 +1,57 @@
+{
+  "app": {
+    "name": "Cloudinary",
+    "description": "Plataforma de gestão de mídia: upload, armazenamento, transformação e entrega de imagens, vídeos e arquivos. Admin API e Upload API."
+  },
+  "environments": [
+    {
+      "name": "Produção",
+      "type": "REST",
+      "baseURL": "https://api.cloudinary.com/v1_1",
+      "authModels": ["BASIC"]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Produção",
+      "environment": "Produção",
+      "authModel": "BASIC",
+      "username": "<api_key, cadastrar na interface>",
+      "password": "<api_secret, cadastrar na interface>"
+    }
+  ],
+  "services": [
+    {
+      "name": "Upload",
+      "description": "Envio e gerenciamento de assets: upload, explicit, rename, destroy, tags e context",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/cloudinary/openapi-upload.ipaas.json"
+    },
+    {
+      "name": "Recursos",
+      "description": "Gestão de assets via Admin API: listar, detalhar, buscar, atualizar, excluir e restaurar",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/cloudinary/openapi-recursos.ipaas.json"
+    },
+    {
+      "name": "Pastas",
+      "description": "Gestão de pastas de assets: listar, criar, renomear/mover e excluir",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/cloudinary/openapi-pastas.ipaas.json"
+    },
+    {
+      "name": "Metadados e Conta",
+      "description": "Campos de metadados estruturados, tags, transformações e informações do product environment (usage, ping, config)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "light-bulb",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/cloudinary/openapi-metadados.ipaas.json"
+    }
+  ]
+}

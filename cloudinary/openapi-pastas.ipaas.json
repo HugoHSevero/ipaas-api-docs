@@ -1,0 +1,486 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cloudinary - Pastas",
+    "description": "Admin API do Cloudinary: gerenciamento das pastas de assets do product environment — listar raiz, listar subpastas, criar, renomear/mover e excluir. API rate-limited, autenticada por HTTP Basic Auth (api_key:api_secret). Base URL: https://api.cloudinary.com/v1_1/{cloud_name}.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.cloudinary.com/v1_1",
+      "description": "Produção (US). Para EU/AP use api-eu/api-ap."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Pastas"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/{cloud_name}/folders": {
+      "get": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Listar pastas raiz",
+        "description": "Lista as pastas de primeiro nível (raiz) do product environment.",
+        "operationId": "list-root-folders",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "Máximo de resultados. Default: aplicável conforme o plano.",
+            "schema": {
+              "type": "integer",
+              "example": 100
+            }
+          },
+          {
+            "name": "next_cursor",
+            "in": "query",
+            "description": "Cursor para a próxima página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de pastas raiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "folders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Nome da pasta."
+                          },
+                          "path": {
+                            "type": "string",
+                            "description": "Caminho completo da pasta."
+                          },
+                          "external_id": {
+                            "type": "string",
+                            "description": "Identificador imutável da pasta."
+                          }
+                        }
+                      }
+                    },
+                    "total_count": {
+                      "type": "integer"
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/folders/{folder}": {
+      "get": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Listar subpastas",
+        "description": "Lista as subpastas imediatas de uma pasta existente.",
+        "operationId": "list-subfolders",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "folder",
+            "in": "path",
+            "required": true,
+            "description": "Caminho completo da pasta pai.",
+            "schema": {
+              "type": "string",
+              "example": "product"
+            }
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "Máximo de resultados.",
+            "schema": {
+              "type": "integer",
+              "example": 100
+            }
+          },
+          {
+            "name": "next_cursor",
+            "in": "query",
+            "description": "Cursor para a próxima página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de subpastas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "folders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Nome da pasta."
+                          },
+                          "path": {
+                            "type": "string",
+                            "description": "Caminho completo da pasta."
+                          },
+                          "external_id": {
+                            "type": "string",
+                            "description": "Identificador imutável da pasta."
+                          }
+                        }
+                      }
+                    },
+                    "total_count": {
+                      "type": "integer"
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Criar pasta",
+        "description": "Cria uma nova pasta de assets no caminho informado.",
+        "operationId": "create-folder",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "folder",
+            "in": "path",
+            "required": true,
+            "description": "Caminho completo da nova pasta, ex.: product/test.",
+            "schema": {
+              "type": "string",
+              "example": "product/test"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pasta criada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Renomear ou mover pasta",
+        "description": "Atualiza uma pasta existente. Alterar o último componente renomeia; alterar o caminho move; alterar ambos faz as duas coisas.",
+        "operationId": "update-folder",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "folder",
+            "in": "path",
+            "required": true,
+            "description": "Caminho completo da pasta existente.",
+            "schema": {
+              "type": "string",
+              "example": "product/test"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "to_folder": {
+                    "type": "string",
+                    "description": "Novo caminho completo da pasta."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pasta atualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Excluir pasta",
+        "description": "Exclui uma pasta vazia. A pasta precisa estar sem assets antes de ser excluída.",
+        "operationId": "delete-folder",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "folder",
+            "in": "path",
+            "required": true,
+            "description": "Caminho completo da pasta vazia a excluir.",
+            "schema": {
+              "type": "string",
+              "example": "product/test"
+            }
+          },
+          {
+            "name": "skip_backup",
+            "in": "query",
+            "description": "Permite excluir mesmo com assets em backup não visíveis. Default: false.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pasta excluída",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Auth com api_key como usuário e api_secret como senha."
+      }
+    }
+  }
+}

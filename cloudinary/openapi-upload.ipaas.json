@@ -1,0 +1,876 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cloudinary - Upload",
+    "description": "Upload API do Cloudinary: envio e gerenciamento de assets (imagens, vídeos e arquivos raw). API rate-unlimited, autenticada por HTTP Basic Auth (api_key:api_secret). Base URL: https://api.cloudinary.com/v1_1/{cloud_name}.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.cloudinary.com/v1_1",
+      "description": "Produção (US). Para EU/AP use api-eu/api-ap."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Upload"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/{cloud_name}/{resource_type}/upload": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Enviar asset",
+        "description": "Envia um asset (imagem, vídeo ou raw) para o product environment. O parâmetro `file` aceita URL remota, caminho local (no SDK) ou dado base64 Data URI. O corpo da requisição no Cloudinary é form-encoded; no iPaaS os campos são montados em configurations.inBody no diagrama.",
+        "operationId": "upload-asset",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name) da conta Cloudinary.",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset. Use `video` também para áudio. Valores: image, raw, video, auto.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "O asset a enviar: URL remota (http/https/s3/gs), Data URI base64 ou caminho de arquivo (SDK)."
+                  },
+                  "public_id": {
+                    "type": "string",
+                    "description": "Identificador público do asset. Sem extensão para image/video; com extensão para raw."
+                  },
+                  "folder": {
+                    "type": "string",
+                    "description": "Pasta onde armazenar o asset."
+                  },
+                  "use_filename": {
+                    "type": "boolean",
+                    "description": "Usar o nome do arquivo original como base do public_id. Default: false."
+                  },
+                  "unique_filename": {
+                    "type": "boolean",
+                    "description": "Acrescentar sufixo único ao nome. Default: true."
+                  },
+                  "overwrite": {
+                    "type": "boolean",
+                    "description": "Sobrescrever asset existente com o mesmo public_id. Default: true para uploads autenticados."
+                  },
+                  "tags": {
+                    "type": "string",
+                    "description": "Lista de tags separadas por vírgula a aplicar ao asset."
+                  },
+                  "context": {
+                    "type": "string",
+                    "description": "Metadados contextuais no formato key=value|key2=value2."
+                  },
+                  "resource_type": {
+                    "type": "string",
+                    "description": "Tipo do asset. Normalmente vai no path; aqui apenas para referência."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Tipo de entrega: upload, private, authenticated. Default: upload."
+                  },
+                  "transformation": {
+                    "type": "string",
+                    "description": "Transformação a aplicar no envio (ex.: w_500,h_500,c_fill)."
+                  },
+                  "notification_url": {
+                    "type": "string",
+                    "description": "URL de webhook para notificação assíncrona ao concluir."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Asset enviado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "asset_id": {
+                      "type": "string",
+                      "description": "Identificador imutável do asset."
+                    },
+                    "public_id": {
+                      "type": "string",
+                      "description": "Identificador público do asset."
+                    },
+                    "version": {
+                      "type": "integer",
+                      "description": "Versão do asset."
+                    },
+                    "version_id": {
+                      "type": "string"
+                    },
+                    "signature": {
+                      "type": "string"
+                    },
+                    "width": {
+                      "type": "integer"
+                    },
+                    "height": {
+                      "type": "integer"
+                    },
+                    "format": {
+                      "type": "string",
+                      "description": "Formato do arquivo (jpg, png, mp4...)."
+                    },
+                    "resource_type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Data de criação em ISO 8601."
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "description": "Tamanho em bytes."
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "etag": {
+                      "type": "string"
+                    },
+                    "placeholder": {
+                      "type": "boolean"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL de entrega HTTP do asset."
+                    },
+                    "secure_url": {
+                      "type": "string",
+                      "description": "URL de entrega HTTPS do asset."
+                    },
+                    "folder": {
+                      "type": "string"
+                    },
+                    "original_filename": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Descrição do erro."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Descrição do erro."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/{resource_type}/explicit": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Aplicar ações a um asset existente",
+        "description": "Aplica ações (geração de transformações derivadas, moderação, tags, metadados) a um asset já enviado, identificado pelo public_id.",
+        "operationId": "explicit-asset",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset. Valores: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "public_id": {
+                    "type": "string",
+                    "description": "public_id do asset existente."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Tipo de entrega do asset. Default: upload."
+                  },
+                  "eager": {
+                    "type": "string",
+                    "description": "Transformações derivadas a gerar, separadas por | ."
+                  },
+                  "tags": {
+                    "type": "string",
+                    "description": "Tags a aplicar, separadas por vírgula."
+                  },
+                  "context": {
+                    "type": "string",
+                    "description": "Metadados contextuais key=value|key2=value2."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ações aplicadas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "asset_id": {
+                      "type": "string",
+                      "description": "Identificador imutável do asset."
+                    },
+                    "public_id": {
+                      "type": "string",
+                      "description": "Identificador público do asset."
+                    },
+                    "version": {
+                      "type": "integer",
+                      "description": "Versão do asset."
+                    },
+                    "version_id": {
+                      "type": "string"
+                    },
+                    "signature": {
+                      "type": "string"
+                    },
+                    "width": {
+                      "type": "integer"
+                    },
+                    "height": {
+                      "type": "integer"
+                    },
+                    "format": {
+                      "type": "string",
+                      "description": "Formato do arquivo (jpg, png, mp4...)."
+                    },
+                    "resource_type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Data de criação em ISO 8601."
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "description": "Tamanho em bytes."
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "etag": {
+                      "type": "string"
+                    },
+                    "placeholder": {
+                      "type": "boolean"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL de entrega HTTP do asset."
+                    },
+                    "secure_url": {
+                      "type": "string",
+                      "description": "URL de entrega HTTPS do asset."
+                    },
+                    "folder": {
+                      "type": "string"
+                    },
+                    "original_filename": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Descrição do erro."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/{resource_type}/rename": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Renomear asset",
+        "description": "Renomeia (altera o public_id) de um asset existente. Pode também mudar o tipo de entrega com to_type.",
+        "operationId": "rename-asset",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset. Valores: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from_public_id": {
+                    "type": "string",
+                    "description": "public_id atual do asset."
+                  },
+                  "to_public_id": {
+                    "type": "string",
+                    "description": "Novo public_id do asset."
+                  },
+                  "overwrite": {
+                    "type": "boolean",
+                    "description": "Sobrescrever asset existente no destino. Default: false."
+                  },
+                  "to_type": {
+                    "type": "string",
+                    "description": "Novo tipo de entrega: upload, private, authenticated."
+                  },
+                  "invalidate": {
+                    "type": "boolean",
+                    "description": "Invalidar cópias em cache no CDN. Default: false."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Asset renomeado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "asset_id": {
+                      "type": "string",
+                      "description": "Identificador imutável do asset."
+                    },
+                    "public_id": {
+                      "type": "string",
+                      "description": "Identificador público do asset."
+                    },
+                    "version": {
+                      "type": "integer",
+                      "description": "Versão do asset."
+                    },
+                    "version_id": {
+                      "type": "string"
+                    },
+                    "signature": {
+                      "type": "string"
+                    },
+                    "width": {
+                      "type": "integer"
+                    },
+                    "height": {
+                      "type": "integer"
+                    },
+                    "format": {
+                      "type": "string",
+                      "description": "Formato do arquivo (jpg, png, mp4...)."
+                    },
+                    "resource_type": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Data de criação em ISO 8601."
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "description": "Tamanho em bytes."
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "etag": {
+                      "type": "string"
+                    },
+                    "placeholder": {
+                      "type": "boolean"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL de entrega HTTP do asset."
+                    },
+                    "secure_url": {
+                      "type": "string",
+                      "description": "URL de entrega HTTPS do asset."
+                    },
+                    "folder": {
+                      "type": "string"
+                    },
+                    "original_filename": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Descrição do erro."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/{resource_type}/destroy": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Excluir asset por public_id",
+        "description": "Exclui permanentemente um único asset do product environment, identificado por public_id e resource_type.",
+        "operationId": "destroy-asset",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset. Valores: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "public_id": {
+                    "type": "string",
+                    "description": "public_id do asset a excluir."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Tipo de entrega. Default: upload."
+                  },
+                  "invalidate": {
+                    "type": "boolean",
+                    "description": "Invalidar cópias em cache no CDN. Default: false."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultado da exclusão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "description": "Resultado da operação, ex.: ok ou not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Descrição do erro."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/{resource_type}/tags": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Gerenciar tags de assets",
+        "description": "Adiciona, remove ou substitui tags em um ou mais assets. O comando é definido em `command` (add, remove, replace, remove_all).",
+        "operationId": "manage-tags",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset. Valores: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "type": "string",
+                    "description": "Operação: add, remove, replace, remove_all."
+                  },
+                  "tag": {
+                    "type": "string",
+                    "description": "Tag (ou tags separadas por vírgula) a aplicar."
+                  },
+                  "public_ids": {
+                    "type": "string",
+                    "description": "public_ids dos assets afetados, separados por vírgula."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tags atualizadas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "public_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "public_ids afetados."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Descrição do erro."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/{resource_type}/context": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Gerenciar metadados contextuais",
+        "description": "Adiciona, remove ou substitui pares chave-valor de metadados contextuais em um ou mais assets.",
+        "operationId": "manage-context",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset. Valores: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "type": "string",
+                    "description": "Operação: add, remove_all."
+                  },
+                  "context": {
+                    "type": "string",
+                    "description": "Pares de contexto key=value|key2=value2."
+                  },
+                  "public_ids": {
+                    "type": "string",
+                    "description": "public_ids dos assets afetados, separados por vírgula."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contexto atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "public_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "public_ids afetados."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Descrição do erro."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Auth com api_key como usuário e api_secret como senha."
+      }
+    }
+  }
+}

@@ -1,0 +1,1000 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cloudinary - Metadados e Conta",
+    "description": "Admin API do Cloudinary: campos de metadados estruturados, tags, transformações nomeadas e informações do product environment (uso, ping, config). API rate-limited, autenticada por HTTP Basic Auth (api_key:api_secret). Base URL: https://api.cloudinary.com/v1_1/{cloud_name}.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.cloudinary.com/v1_1",
+      "description": "Produção (US). Para EU/AP use api-eu/api-ap."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Metadados e Conta"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/{cloud_name}/ping": {
+      "get": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Ping",
+        "description": "Testa a disponibilidade da API do Cloudinary.",
+        "operationId": "ping",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status dos servidores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status dos servidores Cloudinary, ex.: ok."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/usage": {
+      "get": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Uso do product environment",
+        "description": "Retorna detalhes de uso: limites de transformação, banda, armazenamento, requisições e rate limits.",
+        "operationId": "get-usage",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Data específica do relatório de uso (formato dd-mm-yyyy).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados de uso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "plan": {
+                      "type": "string"
+                    },
+                    "last_updated": {
+                      "type": "string"
+                    },
+                    "transformations": {
+                      "type": "object",
+                      "properties": {
+                        "usage": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "used_percent": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "objects": {
+                      "type": "object",
+                      "properties": {
+                        "usage": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "bandwidth": {
+                      "type": "object",
+                      "properties": {
+                        "usage": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "storage": {
+                      "type": "object",
+                      "properties": {
+                        "usage": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "requests": {
+                      "type": "integer"
+                    },
+                    "resources": {
+                      "type": "integer"
+                    },
+                    "derived_resources": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/config": {
+      "get": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Configuração do product environment",
+        "description": "Retorna detalhes da configuração e das definições atuais do product environment, incluindo o folder_mode.",
+        "operationId": "get-config",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "settings",
+            "in": "query",
+            "description": "Incluir as definições atuais (ex.: folder_mode). Default: false.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Configuração do environment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cloud_name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "settings": {
+                      "type": "object",
+                      "properties": {
+                        "folder_mode": {
+                          "type": "string",
+                          "description": "Modo de pastas: dynamic ou fixed."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/tags/{resource_type}": {
+      "get": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Listar tags",
+        "description": "Lista as tags existentes no product environment para o tipo de recurso informado.",
+        "operationId": "list-tags",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "resource_type",
+            "in": "path",
+            "required": true,
+            "description": "Tipo de asset: image, raw, video.",
+            "schema": {
+              "type": "string",
+              "example": "image"
+            }
+          },
+          {
+            "name": "prefix",
+            "in": "query",
+            "description": "Filtra as tags que começam com o prefixo informado.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "Máximo de resultados (até 500). Default: 10.",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "name": "next_cursor",
+            "in": "query",
+            "description": "Cursor para a próxima página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de tags",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/transformations": {
+      "get": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Listar transformações",
+        "description": "Lista as transformações definidas no product environment.",
+        "operationId": "list-transformations",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "Máximo de resultados (até 500). Default: 10.",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "name": "next_cursor",
+            "in": "query",
+            "description": "Cursor para a próxima página.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "named",
+            "in": "query",
+            "description": "Retornar apenas transformações nomeadas.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de transformações",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transformations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "allowed_for_strict": {
+                            "type": "boolean"
+                          },
+                          "used": {
+                            "type": "boolean"
+                          },
+                          "named": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "next_cursor": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/metadata_fields": {
+      "get": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Listar campos de metadados",
+        "description": "Retorna todas as definições de campos de metadados estruturados.",
+        "operationId": "list-metadata-fields",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de campos de metadados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metadata_fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "external_id": {
+                            "type": "string",
+                            "description": "Identificador do campo."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Tipo do campo: string, integer, date, enum, set."
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "Rótulo do campo."
+                          },
+                          "mandatory": {
+                            "type": "boolean",
+                            "description": "Se o preenchimento é obrigatório."
+                          },
+                          "default_value": {
+                            "type": "string",
+                            "description": "Valor padrão."
+                          },
+                          "validation": {
+                            "type": "object",
+                            "description": "Regras de validação do campo."
+                          },
+                          "datasource": {
+                            "type": "object",
+                            "properties": {
+                              "values": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "external_id": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "state": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Criar campo de metadados",
+        "description": "Cria uma nova definição de campo de metadados estruturado. Máximo de 100 campos por product environment.",
+        "operationId": "create-metadata-field",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "external_id": {
+                    "type": "string",
+                    "description": "Identificador do campo."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Tipo do campo: string, integer, date, enum, set."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Rótulo do campo."
+                  },
+                  "mandatory": {
+                    "type": "boolean",
+                    "description": "Se o preenchimento é obrigatório."
+                  },
+                  "default_value": {
+                    "type": "string",
+                    "description": "Valor padrão."
+                  },
+                  "validation": {
+                    "type": "object",
+                    "description": "Regras de validação do campo."
+                  },
+                  "datasource": {
+                    "type": "object",
+                    "properties": {
+                      "values": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "external_id": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            },
+                            "state": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Campo criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "external_id": {
+                      "type": "string",
+                      "description": "Identificador do campo."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Tipo do campo: string, integer, date, enum, set."
+                    },
+                    "label": {
+                      "type": "string",
+                      "description": "Rótulo do campo."
+                    },
+                    "mandatory": {
+                      "type": "boolean",
+                      "description": "Se o preenchimento é obrigatório."
+                    },
+                    "default_value": {
+                      "type": "string",
+                      "description": "Valor padrão."
+                    },
+                    "validation": {
+                      "type": "object",
+                      "description": "Regras de validação do campo."
+                    },
+                    "datasource": {
+                      "type": "object",
+                      "properties": {
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "external_id": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{cloud_name}/metadata_fields/{external_id}": {
+      "get": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Detalhes de campo de metadados",
+        "description": "Retorna uma única definição de campo de metadados pelo external_id.",
+        "operationId": "get-metadata-field",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "external_id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador do campo de metadados.",
+            "schema": {
+              "type": "string",
+              "example": "in_stock"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campo de metadados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "external_id": {
+                      "type": "string",
+                      "description": "Identificador do campo."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Tipo do campo: string, integer, date, enum, set."
+                    },
+                    "label": {
+                      "type": "string",
+                      "description": "Rótulo do campo."
+                    },
+                    "mandatory": {
+                      "type": "boolean",
+                      "description": "Se o preenchimento é obrigatório."
+                    },
+                    "default_value": {
+                      "type": "string",
+                      "description": "Valor padrão."
+                    },
+                    "validation": {
+                      "type": "object",
+                      "description": "Regras de validação do campo."
+                    },
+                    "datasource": {
+                      "type": "object",
+                      "properties": {
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "external_id": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Atualizar campo de metadados",
+        "description": "Atualiza parcialmente uma definição de campo de metadados pelo external_id.",
+        "operationId": "update-metadata-field",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "external_id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador do campo de metadados.",
+            "schema": {
+              "type": "string",
+              "example": "in_stock"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "external_id": {
+                    "type": "string",
+                    "description": "Identificador do campo."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Tipo do campo: string, integer, date, enum, set."
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Rótulo do campo."
+                  },
+                  "mandatory": {
+                    "type": "boolean",
+                    "description": "Se o preenchimento é obrigatório."
+                  },
+                  "default_value": {
+                    "type": "string",
+                    "description": "Valor padrão."
+                  },
+                  "validation": {
+                    "type": "object",
+                    "description": "Regras de validação do campo."
+                  },
+                  "datasource": {
+                    "type": "object",
+                    "properties": {
+                      "values": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "external_id": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            },
+                            "state": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Campo atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "external_id": {
+                      "type": "string",
+                      "description": "Identificador do campo."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Tipo do campo: string, integer, date, enum, set."
+                    },
+                    "label": {
+                      "type": "string",
+                      "description": "Rótulo do campo."
+                    },
+                    "mandatory": {
+                      "type": "boolean",
+                      "description": "Se o preenchimento é obrigatório."
+                    },
+                    "default_value": {
+                      "type": "string",
+                      "description": "Valor padrão."
+                    },
+                    "validation": {
+                      "type": "object",
+                      "description": "Regras de validação do campo."
+                    },
+                    "datasource": {
+                      "type": "object",
+                      "properties": {
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "external_id": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Metadados e Conta"
+        ],
+        "summary": "Excluir campo de metadados",
+        "description": "Exclui uma definição de campo de metadados pelo external_id.",
+        "operationId": "delete-metadata-field",
+        "parameters": [
+          {
+            "name": "cloud_name",
+            "in": "path",
+            "required": true,
+            "description": "Nome do product environment (cloud name).",
+            "schema": {
+              "type": "string",
+              "example": "demo"
+            }
+          },
+          {
+            "name": "external_id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador do campo de metadados.",
+            "schema": {
+              "type": "string",
+              "example": "in_stock"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campo excluído",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Resultado da operação, ex.: ok."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Auth com api_key como usuário e api_secret como senha."
+      }
+    }
+  }
+}

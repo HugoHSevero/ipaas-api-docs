@@ -1,0 +1,644 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/fulfillment/{marketplace}/documents": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "title": "Marketplaces",
+            "enum": [
+              "MERCADO_LIVRE",
+              "ALIEXPRESS",
+              "AMAZON_GLOBAL_API",
+              "ANGELONI",
+              "ARMAZEM_PARAIBA",
+              "B2W_NEW_API",
+              "BABYBIZ",
+              "BANCO_INTER",
+              "BANDSHOP",
+              "BELEZA_NA_WEB_NEW_API",
+              "BRAVIUM",
+              "C_A",
+              "CARREFOUR",
+              "CASA_VIDEO",
+              "CASSOL_CENTERLAR",
+              "CENTAURO_NEW_API",
+              "CLAROSHOP_MEXICO",
+              "COMFORTFLEX_NOVA_API",
+              "COMPRA_CERTA",
+              "COPPEL",
+              "CSM",
+              "DB1_MARKETPLACE",
+              "DECATHLON",
+              "DIGIGROW",
+              "EFACIL",
+              "ELEKTRA",
+              "EOS",
+              "EPOCA",
+              "ESTANTE_VIRTUAL",
+              "FALABELLA",
+              "FARMADELIVERY",
+              "FASTSHOP_NEW_API",
+              "FENICIO",
+              "FOODIES_STORE",
+              "GFG",
+              "GRUPO_MATEUS",
+              "HELP_SELLER",
+              "HITES",
+              "HOUSE_OF_GAMERS",
+              "ICBC_MALL",
+              "IGA",
+              "ITAU",
+              "JUMPSELLER",
+              "KABUM",
+              "KOERICH",
+              "LE_BISCUIT",
+              "LEROY_MERLIN",
+              "LIVESHOP",
+              "LL_LOYALTY",
+              "LOJA_DO_COOPERADO",
+              "LOJA_DO_MECANICO",
+              "LOJAS_COLOMBO",
+              "LOJAS_IMPERIO",
+              "LOJAS_LEBES_NEW_API",
+              "LOJAS_MM",
+              "LOJAS_QUERO_QUERO",
+              "MADEIRA_MADEIRA",
+              "MAGAZINE_LUIZA",
+              "MAGENTO",
+              "MAIS_CORREIOS",
+              "MARCA_SELETA",
+              "MARTINS_ATACADO",
+              "MEGATONE",
+              "MOBLY",
+              "MULTIVAREJO_GPA",
+              "NETSHOES",
+              "NEXTSHOP",
+              "NUVEMSHOP",
+              "OLIST_NEW_API",
+              "PAGUE_MENOS",
+              "PARIS",
+              "PHILIPS_STORE",
+              "PITSTOP",
+              "PNEUBEST",
+              "POLISHOP",
+              "POSTHAUS_NEW_API",
+              "PRESTASHOP",
+              "PRIVALIA",
+              "RAIA_DROGASIL",
+              "RAMARIM_NOVA_API",
+              "RENNER",
+              "RI_HAPPY_NEW_API",
+              "RIACHUELO",
+              "RIPLEY",
+              "SENFF_SHOPPING",
+              "SHEIN",
+              "SHOPEE",
+              "SHOPHUB",
+              "SHOPIFY",
+              "SHOPPING_BB",
+              "SHOPPING_LIVELO",
+              "SICOOB",
+              "SICREDI",
+              "STECK",
+              "SUBLIMITY",
+              "TA_TASHOP",
+              "TENDA_ATACADO",
+              "THE_HOME_DEPOT",
+              "TIENDA_CLIC",
+              "TIKTOK_SHOP",
+              "TRAY",
+              "TROCAFONE",
+              "VALE_BONUS",
+              "VENTURESHOP",
+              "VINKLO_BY_FESTALAB",
+              "VTEX",
+              "WALMART",
+              "WEB_CONTINENTAL_V2",
+              "WEHOUSE",
+              "WOOCOMMERCE",
+              "WOOCOMMERCE2",
+              "YA_PLACE_STORE",
+              "ZEMA",
+              "ZOOM"
+            ],
+            "description": "Descritivo de qual marketplace o pedido pertence",
+            "example": "ALIEXPRESS"
+          },
+          "name": "marketplace",
+          "in": "path",
+          "required": true,
+          "description": "Identificador do marketplace."
+        }
+      ],
+      "get": {
+        "summary": "/fulfillment/{marketplace}/documents",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "links": {
+                      "type": "array",
+                      "description": "Referências de paginação",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "description": "Relacionamento do hyperlink"
+                          },
+                          "href": {
+                            "type": "string",
+                            "description": "URL de definição do recurso"
+                          }
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID do Documento Fiscal"
+                          },
+                          "idOrder": {
+                            "type": "integer",
+                            "description": "ID do Pedido (quando a nota for ligada a um pedido)"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "URL do Documento"
+                          },
+                          "marketplace": {
+                            "type": "string",
+                            "title": "Marketplaces",
+                            "enum": [
+                              "MERCADO_LIVRE",
+                              "ALIEXPRESS",
+                              "AMAZON_GLOBAL_API",
+                              "ANGELONI",
+                              "ARMAZEM_PARAIBA",
+                              "B2W_NEW_API",
+                              "BABYBIZ",
+                              "BANCO_INTER",
+                              "BANDSHOP",
+                              "BELEZA_NA_WEB_NEW_API",
+                              "BRAVIUM",
+                              "C_A",
+                              "CARREFOUR",
+                              "CASA_VIDEO",
+                              "CASSOL_CENTERLAR",
+                              "CENTAURO_NEW_API",
+                              "CLAROSHOP_MEXICO",
+                              "COMFORTFLEX_NOVA_API",
+                              "COMPRA_CERTA",
+                              "COPPEL",
+                              "CSM",
+                              "DB1_MARKETPLACE",
+                              "DECATHLON",
+                              "DIGIGROW",
+                              "EFACIL",
+                              "ELEKTRA",
+                              "EOS",
+                              "EPOCA",
+                              "ESTANTE_VIRTUAL",
+                              "FALABELLA",
+                              "FARMADELIVERY",
+                              "FASTSHOP_NEW_API",
+                              "FENICIO",
+                              "FOODIES_STORE",
+                              "GFG",
+                              "GRUPO_MATEUS",
+                              "HELP_SELLER",
+                              "HITES",
+                              "HOUSE_OF_GAMERS",
+                              "ICBC_MALL",
+                              "IGA",
+                              "ITAU",
+                              "JUMPSELLER",
+                              "KABUM",
+                              "KOERICH",
+                              "LE_BISCUIT",
+                              "LEROY_MERLIN",
+                              "LIVESHOP",
+                              "LL_LOYALTY",
+                              "LOJA_DO_COOPERADO",
+                              "LOJA_DO_MECANICO",
+                              "LOJAS_COLOMBO",
+                              "LOJAS_IMPERIO",
+                              "LOJAS_LEBES_NEW_API",
+                              "LOJAS_MM",
+                              "LOJAS_QUERO_QUERO",
+                              "MADEIRA_MADEIRA",
+                              "MAGAZINE_LUIZA",
+                              "MAGENTO",
+                              "MAIS_CORREIOS",
+                              "MARCA_SELETA",
+                              "MARTINS_ATACADO",
+                              "MEGATONE",
+                              "MOBLY",
+                              "MULTIVAREJO_GPA",
+                              "NETSHOES",
+                              "NEXTSHOP",
+                              "NUVEMSHOP",
+                              "OLIST_NEW_API",
+                              "PAGUE_MENOS",
+                              "PARIS",
+                              "PHILIPS_STORE",
+                              "PITSTOP",
+                              "PNEUBEST",
+                              "POLISHOP",
+                              "POSTHAUS_NEW_API",
+                              "PRESTASHOP",
+                              "PRIVALIA",
+                              "RAIA_DROGASIL",
+                              "RAMARIM_NOVA_API",
+                              "RENNER",
+                              "RI_HAPPY_NEW_API",
+                              "RIACHUELO",
+                              "RIPLEY",
+                              "SENFF_SHOPPING",
+                              "SHEIN",
+                              "SHOPEE",
+                              "SHOPHUB",
+                              "SHOPIFY",
+                              "SHOPPING_BB",
+                              "SHOPPING_LIVELO",
+                              "SICOOB",
+                              "SICREDI",
+                              "STECK",
+                              "SUBLIMITY",
+                              "TA_TASHOP",
+                              "TENDA_ATACADO",
+                              "THE_HOME_DEPOT",
+                              "TIENDA_CLIC",
+                              "TIKTOK_SHOP",
+                              "TRAY",
+                              "TROCAFONE",
+                              "VALE_BONUS",
+                              "VENTURESHOP",
+                              "VINKLO_BY_FESTALAB",
+                              "VTEX",
+                              "WALMART",
+                              "WEB_CONTINENTAL_V2",
+                              "WEHOUSE",
+                              "WOOCOMMERCE",
+                              "WOOCOMMERCE2",
+                              "YA_PLACE_STORE",
+                              "ZEMA",
+                              "ZOOM"
+                            ],
+                            "description": "Descritivo de qual marketplace o pedido pertence",
+                            "example": "ALIEXPRESS"
+                          },
+                          "type": {
+                            "type": "string",
+                            "title": "",
+                            "enum": [
+                              "sale",
+                              "sale_return",
+                              "sale_devolution",
+                              "gift",
+                              "inbound",
+                              "devolution",
+                              "inbound_devolution",
+                              "inbound_return",
+                              "inbound_supplier_return",
+                              "symbolic_inbound",
+                              "symbolic_inbound_return",
+                              "purchase",
+                              "removal",
+                              "symbolic_removal"
+                            ],
+                            "description": "Tipo do documento fulfillment.</br>\n**sale**: venda de mercadorias.</br>\n**sale_return**: retorno de mercadoria nao entregue.</br>\n**sale_devolution**: nota fiscal de devolução.</br>\n**inbound**: nota fiscal de entrada.</br>\n**inbound_devolution**: devolução entrada.</br>\n**inbound_return**: retorno de entrada.</br>\n**inbound_supplier_return**: nota de devolução ao fornecedor. Quando o fornecedor nos enviou uma nota errada essa anota ajuda devolvendo items a mais.</br>\n**symbolic_inbound**: retornos simbólicos.</br>\n**symbolic_inbound_return**: retornos simbólicos.</br>\n**symbolic_removal**: notas de retirada.</br>\n**removal**: notas de retirada.</br>\n",
+                            "readOnly": true,
+                            "example": [
+                              {
+                                "id": 123456,
+                                "name": "Brastemp",
+                                "reducedName": "brastemp",
+                                "partnerId": "marca-001-brastemp"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "size": {
+                          "type": "integer",
+                          "description": "Tamanho da página"
+                        },
+                        "totalElements": {
+                          "type": "integer",
+                          "description": "Total de elementos existentes"
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total de páginas disponíveis"
+                        },
+                        "number": {
+                          "type": "integer",
+                          "description": "Número da página atual"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "links": [
+                        {
+                          "rel": "next",
+                          "href": "http://api.anymarket.com.br/v2/fulfillment/MAGAZINE_LUIZA/documents?offset=5"
+                        }
+                      ],
+                      "content": [
+                        {
+                          "id": 43109,
+                          "idOrder": 107032238,
+                          "url": "https://s3.us-east-1.amazonaws.com/xml.anymarket.com.br/anymarket-magazineluiza-nfe/transactionType-sale/transactionStatus-autorizadas/152273594.LU-1201170398354422-05012023-220027.xml",
+                          "marketplace": "MAGAZINE_LUIZA",
+                          "type": "SALE"
+                        }
+                      ],
+                      "page": {
+                        "size": 5,
+                        "totalElements": 8120,
+                        "totalPages": 1624,
+                        "number": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "404",
+                      "message": "Documento não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-fulfillment-documents",
+        "description": "# Busca documentos fiscais do Fulfillment\nBusca documentos fiscais do Fulfillment do seller, disponibilizados pelos Marketplaces\n\nAtributo 'marketplace' podendo ser:\n- MAGAZINE_LUIZA\n- MERCADO_LIVRE\n- B2W_NEW_API\n- AMAZON_GLOBAL_API\n\n<!-- theme: warning -->\n> #### Atenção!\n>\n> Atributo **'marketplace'** deve ser caixa alta (maiúsculo) pois trata-se de um ENUM.\n<!-- theme: warning -->\n> #### Para MERCADO_LIVRE:\n>\n> Caso o parâmetro *\"createdBefore\"* não seja informado, será considerado o valor de *\"createdAfter\"* acrescido de um mês.  \n> Caso o parâmetro *\"createdAfter\"* não seja informado, será considerado o valor de *\"createdBefore\"* subtraído de um mês.  \n> Se ambos os parâmetros não forem informados, *\"createdBefore\"* assumirá a data atual e *\"createdAfter\"* será definido como um mês antes dessa data.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "idOrder",
+            "description": "ID do Pedido (quando a nota for ligada a um pedido)"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "idDocument",
+            "description": "ID do Documento Fiscal"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "title": "",
+              "enum": [
+                "sale",
+                "sale_return",
+                "sale_devolution",
+                "gift",
+                "inbound",
+                "devolution",
+                "inbound_devolution",
+                "inbound_return",
+                "inbound_supplier_return",
+                "symbolic_inbound",
+                "symbolic_inbound_return",
+                "purchase",
+                "removal",
+                "symbolic_removal"
+              ],
+              "description": "Tipo do documento fulfillment.</br>\n**sale**: venda de mercadorias.</br>\n**sale_return**: retorno de mercadoria nao entregue.</br>\n**sale_devolution**: nota fiscal de devolução.</br>\n**inbound**: nota fiscal de entrada.</br>\n**inbound_devolution**: devolução entrada.</br>\n**inbound_return**: retorno de entrada.</br>\n**inbound_supplier_return**: nota de devolução ao fornecedor. Quando o fornecedor nos enviou uma nota errada essa anota ajuda devolvendo items a mais.</br>\n**symbolic_inbound**: retornos simbólicos.</br>\n**symbolic_inbound_return**: retornos simbólicos.</br>\n**symbolic_removal**: notas de retirada.</br>\n**removal**: notas de retirada.</br>\n",
+              "readOnly": true,
+              "example": [
+                {
+                  "id": 123456,
+                  "name": "Brastemp",
+                  "reducedName": "brastemp",
+                  "partnerId": "marca-001-brastemp"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "type",
+            "description": "Tipo do documento (Ex: Sale, Inbound e etc.)"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "2022-11-25T14:00:00-03:00",
+              "format": "date-time"
+            },
+            "in": "query",
+            "name": "createdAfter",
+            "description": "Criado a partir de"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "2022-11-25T20:30:00-03:00",
+              "format": "date-time"
+            },
+            "in": "query",
+            "name": "createdBefore",
+            "description": "Criado antes de "
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 5,
+              "default": 5,
+              "example": 5,
+              "maximum": 100
+            },
+            "description": "Número máximo de elementos"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 0
+            },
+            "description": "Posição de início da paginação"
+          }
+        ],
+        "tags": [
+          "Fulfillment"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

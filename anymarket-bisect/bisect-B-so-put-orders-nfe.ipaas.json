@@ -1,0 +1,223 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/{id}/nfe": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "description": "ID do pedido gerado pelo ANYMARKET",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "/orders/{id}/nfe",
+        "tags": [
+          "Pedido"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "400 - Bad Request",
+                  "example": {
+                    "code": "400",
+                    "message": "Não foi possível finalizar a chamada."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                },
+                "examples": {}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "500 - Error",
+                  "example": {
+                    "code": "500",
+                    "message": "Erro no sistema. Detalhes: Ocorreu um erro inesperado. Por favor, tente novamente."
+                  }
+                },
+                "examples": {
+                  "orders/{id}/nfe 1": {
+                    "value": {
+                      "code": "500",
+                      "message": "Ocorreu um erro ao atualizar o documento fiscal para o marketplace. Erro: O Mercado Livre não permite o envio do XML da nota fiscal para a seguinte combinação de status e substatus do shipment do pedido no Mercado Livre. (Status: pending, Substatus: buffered, Id. no Marketplace: 20000012345678901)"
+                    }
+                  },
+                  "orders/{id}/nfe 2": {
+                    "value": {
+                      "code": "500",
+                      "message": "Ocorreu um erro ao atualizar o documento fiscal para o marketplace. Erro: O Limite de Nota Fiscal salva na venda foi atingido no Mercado Livre."
+                    }
+                  },
+                  "orders/{id}/nfe 3": {
+                    "value": {
+                      "code": "500",
+                      "message": "Ocorreu um erro ao atualizar o documento fiscal para o marketplace. Erro: Erro ao faturar pedido: Erro: ''??invalid_invoice_emission_date??''"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-orders-id-nfe",
+        "description": "# Envia o XML da NF-e\nEnvia o XMl da NF-e para o Marketplace. Deve ser enviado apenas o conteúdo do XML.\n\n<!-- theme: warning -->\n> #### Atenção!\n> Utilizar no header o ContentType: application/xml;charset=utf-8\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "type": "string"
+              },
+              "examples": {
+                "XML": {
+                  "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<nfeProc xmlns=\"http://www.portalfiscal.inf.br/nfe\" versao=\"4.00\">\n<NFe xmlns=\"http://www.portalfiscal.inf.br/nfe\">\n<infNFe versao=\"4.00\" Id=\"NFe41190908328657000194550015624654251041433087\">\n<ide>\n<cUF>41</cUF>\n<cNF>04143308</cNF>\n<natOp>Venda de mercadorias</natOp>\n<mod>55</mod>\n<serie>1</serie>\n<nNF>562465425</nNF>\n<dhEmi>2019-09-11T15:57:56-03:00</dhEmi>\n<tpNF>1</tpNF>\n<idDest>1</idDest>\n<cMunFG>4115200</cMunFG>\n<tpImp>1</tpImp>\n<tpEmis>1</tpEmis>\n<cDV>7</cDV>\n<tpAmb>2</tpAmb>\n<finNFe>1</finNFe>\n<indFinal>1</indFinal>\n<indPres>9</indPres>\n<procEmi>0</procEmi>\n<verProc>Bling 1.0</verProc>\n</ide>\n<emit>\n<CNPJ>08328657000194</CNPJ>\n<xNome>Anymarket DB1</xNome>\n<enderEmit>\n<xLgr>Av. Advogado Horacio Raccanello Filho</xLgr>\n<nro>5410</nro>\n<xBairro>Novo Centro</xBairro>\n<cMun>4115200</cMun>\n<xMun>Maringa</xMun>\n<UF>PR</UF>\n<CEP>87020035</CEP>\n<cPais>1058</cPais>\n<xPais>Brasil</xPais>\n<fone>4430336300</fone>\n</enderEmit>\n<IE>9038912540</IE>\n<CRT>1</CRT>\n</emit>\n<dest>\n<CPF>42159270130</CPF>\n<xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>\n<enderDest>\n<xLgr>Praca Amabile Giroldo</xLgr>\n<nro>100</nro>\n<xCpl>maca, area, avo, avo</xCpl>\n<xBairro>Zona 04</xBairro>\n<cMun>4115200</cMun>\n<xMun>Maringa</xMun>\n<UF>PR</UF>\n<CEP>87014280</CEP>\n<cPais>1058</cPais>\n<xPais>Brasil</xPais>\n<fone>4432202020</fone>\n</enderDest>\n<indIEDest>9</indIEDest>\n<email>ttest.7y5snb2-oge3dcojrgmztcmbt@mail.com</email>\n</dest>\n<det nItem=\"1\">\n<prod>\n<cProd>AKCI00990ZPTODAVIDA</cProd>\n<cEAN>SEM GTIN</cEAN>\n<xProd>NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xProd>\n<NCM>01029000</NCM>\n<CFOP>5102</CFOP>\n<uCom>1</uCom>\n<qCom>1.0000</qCom>\n<vUnCom>160.00</vUnCom>\n<vProd>160.00</vProd>\n<cEANTrib>SEM GTIN</cEANTrib>\n<uTrib>1</uTrib>\n<qTrib>1.0000</qTrib>\n<vUnTrib>160.00</vUnTrib>\n<indTot>1</indTot>\n<nItemPed>1</nItemPed>\n</prod>\n<imposto>\n<vTotTrib>25.92</vTotTrib>\n<ICMS>\n<ICMSSN102>\n<orig>0</orig>\n<CSOSN>400</CSOSN>\n</ICMSSN102>\n</ICMS>\n<IPI>\n<cEnq>301</cEnq>\n<IPINT>\n<CST>52</CST>\n</IPINT>\n</IPI>\n<PIS>\n<PISNT>\n<CST>07</CST>\n</PISNT>\n</PIS>\n<COFINS>\n<COFINSNT>\n<CST>07</CST>\n</COFINSNT>\n</COFINS>\n</imposto>\n</det>\n<total>\n<ICMSTot>\n<vBC>0.00</vBC>\n<vICMS>0.00</vICMS>\n<vICMSDeson>0</vICMSDeson>\n<vFCP>0.00</vFCP>\n<vBCST>0.00</vBCST>\n<vST>0.00</vST>\n<vFCPST>0.00</vFCPST>\n<vFCPSTRet>0.00</vFCPSTRet>\n<vProd>160.00</vProd>\n<vFrete>0.00</vFrete>\n<vSeg>0.00</vSeg>\n<vDesc>0.00</vDesc>\n<vII>0.00</vII>\n<vIPI>0.00</vIPI>\n<vIPIDevol>0.00</vIPIDevol>\n<vPIS>0.00</vPIS>\n<vCOFINS>0.00</vCOFINS>\n<vOutro>0.00</vOutro>\n<vNF>160.00</vNF>\n<vTotTrib>25.92</vTotTrib>\n</ICMSTot>\n</total>\n<transp>\n<modFrete>0</modFrete>\n<transporta>\n<xNome>DESCONHECIDO</xNome>\n</transporta>\n<vol>\n<pesoL>0.000</pesoL>\n<pesoB>0.000</pesoB>\n</vol>\n</transp>\n<cobr>\n<fat>\n<nFat>562465425</nFat>\n<vOrig>160.00</vOrig>\n<vDesc>0</vDesc>\n<vLiq>160.00</vLiq>\n</fat>\n<dup>\n<nDup>001</nDup>\n<dVenc>2019-09-11</dVenc>\n<vDup>160.00</vDup>\n</dup>\n</cobr>\n<pag>\n<detPag>\n<tPag>01</tPag>\n<vPag>160.00</vPag>\n</detPag>\n</pag>\n<infAdic>\n<infCpl>Total aproximado de tributos: R$ 25,92 (16,20%) Federais R$ 6,72 (4,20%) Estaduais R$ 19,20 (12,00%) . Fonte IBPT.<br /></infCpl>\n</infAdic>\n<infRespTec>\n<CNPJ>01056417000139</CNPJ>\n<xContato>Jonatan Fracasso da Silva</xContato>\n<email>fiscal@bling.com.br</email>\n<fone>05430550479</fone>\n</infRespTec>\n</infNFe>\n<Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">\n<SignedInfo>\n<CanonicalizationMethod Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>\n<SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\"/>\n<Reference URI=\"#NFe41190908328657000194550015624654251041433087\">\n<Transforms>\n<Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>\n<Transform Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>\n</Transforms>\n<DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\"/>\n<DigestValue>JYjiWB7sFoiM7jQckhdvLsSBpQw=</DigestValue>\n</Reference>\n</SignedInfo>\n<SignatureValue>H6DfZXCiFcypfHAXdaotLTU2hSJxaCCDIEHkU84eioyd4VVSqYu/0FbBAYnmlb5xGbqio59fzlZ2P7OvR4UogYcW32jT95HfuB2wkUxIbCPzI14uEQzm7Sve8NG+0H0Oge1U/vTApeZHcGfVsQiGCRItvDUVuGJ50qPCGONz1BV6yBO9cr9WxtA2AhOklb4uShPrb+08W+LZ2ReYKLND5vJVofEmUE9jU1hgFGm/WM2zMgauKNqgJr2/nlPI13PxyxYZ6QTC7EenkEJdr+L9ziWzN5haFQ7mw2jtVQOwpnU5KQBbfmpyWZKQ9sUDPOrnr9y73iKGrPAf6cvTNEhZAA==</SignatureValue>\n<KeyInfo>\n<X509Data>\n<X509Certificate>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</X509Certificate>\n</X509Data>\n</KeyInfo>\n</Signature>\n</NFe>\n<protNFe versao=\"4.00\">\n<infProt>\n<tpAmb>2</tpAmb>\n<verAplic>PR-v4_4_9</verAplic>\n<chNFe>41190908328657000194550015624654251041433087</chNFe>\n<dhRecbto>2019-09-11T15:57:57-03:00</dhRecbto>\n<nProt>141190000835627</nProt>\n<digVal>JYjiWB7sFoiM7jQckhdvLsSBpQw=</digVal>\n<cStat>100</cStat>\n<xMotivo>Autorizado o uso da NF-e</xMotivo>\n</infProt>\n</protNFe>\n</nfeProc>"
+                }
+              }
+            }
+          },
+          "description": "Conteúdo do XML"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

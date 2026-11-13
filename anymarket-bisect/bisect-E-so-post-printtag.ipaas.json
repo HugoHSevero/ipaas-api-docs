@@ -1,0 +1,305 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/printtag/{type}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "PDF",
+              "ZPL",
+              "ZPL2"
+            ]
+          },
+          "name": "type",
+          "in": "path",
+          "required": true,
+          "description": "Tipo da nota que sera gerada (PDF, ZPL ou ZPL2)"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Emissão de Etiquetas"
+        ],
+        "summary": "/printtag/{type}",
+        "description": "# Gera Etiquetas\nGera etiquetas para os pedidos informados",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "Conteúdo presente no TXT do ZPL2, disponível apenas no modo ZPL2 com o parâmetro TXT."
+                    }
+                  }
+                },
+                "examples": {
+                  "ZPL": {
+                    "value": {
+                      "content": "^XA^MCY^CI28^LH5,15^FX  HEADER  ^FS^FX Logo_Meli ^FS^FO20,10^GFA,800,800,10,,:::::::::::O0FF,M07JFE,L07FC003FE,K07EL07E,J01EN078,J07P0E,I01CP038,I07R0E,001CK01FK038,003L0IFK0C,0078J03803CJ0E,0187J06I07I01D8,0300F00F8J0FEFE0C,02003IFK01J06,04I01C6P02,08K0401FM01,1L08060CM083K0100C02M0C2M01001M046K0306I0CL064K0198I02L024Q01L02CR08K03CR04K03FR02K03FFQ01J07!C1FQ0C007E3C03EP0203F03C0078O010F003CI0EF1N0F8003CI070C4M06I03CI02003CL02I03CI02P02I036I03N0106I066I01J08J0C4I067J0EI08J078I0E38I03I0E00406I01C3CI01800100204I01C3CJ0FI080118I03C1EJ03800801FJ0780FK0C008018J0F,078J07C0823J01F,07EJ01C1C36J07E,03FK031C3K0FC,01FCJ01E18J01F8,00FER07F,007F8P01FE,003FFP0FFC,I0FFEN07FF,I03FFCL03FFC,J0IFCJ03IF,J07PFE,K0PF,K01NF8,L01LF8,N0JF,,:::::::::::^FS^FO120,20^A0N,24,24^FH^FDANYMARKET SA _2E_2D ANYMARKET SA _2E #123456789^FS^FO120,43^A0N,24,24^FH^FB550,2,0,L^FDAv_2E Carneiro Leao_2D2 Andar 563, Zona 1^FS^FO120,90^A0N,24,24^FH^FB550,1,0,L^FDMaringa, BR-PR - 87014010^FS^FO120,120^A0N,24,24^FDPack ID: 10000^FS^FO272,117^A0N,27,27^FD01234567890^FS^FX LAST CLUSTER  ^FS^FO20,150^GB210,45,45^FS^FO20,156^A0N,45,45^FB210,1,0,C^FR^FDXSP1^FS^FX END LAST CLUSTER  ^FS^FO480,150^GB330,40,40^FS^FO410,160^A0N,22,22^FB460,1,0,C^FR^FH^FDENTREGAR NA COLETA^FS^FX  Shipment_Number_Bar_Code  ^FS^FO230,210^BY3,,0^BCN,160,N,N,N^FD>:01234567890^FS^FO95,385^A0N,30,30^FB390,1,0,R^FD423127^FS^FO488,381^A0N,35,35^FB400,1,0,L^FD60443^FS^FX  END_HEADER  ^FS^FX  CUSTOM_DATA  ^FS^FO0,580^A0N,175,175^FB630,1,0,R^FDSRD1^FS^FO670,640^A0N,47,47^FB200,1,0,L^FD09:00^FS^FO0,790^A0N,28,28^FB600,1,0,R^FDXSP1 > XSP9 > SRD1 > ^FS^FO605,785^A0N,40,40^FD4^FS^FO0,830^A0N,38,38^FB820,1,0,C^FDTER 06/06/2023   CEP: 87014010   NF: 1234567^FS^FX  END CUSTOM_DATA  ^FS^FO0,950^GB850,0,2^FS^FX  RECEIVER ZONE  ^FS^FO30,970^A0N,26,26^FB600,2,0,L^FH^FDDB1 Global Software SA (DB1GLOBALSOFTWARE)^FS^FO30,1030^A0N,26,26^FB600,2,0,L^FH^FDEndere_C3_A7o: Av Carneiro Leao, 563 - 2º Andar_2c Zona 1^FS^FO30,1090^A0N,30,30^FDCEP: 87014010^FS^FO30,1089^A0N,30,30^FDCEP: 87014010^FS^FO30,1121^A0N,26,26^FB600,2,1000,L^FH^FDCidade de destino: Maringa_2c Parana^FS^FO30,1150^A0N,26,26^FB600,5,0,L^FH^FDComplemento: Sobreloja Centro Empresarial Le Monde_2E^FS^FX  QR Code  ^FS^FO650,985^BY2,2,0^BQN,2,5^FDLA,{\"id\":\"01234567890\",\"t\":\"lm\"}^FS^FO650,1130^GB105,40,40^FS^FO650,1135^A0N,35,35^FB105,1,0,C^FR^FDR^FS^FX  END_FOOTER  ^FS^XZ"
+                    }
+                  }
+                }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "file=PLP": {
+                    "value": "Arquivo.pdf"
+                  },
+                  "type = PDF ou ZIP": {
+                    "value": "Arquivo.pdf ou Arquivo.zip"
+                  }
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "type = PDF": {
+                    "value": "Arquivo.zip"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "code": "409",
+                      "message": "As etiquetas dos seguintes pedidos [id dos pedidos] não estão prontas para download, tente novamente mais tarde"
+                    }
+                  },
+                  "Example 1": {
+                    "value": {
+                      "code": "409",
+                      "message": "As etiquetas dos seguintes pedidos [id dos pedidos] não estão prontas para download, tente novamente mais tarde"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "500 - Error",
+                  "example": {
+                    "code": "500",
+                    "message": "Erro no sistema. Detalhes: Ocorreu um erro inesperado. Por favor, tente novamente."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orders": {
+                    "type": "array",
+                    "description": "ID´s das vendas",
+                    "items": {
+                      "type": "integer",
+                      "description": "Id da venda"
+                    }
+                  }
+                },
+                "required": [
+                  "orders"
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "TXT",
+                "PLP"
+              ]
+            },
+            "in": "query",
+            "name": "file",
+            "description": "Pode ser informado \"TXT\" ou \"PLP\" quando o tipo for ZPL2. Quando informado TXT é retornado um JSON com o conteúdo do TXT fornecido pelo Marketplace, quando informado PLP o retorno é um PDF com o PLP."
+          }
+        ],
+        "operationId": "post-printtag-type"
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

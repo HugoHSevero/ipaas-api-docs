@@ -1,0 +1,121 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/fiscalDocuments/download/{document_item_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "document_item_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "/fiscalDocuments/download/{document_item_id}",
+        "tags": [
+          "Documentos Fiscais"
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna o xml do documento fiscal\r\n\r\n##### Exemplos de resposta\r\n\r\n- Documento do tipo `\"NFE\"` com o status `\"AUTHORIZED\"` (Nota fiscal autorizada):\r\n\r\n```xml\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<nfeProc versao=\"4.00\"\r\n\txmlns=\"http://www.portalfiscal.inf.br/nfe\">\r\n\t<NFe xmlns=\"http://www.portalfiscal.inf.br/nfe\">\r\n\t\t<infNFe Id=\"NFe99999999999999999999999999999999999999999999\" versao=\"4.00\">\r\n\t\t\t<ide>\r\n\t\t\t\t<cUF>99</cUF>\r\n\t\t\t\t<cNF>12345678</cNF>\r\n\t\t\t\t<natOp>Venda de produtos diversos</natOp>\r\n\t\t\t\t<mod>55</mod>\r\n\t\t\t\t<serie>1</serie>\r\n\t\t\t\t<nNF>123456</nNF>\r\n\t\t\t\t<dhEmi>2025-01-01T12:00:00-03:00</dhEmi>\r\n\t\t\t\t<dhSaiEnt>2025-01-01T12:00:00-03:00</dhSaiEnt>\r\n\t\t\t\t<tpNF>1</tpNF>\r\n\t\t\t\t<idDest>1</idDest>\r\n\t\t\t\t<cMunFG>9999999</cMunFG>\r\n\t\t\t\t<tpImp>1</tpImp>\r\n\t\t\t\t<tpEmis>1</tpEmis>\r\n\t\t\t\t<cDV>9</cDV>\r\n\t\t\t\t<tpAmb>2</tpAmb>\r\n\t\t\t\t<finNFe>1</finNFe>\r\n\t\t\t\t<indFinal>1</indFinal>\r\n\t\t\t\t<indPres>1</indPres>\r\n\t\t\t\t<indIntermed>0</indIntermed>\r\n\t\t\t\t<procEmi>0</procEmi>\r\n\t\t\t\t<verProc>exemplo.documentacao</verProc>\r\n\t\t\t\t<NFref>\r\n\t\t\t\t\t<refNFe>99999999999999999999999999999999999999999999</refNFe>\r\n\t\t\t\t</NFref>\r\n\t\t\t</ide>\r\n\t\t\t<emit>\r\n\t\t\t\t<CNPJ>00000000000191</CNPJ>\r\n\t\t\t\t<xNome>EMPRESA DE EXEMPLO LTDA</xNome>\r\n\t\t\t\t<enderEmit>\r\n\t\t\t\t\t<xLgr>Rua Fictícia</xLgr>\r\n\t\t\t\t\t<nro>123</nro>\r\n\t\t\t\t\t<xCpl>Bloco A</xCpl>\r\n\t\t\t\t\t<xBairro>Centro</xBairro>\r\n\t\t\t\t\t<cMun>9999999</cMun>\r\n\t\t\t\t\t<xMun>Cidade Exemplo</xMun>\r\n\t\t\t\t\t<UF>EX</UF>\r\n\t\t\t\t\t<CEP>00000000</CEP>\r\n\t\t\t\t\t<cPais>1058</cPais>\r\n\t\t\t\t\t<xPais>Brasil</xPais>\r\n\t\t\t\t\t<fone>11999999999</fone>\r\n\t\t\t\t</enderEmit>\r\n\t\t\t\t<IE>000000000000</IE>\r\n\t\t\t\t<CRT>3</CRT>\r\n\t\t\t</emit>\r\n\t\t\t<dest>\r\n\t\t\t\t<CNPJ>00000000000000</CNPJ>\r\n\t\t\t\t<xNome>CLIENTE DEMONSTRACAO S/A</xNome>\r\n\t\t\t\t<enderDest>\r\n\t\t\t\t\t<xLgr>Avenida de Teste</xLgr>\r\n\t\t\t\t\t<nro>1000</nro>\r\n\t\t\t\t\t<xCpl>Conjunto 1</xCpl>\r\n\t\t\t\t\t<xBairro>Bairro Teste</xBairro>\r\n\t\t\t\t\t<cMun>8888888</cMun>\r\n\t\t\t\t\t<xMun>Outro Município</xMun>\r\n\t\t\t\t\t<UF>TS</UF>\r\n\t\t\t\t\t<CEP>88888888</CEP>\r\n\t\t\t\t\t<cPais>1058</cPais>\r\n\t\t\t\t\t<xPais>Brasil</xPais>\r\n\t\t\t\t</enderDest>\r\n\t\t\t\t<indIEDest>1</indIEDest>\r\n\t\t\t\t<IE>000000000000</IE>\r\n\t\t\t</dest>\r\n\t\t\t<det nItem=\"1\">\r\n\t\t\t\t<prod>\r\n\t\t\t\t\t<cProd>XYZ123</cProd>\r\n\t\t\t\t\t<cEAN>0000000000000</cEAN>\r\n\t\t\t\t\t<xProd>Produto Exemplo - Mochila Teste</xProd>\r\n\t\t\t\t\t<NCM>00000000</NCM>\r\n\t\t\t\t\t<CFOP>5101</CFOP>\r\n\t\t\t\t\t<uCom>UN</uCom>\r\n\t\t\t\t\t<qCom>2</qCom>\r\n\t\t\t\t\t<vUnCom>50.00000000</vUnCom>\r\n\t\t\t\t\t<vProd>100.00</vProd>\r\n\t\t\t\t\t<cEANTrib>0000000000000</cEANTrib>\r\n\t\t\t\t\t<uTrib>UN</uTrib>\r\n\t\t\t\t\t<qTrib>2</qTrib>\r\n\t\t\t\t\t<vUnTrib>50.00000000</vUnTrib>\r\n\t\t\t\t\t<indTot>1</indTot>\r\n\t\t\t\t</prod>\r\n\t\t\t\t<imposto>\r\n\t\t\t\t\t<vTotTrib>15.00</vTotTrib>\r\n\t\t\t\t\t<ICMS>\r\n\t\t\t\t\t\t<ICMS00>\r\n\t\t\t\t\t\t\t<orig>0</orig>\r\n\t\t\t\t\t\t\t<CST>00</CST>\r\n\t\t\t\t\t\t\t<modBC>3</modBC>\r\n\t\t\t\t\t\t\t<vBC>100.00</vBC>\r\n\t\t\t\t\t\t\t<pICMS>18.0000</pICMS>\r\n\t\t\t\t\t\t\t<vICMS>18.00</vICMS>\r\n\t\t\t\t\t\t</ICMS00>\r\n\t\t\t\t\t</ICMS>\r\n\t\t\t\t\t<IPI>\r\n\t\t\t\t\t\t<cEnq>999</cEnq>\r\n\t\t\t\t\t\t<IPINT>\r\n\t\t\t\t\t\t\t<CST>03</CST>\r\n\t\t\t\t\t\t</IPINT>\r\n\t\t\t\t\t</IPI>\r\n\t\t\t\t\t<PIS>\r\n\t\t\t\t\t\t<PISOutr>\r\n\t\t\t\t\t\t\t<CST>99</CST>\r\n\t\t\t\t\t\t\t<vBC>100.00</vBC>\r\n\t\t\t\t\t\t\t<pPIS>1.6500</pPIS>\r\n\t\t\t\t\t\t\t<vPIS>1.65</vPIS>\r\n\t\t\t\t\t\t</PISOutr>\r\n\t\t\t\t\t</PIS>\r\n\t\t\t\t\t<COFINS>\r\n\t\t\t\t\t\t<COFINSOutr>\r\n\t\t\t\t\t\t\t<CST>99</CST>\r\n\t\t\t\t\t\t\t<vBC>100.00</vBC>\r\n\t\t\t\t\t\t\t<pCOFINS>7.6000</pCOFINS>\r\n\t\t\t\t\t\t\t<vCOFINS>7.60</vCOFINS>\r\n\t\t\t\t\t\t</COFINSOutr>\r\n\t\t\t\t\t</COFINS>\r\n\t\t\t\t</imposto>\r\n\t\t\t\t<infAdProd>xPed:00000000000000</infAdProd>\r\n\t\t\t</det>\r\n\t\t\t<total>\r\n\t\t\t\t<ICMSTot>\r\n\t\t\t\t\t<vBC>100.00</vBC>\r\n\t\t\t\t\t<vICMS>18.00</vICMS>\r\n\t\t\t\t\t<vICMSDeson>0.00</vICMSDeson>\r\n\t\t\t\t\t<vFCP>0.00</vFCP>\r\n\t\t\t\t\t<vBCST>0.00</vBCST>\r\n\t\t\t\t\t<vST>0.00</vST>\r\n\t\t\t\t\t<vFCPST>0.00</vFCPST>\r\n\t\t\t\t\t<vFCPSTRet>0.00</vFCPSTRet>\r\n\t\t\t\t\t<vProd>100.00</vProd>\r\n\t\t\t\t\t<vFrete>0.00</vFrete>\r\n\t\t\t\t\t<vSeg>0.00</vSeg>\r\n\t\t\t\t\t<vDesc>0.00</vDesc>\r\n\t\t\t\t\t<vII>0.00</vII>\r\n\t\t\t\t\t<vIPI>0.00</vIPI>\r\n\t\t\t\t\t<vIPIDevol>0.00</vIPIDevol>\r\n\t\t\t\t\t<vPIS>1.65</vPIS>\r\n\t\t\t\t\t<vCOFINS>7.60</vCOFINS>\r\n\t\t\t\t\t<vOutro>0.00</vOutro>\r\n\t\t\t\t\t<vNF>100.00</vNF>\r\n\t\t\t\t\t<vTotTrib>15.00</vTotTrib>\r\n\t\t\t\t</ICMSTot>\r\n\t\t\t</total>\r\n\t\t\t<transp>\r\n\t\t\t\t<modFrete>0</modFrete>\r\n\t\t\t</transp>\r\n\t\t\t<pag>\r\n\t\t\t\t<detPag>\r\n\t\t\t\t\t<indPag>0</indPag>\r\n\t\t\t\t\t<tPag>01</tPag>\r\n\t\t\t\t\t<vPag>100.00</vPag>\r\n\t\t\t\t</detPag>\r\n\t\t\t</pag>\r\n\t\t\t<infIntermed>\r\n\t\t\t\t<CNPJ>00000000000100</CNPJ>\r\n\t\t\t\t<idCadIntTran>000000000</idCadIntTran>\r\n\t\t\t</infIntermed>\r\n\t\t\t<infAdic>\r\n\t\t\t\t<infCpl>Documento emitido para fins de demonstração. Nenhuma operação real ocorreu.</infCpl>\r\n\t\t\t\t<obsCont xCampo=\"external_id\">\r\n\t\t\t\t\t<xTexto>EXEMPLO-documento-ficticio-123456789</xTexto>\r\n\t\t\t\t</obsCont>\r\n\t\t\t</infAdic>\r\n\t\t</infNFe>\r\n\t\t<Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">\r\n\t\t\t<SignatureValue>DADOASSINATURAFICTICIO</SignatureValue>\r\n\t\t</Signature>\r\n\t</NFe>\r\n\t<protNFe versao=\"4.00\">\r\n\t\t<infProt>\r\n\t\t\t<tpAmb>2</tpAmb>\r\n\t\t\t<verAplic>EXEMPLO_APP</verAplic>\r\n\t\t\t<chNFe>99999999999999999999999999999999999999999999</chNFe>\r\n\t\t\t<dhRecbto>2025-01-01T12:30:00-03:00</dhRecbto>\r\n\t\t\t<nProt>000000000000000</nProt>\r\n\t\t\t<digVal>DIGESTOEXEMPLO==</digVal>\r\n\t\t\t<cStat>100</cStat>\r\n\t\t\t<xMotivo>Autorizado o uso da NF-e</xMotivo>\r\n\t\t</infProt>\r\n\t</protNFe>\r\n</nfeProc>\r\n\r\n```\r\n\r\n- Documento do tipo `\"NFE\"` com o status `\"CANCELLED\"` (Evento de cancelamento de nota fiscal):\r\n```xml\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<procEventoNFe versao=\"1.00\" xmlns=\"http://www.portalfiscal.inf.br/nfe\">\r\n  <evento xmlns=\"http://www.portalfiscal.inf.br/nfe\" versao=\"1.00\">\r\n    <infEvento Id=\"ID1101119999999999999999999999999999999999999999999\">\r\n      <cOrgao>91</cOrgao>\r\n      <tpAmb>2</tpAmb>\r\n      <CNPJ>99999999000199</CNPJ>\r\n      <chNFe>99999999999999999999550050000123456789012345</chNFe>\r\n      <dhEvento>2025-06-01T10:00:00-03:00</dhEvento>\r\n      <tpEvento>110111</tpEvento>\r\n      <nSeqEvento>1</nSeqEvento>\r\n      <verEvento>1.00</verEvento>\r\n      <detEvento versao=\"1.00\">\r\n        <descEvento>Cancelamento</descEvento>\r\n        <nProt>123456789012345</nProt>\r\n        <xJust>Cancelamento realizado por motivo genérico para fins de teste.</xJust>\r\n      </detEvento>\r\n    </infEvento>\r\n    <Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">\r\n      <SignedInfo>\r\n        <CanonicalizationMethod Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>\r\n        <SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\"/>\r\n        <Reference URI=\"#ID1101119999999999999999999999999999999999999999999\">\r\n          <Transforms>\r\n            <Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>\r\n            <Transform Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>\r\n          </Transforms>\r\n          <DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\"/>\r\n          <DigestValue>XXXXXXXXXXXXXXXXXXXXXXXXXXXXX=</DigestValue>\r\n        </Reference>\r\n      </SignedInfo>\r\n      <SignatureValue>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</SignatureValue>\r\n      <KeyInfo>\r\n        <X509Data>\r\n          <X509Certificate>MIIDXTCCAkWgAwIBAgIEUyb+qDANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJCUjEWMBQGA1UECgwNQ29tcGFuaWEgRmljdGljaWExEzARBgNVBAMMCkV4ZW1wbG8gQ0EwHhcNMjUwNjAxMDAwMDAwWhcNMjYwNjAxMDAwMDAwWjBcMQswCQYDVQQGEwJCUjEXMBUGA1UECgwORW1pdGVudGUgRGV4ZW1wbG8xEzARBgNVBAMMCkV4ZW1wbG8gU1NUMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnomizado+ParaUsoEm+Docx==</X509Certificate>\r\n        </X509Data>\r\n      </KeyInfo>\r\n    </Signature>\r\n  </evento>\r\n  <retEvento versao=\"1.00\">\r\n    <infEvento>\r\n      <tpAmb>2</tpAmb>\r\n      <verAplic>EXEMPLO100200</verAplic>\r\n      <cOrgao>91</cOrgao>\r\n      <cStat>135</cStat>\r\n      <xMotivo>Evento registrado e vinculado a NF-e</xMotivo>\r\n      <chNFe>99999999999999999999550050000123456789012345</chNFe>\r\n      <tpEvento>110111</tpEvento>\r\n      <nSeqEvento>1</nSeqEvento>\r\n      <dhRegEvento>2025-06-01T10:00:00-03:00</dhRegEvento>\r\n      <nProt>123456789012346</nProt>\r\n    </infEvento>\r\n  </retEvento>\r\n</procEventoNFe>\r\n\r\n```\r\n\r\n- Documento do tipo `\"CTE\"` com o status `\"AUTHORIZED\"` (Conhecimento de transporte autorizado):\r\n```xml\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<cteProc xmlns=\"http://www.portalfiscal.inf.br/cte\" versao=\"4.00\">\r\n  <CTe xmlns=\"http://www.portalfiscal.inf.br/cte\">\r\n    <infCte Id=\"CTe99999999999999999999550010000000000000000000\" versao=\"4.00\">\r\n      <ide>\r\n        <cUF>99</cUF>\r\n        <cCT>00000000</cCT>\r\n        <CFOP>6353</CFOP>\r\n        <natOp>PRESTAÇÕES DE SERVIÇOS DE TRANSPORTE</natOp>\r\n        <mod>57</mod>\r\n        <serie>1</serie>\r\n        <nCT>1234567</nCT>\r\n        <dhEmi>2025-06-01T08:00:00-03:00</dhEmi>\r\n        <tpImp>1</tpImp>\r\n        <tpEmis>1</tpEmis>\r\n        <cDV>0</cDV>\r\n        <tpAmb>2</tpAmb>\r\n        <tpCTe>0</tpCTe>\r\n        <procEmi>0</procEmi>\r\n        <verProc>1.0.0</verProc>\r\n        <cMunEnv>9999999</cMunEnv>\r\n        <xMunEnv>Cidade de Origem</xMunEnv>\r\n        <UFEnv>XX</UFEnv>\r\n        <modal>01</modal>\r\n        <tpServ>0</tpServ>\r\n        <cMunIni>9999998</cMunIni>\r\n        <xMunIni>Município Inicial</xMunIni>\r\n        <UFIni>XX</UFIni>\r\n        <cMunFim>9999997</cMunFim>\r\n        <xMunFim>Município Final</xMunFim>\r\n        <UFFim>YY</UFFim>\r\n        <retira>1</retira>\r\n        <indIEToma>1</indIEToma>\r\n        <toma3>\r\n          <toma>0</toma>\r\n        </toma3>\r\n      </ide>\r\n      <emit>\r\n        <CNPJ>99999999000199</CNPJ>\r\n        <IE>000000000</IE>\r\n        <xNome>TRANSPORTADORA FICTICIA LTDA</xNome>\r\n        <enderEmit>\r\n          <xLgr>Rua Exemplo</xLgr>\r\n          <nro>100</nro>\r\n          <xBairro>Centro</xBairro>\r\n          <cMun>9999999</cMun>\r\n          <xMun>Cidade de Origem</xMun>\r\n          <CEP>99999999</CEP>\r\n          <UF>XX</UF>\r\n        </enderEmit>\r\n        <CRT>3</CRT>\r\n      </emit>\r\n      <rem>\r\n        <CNPJ>88888888000188</CNPJ>\r\n        <IE>111111111</IE>\r\n        <xNome>REMETENTE FICTÍCIO LTDA</xNome>\r\n        <enderReme>\r\n          <xLgr>Avenida Fictícia</xLgr>\r\n          <nro>9999</nro>\r\n          <xBairro>Bairro Fictício</xBairro>\r\n          <cMun>9999998</cMun>\r\n          <xMun>Município Inicial</xMun>\r\n          <CEP>88888888</CEP>\r\n          <UF>XX</UF>\r\n        </enderReme>\r\n      </rem>\r\n      <dest>\r\n        <CPF>00000000000</CPF>\r\n        <xNome>DESTINATÁRIO FICTÍCIO</xNome>\r\n        <enderDest>\r\n          <xLgr>Rua Final</xLgr>\r\n          <nro>0</nro>\r\n          <xCpl>Complemento Qualquer</xCpl>\r\n          <xBairro>Bairro Final</xBairro>\r\n          <cMun>9999997</cMun>\r\n          <xMun>Município Final</xMun>\r\n          <CEP>77777777</CEP>\r\n          <UF>YY</UF>\r\n        </enderDest>\r\n      </dest>\r\n      <vPrest>\r\n        <vTPrest>100.00</vTPrest>\r\n        <vRec>100.00</vRec>\r\n      </vPrest>\r\n      <imp>\r\n        <ICMS>\r\n          <ICMS00>\r\n            <CST>00</CST>\r\n            <vBC>100.00</vBC>\r\n            <pICMS>12.00</pICMS>\r\n            <vICMS>12.00</vICMS>\r\n          </ICMS00>\r\n        </ICMS>\r\n        <vTotTrib>12.00</vTotTrib>\r\n      </imp>\r\n      <infCTeNorm>\r\n        <infCarga>\r\n          <vCarga>500.00</vCarga>\r\n          <proPred>MERCADORIA</proPred>\r\n          <infQ>\r\n            <cUnid>01</cUnid>\r\n            <tpMed>PESO BRUTO</tpMed>\r\n            <qCarga>10.0000</qCarga>\r\n          </infQ>\r\n        </infCarga>\r\n        <infDoc>\r\n          <infNFe>\r\n            <chave>99999999999999999999550010000000000000000000</chave>\r\n            <dPrev>2025-06-05</dPrev>\r\n          </infNFe>\r\n        </infDoc>\r\n        <infModal versaoModal=\"4.00\">\r\n          <rodo>\r\n            <RNTRC>00000000</RNTRC>\r\n          </rodo>\r\n        </infModal>\r\n      </infCTeNorm>\r\n    </infCte>\r\n    <infCTeSupl>\r\n      <qrCodCTe>https://www.seufornecedor.com.br/cte/qrCode?chCTe=99999999999999999999550010000000000000000000&amp;tpAmb=2</qrCodCTe>\r\n    </infCTeSupl>\r\n    <Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">\r\n      <SignedInfo>\r\n        <CanonicalizationMethod Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>\r\n        <SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\"/>\r\n        <Reference URI=\"#CTe99999999999999999999550010000000000000000000\">\r\n          <Transforms>\r\n            <Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>\r\n            <Transform Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>\r\n          </Transforms>\r\n          <DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\"/>\r\n          <DigestValue>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX==</DigestValue>\r\n        </Reference>\r\n      </SignedInfo>\r\n      <SignatureValue>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</SignatureValue>\r\n      <KeyInfo>\r\n        <X509Data>\r\n          <X509Certificate>MIID...FICTICIO...CERTIFICADO</X509Certificate>\r\n        </X509Data>\r\n      </KeyInfo>\r\n    </Signature>\r\n  </CTe>\r\n  <protCTe versao=\"4.00\">\r\n    <infProt>\r\n      <tpAmb>2</tpAmb>\r\n      <verAplic>EXEMPLO20240601000000</verAplic>\r\n      <chCTe>99999999999999999999550010000000000000000000</chCTe>\r\n      <dhRecbto>2025-06-01T08:00:01-03:00</dhRecbto>\r\n      <nProt>999999999999999</nProt>\r\n      <digVal>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX==</digVal>\r\n      <cStat>100</cStat>\r\n      <xMotivo>Autorizado o uso do CT-e</xMotivo>\r\n    </infProt>\r\n  </protCTe>\r\n</cteProc>\r\n\r\n\r\n```\r\n",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-fiscalDocuments-download",
+        "description": "# Consulta o Arquivo de um Documento Fiscal\r\n\r\nConsulta um documento fiscal.\r\n\r\n> #### Atenção\r\n>\r\n> O `document_item_id` é retornado junto com todo o caminho de acesso ao XML na Consulta de Documentos Fiscais, no objeto `path`, do array `documents`, exemplo abaixo:\r\n>\r\n> ```json\r\n> {\r\n>   [...],\r\n> \"documents\": [\r\n>                {\r\n>                    \"status\": \"AUTHORIZED\",\r\n>                    \"data\": \"2025-06-04T15:30:50Z\",\r\n>                    \"url\": {\r\n>                       \"path\": \"/document/download/101\",\r\n>                       \"expirationDate\": \"2030-06-04T15:30:50Z\"\r\n>                   }\r\n>                }\r\n>            ]\r\n>}\r\n>```",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Id do documento fiscal gerado pelo ANYMARKET"
+          }
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

@@ -1,0 +1,390 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/reservations": {
+      "parameters": [],
+      "post": {
+        "summary": "/orders/reservations",
+        "operationId": "post-orders-reservations",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "marketPlaceId": {
+                      "type": "string"
+                    },
+                    "marketPlace": {
+                      "type": "string"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "sku": {
+                            "type": "object",
+                            "properties": {
+                              "partnerId": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples": {
+                    "Example 1": {
+                      "id": 7,
+                      "marketPlaceId": "1020301",
+                      "marketPlace": "MARKETPLACE_TESTE",
+                      "total": 150,
+                      "items": [
+                        {
+                          "amount": 1,
+                          "sku": {
+                            "partnerId": "ProdutoAPIV21663352881193"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": 0,
+                      "accountName": "string",
+                      "marketPlaceId": "string",
+                      "marketPlaceNumber": "string",
+                      "partnerId": "string",
+                      "marketPlace": "string",
+                      "subChannel": "string",
+                      "subChannelNormalized": "string",
+                      "createdAt": "2019-08-24T14:15:22Z",
+                      "paymentDate": "2019-08-24T14:15:22Z",
+                      "cancelDate": "2019-08-24T14:15:22Z",
+                      "shippingOptionId": "string",
+                      "transmissionStatus": "string",
+                      "status": "PENDING",
+                      "marketPlaceStatus": "string",
+                      "marketPlaceStatusComplement": "string",
+                      "documentIntermediator": "string",
+                      "intermediateRegistrationId": "string",
+                      "documentPaymentInstitution": "string",
+                      "fulfillment": true,
+                      "discount": 0,
+                      "freight": 0,
+                      "interestValue": 0,
+                      "gross": 0,
+                      "total": 0,
+                      "marketPlaceUrl": "string",
+                      "marketPlaceShipmentStatus": "string",
+                      "invoice": {
+                        "accessKey": "string",
+                        "series": "string",
+                        "number": "string",
+                        "date": "2019-08-24T14:15:22Z",
+                        "cfop": "string",
+                        "companyStateTaxId": "string",
+                        "linkNfe": "string",
+                        "invoiceLink": "string",
+                        "extraDescription": "string"
+                      },
+                      "shipping": {
+                        "city": "string",
+                        "state": "string",
+                        "stateNameNormalized": "string",
+                        "country": "string",
+                        "countryAcronymNormalized": "string",
+                        "countryNameNormalized": "string",
+                        "address": "string",
+                        "number": "string",
+                        "neighborhood": "string",
+                        "street": "string",
+                        "comment": "string",
+                        "reference": "string",
+                        "zipCode": "string",
+                        "receiverName": "string",
+                        "promisedShippingTime": "2019-08-24T14:15:22Z"
+                      },
+                      "billingAddress": {
+                        "city": "string",
+                        "state": "string",
+                        "stateNameNormalized": "string",
+                        "country": "string",
+                        "countryAcronymNormalized": "string",
+                        "countryNameNormalized": "string",
+                        "street": "string",
+                        "number": "string",
+                        "neighborhood": "string",
+                        "comment": "string",
+                        "reference": "string",
+                        "zipCode": "string"
+                      },
+                      "anymarketAddress": {
+                        "state": "string",
+                        "city": "string",
+                        "zipCode": "string",
+                        "neighborhood": "string",
+                        "address": "string",
+                        "street": "string",
+                        "number": "string",
+                        "comment": "string",
+                        "reference": "string",
+                        "receiverName": "string",
+                        "promisedShippingTime": "string"
+                      },
+                      "buyer": {
+                        "marketPlaceId": "string",
+                        "name": "string",
+                        "email": "string",
+                        "document": "string",
+                        "documentType": "string",
+                        "phone": "string",
+                        "cellPhone": "string",
+                        "documentNumberNormalized": "string"
+                      },
+                      "payments": [
+                        {
+                          "method": "string",
+                          "status": "string",
+                          "value": 0,
+                          "installments": 0,
+                          "marketplaceId": "string",
+                          "gatewayFee": 0,
+                          "marketplaceFee": 0,
+                          "paymentMethodNormalized": "string",
+                          "paymentDetailNormalized": "string"
+                        }
+                      ],
+                      "items": [
+                        {
+                          "product": {
+                            "id": 0,
+                            "title": "string"
+                          },
+                          "sku": {
+                            "id": 0,
+                            "title": "string",
+                            "partnerId": "string",
+                            "externalId": "string",
+                            "ean": "string"
+                          },
+                          "amount": 0,
+                          "unit": 0,
+                          "gross": 0,
+                          "total": 0,
+                          "discount": 0,
+                          "shippings": [
+                            {
+                              "id": 0,
+                              "shippingtype": "string",
+                              "shippingCarrierNormalized": "string",
+                              "shippingCarrierTypeNormalized": "string"
+                            }
+                          ],
+                          "stocks": [
+                            {
+                              "stockLocalId": 0,
+                              "stockName": "string",
+                              "amount": 0
+                            }
+                          ],
+                          "marketPlaceId": "string",
+                          "orderItemId": "string",
+                          "idInMarketPlace": "string",
+                          "officialStoreId": "string",
+                          "officialStoreName": "string",
+                          "listingType": "string",
+                          "freeShipping": true
+                        }
+                      ],
+                      "tracking": {
+                        "url": "string",
+                        "number": "string",
+                        "carrier": "string",
+                        "carrierDocument": "string",
+                        "date": "2019-08-24T14:15:22Z",
+                        "deliveredDate": "2019-08-24T14:15:22Z",
+                        "estimateDate": "2019-08-24T14:15:22Z",
+                        "shippedDate": "2019-08-24T14:15:22Z"
+                      },
+                      "deliverStatus": "UNKNOWN",
+                      "idAccount": 0,
+                      "pickup": {
+                        "id": 0,
+                        "description": "string",
+                        "partnerId": 0,
+                        "marketplaceId": "string",
+                        "receiverName": "string"
+                      },
+                      "metadata": {
+                        "number-of-packages": "1",
+                        "cdZipCode": "string",
+                        "needInvoiceXML": "true"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Cria uma reserva",
+        "tags": [
+          "Pedido"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "Example 1": {
+                    "id": 7,
+                    "marketPlaceId": "1020301",
+                    "marketPlace": "MARKETPLACE_TESTE",
+                    "total": 150,
+                    "items": [
+                      {
+                        "amount": 1,
+                        "sku": {
+                          "partnerId": "ProdutoAPIV21663352881193"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "properties": {
+                  "marketPlaceId": {
+                    "type": "string"
+                  },
+                  "marketPlace": {
+                    "type": "string"
+                  },
+                  "total": {
+                    "type": "integer"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "amount": {
+                          "type": "integer"
+                        },
+                        "sku": {
+                          "type": "object",
+                          "properties": {
+                            "partnerId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-internal": true,
+        "x-stoplight": {
+          "id": "7577rkj4qstu0"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

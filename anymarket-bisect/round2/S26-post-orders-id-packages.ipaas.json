@@ -1,0 +1,637 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/{id}/packages": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do Pedido no ANYMARKET"
+        }
+      ],
+      "post": {
+        "summary": "/orders/{id}/packages",
+        "tags": [
+          "Pedido"
+        ],
+        "operationId": "post-orders-id-packages",
+        "description": "# Cria um pacote (múltiplos envios) para um pedido\nSinaliza ao canal que a venda terá diferentes envios, permitindo que múltiplos pacotes — e, consequentemente, múltiplas notas fiscais — sejam associados ao mesmo pedido.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Corpo da requisição para criação de pacote (múltiplos envios) de um pedido",
+                "required": [
+                  "packages"
+                ],
+                "properties": {
+                  "packageReason": {
+                    "type": "object",
+                    "description": "Motivo do pacote, utilizado pelo mecanismo de integração com marketplaces remotos",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Código do motivo"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Descrição do motivo"
+                      }
+                    },
+                    "example": {
+                      "id": "string",
+                      "description": "string"
+                    }
+                  },
+                  "packages": {
+                    "type": "array",
+                    "description": "Pacotes a serem criados para o pedido",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "description": "Um pacote a ser criado para o pedido",
+                      "required": [
+                        "items"
+                      ],
+                      "properties": {
+                        "dimensions": {
+                          "type": "object",
+                          "description": "Dimensões do pacote, em centímetros. Cada campo é individualmente opcional.",
+                          "properties": {
+                            "length": {
+                              "type": "number",
+                              "description": "Comprimento do pacote, em centímetros",
+                              "minimum": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "Largura do pacote, em centímetros",
+                              "minimum": 0
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "Altura do pacote, em centímetros",
+                              "minimum": 0
+                            },
+                            "weight": {
+                              "type": "number",
+                              "description": "Peso do pacote",
+                              "minimum": 0
+                            }
+                          },
+                          "example": {
+                            "length": 0,
+                            "width": 0,
+                            "height": 0,
+                            "weight": 0
+                          }
+                        },
+                        "items": {
+                          "type": "array",
+                          "description": "Itens que compõe o pacote",
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "description": "Item que compõe o pacote",
+                            "required": [
+                              "sku",
+                              "quantity"
+                            ],
+                            "properties": {
+                              "sku": {
+                                "type": "string",
+                                "description": "SKU do item no canal/marketplace de venda"
+                              },
+                              "quantity": {
+                                "type": "number",
+                                "description": "Quantidade do item que irá compor o pacote",
+                                "minimum": 1
+                              }
+                            },
+                            "example": {
+                              "sku": "string",
+                              "quantity": 1
+                            }
+                          }
+                        },
+                        "externalId": {
+                          "type": "string",
+                          "description": "Identificador do seller"
+                        }
+                      },
+                      "example": {
+                        "dimensions": {
+                          "length": 0,
+                          "width": 0,
+                          "height": 0,
+                          "weight": 0
+                        },
+                        "items": [
+                          {
+                            "sku": "string",
+                            "quantity": 1
+                          }
+                        ],
+                        "externalId": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "packageReason": {
+                    "id": "string",
+                    "description": "string"
+                  },
+                  "packages": [
+                    {
+                      "dimensions": {
+                        "length": 0,
+                        "width": 0,
+                        "height": 0,
+                        "weight": 0
+                      },
+                      "items": [
+                        {
+                          "sku": "string",
+                          "quantity": 1
+                        }
+                      ],
+                      "externalId": "string"
+                    }
+                  ]
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "packageReason": {
+                      "id": "string",
+                      "description": "string"
+                    },
+                    "packages": [
+                      {
+                        "dimensions": {
+                          "length": 0,
+                          "width": 0,
+                          "height": 0,
+                          "weight": 0
+                        },
+                        "items": [
+                          {
+                            "sku": "string",
+                            "quantity": 1
+                          }
+                        ],
+                        "externalId": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Pacote (múltiplos envios) de um pedido, incluindo os dados gerados/enriquecidos pelo ANYMARKET",
+                  "properties": {
+                    "orderId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Identificador do pedido no ANYMARKET"
+                    },
+                    "packageId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Identificador do agrupamento de pacotes gerado pelo ANYMARKET"
+                    },
+                    "oi": {
+                      "type": "string",
+                      "description": "Identificador da organização (tenant) no ANYMARKET"
+                    },
+                    "orderIdInMarketplace": {
+                      "type": "string",
+                      "description": "Identificador do pedido no marketplace"
+                    },
+                    "packageReason": {
+                      "type": "object",
+                      "description": "Motivo do pacote, utilizado pelo mecanismo de integração com marketplaces remotos",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Código do motivo"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Descrição do motivo"
+                        }
+                      },
+                      "example": {
+                        "id": "string",
+                        "description": "string"
+                      }
+                    },
+                    "packages": {
+                      "type": "array",
+                      "description": "Pacotes do pedido",
+                      "items": {
+                        "type": "object",
+                        "description": "Um pacote do pedido, incluindo os dados gerados/enriquecidos pelo ANYMARKET",
+                        "properties": {
+                          "packageItemId": {
+                            "type": "string",
+                            "format": "uuid",
+                            "description": "Identificador deste pacote, gerado pelo ANYMARKET"
+                          },
+                          "externalId": {
+                            "type": "string",
+                            "description": "Identificador do seller"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data de criação do pacote"
+                          },
+                          "trackingCode": {
+                            "type": "string",
+                            "description": "Código de rastreio do pacote"
+                          },
+                          "trackingDate": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data de rastreio do pacote"
+                          },
+                          "dimensions": {
+                            "type": "object",
+                            "description": "Dimensões do pacote, em centímetros. Cada campo é individualmente opcional.",
+                            "properties": {
+                              "length": {
+                                "type": "number",
+                                "description": "Comprimento do pacote, em centímetros",
+                                "minimum": 0
+                              },
+                              "width": {
+                                "type": "number",
+                                "description": "Largura do pacote, em centímetros",
+                                "minimum": 0
+                              },
+                              "height": {
+                                "type": "number",
+                                "description": "Altura do pacote, em centímetros",
+                                "minimum": 0
+                              },
+                              "weight": {
+                                "type": "number",
+                                "description": "Peso do pacote",
+                                "minimum": 0
+                              }
+                            },
+                            "example": {
+                              "length": 0,
+                              "width": 0,
+                              "height": 0,
+                              "weight": 0
+                            }
+                          },
+                          "reasonId": {
+                            "type": "string",
+                            "description": "Código do motivo do pacote"
+                          },
+                          "reasonDescription": {
+                            "type": "string",
+                            "description": "Descrição do motivo do pacote"
+                          },
+                          "createdUnit": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data de criação do pacote na unidade"
+                          },
+                          "issuedLabelAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data de emissão da etiqueta do pacote"
+                          },
+                          "statusMarketplace": {
+                            "type": "string",
+                            "description": "Status do pacote no marketplace"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "Status do pacote"
+                          },
+                          "items": {
+                            "type": "array",
+                            "description": "Itens que compõe o pacote",
+                            "items": {
+                              "type": "object",
+                              "description": "Item que compõe o pacote, incluindo os dados gerados/enriquecidos pelo ANYMARKET",
+                              "required": [
+                                "sku",
+                                "quantity"
+                              ],
+                              "properties": {
+                                "packageItemId": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                  "description": "Identificador do item do pacote gerado pelo ANYMARKET"
+                                },
+                                "sku": {
+                                  "type": "string",
+                                  "description": "SKU do item no canal/marketplace de venda"
+                                },
+                                "quantity": {
+                                  "type": "number",
+                                  "description": "Quantidade do item que compõe o pacote",
+                                  "minimum": 1
+                                },
+                                "salesOrderItemId": {
+                                  "type": "integer",
+                                  "format": "int64",
+                                  "description": "Identificador do item do pedido de venda"
+                                },
+                                "skuInMarketplace": {
+                                  "type": "string",
+                                  "description": "SKU do item no marketplace"
+                                },
+                                "idInMarketplace": {
+                                  "type": "string",
+                                  "description": "Identificador do item no marketplace"
+                                }
+                              },
+                              "example": {
+                                "packageItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "sku": "string",
+                                "quantity": 1,
+                                "salesOrderItemId": 0,
+                                "skuInMarketplace": "string",
+                                "idInMarketplace": "string"
+                              }
+                            }
+                          }
+                        },
+                        "example": {
+                          "packageItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "externalId": "string",
+                          "createdAt": "2019-08-24T14:15:22Z",
+                          "trackingCode": "string",
+                          "trackingDate": "2019-08-24T14:15:22Z",
+                          "dimensions": {
+                            "length": 0,
+                            "width": 0,
+                            "height": 0,
+                            "weight": 0
+                          },
+                          "reasonId": "string",
+                          "reasonDescription": "string",
+                          "createdUnit": "2019-08-24T14:15:22Z",
+                          "issuedLabelAt": "2019-08-24T14:15:22Z",
+                          "statusMarketplace": "string",
+                          "status": "string",
+                          "items": [
+                            {
+                              "packageItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "sku": "string",
+                              "quantity": 1,
+                              "salesOrderItemId": 0,
+                              "skuInMarketplace": "string",
+                              "idInMarketplace": "string"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "orderId": 0,
+                    "packageId": 0,
+                    "oi": "string",
+                    "orderIdInMarketplace": "string",
+                    "packageReason": {
+                      "id": "string",
+                      "description": "string"
+                    },
+                    "packages": [
+                      {
+                        "packageItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "externalId": "string",
+                        "createdAt": "2019-08-24T14:15:22Z",
+                        "trackingCode": "string",
+                        "trackingDate": "2019-08-24T14:15:22Z",
+                        "dimensions": {
+                          "length": 0,
+                          "width": 0,
+                          "height": 0,
+                          "weight": 0
+                        },
+                        "reasonId": "string",
+                        "reasonDescription": "string",
+                        "createdUnit": "2019-08-24T14:15:22Z",
+                        "issuedLabelAt": "2019-08-24T14:15:22Z",
+                        "statusMarketplace": "string",
+                        "status": "string",
+                        "items": [
+                          {
+                            "packageItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "sku": "string",
+                            "quantity": 1,
+                            "salesOrderItemId": 0,
+                            "skuInMarketplace": "string",
+                            "idInMarketplace": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "orderId": 0,
+                      "packageId": 0,
+                      "oi": "string",
+                      "orderIdInMarketplace": "string",
+                      "packageReason": {
+                        "id": "string",
+                        "description": "string"
+                      },
+                      "packages": [
+                        {
+                          "packageItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "externalId": "string",
+                          "createdAt": "2019-08-24T14:15:22Z",
+                          "trackingCode": "string",
+                          "trackingDate": "2019-08-24T14:15:22Z",
+                          "dimensions": {
+                            "length": 0,
+                            "width": 0,
+                            "height": 0,
+                            "weight": 0
+                          },
+                          "reasonId": "string",
+                          "reasonDescription": "string",
+                          "createdUnit": "2019-08-24T14:15:22Z",
+                          "issuedLabelAt": "2019-08-24T14:15:22Z",
+                          "statusMarketplace": "string",
+                          "status": "string",
+                          "items": [
+                            {
+                              "packageItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "sku": "string",
+                              "quantity": 1,
+                              "salesOrderItemId": 0,
+                              "skuInMarketplace": "string",
+                              "idInMarketplace": "string"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

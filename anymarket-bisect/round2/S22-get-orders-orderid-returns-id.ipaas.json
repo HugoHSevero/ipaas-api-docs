@@ -1,0 +1,906 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/{orderId}/returns/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "orderId",
+          "in": "path",
+          "required": true,
+          "description": "ID do Pedido no ANYMARKET"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID da Devolução no ANYMARKET"
+        }
+      ],
+      "get": {
+        "summary": "/orders/{orderId}/returns/{id}",
+        "tags": [
+          "Devolução"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "orderId",
+                    "marketplace",
+                    "marketplaceOrderId",
+                    "marketplaceReturnId",
+                    "marketplaceTypeId",
+                    "accountId",
+                    "status",
+                    "reason",
+                    "type",
+                    "createdAt",
+                    "items",
+                    "history"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID da Devolução"
+                    },
+                    "orderId": {
+                      "type": "integer",
+                      "description": "ID do Pedido no ANYMARKET"
+                    },
+                    "oi": {
+                      "type": "string"
+                    },
+                    "marketplace": {
+                      "type": "string",
+                      "title": "Marketplaces",
+                      "enum": [
+                        "MERCADO_LIVRE",
+                        "ALIEXPRESS",
+                        "AMAZON_GLOBAL_API",
+                        "ANGELONI",
+                        "ARMAZEM_PARAIBA",
+                        "B2W_NEW_API",
+                        "BABYBIZ",
+                        "BANCO_INTER",
+                        "BANDSHOP",
+                        "BELEZA_NA_WEB_NEW_API",
+                        "BRAVIUM",
+                        "C_A",
+                        "CARREFOUR",
+                        "CASA_VIDEO",
+                        "CASSOL_CENTERLAR",
+                        "CENTAURO_NEW_API",
+                        "CLAROSHOP_MEXICO",
+                        "COMFORTFLEX_NOVA_API",
+                        "COMPRA_CERTA",
+                        "COPPEL",
+                        "CSM",
+                        "DB1_MARKETPLACE",
+                        "DECATHLON",
+                        "DIGIGROW",
+                        "EFACIL",
+                        "ELEKTRA",
+                        "EOS",
+                        "EPOCA",
+                        "ESTANTE_VIRTUAL",
+                        "FALABELLA",
+                        "FARMADELIVERY",
+                        "FASTSHOP_NEW_API",
+                        "FENICIO",
+                        "FOODIES_STORE",
+                        "GFG",
+                        "GRUPO_MATEUS",
+                        "HELP_SELLER",
+                        "HITES",
+                        "HOUSE_OF_GAMERS",
+                        "ICBC_MALL",
+                        "IGA",
+                        "ITAU",
+                        "JUMPSELLER",
+                        "KABUM",
+                        "KOERICH",
+                        "LE_BISCUIT",
+                        "LEROY_MERLIN",
+                        "LIVESHOP",
+                        "LL_LOYALTY",
+                        "LOJA_DO_COOPERADO",
+                        "LOJA_DO_MECANICO",
+                        "LOJAS_COLOMBO",
+                        "LOJAS_IMPERIO",
+                        "LOJAS_LEBES_NEW_API",
+                        "LOJAS_MM",
+                        "LOJAS_QUERO_QUERO",
+                        "MADEIRA_MADEIRA",
+                        "MAGAZINE_LUIZA",
+                        "MAGENTO",
+                        "MAIS_CORREIOS",
+                        "MARCA_SELETA",
+                        "MARTINS_ATACADO",
+                        "MEGATONE",
+                        "MOBLY",
+                        "MULTIVAREJO_GPA",
+                        "NETSHOES",
+                        "NEXTSHOP",
+                        "NUVEMSHOP",
+                        "OLIST_NEW_API",
+                        "PAGUE_MENOS",
+                        "PARIS",
+                        "PHILIPS_STORE",
+                        "PITSTOP",
+                        "PNEUBEST",
+                        "POLISHOP",
+                        "POSTHAUS_NEW_API",
+                        "PRESTASHOP",
+                        "PRIVALIA",
+                        "RAIA_DROGASIL",
+                        "RAMARIM_NOVA_API",
+                        "RENNER",
+                        "RI_HAPPY_NEW_API",
+                        "RIACHUELO",
+                        "RIPLEY",
+                        "SENFF_SHOPPING",
+                        "SHEIN",
+                        "SHOPEE",
+                        "SHOPHUB",
+                        "SHOPIFY",
+                        "SHOPPING_BB",
+                        "SHOPPING_LIVELO",
+                        "SICOOB",
+                        "SICREDI",
+                        "STECK",
+                        "SUBLIMITY",
+                        "TA_TASHOP",
+                        "TENDA_ATACADO",
+                        "THE_HOME_DEPOT",
+                        "TIENDA_CLIC",
+                        "TIKTOK_SHOP",
+                        "TRAY",
+                        "TROCAFONE",
+                        "VALE_BONUS",
+                        "VENTURESHOP",
+                        "VINKLO_BY_FESTALAB",
+                        "VTEX",
+                        "WALMART",
+                        "WEB_CONTINENTAL_V2",
+                        "WEHOUSE",
+                        "WOOCOMMERCE",
+                        "WOOCOMMERCE2",
+                        "YA_PLACE_STORE",
+                        "ZEMA",
+                        "ZOOM"
+                      ],
+                      "description": "Descritivo de qual marketplace o pedido pertence",
+                      "example": "ALIEXPRESS"
+                    },
+                    "marketplaceOrderId": {
+                      "type": "string",
+                      "description": "ID público do pedido no marketplace"
+                    },
+                    "marketplaceReturnId": {
+                      "type": "string",
+                      "description": "ID público da devolução no marketplace"
+                    },
+                    "marketplaceTypeId": {
+                      "type": "string",
+                      "description": "Tipo de devolução no marketplace",
+                      "example": "automatic, calim, dispute"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "description": "ID da conta no ANYMARKET"
+                    },
+                    "accountName": {
+                      "type": "string",
+                      "description": "Nome da conta no ANYMARKET"
+                    },
+                    "paymentStatus": {
+                      "type": "string",
+                      "description": "Status do pagamento da devolução"
+                    },
+                    "status": {
+                      "description": "Status da devolução\n\n**NEW_RETURN**: Nova devolução<br>\n**WAITING_DELIVERY**: Retorno ao CD do seller<br>\n**WAITING_DELIVERY_MARKETPLACE**: Retorno ao CD do marketplace<br>\n**WAITING_CONFERENCE**: Aguardando conferência<br>\n**CHECKED**: Devolução conferida<br>\n**CANCELLED**: Devolução cancelada<br>\n**CONCLUDED**: Devolução concluída<br>\n**FAILED**: Devolução falhou<br>\n**EXPIRED**: Devolução expirou                  ",
+                      "enum": [
+                        "NEW_RETURN",
+                        "WAITING_DELIVERY",
+                        "WAITING_DELIVERY_MARKETPLACE",
+                        "WAITING_CONFERENCE",
+                        "CHECKED",
+                        "CANCELLED",
+                        "CONCLUDED",
+                        "FAILED",
+                        "EXPIRED"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "Razão da devolução"
+                    },
+                    "type": {
+                      "description": "Tipo de devolução",
+                      "enum": [
+                        "TOTAL",
+                        "PARTIAL"
+                      ]
+                    },
+                    "createdAt": {
+                      "title": "dateTypeGMT",
+                      "type": "string",
+                      "example": "2024-08-30T08:26:00-03:00",
+                      "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                      "description": "Modelo de data e hora com GMT"
+                    },
+                    "closedAt": {
+                      "title": "dateTypeGMT",
+                      "type": "string",
+                      "example": "2024-08-30T08:26:00-03:00",
+                      "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                      "description": "Modelo de data e hora com GMT"
+                    },
+                    "checkedAt": {
+                      "title": "dateTypeGMT",
+                      "type": "string",
+                      "example": "2024-08-30T08:26:00-03:00",
+                      "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                      "description": "Modelo de data e hora com GMT"
+                    },
+                    "updatedAt": {
+                      "title": "dateTypeGMT",
+                      "type": "string",
+                      "example": "2024-08-30T08:26:00-03:00",
+                      "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                      "description": "Modelo de data e hora com GMT"
+                    },
+                    "items": {
+                      "type": "array",
+                      "description": "Items devolvidos",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "orderItemId",
+                          "skuId",
+                          "marketplaceSkuId",
+                          "quantity"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID do item da devolução no ANYMARKET"
+                          },
+                          "orderItemId": {
+                            "type": "integer",
+                            "description": "Id do item no pedido gerado pelo ANYMARKET"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Título do produto"
+                          },
+                          "skuId": {
+                            "type": "integer",
+                            "description": "ID do SKU gerado pelo ANYMARKET"
+                          },
+                          "marketplaceSkuId": {
+                            "type": "string",
+                            "description": "Código do sku no marketplace",
+                            "example": "MLB123456789, SKU_123"
+                          },
+                          "quantity": {
+                            "type": "integer",
+                            "description": "Quantidade do item"
+                          }
+                        }
+                      }
+                    },
+                    "shipping": {
+                      "type": "array",
+                      "description": "Envio da devolução",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "marketplaceShippingId",
+                          "status",
+                          "type",
+                          "city",
+                          "state",
+                          "country",
+                          "createdAt"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID do envio da devolução no ANYMARKET"
+                          },
+                          "marketplaceShippingId": {
+                            "type": "string",
+                            "description": "Código do envio no marketplace"
+                          },
+                          "status": {
+                            "description": "Status do envio no marketplace\n\n**WAITING_CARRIER**: Aguardando envio<br>\n**TRANSIT_GOODS**: Em trânsito<br>\n**DELIVERED**: Devolução no CD<br>\n**NOT_DELIVERED**: Devolução não entregue no CD ",
+                            "enum": [
+                              "WAITING_CARRIER",
+                              "TRANSIT_GOODS",
+                              "DELIVERED",
+                              "NOT_DELIVERED"
+                            ]
+                          },
+                          "subStatus": {
+                            "type": "string",
+                            "description": "Substatus do envio no marketplace"
+                          },
+                          "trackingNumber": {
+                            "type": "string",
+                            "description": "Número de rastreio"
+                          },
+                          "estimatedDelivery": {
+                            "title": "dateTypeGMT",
+                            "type": "string",
+                            "example": "2024-08-30T08:26:00-03:00",
+                            "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                            "description": "Modelo de data e hora com GMT"
+                          },
+                          "transportServiceName": {
+                            "type": "string",
+                            "description": "Nome da transportadora"
+                          },
+                          "senderName": {
+                            "type": "string",
+                            "description": "Nome do responsável pelo envio"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Define o tipo do endereço de envio",
+                            "example": "selling_address"
+                          },
+                          "addressLine": {
+                            "type": "string",
+                            "description": "Endereço completo do envio"
+                          },
+                          "streetName": {
+                            "type": "string",
+                            "description": "Rua"
+                          },
+                          "streetNumber": {
+                            "type": "string",
+                            "description": "Número"
+                          },
+                          "comment": {
+                            "type": "string",
+                            "description": "Complemento"
+                          },
+                          "zipCode": {
+                            "type": "string",
+                            "description": "Código Postal"
+                          },
+                          "city": {
+                            "type": "string",
+                            "description": "Cidade"
+                          },
+                          "state": {
+                            "type": "string",
+                            "description": "Estado"
+                          },
+                          "country": {
+                            "type": "string",
+                            "description": "País"
+                          },
+                          "neighborhood": {
+                            "type": "string",
+                            "description": "Bairro"
+                          },
+                          "destination": {
+                            "type": "string",
+                            "description": "Define o tipo de endereço do CD\n\n**SELLER_ADDRESS**: CD do seller<br>\n**WAREHOUSE**: CD do marketplace",
+                            "enum": [
+                              "SELLER_ADDRESS",
+                              "WAREHOUSE"
+                            ]
+                          },
+                          "municipality": {
+                            "type": "string",
+                            "description": "Município"
+                          },
+                          "createdAt": {
+                            "title": "dateTypeGMT",
+                            "type": "string",
+                            "example": "2024-08-30T08:26:00-03:00",
+                            "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                            "description": "Modelo de data e hora com GMT"
+                          }
+                        }
+                      }
+                    },
+                    "history": {
+                      "type": "array",
+                      "description": "Histórico da devolução",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "returnStatus",
+                          "createdAt"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "Data da criação do envio da devolução"
+                          },
+                          "returnStatus": {
+                            "description": "Status da devolução\n\n**NEW_RETURN**: Nova devolução<br>\n**WAITING_DELIVERY**: Retorno ao CD do seller<br>\n**WAITING_DELIVERY_MARKETPLACE**: Retorno ao CD do marketplace<br>\n**WAITING_CONFERENCE**: Aguardando conferência<br>\n**CHECKED**: Devolução conferida<br>\n**CANCELLED**: Devolução cancelada<br>\n**CONCLUDED**: Devolução concluída<br>\n**FAILED**: Devolução falhou<br>\n**EXPIRED**: Devolução expirou",
+                            "enum": [
+                              "NEW_RETURN",
+                              "WAITING_DELIVERY",
+                              "WAITING_CONFERENCE",
+                              "CHECKED",
+                              "CANCELLED",
+                              "CONCLUDED",
+                              "FAILED",
+                              "EXPIRED",
+                              "WAITING_DELIVERY_MARKETPLACE"
+                            ]
+                          },
+                          "shippingStatus": {
+                            "description": "Status da entrega da devolução\n\n**WAITING_CARRIER**: Aguardando envio<br>\n**TRANSIT_GOODS**: Em trânsito<br>\n**DELIVERED**: Devolução no CD<br>\n**NOT_DELIVERED**: Devolução não entregue no CD",
+                            "enum": [
+                              "WAITING_CARRIER",
+                              "TRANSIT_GOODS",
+                              "DELIVERED",
+                              "NOT_DELIVERED"
+                            ]
+                          },
+                          "shippingSubStatus": {
+                            "type": "string",
+                            "description": "Substatus da devolução"
+                          },
+                          "createdAt": {
+                            "title": "dateTypeGMT",
+                            "type": "string",
+                            "example": "2024-08-30T08:26:00-03:00",
+                            "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                            "description": "Modelo de data e hora com GMT"
+                          }
+                        }
+                      }
+                    },
+                    "conference": {
+                      "type": "object",
+                      "description": "Dados de conferência da devolução",
+                      "required": [
+                        "status"
+                      ],
+                      "properties": {
+                        "reasonDetails": {
+                          "type": "string",
+                          "description": "Detalhes do motivo da devolução"
+                        },
+                        "status": {
+                          "enum": [
+                            "RETURN_CHECK_OK",
+                            "RETURN_CHECK_NOT_OK"
+                          ],
+                          "description": "Status da conferência da devolução"
+                        },
+                        "observations": {
+                          "type": "string",
+                          "description": "Observações na conferência da devolução"
+                        },
+                        "marketplaceReview": {
+                          "type": "object",
+                          "description": "Dados da revisão do marketplace",
+                          "properties": {
+                            "method": {
+                              "type": "string",
+                              "description": "Método da revisão"
+                            },
+                            "reviewStatus": {
+                              "type": "string",
+                              "description": "Status da revisão no marketplace"
+                            },
+                            "productCondition": {
+                              "type": "string",
+                              "description": "Condição do produto\n\n**saleable**: o produto está em boas condições para venda.<br>\n**discard**: o produto foi descartado.<br>\n**unsaleable**: o produto não está apto para venda.<br>\n**missing**: o produto não chegou para revisão."
+                            },
+                            "productDestination": {
+                              "type": "string",
+                              "description": "Destino do produto"
+                            },
+                            "benefited": {
+                              "type": "string",
+                              "description": "Beneficiário da revisão"
+                            },
+                            "reasonId": {
+                              "type": "string",
+                              "description": "Identificador do motivo da revisão\n\n**accepted**: o produto foi aceito.<br>\n**different_product**: produto diferente.<br>\n**discard**: produto descartado.<br>\n**misused**: produto mal usado.<br>\n**not_working**: o produto não funciona.<br>\n**incomplete**: produto incompleto.<br>\n**blocked**: produto bloqueado.<br>\n**open_box**: produto de caixa aberta.<br>\n**missing**: produto não encontrado.<br>\n**default**: nos casos em que a revisão não pôde ser gerada.<br>\n**null**: quando não há uma revisão."
+                            },
+                            "reviewedAt": {
+                              "title": "dateTypeGMT",
+                              "type": "string",
+                              "example": "2024-08-30T08:26:00-03:00",
+                              "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}",
+                              "description": "Data da revisão"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "invoice": {
+                      "type": "object",
+                      "description": "Dados da nota fiscal da devolução",
+                      "properties": {
+                        "accessKey": {
+                          "type": "string",
+                          "description": "Chave de acesso da nota fiscal"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 1234,
+                      "orderId": 123456789,
+                      "oi": "123456789.",
+                      "marketplace": "MERCADO_LIVRE",
+                      "marketplaceOrderId": "2000001234567",
+                      "marketplaceReturnId": "234567",
+                      "marketplaceTypeId": "automatic",
+                      "accountId": "123",
+                      "accountName": "TESTUSER",
+                      "paymentStatus": "APPROVED",
+                      "status": "NEW_RETURN",
+                      "reason": "Não é da cor, tamanho ou modelo que escolhi",
+                      "type": "TOTAL",
+                      "createdAt": "2024-08-30T11:26:00.000Z",
+                      "closedAt": "2024-08-30T11:26:00.000Z",
+                      "checkedAt": "2024-08-30T11:26:00.000Z",
+                      "updatedAt": "2024-08-30T11:26:00.000Z",
+                      "items": [
+                        {
+                          "id": 123,
+                          "orderItemId": 234567890,
+                          "title": "Boné",
+                          "skuId": 34567890,
+                          "marketplaceSkuId": "MLB123456789",
+                          "quantity": 2
+                        },
+                        {
+                          "id": 1234,
+                          "orderItemId": 234567891,
+                          "title": "Jaqueta",
+                          "skuId": 34567891,
+                          "marketplaceSkuId": "MLB1234567890",
+                          "quantity": 2
+                        }
+                      ],
+                      "shipping": [
+                        {
+                          "id": 1234,
+                          "marketplaceShippingId": "123456789",
+                          "status": "WAITING_CARRIER",
+                          "subStatus": "READY_TO_PRINT",
+                          "trackingNumber": "OY123456789BR",
+                          "estimatedDelivery": "2024-08-31T11:26:00.000Z",
+                          "transportServiceName": "Mercado Livre",
+                          "senderName": "Test Test",
+                          "type": "selling_address",
+                          "addressLine": "XXXXXXX",
+                          "streetName": "XXXXXXX",
+                          "streetNumber": "XXXXXXX",
+                          "comment": "XXXXXXX",
+                          "zipCode": "06454000",
+                          "city": "Barueri",
+                          "state": "São Paulo",
+                          "country": "Brasil",
+                          "neighborhood": "Alphaville",
+                          "destination": "seller_address",
+                          "createdAt": "2024-08-30T11:26:00.000Z"
+                        },
+                        {
+                          "id": 1235,
+                          "marketplaceShippingId": "1234567890",
+                          "status": "WAITING_CARRIER",
+                          "subStatus": "READY_TO_PRINT",
+                          "trackingNumber": "OY123456789BR",
+                          "estimatedDelivery": "2024-08-31T11:26:00.000Z",
+                          "transportServiceName": "Mercado Livre",
+                          "senderName": "Test Test",
+                          "type": "selling_address",
+                          "addressLine": "XXXXXXX",
+                          "streetName": "XXXXXXX",
+                          "streetNumber": "XXXXXXX",
+                          "comment": "XXXXXXX",
+                          "zipCode": "06454000",
+                          "city": "Barueri",
+                          "state": "São Paulo",
+                          "country": "Brasil",
+                          "neighborhood": "Alphaville",
+                          "destination": "warehouse",
+                          "createdAt": "2024-08-30T11:26:00.000Z"
+                        }
+                      ],
+                      "history": [
+                        {
+                          "id": 12345,
+                          "returnStatus": "NEW_RETURN",
+                          "shippingStatus": "WAITING_CARRIER",
+                          "shippingSubStatus": "READY_TO_PRINT",
+                          "createdAt": "2024-08-30T11:26:00.000Z"
+                        }
+                      ],
+                      "conference": {
+                        "reasonDetails": "string",
+                        "status": "RETURN_CHECK_OK",
+                        "observations": "string",
+                        "marketplaceReview": {
+                          "method": "triage",
+                          "reviewStatus": "success",
+                          "productCondition": "unsaleable",
+                          "productDestination": "seller",
+                          "benefited": "buyer",
+                          "reasonId": "accepted",
+                          "reviewedAt": "2024-08-27T14:58:21.978Z"
+                        }
+                      },
+                      "invoice": {
+                        "accessKey": "string"
+                      }
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "id": 75055,
+                      "orderId": 179762155,
+                      "oi": "259061958.",
+                      "marketplace": "MERCADO_LIVRE",
+                      "marketplaceOrderId": "2000006227480873",
+                      "marketplaceReturnId": "27480873",
+                      "marketplaceTypeId": "automatic",
+                      "accountId": "47205",
+                      "accountName": "TESTUSER1143557621",
+                      "paymentStatus": "APPROVED",
+                      "status": "NEW_RETURN",
+                      "reason": "Não é da cor, tamanho ou modelo que escolhi",
+                      "type": "TOTAL",
+                      "createdAt": "2024-08-30T11:26:00.000Z",
+                      "closedAt": "2024-08-30T11:26:00.000Z",
+                      "checkedAt": "2024-08-30T11:26:00.000Z",
+                      "updatedAt": "2024-08-30T11:26:00.000Z",
+                      "items": [
+                        {
+                          "id": 75036,
+                          "orderItemId": 209627092,
+                          "title": "BonΘ H90 Logo (UNISSEX)",
+                          "skuId": 95527728,
+                          "marketplaceSkuId": "MLB4776746304",
+                          "quantity": 2
+                        },
+                        {
+                          "id": 75037,
+                          "orderItemId": 209627093,
+                          "title": "Jaqueta Hino Colômbia",
+                          "skuId": 95527734,
+                          "marketplaceSkuId": "MLB4776746582",
+                          "quantity": 2
+                        }
+                      ],
+                      "shipping": [
+                        {
+                          "id": 74995,
+                          "marketplaceShippingId": "1",
+                          "status": "WAITING_CARRIER",
+                          "subStatus": "READY_TO_PRINT",
+                          "trackingNumber": "OY123456789BR",
+                          "estimatedDelivery": "2024-08-31T11:26:00.000Z",
+                          "transportServiceName": "Mercado Livre",
+                          "senderName": "Test Test",
+                          "type": "selling_address",
+                          "addressLine": "XXXXXXX",
+                          "streetName": "XXXXXXX",
+                          "streetNumber": "XXXXXXX",
+                          "comment": "XXXXXXX",
+                          "zipCode": "06454000",
+                          "city": "Barueri",
+                          "state": "São Paulo",
+                          "country": "Brasil",
+                          "neighborhood": "Alphaville Centro Industrial e Empresarial/Alphaville",
+                          "destination": "seller_address",
+                          "createdAt": "2024-08-30T11:26:00.000Z"
+                        }
+                      ],
+                      "history": [
+                        {
+                          "id": 386651,
+                          "returnStatus": "NEW_RETURN",
+                          "shippingStatus": "WAITING_CARRIER",
+                          "shippingSubStatus": "READY_TO_PRINT",
+                          "createdAt": "2024-08-30T11:26:00.000Z"
+                        }
+                      ],
+                      "conference": {
+                        "reasonDetails": "string",
+                        "status": "RETURN_CHECK_OK",
+                        "observations": "string",
+                        "marketplaceReview": {
+                          "method": "triage",
+                          "reviewStatus": "success",
+                          "productCondition": "unsaleable",
+                          "productDestination": "seller",
+                          "benefited": "buyer",
+                          "reasonId": "accepted",
+                          "reviewedAt": "2024-08-27T14:58:21.978Z"
+                        }
+                      },
+                      "invoice": {
+                        "accessKey": "43240830111222333444550010001234567891234567890"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "description": "Código da mensagem de erro "
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de Erro"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "description": "Código da mensagem de erro "
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de Erro"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-orders-returns-id",
+        "description": "# Consulta os detalhes de uma Devolução\r\nConsulta os detalhes de uma devolução de pedido",
+        "parameters": []
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

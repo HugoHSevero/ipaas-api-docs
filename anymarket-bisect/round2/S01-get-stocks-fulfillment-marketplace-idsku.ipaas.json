@@ -1,0 +1,364 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/stocks/fulfillment/{marketplace}/{idSku}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "title": "Marketplaces",
+            "enum": [
+              "MERCADO_LIVRE",
+              "ALIEXPRESS",
+              "AMAZON_GLOBAL_API",
+              "ANGELONI",
+              "ARMAZEM_PARAIBA",
+              "B2W_NEW_API",
+              "BABYBIZ",
+              "BANCO_INTER",
+              "BANDSHOP",
+              "BELEZA_NA_WEB_NEW_API",
+              "BRAVIUM",
+              "C_A",
+              "CARREFOUR",
+              "CASA_VIDEO",
+              "CASSOL_CENTERLAR",
+              "CENTAURO_NEW_API",
+              "CLAROSHOP_MEXICO",
+              "COMFORTFLEX_NOVA_API",
+              "COMPRA_CERTA",
+              "COPPEL",
+              "CSM",
+              "DB1_MARKETPLACE",
+              "DECATHLON",
+              "DIGIGROW",
+              "EFACIL",
+              "ELEKTRA",
+              "EOS",
+              "EPOCA",
+              "ESTANTE_VIRTUAL",
+              "FALABELLA",
+              "FARMADELIVERY",
+              "FASTSHOP_NEW_API",
+              "FENICIO",
+              "FOODIES_STORE",
+              "GFG",
+              "GRUPO_MATEUS",
+              "HELP_SELLER",
+              "HITES",
+              "HOUSE_OF_GAMERS",
+              "ICBC_MALL",
+              "IGA",
+              "ITAU",
+              "JUMPSELLER",
+              "KABUM",
+              "KOERICH",
+              "LE_BISCUIT",
+              "LEROY_MERLIN",
+              "LIVESHOP",
+              "LL_LOYALTY",
+              "LOJA_DO_COOPERADO",
+              "LOJA_DO_MECANICO",
+              "LOJAS_COLOMBO",
+              "LOJAS_IMPERIO",
+              "LOJAS_LEBES_NEW_API",
+              "LOJAS_MM",
+              "LOJAS_QUERO_QUERO",
+              "MADEIRA_MADEIRA",
+              "MAGAZINE_LUIZA",
+              "MAGENTO",
+              "MAIS_CORREIOS",
+              "MARCA_SELETA",
+              "MARTINS_ATACADO",
+              "MEGATONE",
+              "MOBLY",
+              "MULTIVAREJO_GPA",
+              "NETSHOES",
+              "NEXTSHOP",
+              "NUVEMSHOP",
+              "OLIST_NEW_API",
+              "PAGUE_MENOS",
+              "PARIS",
+              "PHILIPS_STORE",
+              "PITSTOP",
+              "PNEUBEST",
+              "POLISHOP",
+              "POSTHAUS_NEW_API",
+              "PRESTASHOP",
+              "PRIVALIA",
+              "RAIA_DROGASIL",
+              "RAMARIM_NOVA_API",
+              "RENNER",
+              "RI_HAPPY_NEW_API",
+              "RIACHUELO",
+              "RIPLEY",
+              "SENFF_SHOPPING",
+              "SHEIN",
+              "SHOPEE",
+              "SHOPHUB",
+              "SHOPIFY",
+              "SHOPPING_BB",
+              "SHOPPING_LIVELO",
+              "SICOOB",
+              "SICREDI",
+              "STECK",
+              "SUBLIMITY",
+              "TA_TASHOP",
+              "TENDA_ATACADO",
+              "THE_HOME_DEPOT",
+              "TIENDA_CLIC",
+              "TIKTOK_SHOP",
+              "TRAY",
+              "TROCAFONE",
+              "VALE_BONUS",
+              "VENTURESHOP",
+              "VINKLO_BY_FESTALAB",
+              "VTEX",
+              "WALMART",
+              "WEB_CONTINENTAL_V2",
+              "WEHOUSE",
+              "WOOCOMMERCE",
+              "WOOCOMMERCE2",
+              "YA_PLACE_STORE",
+              "ZEMA",
+              "ZOOM"
+            ],
+            "description": "Descritivo de qual marketplace o pedido pertence",
+            "example": "ALIEXPRESS"
+          },
+          "name": "marketplace",
+          "in": "path",
+          "required": true,
+          "description": "Identificador do marketplace."
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "idSku",
+          "in": "path",
+          "required": true,
+          "description": "Id do SKU do ANYMARKET."
+        }
+      ],
+      "get": {
+        "summary": "/stocks/fulfillment/{marketplace}/{idSku}",
+        "tags": [
+          "Fulfillment"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "description": "",
+                    "type": "object",
+                    "properties": {
+                      "sku": {
+                        "type": "string",
+                        "description": "Código do SKU no MarketPlace"
+                      },
+                      "document": {
+                        "type": "string",
+                        "minLength": 14,
+                        "maxLength": 14,
+                        "description": "CNPJ do centro de distribuição (CD) fulfillment"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Descrição do centro de distribuição (CD) fulfillment"
+                      },
+                      "fulfillment_quantity_stock": {
+                        "type": "number",
+                        "description": "Quantidade de estoque fulfillment no centro de distribuição (CD)",
+                        "format": "double"
+                      },
+                      "fulfillment_reserved_stock": {
+                        "type": "number",
+                        "description": "Quantidade de estoque fulfillment reservado no centro de distribuição (CD)",
+                        "format": "double"
+                      },
+                      "fulfillment_available_stock": {
+                        "type": "number",
+                        "description": "Quantidade de estoque fulfillment disponível no centro de distribuição (CD). Obtido através do cálculo (fulfillment_quantity_stock - fulfillment_reserved_stock)",
+                        "format": "double"
+                      }
+                    },
+                    "example": {
+                      "sku": "string",
+                      "document": "string",
+                      "description": "string",
+                      "fulfillment_quantity_stock": "number",
+                      "fulfillment_available_stock": "number",
+                      "fulfillment_reserved_stock": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "400 - Bad Request",
+                  "example": {
+                    "code": "400",
+                    "message": "Não foi possível finalizar a chamada."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-stocks-fulfillment",
+        "description": "# Consulta estoque fulfillment por marketplace e idSku\nUtilizada para listar os estoques fulfillment do SKU em cada centro de distribuição do marketplace.\nParâmetro 'marketplace' podendo ser:\n- B2W_NEW_API\n- MERCADO_LIVRE\n- OUTROS\n<!-- theme: warning -->\n> #### Atenção!\n>\n> Atributo **'marketplace'** deve ser caixa alta (maiúsculo) pois trata-se de um ENUM."
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

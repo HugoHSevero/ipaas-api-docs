@@ -1,0 +1,237 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/{id}/nfe/type/{type}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do pedido gerado pelo ANYMARKET"
+        },
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "sale",
+              "sale_return",
+              "sale_devolution",
+              "gift",
+              "inbound",
+              "devolution",
+              "inbound_devolution",
+              "inbound_return",
+              "inbound_supplier_return",
+              "symbolic_inbound",
+              "symbolic_inbound_return",
+              "purchase",
+              "removal",
+              "symbolic_removal"
+            ]
+          },
+          "name": "type",
+          "in": "path",
+          "required": true,
+          "description": "Tipo do XML desejado"
+        }
+      ],
+      "get": {
+        "summary": "/orders/{id}/nfe/type/{type}",
+        "tags": [
+          "Pedido"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "url"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "title": "",
+                        "enum": [
+                          "sale",
+                          "sale_return",
+                          "sale_devolution",
+                          "gift",
+                          "inbound",
+                          "devolution",
+                          "inbound_devolution",
+                          "inbound_return",
+                          "inbound_supplier_return",
+                          "symbolic_inbound",
+                          "symbolic_inbound_return",
+                          "purchase",
+                          "removal",
+                          "symbolic_removal"
+                        ],
+                        "description": "Tipo do documento fulfillment.</br>\n**sale**: venda de mercadorias.</br>\n**sale_return**: retorno de mercadoria nao entregue.</br>\n**sale_devolution**: nota fiscal de devolução.</br>\n**inbound**: nota fiscal de entrada.</br>\n**inbound_devolution**: devolução entrada.</br>\n**inbound_return**: retorno de entrada.</br>\n**inbound_supplier_return**: nota de devolução ao fornecedor. Quando o fornecedor nos enviou uma nota errada essa anota ajuda devolvendo items a mais.</br>\n**symbolic_inbound**: retornos simbólicos.</br>\n**symbolic_inbound_return**: retornos simbólicos.</br>\n**symbolic_removal**: notas de retirada.</br>\n**removal**: notas de retirada.</br>\n",
+                        "readOnly": true,
+                        "example": [
+                          {
+                            "id": 123456,
+                            "name": "Brastemp",
+                            "reducedName": "brastemp",
+                            "partnerId": "marca-001-brastemp"
+                          }
+                        ]
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    }
+                  }
+                },
+                "examples": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-orders-id-nfe-type-type",
+        "description": "# Busca o XML da NF-e\nRetorna o Xml da NF-e para o Seller. Deve ser enviado o tipo de NF-e desejada.\n\nAtributo 'type' podendo ser:\n- sale\n- sale_return\n- sale_devolution\n- gift\n- inbound\n- devolution\n- inbound_devolution\n- inbound_return\n- inbound_supplier_return\n- symbolic_inbound\n- symbolic_inbound_return\n- purchase\n- removal\n- symbolic_removal\n",
+        "deprecated": true
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

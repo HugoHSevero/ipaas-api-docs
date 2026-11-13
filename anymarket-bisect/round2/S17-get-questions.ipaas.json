@@ -1,0 +1,265 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/questions": {
+      "get": {
+        "summary": "/questions",
+        "tags": [
+          "Perguntas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "links": {
+                      "type": "array",
+                      "description": "Referências de paginação",
+                      "uniqueItems": false,
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "items": {
+                        "title": "PageLinks",
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "description": "Relacionamento do hyperlink",
+                            "example": "next"
+                          },
+                          "href": {
+                            "type": "string",
+                            "description": "URL de definição do recurso",
+                            "example": "https://.../v2/{rota}?limit=5&offset=5"
+                          }
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "array",
+                      "description": "Lista de pedidos",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID da pergunta gerado pelo ANYMARKET",
+                            "format": "int64"
+                          },
+                          "questionerName": {
+                            "type": "string",
+                            "description": "Nome do questionador"
+                          },
+                          "context": {
+                            "type": "string",
+                            "description": "ID da Transmissão concatenado com o nome do Produto"
+                          },
+                          "question": {
+                            "type": "string",
+                            "description": "Pergunta"
+                          },
+                          "answers": {
+                            "type": "array",
+                            "description": "Respostas",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "ID da resposta gerado pelo ANYMARKET",
+                                  "format": "int64",
+                                  "minimum": 0
+                                },
+                                "answer": {
+                                  "type": "string",
+                                  "description": "Resposta",
+                                  "maxLength": 2000
+                                }
+                              },
+                              "required": [
+                                "answer"
+                              ]
+                            }
+                          },
+                          "questionDate": {
+                            "type": "string",
+                            "description": "Data da Pergunta",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "questionerName",
+                          "context",
+                          "question",
+                          "answers",
+                          "questionDate"
+                        ],
+                        "example": {
+                          "id": 0,
+                          "questionerName": "string",
+                          "context": "string",
+                          "question": "string",
+                          "answers": [
+                            {
+                              "id": 0,
+                              "answer": "string"
+                            }
+                          ],
+                          "questionDate": "2019-08-24T14:15:22Z"
+                        }
+                      }
+                    },
+                    "page": {
+                      "title": "PageMetadata",
+                      "type": "object",
+                      "properties": {
+                        "size": {
+                          "type": "integer",
+                          "description": "Tamanho da página",
+                          "format": "int64",
+                          "readOnly": true
+                        },
+                        "totalElements": {
+                          "type": "integer",
+                          "description": "Total de elementos existentes",
+                          "format": "int64",
+                          "readOnly": true
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total de páginas disponíveis",
+                          "format": "int64",
+                          "readOnly": true
+                        },
+                        "number": {
+                          "type": "integer",
+                          "description": "Número da página atual",
+                          "format": "int64",
+                          "readOnly": true
+                        }
+                      }
+                    }
+                  },
+                  "title": "Page_Order",
+                  "description": ""
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-questions",
+        "description": "# Consulta as perguntas disponíveis\nConsulta as perguntas disponíveis. Atualmente apenas para o MARKETPLACE Mercado Livre.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "2022-02-25"
+            },
+            "in": "query",
+            "name": "date",
+            "description": "Criado a partir de"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "UNANSWERED",
+                "ANSWERED",
+                "TO_BE_DELETED",
+                "CLOSED_UNANSWERED"
+              ]
+            },
+            "in": "query",
+            "name": "status",
+            "description": "Atributo para filtrar perguntas pelo status"
+          }
+        ],
+        "x-internal": true,
+        "x-stoplight": {
+          "id": "9aiqz9yqesuvy"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

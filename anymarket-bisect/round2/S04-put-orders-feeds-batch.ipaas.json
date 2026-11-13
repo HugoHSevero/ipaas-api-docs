@@ -1,0 +1,203 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/feeds/batch": {
+      "parameters": [],
+      "put": {
+        "summary": "/orders/feeds/batch",
+        "operationId": "put-orders-feeds-batch",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Feed pedido"
+        ],
+        "description": "# Marca vários feeds como processados de uma vez\nApós consulta de diversos pedidos através do feed, é preciso marcá-los como lidos. Caso não sejam marcados, continuarão retornandos na consulta. Por este endpoint é possível fazer a confirmação de leitura em massa de vários pedidos.\n\n> O método `PUT` substitui completamente o recurso. \n>\n> Todos os campos obrigatórios devem ser enviados, mesmo que não tenham sido modificados.\n>\n> Campos omitidos podem ser redefinidos ou apagados.\n>\n> Use este método quando quiser sobrescrever todas as informações.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "token",
+                    "type"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "Id da notificação do pedido",
+                      "example": 188443520
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status do pedido no momento do GET no pedido, caso queira fazer a confirmação por status",
+                      "example": "PENDING"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token recuperado na consulta do feed",
+                      "format": "uuid",
+                      "example": "c74952c9-f181-4ea5-81d2-adeee74215c4"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Tipo da notificação",
+                      "example": "ORDER"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example 1": {
+                  "value": [
+                    {
+                      "id": 188443520,
+                      "status": "PENDING",
+                      "token": "c74952c9-f181-4ea5-81d2-adeee74215c4",
+                      "type": "ORDER"
+                    },
+                    {
+                      "id": 188443520,
+                      "status": "PENDING",
+                      "token": "c74952c9-f181-4ea5-81d2-adeee74215c4",
+                      "type": "ORDER"
+                    }
+                  ]
+                },
+                "stoplight-Example 1": {
+                  "value": [
+                    {
+                      "id": 188443520,
+                      "status": "PAID_WAITING_SHIP",
+                      "token": "c74952c9-f181-4ea5-81d2-adeee74215c4",
+                      "type": "ORDER"
+                    },
+                    {
+                      "id": 188443328,
+                      "status": "PAID_WAITING_SHIP",
+                      "token": "5238ba67-57b6-4097-9f75-14c3b2ae6a78",
+                      "type": "ORDER"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "description": "Dados para atualização do feed"
+        },
+        "parameters": []
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

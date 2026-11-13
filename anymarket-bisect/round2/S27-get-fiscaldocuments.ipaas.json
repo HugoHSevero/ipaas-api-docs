@@ -1,0 +1,539 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/fiscalDocuments": {
+      "parameters": [],
+      "get": {
+        "summary": "/fiscalDocuments",
+        "tags": [
+          "Documentos Fiscais"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK\r\n\r\n> Caso nenhum documento seja encontrado, o retorno será **200** com o array `content` vazio.\r\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "content",
+                    "links",
+                    "page"
+                  ],
+                  "properties": {
+                    "content": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "createdAt",
+                          "lastUpdate",
+                          "marketplace"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID do registro do documento, enviado na notificação."
+                          },
+                          "documentId": {
+                            "type": "string",
+                            "description": "Identificador da nota fiscal, é retornado o número da nota fiscal para documentos do tipo NFE"
+                          },
+                          "documentKey": {
+                            "type": "string",
+                            "description": "Chave do documento, é retornado a chave da nota fiscal para documentos do tipo NFE"
+                          },
+                          "orderId": {
+                            "type": "string",
+                            "description": "ID do pedido no ANYMARKET associado ao pedido"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "Data de criação do registro do documento no ANYMARKET"
+                          },
+                          "lastUpdate": {
+                            "type": "string",
+                            "description": "Data da última atualização do documento"
+                          },
+                          "marketplace": {
+                            "type": "string",
+                            "description": "Descritivo de qual marketplace o pedido pertence"
+                          },
+                          "origin": {
+                            "type": "string",
+                            "description": "Responsável pela persistência da nota fiscal no armazenador de arquivo fiscal document. Quando não informado no envio, o valor padrão é UNKNOW.",
+                            "enum": [
+                              "ORIGIN_ERP",
+                              "ORIGIN_MARKETPLACE",
+                              "UNKNOW"
+                            ],
+                            "x-enum-descriptions": {
+                              "ORIGIN_ERP": "Nota fiscal enviada pelo ERP do seller",
+                              "ORIGIN_MARKETPLACE": "Nota fiscal originada do marketplace",
+                              "UNKNOW": "Origem não identificada (valor padrão quando não informado)"
+                            }
+                          },
+                          "documentType": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "Modelo do documento"
+                              },
+                              "subType": {
+                                "description": "Tipo de operação do documento",
+                                "enum": []
+                              }
+                            }
+                          },
+                          "documents": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "enum": [],
+                                  "description": "Estado do documento: Autorizado, Cancelado."
+                                },
+                                "data": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Data de emissão do documento/evento"
+                                },
+                                "url": {
+                                  "type": "object",
+                                  "properties": {
+                                    "path": {
+                                      "type": "string",
+                                      "description": "Caminho da API de acesso ao documento"
+                                    },
+                                    "expirationDate": {
+                                      "type": "string",
+                                      "description": "Data de remoção do documento "
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "relationships": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "referenceKey": {
+                                  "type": "string",
+                                  "description": "Chave do documento relacionado"
+                                },
+                                "documentType": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "description": "Modelo do documento relacionado"
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "description": "Tipo de operação do documento relacionado"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "metadata": {
+                            "type": "array",
+                            "description": "Campos adicionais de informações do documento de chave e valor de informações específicas de cada canal.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "links": {
+                      "type": "array",
+                      "description": "Referências de paginação\r\n",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "rel",
+                          "href"
+                        ],
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "description": "Relacionamento do hyperlink"
+                          },
+                          "href": {
+                            "type": "string",
+                            "description": "URL de definição do recurso"
+                          }
+                        }
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "required": [
+                        "size",
+                        "totalElements",
+                        "totalPages",
+                        "number"
+                      ],
+                      "properties": {
+                        "size": {
+                          "type": "integer",
+                          "description": "Tamanho da página\r\n\r\n"
+                        },
+                        "totalElements": {
+                          "type": "integer",
+                          "description": "Total de elementos existentes\r\n\r\n"
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total de páginas disponíveis\r\n\r\n"
+                        },
+                        "number": {
+                          "type": "integer",
+                          "description": "Número da página atual\r\n\r\n"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "content": [
+                        {
+                          "id": "string",
+                          "documentId": "string",
+                          "documentKey": "string",
+                          "orderId": "string",
+                          "createdAt": "string",
+                          "lastUpdate": "string",
+                          "marketplace": "string",
+                          "origin": "string",
+                          "documentType": {
+                            "type": "string",
+                            "value": "string"
+                          },
+                          "documents": [
+                            {
+                              "status": "string",
+                              "data": "string",
+                              "url": {
+                                "path": "string",
+                                "expirationDate": "string"
+                              }
+                            }
+                          ],
+                          "relationships": [
+                            {
+                              "referenceKey": "string",
+                              "documentType": {
+                                "type": "string",
+                                "value": "string"
+                              }
+                            }
+                          ],
+                          "metadata": [
+                            {
+                              "key": "string",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      ],
+                      "links": [
+                        {
+                          "rel": "string",
+                          "href": "string"
+                        }
+                      ],
+                      "page": {
+                        "size": 0,
+                        "totalElements": 0,
+                        "totalPages": 0,
+                        "number": 0
+                      }
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "content": [
+                        {
+                          "id": "47.",
+                          "documentId": "23208074",
+                          "documentKey": "35240612345678000123550010000012345678901234",
+                          "orderId": "20020251989",
+                          "createdAt": "2025-06-23T14:04:36.934718Z",
+                          "lastUpdate": "2025-06-23T14:10:36.934727Z",
+                          "marketplace": "MERCADO_LIVRE",
+                          "origin": "ORIGIN_ERP",
+                          "documentType": {
+                            "type": "NFE",
+                            "value": "sale"
+                          },
+                          "documents": [
+                            {
+                              "status": "AUTHORIZED",
+                              "data": "2025-06-04T15:30:50Z",
+                              "url": {
+                                "path": "/document/download/1",
+                                "expirationDate": "2030-06-04T15:30:50Z"
+                              }
+                            },
+                            {
+                              "status": "CANCELLED",
+                              "data": "2025-06-05T15:30:50Z",
+                              "url": {
+                                "path": "/document/download/2",
+                                "expirationDate": "2030-06-05T15:30:50Z"
+                              }
+                            }
+                          ],
+                          "relationships": [
+                            {
+                              "referenceKey": "35240612345678000123550010000012345678901235",
+                              "documentType": {
+                                "type": "NFE",
+                                "value": "symbolic_inbound_return"
+                              }
+                            }
+                          ],
+                          "metadata": [
+                            {
+                              "key": "cfop",
+                              "value": "1949"
+                            }
+                          ]
+                        }
+                      ],
+                      "links": [
+                        {
+                          "rel": "self",
+                          "href": "/api/fiscal-documents?page=0&size=10"
+                        },
+                        {
+                          "rel": "next",
+                          "href": "/api/fiscal-documents?page=1&size=10"
+                        },
+                        {
+                          "rel": "last",
+                          "href": "/api/fiscal-documents?page=50&size=10"
+                        }
+                      ],
+                      "page": {
+                        "size": 10,
+                        "totalElements": 504,
+                        "totalPages": 51,
+                        "number": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-fiscalDocuments",
+        "description": "# Consulta Documentos Fiscais\r\n\r\nConsulta listagem de documentos fiscais\r\n\r\n",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "orderId",
+            "description": "ID do pedido associado ao documento"
+          },
+          {
+            "schema": {
+              "enum": [
+                "MERCADO_LIVRE",
+                "MAGAZINE_LUIZA",
+                "SHOPEE",
+                "NETSHOES",
+                "DAFITI",
+                "AMAZON_GLOBAL_API"
+              ],
+              "type": "string"
+            },
+            "in": "query",
+            "name": "marketplace",
+            "description": "ENUM do marketplace",
+            "allowEmptyValue": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2022-11-25T14:00:00-03:00"
+            },
+            "in": "query",
+            "name": "createdAtFrom",
+            "description": "Criado a partir de",
+            "allowEmptyValue": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2022-11-25T20:30:00-03:00"
+            },
+            "in": "query",
+            "name": "createdAtTo",
+            "description": "Criado antes de",
+            "allowEmptyValue": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "2022-11-25T14:00:00-03:00",
+              "format": "time"
+            },
+            "in": "query",
+            "name": "lastUpdateFrom",
+            "description": "Atualizado a partir de"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "time",
+              "example": "2022-11-25T20:30:00-03:00"
+            },
+            "in": "query",
+            "name": "lastUpdateTo",
+            "description": "Atualizado antes de"
+          },
+          {
+            "schema": {
+              "enum": [
+                "sale",
+                "sale_return",
+                "devolution",
+                "inbound",
+                "inbound_return",
+                "symbolic_inbound",
+                "symbolic_inbound_return"
+              ]
+            },
+            "in": "query",
+            "name": "documentTypeValue",
+            "description": "Tipo de operação do documento"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 50
+            },
+            "description": "Número máximo de elementos"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "maximum": 9999999,
+              "minimum": 0
+            },
+            "description": "Posição de início da paginação"
+          }
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

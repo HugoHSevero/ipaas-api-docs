@@ -1,0 +1,569 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/freight/quotes": {
+      "post": {
+        "summary": "/freight/quotes",
+        "operationId": "post-freight-quotes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "marketPlace": {
+                      "type": "string",
+                      "title": "Marketplaces",
+                      "enum": [
+                        "MERCADO_LIVRE",
+                        "ALIEXPRESS",
+                        "AMAZON_GLOBAL_API",
+                        "ANGELONI",
+                        "ARMAZEM_PARAIBA",
+                        "B2W_NEW_API",
+                        "BABYBIZ",
+                        "BANCO_INTER",
+                        "BANDSHOP",
+                        "BELEZA_NA_WEB_NEW_API",
+                        "BRAVIUM",
+                        "C_A",
+                        "CARREFOUR",
+                        "CASA_VIDEO",
+                        "CASSOL_CENTERLAR",
+                        "CENTAURO_NEW_API",
+                        "CLAROSHOP_MEXICO",
+                        "COMFORTFLEX_NOVA_API",
+                        "COMPRA_CERTA",
+                        "COPPEL",
+                        "CSM",
+                        "DB1_MARKETPLACE",
+                        "DECATHLON",
+                        "DIGIGROW",
+                        "EFACIL",
+                        "ELEKTRA",
+                        "EOS",
+                        "EPOCA",
+                        "ESTANTE_VIRTUAL",
+                        "FALABELLA",
+                        "FARMADELIVERY",
+                        "FASTSHOP_NEW_API",
+                        "FENICIO",
+                        "FOODIES_STORE",
+                        "GFG",
+                        "GRUPO_MATEUS",
+                        "HELP_SELLER",
+                        "HITES",
+                        "HOUSE_OF_GAMERS",
+                        "ICBC_MALL",
+                        "IGA",
+                        "ITAU",
+                        "JUMPSELLER",
+                        "KABUM",
+                        "KOERICH",
+                        "LE_BISCUIT",
+                        "LEROY_MERLIN",
+                        "LIVESHOP",
+                        "LL_LOYALTY",
+                        "LOJA_DO_COOPERADO",
+                        "LOJA_DO_MECANICO",
+                        "LOJAS_COLOMBO",
+                        "LOJAS_IMPERIO",
+                        "LOJAS_LEBES_NEW_API",
+                        "LOJAS_MM",
+                        "LOJAS_QUERO_QUERO",
+                        "MADEIRA_MADEIRA",
+                        "MAGAZINE_LUIZA",
+                        "MAGENTO",
+                        "MAIS_CORREIOS",
+                        "MARCA_SELETA",
+                        "MARTINS_ATACADO",
+                        "MEGATONE",
+                        "MOBLY",
+                        "MULTIVAREJO_GPA",
+                        "NETSHOES",
+                        "NEXTSHOP",
+                        "NUVEMSHOP",
+                        "OLIST_NEW_API",
+                        "PAGUE_MENOS",
+                        "PARIS",
+                        "PHILIPS_STORE",
+                        "PITSTOP",
+                        "PNEUBEST",
+                        "POLISHOP",
+                        "POSTHAUS_NEW_API",
+                        "PRESTASHOP",
+                        "PRIVALIA",
+                        "RAIA_DROGASIL",
+                        "RAMARIM_NOVA_API",
+                        "RENNER",
+                        "RI_HAPPY_NEW_API",
+                        "RIACHUELO",
+                        "RIPLEY",
+                        "SENFF_SHOPPING",
+                        "SHEIN",
+                        "SHOPEE",
+                        "SHOPHUB",
+                        "SHOPIFY",
+                        "SHOPPING_BB",
+                        "SHOPPING_LIVELO",
+                        "SICOOB",
+                        "SICREDI",
+                        "STECK",
+                        "SUBLIMITY",
+                        "TA_TASHOP",
+                        "TENDA_ATACADO",
+                        "THE_HOME_DEPOT",
+                        "TIENDA_CLIC",
+                        "TIKTOK_SHOP",
+                        "TRAY",
+                        "TROCAFONE",
+                        "VALE_BONUS",
+                        "VENTURESHOP",
+                        "VINKLO_BY_FESTALAB",
+                        "VTEX",
+                        "WALMART",
+                        "WEB_CONTINENTAL_V2",
+                        "WEHOUSE",
+                        "WOOCOMMERCE",
+                        "WOOCOMMERCE2",
+                        "YA_PLACE_STORE",
+                        "ZEMA",
+                        "ZOOM"
+                      ],
+                      "description": "Marketplace onde foi realizada a consulta",
+                      "example": "ALIEXPRESS"
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "CEP do destinatário do frete sem hífen ",
+                      "maxLength": 8
+                    },
+                    "products": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "description": "Lista de produtos existentes ",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "skuId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Código do item no marketplace "
+                          },
+                          "amount": {
+                            "type": "number",
+                            "description": "Quantidade do item"
+                          },
+                          "dimensions": {
+                            "type": "object",
+                            "description": "Dimensões do item",
+                            "properties": {
+                              "height": {
+                                "type": "number",
+                                "description": "Altura do objeto"
+                              },
+                              "width": {
+                                "type": "number",
+                                "description": "Largura do objeto"
+                              },
+                              "weight": {
+                                "type": "number",
+                                "description": "Peso do objeto"
+                              },
+                              "length": {
+                                "type": "number",
+                                "description": "Comprimento do objeto"
+                              }
+                            }
+                          },
+                          "stockAmount": {
+                            "type": "number",
+                            "description": "Quantidade em estoque"
+                          },
+                          "additionalDeliveryTime": {
+                            "type": "number",
+                            "description": "Prazo adicional em dias para este produto "
+                          },
+                          "price": {
+                            "type": "number",
+                            "description": "Preço normal do produto",
+                            "format": "double",
+                            "minimum": 0
+                          },
+                          "discountPrice": {
+                            "type": "number",
+                            "description": "Preço do produto com desconto ",
+                            "format": "double",
+                            "minimum": 0
+                          }
+                        }
+                      }
+                    },
+                    "quotes": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "description": "Cotações de frete",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "carrierName": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Nome da empresa de transporte "
+                          },
+                          "serviceName": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Nome do serviço de transporte "
+                          },
+                          "deliveryTime": {
+                            "type": "number",
+                            "description": "Prazo de entrega em dias "
+                          },
+                          "freightType": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Tipo do frete (NORMAL/EXPRESS) ",
+                            "enum": [
+                              "NORMAL",
+                              "EXPRESS"
+                            ]
+                          },
+                          "price": {
+                            "type": "number",
+                            "description": "Valor do frete",
+                            "format": "double",
+                            "minimum": 0
+                          }
+                        }
+                      }
+                    },
+                    "defaultFreight": {
+                      "type": "object",
+                      "description": "Quando está configurado frete padrão e não encontrou algum SKU pesquisado, retorna o valor do frete padrão ",
+                      "properties": {
+                        "carrierName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Nome da empresa de transporte "
+                        },
+                        "serviceName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Nome do serviço de transporte "
+                        },
+                        "deliveryTime": {
+                          "type": "number",
+                          "description": "Prazo de entrega em dias "
+                        },
+                        "freightType": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Tipo do frete (NORMAL/EXPRESS) ",
+                          "enum": [
+                            "NORMAL",
+                            "EXPRESS"
+                          ]
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "Valor do frete",
+                          "format": "double",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "missingSkus": {
+                      "type": "object",
+                      "description": "Mapa com as SKUs não encontradas"
+                    }
+                  },
+                  "example": {
+                    "marketPlace": "string",
+                    "zipCode": "string",
+                    "products": [
+                      {
+                        "skuId": "string",
+                        "amount": 0,
+                        "dimensions": {
+                          "height": 0,
+                          "width": 0,
+                          "weight": 0,
+                          "length": 0
+                        },
+                        "stockAmount": 0,
+                        "additionalDeliveryTime": 0,
+                        "price": 0,
+                        "discountPrice": 0
+                      }
+                    ],
+                    "quotes": [
+                      {
+                        "carrierName": "string",
+                        "serviceName": "string",
+                        "deliveryTime": 0,
+                        "freightType": "string",
+                        "price": 0
+                      }
+                    ],
+                    "defaultFreight": {
+                      "carrierName": "string",
+                      "serviceName": "string",
+                      "deliveryTime": 0,
+                      "freightType": "string",
+                      "price": 0
+                    },
+                    "missingSkus": {}
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Cotação de Valores de Frete\nCotação de valores de frete para o objeto informado",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "zipCode": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "CEP do destinatário do frete sem hífen ",
+                    "maxLength": 8
+                  },
+                  "marketPlace": {
+                    "description": "Descritivo de qual marketplace",
+                    "type": "string"
+                  },
+                  "additionalPercentual": {
+                    "type": "number",
+                    "description": "Percentual a adicionar ao valor de frete",
+                    "format": "double"
+                  },
+                  "timeout": {
+                    "type": "integer",
+                    "description": "Timeout, em milissegundos, para a consulta",
+                    "format": "int32",
+                    "minimum": 0
+                  },
+                  "products": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "description": "Lista de produtos a consultar",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "skuId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Código do item no marketplace "
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "description": "Quantidade do item ",
+                          "format": "int32",
+                          "maximum": 1000000,
+                          "minimum": 0
+                        },
+                        "dimensions": {
+                          "type": "object",
+                          "description": "Dimensões do item",
+                          "properties": {
+                            "height": {
+                              "type": "number",
+                              "description": "Altura do objeto"
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "Largura do objeto"
+                            },
+                            "weight": {
+                              "type": "number",
+                              "description": "Peso do objeto"
+                            },
+                            "length": {
+                              "type": "number",
+                              "description": "Comprimento do objeto"
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "skuId",
+                        "amount"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "zipCode",
+                  "marketPlace"
+                ],
+                "example": {
+                  "zipCode": "string",
+                  "marketPlace": "string",
+                  "additionalPercentual": -1.7976931348623157e+308,
+                  "timeout": 0,
+                  "products": [
+                    {
+                      "skuId": "string",
+                      "amount": 0,
+                      "dimensions": {
+                        "height": 0,
+                        "width": 0,
+                        "weight": 0,
+                        "length": 0
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cotar Frete"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

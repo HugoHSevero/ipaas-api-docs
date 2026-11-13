@@ -1,0 +1,941 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/{id}/returns": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do Pedido no ANYMARKET"
+        }
+      ],
+      "get": {
+        "summary": "/orders/{id}/returns",
+        "tags": [
+          "Devolução"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "content"
+                  ],
+                  "properties": {
+                    "links": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string"
+                          },
+                          "href": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "orderId",
+                          "marketplace",
+                          "marketplaceOrderId",
+                          "marketplaceReturnId",
+                          "marketplaceTypeId",
+                          "paymentStatus",
+                          "status",
+                          "reason",
+                          "items",
+                          "history"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID da devolução"
+                          },
+                          "orderId": {
+                            "type": "integer",
+                            "description": "ID do pedido gerado pelo ANYMARKET"
+                          },
+                          "oi": {
+                            "type": "string"
+                          },
+                          "marketplace": {
+                            "type": "string",
+                            "title": "Marketplaces",
+                            "enum": [
+                              "MERCADO_LIVRE",
+                              "ALIEXPRESS",
+                              "AMAZON_GLOBAL_API",
+                              "ANGELONI",
+                              "ARMAZEM_PARAIBA",
+                              "B2W_NEW_API",
+                              "BABYBIZ",
+                              "BANCO_INTER",
+                              "BANDSHOP",
+                              "BELEZA_NA_WEB_NEW_API",
+                              "BRAVIUM",
+                              "C_A",
+                              "CARREFOUR",
+                              "CASA_VIDEO",
+                              "CASSOL_CENTERLAR",
+                              "CENTAURO_NEW_API",
+                              "CLAROSHOP_MEXICO",
+                              "COMFORTFLEX_NOVA_API",
+                              "COMPRA_CERTA",
+                              "COPPEL",
+                              "CSM",
+                              "DB1_MARKETPLACE",
+                              "DECATHLON",
+                              "DIGIGROW",
+                              "EFACIL",
+                              "ELEKTRA",
+                              "EOS",
+                              "EPOCA",
+                              "ESTANTE_VIRTUAL",
+                              "FALABELLA",
+                              "FARMADELIVERY",
+                              "FASTSHOP_NEW_API",
+                              "FENICIO",
+                              "FOODIES_STORE",
+                              "GFG",
+                              "GRUPO_MATEUS",
+                              "HELP_SELLER",
+                              "HITES",
+                              "HOUSE_OF_GAMERS",
+                              "ICBC_MALL",
+                              "IGA",
+                              "ITAU",
+                              "JUMPSELLER",
+                              "KABUM",
+                              "KOERICH",
+                              "LE_BISCUIT",
+                              "LEROY_MERLIN",
+                              "LIVESHOP",
+                              "LL_LOYALTY",
+                              "LOJA_DO_COOPERADO",
+                              "LOJA_DO_MECANICO",
+                              "LOJAS_COLOMBO",
+                              "LOJAS_IMPERIO",
+                              "LOJAS_LEBES_NEW_API",
+                              "LOJAS_MM",
+                              "LOJAS_QUERO_QUERO",
+                              "MADEIRA_MADEIRA",
+                              "MAGAZINE_LUIZA",
+                              "MAGENTO",
+                              "MAIS_CORREIOS",
+                              "MARCA_SELETA",
+                              "MARTINS_ATACADO",
+                              "MEGATONE",
+                              "MOBLY",
+                              "MULTIVAREJO_GPA",
+                              "NETSHOES",
+                              "NEXTSHOP",
+                              "NUVEMSHOP",
+                              "OLIST_NEW_API",
+                              "PAGUE_MENOS",
+                              "PARIS",
+                              "PHILIPS_STORE",
+                              "PITSTOP",
+                              "PNEUBEST",
+                              "POLISHOP",
+                              "POSTHAUS_NEW_API",
+                              "PRESTASHOP",
+                              "PRIVALIA",
+                              "RAIA_DROGASIL",
+                              "RAMARIM_NOVA_API",
+                              "RENNER",
+                              "RI_HAPPY_NEW_API",
+                              "RIACHUELO",
+                              "RIPLEY",
+                              "SENFF_SHOPPING",
+                              "SHEIN",
+                              "SHOPEE",
+                              "SHOPHUB",
+                              "SHOPIFY",
+                              "SHOPPING_BB",
+                              "SHOPPING_LIVELO",
+                              "SICOOB",
+                              "SICREDI",
+                              "STECK",
+                              "SUBLIMITY",
+                              "TA_TASHOP",
+                              "TENDA_ATACADO",
+                              "THE_HOME_DEPOT",
+                              "TIENDA_CLIC",
+                              "TIKTOK_SHOP",
+                              "TRAY",
+                              "TROCAFONE",
+                              "VALE_BONUS",
+                              "VENTURESHOP",
+                              "VINKLO_BY_FESTALAB",
+                              "VTEX",
+                              "WALMART",
+                              "WEB_CONTINENTAL_V2",
+                              "WEHOUSE",
+                              "WOOCOMMERCE",
+                              "WOOCOMMERCE2",
+                              "YA_PLACE_STORE",
+                              "ZEMA",
+                              "ZOOM"
+                            ],
+                            "description": "Descritivo de qual marketplace o pedido pertence",
+                            "example": "ALIEXPRESS"
+                          },
+                          "type": {
+                            "description": "Tipo de devolução",
+                            "enum": [
+                              "TOTAL",
+                              "PARTIAL"
+                            ]
+                          },
+                          "marketplaceOrderId": {
+                            "type": "string",
+                            "description": "ID público do pedido no marketplace"
+                          },
+                          "marketplaceReturnId": {
+                            "type": "string",
+                            "description": "ID público da devolução no marketplace"
+                          },
+                          "marketplaceTypeId": {
+                            "type": "string",
+                            "description": "Tipo de devolução no marketplace"
+                          },
+                          "accountId": {
+                            "type": "string",
+                            "description": "ID da conta gerado automático pelo ANYMARKET"
+                          },
+                          "accountName": {
+                            "type": "string",
+                            "description": "Identificador da conta do Marketplace"
+                          },
+                          "paymentStatus": {
+                            "type": "string",
+                            "description": "Status do pagamento da devolução"
+                          },
+                          "status": {
+                            "description": "Status da devolução\n\n**NEW_RETURN**: Nova devolução<br>\n**WAITING_DELIVERY**: Retorno ao CD do seller<br>\n**WAITING_DELIVERY_MARKETPLACE**: Retorno ao CD do marketplace<br>\n**WAITING_CONFERENCE**: Aguardando conferência<br>\n**CHECKED**: Devolução conferida<br>\n**CANCELLED**: Devolução cancelada<br>\n**CONCLUDED**: Devolução concluída<br>\n**FAILED**: Devolução falhou<br>\n**EXPIRED**: Devolução expirou",
+                            "enum": [
+                              "NEW_RETURN",
+                              "WAITING_DELIVERY",
+                              "WAITING_DELIVERY_MARKETPLACE",
+                              "WAITING_CONFERENCE",
+                              "CHECKED",
+                              "CANCELLED",
+                              "CONCLUDED",
+                              "FAILED",
+                              "EXPIRED"
+                            ]
+                          },
+                          "reason": {
+                            "type": "string",
+                            "description": "Razão da devolução"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "Data da criação da devolução"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "Data da última atualização"
+                          },
+                          "closedAt": {
+                            "type": "string",
+                            "description": "Data prevista para o encerramento da devolução"
+                          },
+                          "checkedAt": {
+                            "type": "string",
+                            "description": "Data que a devolução foi conferida"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "orderItemId"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "ID do item da devolução"
+                                },
+                                "orderItemId": {
+                                  "type": "integer",
+                                  "description": "Id do item no pedido gerado pelo ANYMARKET"
+                                },
+                                "title": {
+                                  "type": "string",
+                                  "description": "Título do produto"
+                                },
+                                "skuId": {
+                                  "type": "integer",
+                                  "description": "ID do SKU gerado pelo ANYMARKET"
+                                },
+                                "marketplaceSkuId": {
+                                  "type": "string",
+                                  "description": "Código do sku no marketplace"
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "description": "Quantidade do item"
+                                }
+                              }
+                            }
+                          },
+                          "shipping": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "marketplaceShippingId",
+                                "status",
+                                "trackingNumber",
+                                "estimatedDelivery",
+                                "type",
+                                "createdAt"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "ID do item da entrega da devolução"
+                                },
+                                "marketplaceShippingId": {
+                                  "type": "string",
+                                  "description": "Código do envio no marketplace"
+                                },
+                                "status": {
+                                  "description": "Status do envio no marketplace\n\n**WAITING_CARRIER**: Aguardando envio<br>\n**TRANSIT_GOODS**: Em trânsito<br>\n**DELIVERED**: Devolução no CD<br>\n**NOT_DELIVERED**: Devolução não entregue no CD ",
+                                  "enum": [
+                                    "WAITING_CARRIER",
+                                    "TRANSIT_GOODS",
+                                    "DELIVERED",
+                                    "NOT_DELIVERED"
+                                  ]
+                                },
+                                "subStatus": {
+                                  "type": "string",
+                                  "description": "Substatus do envio no marketplace"
+                                },
+                                "trackingNumber": {
+                                  "type": "string",
+                                  "description": "Número de rastreio"
+                                },
+                                "estimatedDelivery": {
+                                  "type": "string",
+                                  "description": "Data estimada (Necessário informar o fuso horario)"
+                                },
+                                "transportServiceName": {
+                                  "type": "string",
+                                  "description": "Nome da transportadora"
+                                },
+                                "senderName": {
+                                  "type": "string",
+                                  "description": "Nome do responsável pelo envio"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "Define o tipo do endereço de envio"
+                                },
+                                "addressLine": {
+                                  "type": "string",
+                                  "description": "Endereço completo do envio"
+                                },
+                                "streetName": {
+                                  "type": "string",
+                                  "description": "Rua"
+                                },
+                                "streetNumber": {
+                                  "type": "string",
+                                  "description": "Número"
+                                },
+                                "comment": {
+                                  "type": "string",
+                                  "description": "Complemento"
+                                },
+                                "zipCode": {
+                                  "type": "string",
+                                  "description": "Código Postal"
+                                },
+                                "city": {
+                                  "type": "string",
+                                  "description": "Cidade"
+                                },
+                                "state": {
+                                  "type": "string",
+                                  "description": "Estado"
+                                },
+                                "country": {
+                                  "type": "string",
+                                  "description": "País "
+                                },
+                                "neighborhood": {
+                                  "type": "string",
+                                  "description": "Bairro"
+                                },
+                                "municipality": {
+                                  "type": "string",
+                                  "description": "Cidade ou Distrito"
+                                },
+                                "destination": {
+                                  "type": "string",
+                                  "enum": [
+                                    "SELLER_ADDRESS",
+                                    "WAREHOUSE"
+                                  ],
+                                  "description": "Define o tipo de endereço do CD\n\n**SELLER_ADDRESS**: CD do seller<br>\n**WAREHOUSE**: CD do marketplace"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "Data da criação do envio da devolução"
+                                }
+                              }
+                            }
+                          },
+                          "history": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "returnStatus",
+                                "shippingStatus",
+                                "createdAt"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "ID do histórico da devolução gerado pelo ANYMARKET"
+                                },
+                                "returnStatus": {
+                                  "description": "Status da devolução\n\n**NEW_RETURN**: Nova devolução<br>\n**WAITING_DELIVERY**: Retorno ao CD do seller<br>\n**WAITING_DELIVERY_MARKETPLACE**: Retorno ao CD do marketplace<br>\n**WAITING_CONFERENCE**: Aguardando conferência<br>\n**CHECKED**: Devolução conferida<br>\n**CANCELLED**: Devolução cancelada<br>\n**CONCLUDED**: Devolução concluída<br>\n**FAILED**: Devolução falhou<br>\n**EXPIRED**: Devolução expirou",
+                                  "enum": [
+                                    "NEW_RETURN",
+                                    "WAITING_DELIVERY",
+                                    "WAITING_CONFERENCE",
+                                    "CHECKED",
+                                    "CANCELLED",
+                                    "CONCLUDED",
+                                    "FAILED",
+                                    "EXPIRED",
+                                    "WAITING_DELIVERY_MARKETPLACE"
+                                  ]
+                                },
+                                "shippingStatus": {
+                                  "description": "Status da entrega da devolução\n\n**WAITING_CARRIER**: Aguardando envio<br>\n**TRANSIT_GOODS**: Em trânsito<br>\n**DELIVERED**: Devolução no CD<br>\n**NOT_DELIVERED**: Devolução não entregue no CD",
+                                  "enum": [
+                                    "WAITING_CARRIER",
+                                    "TRANSIT_GOODS",
+                                    "DELIVERED",
+                                    "NOT_DELIVERED"
+                                  ]
+                                },
+                                "shippingSubStatus": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "Data da criação do histórico da devolução"
+                                }
+                              }
+                            }
+                          },
+                          "conference": {
+                            "type": "object",
+                            "description": "Dados de conferência da devolução",
+                            "required": [
+                              "status"
+                            ],
+                            "properties": {
+                              "reasonDetails": {
+                                "type": "string",
+                                "description": "Detalhes do motivo da devolução"
+                              },
+                              "status": {
+                                "enum": [
+                                  "RETURN_CHECK_OK",
+                                  "RETURN_CHECK_NOT_OK"
+                                ],
+                                "description": "Status da conferência da devolução"
+                              },
+                              "observations": {
+                                "type": "string",
+                                "description": "Observações na conferência da devolução"
+                              },
+                              "marketplaceReview": {
+                                "type": "object",
+                                "description": "Revisão da devolução pelo marketplace",
+                                "properties": {
+                                  "method": {
+                                    "type": "string",
+                                    "description": "Método de revisão"
+                                  },
+                                  "reviewStatus": {
+                                    "type": "string",
+                                    "description": "Status da revisão do marketplace"
+                                  },
+                                  "productCondition": {
+                                    "type": "string",
+                                    "description": "Condição do produto na revisão"
+                                  },
+                                  "productDestination": {
+                                    "type": "string",
+                                    "description": "Destino do produto após revisão"
+                                  },
+                                  "benefited": {
+                                    "type": "string",
+                                    "description": "Beneficiado na revisão"
+                                  },
+                                  "reasonId": {
+                                    "type": "string",
+                                    "description": "ID do motivo da revisão"
+                                  },
+                                  "reviewedAt": {
+                                    "type": "string",
+                                    "description": "Data da revisão"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "invoice": {
+                            "type": "object",
+                            "description": "Dados da nota fiscal da devolução",
+                            "properties": {
+                              "accessKey": {
+                                "type": "string",
+                                "description": "Chave de acesso da nota fiscal"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "size": {
+                          "type": "integer"
+                        },
+                        "totalElements": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        },
+                        "number": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "links": [
+                        {
+                          "rel": "string",
+                          "href": "string"
+                        }
+                      ],
+                      "content": [
+                        {
+                          "id": 0,
+                          "orderId": 0,
+                          "oi": "string",
+                          "marketplace": "string",
+                          "type": "string",
+                          "marketplaceOrderId": "string",
+                          "marketplaceReturnId": "string",
+                          "marketplaceTypeId": "string",
+                          "accountId": "string",
+                          "accountName": "string",
+                          "paymentStatus": "string",
+                          "status": "string",
+                          "reason": "string",
+                          "createdAt": "string",
+                          "updatedAt": "string",
+                          "closedAt": "string",
+                          "checkedAt": "string",
+                          "items": [
+                            {
+                              "id": 0,
+                              "orderItemId": 0,
+                              "title": "string",
+                              "skuId": 0,
+                              "marketplaceSkuId": "string",
+                              "quantity": 0
+                            }
+                          ],
+                          "shipping": [
+                            {
+                              "id": 0,
+                              "marketplaceShippingId": "string",
+                              "status": "string",
+                              "subStatus": "string",
+                              "trackingNumber": "string",
+                              "estimatedDelivery": "string",
+                              "transportServiceName": "string",
+                              "senderName": "string",
+                              "type": "string",
+                              "addressLine": "string",
+                              "streetName": "string",
+                              "streetNumber": "string",
+                              "comment": "string",
+                              "zipCode": "string",
+                              "city": "string",
+                              "state": "string",
+                              "country": "string",
+                              "neighborhood": "string",
+                              "municipality": "string",
+                              "destination": "seller_address",
+                              "createdAt": "string"
+                            },
+                            {
+                              "id": 0,
+                              "marketplaceShippingId": "string",
+                              "status": "string",
+                              "subStatus": "string",
+                              "trackingNumber": "string",
+                              "estimatedDelivery": "string",
+                              "transportServiceName": "string",
+                              "senderName": "string",
+                              "type": "string",
+                              "addressLine": "string",
+                              "streetName": "string",
+                              "streetNumber": "string",
+                              "comment": "string",
+                              "zipCode": "string",
+                              "city": "string",
+                              "state": "string",
+                              "country": "string",
+                              "neighborhood": "string",
+                              "municipality": "string",
+                              "destination": "warehouse",
+                              "createdAt": "string"
+                            }
+                          ],
+                          "history": [
+                            {
+                              "id": 0,
+                              "returnStatus": "string",
+                              "shippingStatus": "string",
+                              "shippingSubStatus": "string",
+                              "createdAt": "string"
+                            }
+                          ],
+                          "conference": {
+                            "reasonDetails": "string",
+                            "status": "RETURN_CHECK_OK",
+                            "observations": "string",
+                            "marketplaceReview": {
+                              "method": "string",
+                              "reviewStatus": "string",
+                              "productCondition": "string",
+                              "productDestination": "string",
+                              "benefited": "string",
+                              "reasonId": "string",
+                              "reviewedAt": "string"
+                            }
+                          },
+                          "invoice": {
+                            "accessKey": "string"
+                          }
+                        }
+                      ],
+                      "page": {
+                        "size": 0,
+                        "totalElements": 0,
+                        "totalPages": 0,
+                        "number": 0
+                      }
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "links": [
+                        {
+                          "rel": "next",
+                          "href": "http://api.anymarket.com.br/v2/orders/164084149/return?offset=5"
+                        }
+                      ],
+                      "content": [
+                        {
+                          "id": 74,
+                          "orderId": 164084149,
+                          "oi": "22449504.",
+                          "marketplace": "ECOMMERCE",
+                          "marketplaceOrderId": "1",
+                          "marketplaceReturnId": "1",
+                          "marketplaceTypeId": "claim",
+                          "accountId": "12641",
+                          "accountName": "ECOMMERCE",
+                          "paymentStatus": "retained",
+                          "status": "opened",
+                          "reason": "PDD9946",
+                          "createdAt": "2024-05-14T17:14:24.913Z",
+                          "updatedAt": "2024-05-14T17:14:24.913Z"
+                        },
+                        {
+                          "id": 75,
+                          "orderId": 164084149,
+                          "oi": "22449504.",
+                          "marketplace": "ECOMMERCE",
+                          "marketplaceOrderId": "giovani-27",
+                          "marketplaceReturnId": "giovani-27-return",
+                          "marketplaceTypeId": "1",
+                          "accountId": "1",
+                          "accountName": "Loja do Giovani",
+                          "paymentStatus": "APPROVED",
+                          "status": "SHIPPED",
+                          "reason": "OTHER_MOTIVE",
+                          "closedAt": "2023-09-22T14:32:11.544Z",
+                          "createdAt": "2023-09-22T14:32:11.544Z",
+                          "updatedAt": "2023-09-22T14:32:11.544Z",
+                          "items": [
+                            {
+                              "id": 56,
+                              "orderItemId": 191248906,
+                              "title": "Title Item",
+                              "skuId": 51786368,
+                              "marketplaceSkuId": "sku-do-giovani",
+                              "quantity": 1
+                            }
+                          ],
+                          "shipping": [
+                            {
+                              "id": 56,
+                              "marketplaceShippingId": "1",
+                              "status": "READY_TO_SHIP",
+                              "subStatus": "READY_TO_PRINT",
+                              "trackingNumber": "Tracking Number",
+                              "estimatedDelivery": "2023-09-22T14:32:11.544Z",
+                              "transportServiceName": "Transport Service Name",
+                              "senderName": "Sender Name",
+                              "type": "Type",
+                              "addressLine": "Address Line",
+                              "streetName": "Street Name",
+                              "streetNumber": "Street Number",
+                              "comment": "Comment",
+                              "zipCode": "Zip Code",
+                              "city": "City",
+                              "state": "State",
+                              "country": "Country",
+                              "neighborhood": "Neighborhood",
+                              "municipality": "Municipality",
+                              "destination": "Destination",
+                              "createdAt": "2023-09-22T14:32:11.544Z"
+                            }
+                          ],
+                          "history": [
+                            {
+                              "id": 59,
+                              "returnStatus": "OPENED",
+                              "shippingStatus": "READY_TO_SHIP",
+                              "shippingSubStatus": "READY_TO_PRINT",
+                              "createdAt": "2023-09-22T14:32:11.544Z"
+                            }
+                          ],
+                          "conference": [
+                            {
+                              "reasonDetails": "Reason",
+                              "status": "RETURN_CHECK_OK",
+                              "observations": null,
+                              "marketplaceReview": {
+                                "method": "string",
+                                "reviewStatus": "string",
+                                "productCondition": "string",
+                                "productDestination": "string",
+                                "benefited": "string",
+                                "reasonId": "string",
+                                "reviewedAt": "2024-08-30T11:26:00.000Z"
+                              }
+                            }
+                          ],
+                          "invoice": {
+                            "accessKey": "string"
+                          }
+                        }
+                      ],
+                      "page": {
+                        "size": 5,
+                        "totalElements": 2,
+                        "totalPages": 1,
+                        "number": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "description": "Código da mensagem de erro "
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de Erro"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "description": "Código da mensagem de erro "
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de Erro"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  },
+                  "stoplight-Example 1": {
+                    "value": {
+                      "code": "string",
+                      "message": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-orders-id-returns",
+        "description": "# Consulta as devoluções de um determinado pedido\r\nConsulta as devoluções de um determinado pedido",
+        "requestBody": {
+          "description": "",
+          "content": {}
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

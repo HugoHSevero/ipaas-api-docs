@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders/{id}/fiscalDocument": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "description": "ID do pedido no ANYMARKET.",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "/orders/{id}/fiscalDocument",
+        "tags": [
+          "Pedido"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "packageId",
+            "in": "query",
+            "description": "Identificador do pacote do pedido ao qual a nota fiscal pertence. Obrigatório quando o pedido possui pacotes; não deve ser informado quando o pedido não possui pacotes.",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NF registrada com sucesso no pacote.",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "400 - Bad Request",
+                  "example": {
+                    "code": "400",
+                    "message": "Não foi possível finalizar a chamada."
+                  }
+                },
+                "examples": {
+                  "packageId obrigatório": {
+                    "value": {
+                      "code": "400",
+                      "message": "O parâmetro packageId é obrigatório quando o pedido possui pacotes."
+                    }
+                  },
+                  "PACKAGE_ALREADY_INVOICED": {
+                    "value": {
+                      "code": "400",
+                      "message": "O pacote informado já possui nota fiscal associada (PACKAGE_ALREADY_INVOICED)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (WebDAV)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "422 - Error",
+                  "example": {
+                    "code": "422",
+                    "message": "O campo informado esta fora das especificações."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "500 - Error",
+                  "example": {
+                    "code": "500",
+                    "message": "Erro no sistema. Detalhes: Ocorreu um erro inesperado. Por favor, tente novamente."
+                  }
+                },
+                "examples": {
+                  "orders/{id}/nfe 1": {
+                    "value": {
+                      "code": "500",
+                      "message": "Ocorreu um erro ao atualizar o documento fiscal para o marketplace. Erro: O Mercado Livre não permite o envio do XML da nota fiscal para a seguinte combinação de status e substatus do shipment do pedido no Mercado Livre. (Status: pending, Substatus: buffered, Id. no Marketplace: 20000012345678901)"
+                    }
+                  },
+                  "orders/{id}/nfe 2": {
+                    "value": {
+                      "code": "500",
+                      "message": "Ocorreu um erro ao atualizar o documento fiscal para o marketplace. Erro: O Limite de Nota Fiscal salva na venda foi atingido no Mercado Livre."
+                    }
+                  },
+                  "orders/{id}/nfe 3": {
+                    "value": {
+                      "code": "500",
+                      "message": "Ocorreu um erro ao atualizar o documento fiscal para o marketplace. Erro: Erro ao faturar pedido: Erro: ''??invalid_invoice_emission_date??''"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-orders-id-fiscaDocument",
+        "description": "# Envia a Nota Fiscal (PDF ou XML)\n\nRegistra a nota fiscal em um pacote do pedido e envia o documento ao Marketplace. O endpoint não retorna body na resposta (void).\n\n## Parâmetros\n\n| Parâmetro | Tipo | Obrigatoriedade | Descrição |\n|-----------|------|-----------------|-----------|\n| id (path) | Long | Obrigatório | ID do pedido no ANYMARKET. |\n| packageId (query) | UUID | Obrigatório quando o pedido possui pacotes; não deve ser informado quando o pedido não possui pacotes | Identificador do pacote do pedido ao qual a nota fiscal pertence. |\n\n## Body (multipart/form-data)\n\n| Campo | Tipo | Obrigatoriedade | Descrição |\n|-------|------|-----------------|-----------|\n| file | File (PDF ou XML) | Obrigatório | Arquivo da nota fiscal. |\n| number | String | Obrigatório | Número da nota fiscal. |\n| date | String (ISO 8601) | Obrigatório | Data de emissão. Ex: 2026-05-05T10:00:00-03:00. |\n| accessKey | String | Opcional | Chave de acesso da NF-e. |\n| series | String | Opcional | Série da nota fiscal. |\n| cfop | String | Opcional | Código Fiscal de Operações e Prestações. |\n| companyStateTaxId | String | Opcional | Inscrição estadual da empresa emissora. |\n| linkNfe | String | Opcional | URL para consulta da NF-e. |\n| invoiceLink | String | Opcional | URL onde está armazenado o PDF ou XML da nota fiscal. |\n| extraDescription | String | Opcional | Campo para observações. |\n| operationType | String | Opcional | Tipo de operação fiscal. |\n| emissionType | String | Opcional | Tipo de emissão da nota fiscal. |\n| authorizationProtocol | String | Opcional | Protocolo de autorização da nota fiscal. |\n| origin | String | Opcional | Responsável pela persistência da nota fiscal no armazenador de arquivo fiscal document. Valores: ORIGIN_ERP, ORIGIN_MARKETPLACE, UNKNOW. Quando não informado, o valor padrão é UNKNOW. |\n\n> **Importante:** Pacotes faturados se tornam imutáveis — não podem ser editados, excluídos ou cancelados.\n\n## Códigos de retorno\n\n| Código | Descrição |\n|--------|-----------|\n| 200 | NF registrada com sucesso no pacote. |\n| 400 | `packageId obrigatório` — pedido possui pacotes e a requisição não informou packageId. |\n| 400 | `PACKAGE_ALREADY_INVOICED` — pacote informado já possui NF associada. |\n\n## Exemplo de curl\n\n```bash\ncurl --location 'https://sandbox-api.anymarket.com.br/v2/orders/6565/fiscalDocument' \\\n  --header 'gumgaToken: <seu_token>' \\\n  --form 'file=@\"/caminho/para/nota-fiscal.pdf\"' \\\n  --form 'packageId=\"476ae5cb-2cc2-4e4e-9f42-22def0f06378\"' \\\n  --form 'date=\"2026-05-15T10:00:00-03:00\"' \\\n  --form 'number=\"1234\"' \\\n  --form 'accessKey=\"352505123456780001955500100000123412345\"' \\\n  --form 'series=\"1\"' \\\n  --form 'invoiceLink=\"https://example.com/danfe/1234.pdf\"' \\\n  --form 'linkNfe=\"https://example.com/nfe/1234.xml\"' \\\n  --form 'cfop=\"6102\"' \\\n  --form 'companyStateTaxId=\"123456789\"' \\\n  --form 'extraDescription=\"Venda de mercadoria\"' \\\n  --form 'operationType=\"1\"' \\\n  --form 'emissionType=\"1\"' \\\n  --form 'authorizationProtocol=\"135260005473993\"' \\\n  --form 'origin=\"ORIGIN_ERP\"'\n```\n\n> **Nota:** Caso o campo `origin` não seja informado na requisição, o valor padrão atribuído será `UNKNOW`."
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

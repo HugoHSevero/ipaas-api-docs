@@ -1,0 +1,3106 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/orders": {
+      "post": {
+        "summary": "/orders",
+        "operationId": "post-orders",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "accountName",
+                    "marketPlaceId",
+                    "marketPlaceNumber",
+                    "marketPlace",
+                    "createdAt",
+                    "transmissionStatus",
+                    "status",
+                    "marketPlaceStatus",
+                    "discount",
+                    "freight",
+                    "sellerFreight",
+                    "interestValue",
+                    "gross",
+                    "total",
+                    "shipping",
+                    "anymarketAddress",
+                    "buyer",
+                    "payments",
+                    "items",
+                    "deliveryStatus",
+                    "idAccount"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID do pedido gerado pelo ANYMARKET",
+                      "format": "int64"
+                    },
+                    "accountName": {
+                      "type": "string",
+                      "description": "Identificador da conta do Marketplace",
+                      "maxLength": 255
+                    },
+                    "marketPlaceId": {
+                      "type": "string",
+                      "description": "ID interno do pedido no marketplace",
+                      "maxLength": 255
+                    },
+                    "marketPlaceNumber": {
+                      "type": "string",
+                      "description": "ID público do pedido no marketplace",
+                      "maxLength": 255
+                    },
+                    "partnerId": {
+                      "type": "string",
+                      "description": "Código do pedido no parceiro. Uma vez informado, não poderá ser alterado",
+                      "maxLength": 100
+                    },
+                    "marketPlace": {
+                      "type": "string",
+                      "title": "Marketplaces",
+                      "enum": [
+                        "MERCADO_LIVRE",
+                        "ALIEXPRESS",
+                        "AMAZON_GLOBAL_API",
+                        "ANGELONI",
+                        "ARMAZEM_PARAIBA",
+                        "B2W_NEW_API",
+                        "BABYBIZ",
+                        "BANCO_INTER",
+                        "BANDSHOP",
+                        "BELEZA_NA_WEB_NEW_API",
+                        "BRAVIUM",
+                        "C_A",
+                        "CARREFOUR",
+                        "CASA_VIDEO",
+                        "CASSOL_CENTERLAR",
+                        "CENTAURO_NEW_API",
+                        "CLAROSHOP_MEXICO",
+                        "COMFORTFLEX_NOVA_API",
+                        "COMPRA_CERTA",
+                        "COPPEL",
+                        "CSM",
+                        "DB1_MARKETPLACE",
+                        "DECATHLON",
+                        "DIGIGROW",
+                        "EFACIL",
+                        "ELEKTRA",
+                        "EOS",
+                        "EPOCA",
+                        "ESTANTE_VIRTUAL",
+                        "FALABELLA",
+                        "FARMADELIVERY",
+                        "FASTSHOP_NEW_API",
+                        "FENICIO",
+                        "FOODIES_STORE",
+                        "GFG",
+                        "GRUPO_MATEUS",
+                        "HELP_SELLER",
+                        "HITES",
+                        "HOUSE_OF_GAMERS",
+                        "ICBC_MALL",
+                        "IGA",
+                        "ITAU",
+                        "JUMPSELLER",
+                        "KABUM",
+                        "KOERICH",
+                        "LE_BISCUIT",
+                        "LEROY_MERLIN",
+                        "LIVESHOP",
+                        "LL_LOYALTY",
+                        "LOJA_DO_COOPERADO",
+                        "LOJA_DO_MECANICO",
+                        "LOJAS_COLOMBO",
+                        "LOJAS_IMPERIO",
+                        "LOJAS_LEBES_NEW_API",
+                        "LOJAS_MM",
+                        "LOJAS_QUERO_QUERO",
+                        "MADEIRA_MADEIRA",
+                        "MAGAZINE_LUIZA",
+                        "MAGENTO",
+                        "MAIS_CORREIOS",
+                        "MARCA_SELETA",
+                        "MARTINS_ATACADO",
+                        "MEGATONE",
+                        "MOBLY",
+                        "MULTIVAREJO_GPA",
+                        "NETSHOES",
+                        "NEXTSHOP",
+                        "NUVEMSHOP",
+                        "OLIST_NEW_API",
+                        "PAGUE_MENOS",
+                        "PARIS",
+                        "PHILIPS_STORE",
+                        "PITSTOP",
+                        "PNEUBEST",
+                        "POLISHOP",
+                        "POSTHAUS_NEW_API",
+                        "PRESTASHOP",
+                        "PRIVALIA",
+                        "RAIA_DROGASIL",
+                        "RAMARIM_NOVA_API",
+                        "RENNER",
+                        "RI_HAPPY_NEW_API",
+                        "RIACHUELO",
+                        "RIPLEY",
+                        "SENFF_SHOPPING",
+                        "SHEIN",
+                        "SHOPEE",
+                        "SHOPHUB",
+                        "SHOPIFY",
+                        "SHOPPING_BB",
+                        "SHOPPING_LIVELO",
+                        "SICOOB",
+                        "SICREDI",
+                        "STECK",
+                        "SUBLIMITY",
+                        "TA_TASHOP",
+                        "TENDA_ATACADO",
+                        "THE_HOME_DEPOT",
+                        "TIENDA_CLIC",
+                        "TIKTOK_SHOP",
+                        "TRAY",
+                        "TROCAFONE",
+                        "VALE_BONUS",
+                        "VENTURESHOP",
+                        "VINKLO_BY_FESTALAB",
+                        "VTEX",
+                        "WALMART",
+                        "WEB_CONTINENTAL_V2",
+                        "WEHOUSE",
+                        "WOOCOMMERCE",
+                        "WOOCOMMERCE2",
+                        "YA_PLACE_STORE",
+                        "ZEMA",
+                        "ZOOM"
+                      ],
+                      "description": "Descritivo de qual marketplace o pedido pertence",
+                      "example": "ALIEXPRESS"
+                    },
+                    "subChannel": {
+                      "type": "string",
+                      "description": "Site onde foi realizado o pedido (conforme recebido pelo marketplace. Pode ser nulo caso o marketplace não possua subcanal)",
+                      "maxLength": 50
+                    },
+                    "subChannelNormalized": {
+                      "type": "string",
+                      "description": "Site onde foi realizado o pedido (normalizado pelo ANYMARKET. Pode ser nulo)",
+                      "maxLength": 100
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Data de criação do pedido",
+                      "format": "date-time"
+                    },
+                    "paymentDate": {
+                      "type": "string",
+                      "description": "Data de pagamento do pedido",
+                      "format": "date-time"
+                    },
+                    "cancelDate": {
+                      "type": "string",
+                      "description": "Data de cancelamento do pedido",
+                      "format": "date-time"
+                    },
+                    "shippingOptionId": {
+                      "type": "string",
+                      "description": "ID do Envio de cada Marketplace",
+                      "maxLength": 50
+                    },
+                    "transmissionStatus": {
+                      "type": "string",
+                      "description": "Status da transmissão</br></br>\n\n  **OK**: Pedido sincronizado com sucesso com o Marketplace</br>\n  **ERROR**: Ocorreu erro na sincronização com o Marketplace</br>\n  **WAITING**: Aguardando sincronização com o Marketplace</br>\n"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status do pedido</br></br>\n\n  **CONCLUDED**: Pedido entregue (é a última situação do pedido). Mudando para essa situação é necessário informar: data de entrega</br>\n  **CANCELED**: Cancelado</br>\n  **INVOICED**: Faturado. Mudando para essa situação é necessário informar: número da nota, número de série, data de emissão e chave de acesso</br>\n  **PAID_WAITING_DELIVERY**: Enviado (aguardando entrega). Mudando para essa situação é necessário informar: URL de rastreamento, número de rastreio, nome da transportadora, data de envio</br>\n  **PAID_WAITING_SHIP**: Pago (está aguardando envio)</br>\n  **PENDING**: Pendente (Ainda não foi pago. Existe parâmetro para que o ANYMARKET importe do MarketPlace o pedido que ainda não foi pago)</br>\n",
+                      "enum": [
+                        "PENDING",
+                        "PAID_WAITING_SHIP",
+                        "INVOICED",
+                        "PAID_WAITING_DELIVERY",
+                        "CONCLUDED",
+                        "CANCELED"
+                      ]
+                    },
+                    "marketPlaceStatus": {
+                      "type": "string",
+                      "description": "Situação do pedido no marketplace. Cada marketplace possui situações diferentes. Ex: no mercado livre não existe a situação faturado\n",
+                      "maxLength": 255
+                    },
+                    "marketPlaceStatusComplement": {
+                      "type": "string",
+                      "description": "Informação complementar à situação do pedido no marketplace. Cada marketplace possui situações diferentes. Ex: na Dafiti o pedido pode ser marcado como falha de entrega e a causa pode ser armazenada nesse atributo\n",
+                      "maxLength": 1000
+                    },
+                    "documentIntermediator": {
+                      "type": "string",
+                      "description": "Identificador de intermediador da Transação CNPJ",
+                      "maxLength": 14
+                    },
+                    "intermediateRegistrationId": {
+                      "type": "string",
+                      "description": "Identificador  do cadastro (vendedor ou usuário)  no intermediador",
+                      "maxLength": 60
+                    },
+                    "documentPaymentInstitution": {
+                      "type": "string",
+                      "description": "Identificador de Instituição de pagamento CNPJ",
+                      "maxLength": 14
+                    },
+                    "fulfillment": {
+                      "type": "boolean",
+                      "description": "Identifica se o pedido é fulfillment"
+                    },
+                    "quoteReconciliation": {
+                      "type": "object",
+                      "description": "Cotação realizada",
+                      "properties": {
+                        "quoteId": {
+                          "type": "string",
+                          "description": "ID da cotação realizada"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "Preço retornado no momento da cotação"
+                        }
+                      }
+                    },
+                    "discount": {
+                      "type": "number",
+                      "description": "Desconto do pedido",
+                      "format": "double"
+                    },
+                    "freight": {
+                      "type": "number",
+                      "description": "Valor de frete",
+                      "format": "double"
+                    },
+                    "sellerFreight": {
+                      "type": "number",
+                      "description": "Custo de Frete do Lojista",
+                      "format": "double"
+                    },
+                    "interestValue": {
+                      "type": "number",
+                      "description": "Valor dos juros",
+                      "format": "double"
+                    },
+                    "gross": {
+                      "type": "number",
+                      "description": "Total bruto sem o valor de frete",
+                      "format": "double"
+                    },
+                    "total": {
+                      "type": "number",
+                      "description": "Total do pedido com o valor de frete",
+                      "format": "double"
+                    },
+                    "marketPlaceUrl": {
+                      "type": "string",
+                      "description": "URL do pedido no marketplace",
+                      "maxLength": 255
+                    },
+                    "marketPlaceShipmentStatus": {
+                      "description": "Situação de envio do pedido no marketplace. Cada marketplace possui situações diferentes</br></br>\r\n              **UNKNOWN**: (Desconhecido) Valor padrão para o campo;</br>\r\n              **PACKING**: (Em preparação) Indica que o pedido já foi faturado e está em processo de preparação interna</br>\r\n              **HOLD_FOR_PICKUP**: (Aguardando coleta) Indica que o pedido já foi preparado e está pronto para ser coletado pelo departamento responsável</br>\r\n              **DELAYED_PICKUP**: (Coleta atrasada) Indica que a coleta do pedido está atrasada com base em uma SLA de gestão do seller</br>\r\n              **HOLD_FOR_SHIPPED**: (Aguardando envio) Indica que a coleta do pedido já foi realizada e está aguardando uma confirmação de envio por parte do departamento responsável pela entrega do pedido</br>\r\n              **DELAYED_SHIPPING**: (Envio atrasado) Indica que a coleta do pedido já foi realizada no entanto o envio está atrasado com base em uma SLA de gestão do seller</br>\r\n              **SHIPPED**: (Enviado) Indica que a coleta e o envio foram realizados e confirmados pelo departamento responsável</br>\r\n              **SHIP_CONFIRMED**: (Ship Confirmed) Indica que o pedido está separado e preparado para coleta</br>\r\n              **QUARANTINE**: (Quarentena) Indica que o pedido está em quarentena</br>\r\n              **NOT_DELIVERED**: (Não entregue)</br>\r\n              **IN_TRANSIT**: (Em trânsito) indica que o pedido está em deslocamento para o destinatário</br>\r\n              **DELIVERED**: (Entregue) indica que o pedido foi entregue ao destinatário</br>\r\n              **DELAYED**: (Atrasado) indica que pedido esta atrasado </br>\r\n              **DELIVERED_LATE**: (Entregue atrasado). indica que pedido foi entregue depois data prevista de entrega</br>",
+                      "enum": [
+                        "UNKNOWN",
+                        "PACKING",
+                        "HOLD_FOR_PICKUP",
+                        "DELAYED_PICKUP",
+                        "HOLD_FOR_SHIPPED",
+                        "DELAYED_SHIPPING",
+                        "SHIPPED",
+                        "SHIP_CONFIRMED",
+                        "QUARANTINE",
+                        "NOT_DELIVERED",
+                        "IN_TRANSIT",
+                        "DELIVERED",
+                        "DELAYED",
+                        "DELIVERED_LATE"
+                      ],
+                      "default": "UNKNOWN"
+                    },
+                    "invoice": {
+                      "type": "object",
+                      "properties": {
+                        "accessKey": {
+                          "type": "string",
+                          "description": "Chave de acesso da nota fiscal",
+                          "maxLength": 255
+                        },
+                        "series": {
+                          "type": "string",
+                          "description": "Número de série da nota fiscal",
+                          "maxLength": 255
+                        },
+                        "number": {
+                          "type": "string",
+                          "description": "Número da nota fiscal",
+                          "maxLength": 255
+                        },
+                        "date": {
+                          "type": "string",
+                          "description": "Data de emissão da nota fiscal (Necessário informar o fuso horario)",
+                          "format": "date-time"
+                        },
+                        "cfop": {
+                          "type": "string",
+                          "description": "Código Fiscal de Operações e Prestações, esse campo será obrigátorio caso seja utilizado 'Mercado Envio Coleta'",
+                          "maxLength": 50
+                        },
+                        "companyStateTaxId": {
+                          "type": "string",
+                          "description": "Inscrição Estadual quando o comprador é uma Pessoa Jurídica (CNPJ), esse campo será obrigátorio caso seja utilizado 'Mercado Envios Coleta'; é possível utilizar 'ISENTO'",
+                          "maxLength": 20
+                        },
+                        "linkNfe": {
+                          "type": "string",
+                          "description": "Campo para inserir a URL para consulta da nota fiscal",
+                          "maxLength": 300
+                        },
+                        "invoiceLink": {
+                          "type": "string",
+                          "description": "Campo para inserir a URL onde está armazenada o PDF ou o XML da nota fiscal (utilizado para a integração da Garbarino)",
+                          "maxLength": 4000
+                        },
+                        "extraDescription": {
+                          "type": "string",
+                          "description": "Campo para observações",
+                          "maxLength": 255
+                        },
+                        "fiscalMetadata": {
+                          "type": "object",
+                          "description": "Metadados fiscais complementares da nota fiscal",
+                          "properties": {
+                            "operationType": {
+                              "type": "string",
+                              "description": "Tipo de operação fiscal (ex.: entrada, saida)"
+                            },
+                            "emissionType": {
+                              "type": "string",
+                              "description": "Tipo de emissão da nota fiscal (ex.: normal, contingencia)"
+                            },
+                            "authorizationProtocol": {
+                              "type": "string",
+                              "description": "Protocolo de autorização da nota fiscal"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "shipping": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "description": "Endereço",
+                          "maxLength": 500
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "Cidade",
+                          "maxLength": 255
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "Complemento",
+                          "maxLength": 500
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "País (Campo original, cadastrado pelo Marketplace ou Ecommerce)",
+                          "maxLength": 255
+                        },
+                        "countryAcronymNormalized": {
+                          "type": "string",
+                          "description": "Sigla do País padronizado internamente pelo ANYMARKET. Pode ser nulo se o country for nulo ou desconhecido.",
+                          "maxLength": 2
+                        },
+                        "countryNameNormalized": {
+                          "type": "string",
+                          "description": "Nome do País padronizado internamente pelo ANYMARKET. Pode ser nulo se o country for nulo ou UNKNOWN para desconhecido.",
+                          "maxLength": 100
+                        },
+                        "neighborhood": {
+                          "type": "string",
+                          "description": "Bairro",
+                          "maxLength": 255
+                        },
+                        "number": {
+                          "type": "string",
+                          "description": "Número",
+                          "maxLength": 100
+                        },
+                        "promisedShippingTime": {
+                          "type": "string",
+                          "description": "Data acordada para entrega",
+                          "example": "2023-06-15T21:25:52Z"
+                        },
+                        "promisedDispatchTime": {
+                          "type": "string",
+                          "description": "Data prevista de coleta",
+                          "example": "2024-09-17T03:00:00Z"
+                        },
+                        "receiverName": {
+                          "type": "string",
+                          "description": "Nome do remetente para entrega",
+                          "maxLength": 255
+                        },
+                        "reference": {
+                          "type": "string",
+                          "description": "Referência",
+                          "maxLength": 255
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "Sigla do Estado padronizado internamente pelo ANYMARKET. Pode ser nulo se o state for nulo ou o valor enviado pelo Marketplace, se ele for desconhecido.",
+                          "maxLength": 255
+                        },
+                        "stateNameNormalized": {
+                          "type": "string",
+                          "description": "Nome do Estado padronizado internamente pelo ANYMARKET. Pode ser nulo se o state for nulo ou UNKNOWN para desconhecido.",
+                          "maxLength": 100
+                        },
+                        "street": {
+                          "type": "string",
+                          "description": "Rua",
+                          "maxLength": 255
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "description": "CEP",
+                          "maxLength": 255
+                        }
+                      },
+                      "required": [
+                        "address",
+                        "city",
+                        "country",
+                        "countryAcronymNormalized",
+                        "countryNameNormalized",
+                        "number",
+                        "receiverName",
+                        "state",
+                        "stateNameNormalized",
+                        "street",
+                        "zipCode"
+                      ]
+                    },
+                    "billingAddress": {
+                      "type": "object",
+                      "description": "Endereço de Cobrança",
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "description": "Endereço",
+                          "maxLength": 500
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "Cidade",
+                          "maxLength": 255
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "Complemento",
+                          "maxLength": 500
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "País (Campo original, cadastrado pelo Marketplace ou Ecommerce)",
+                          "maxLength": 255
+                        },
+                        "countryAcronymNormalized": {
+                          "type": "string",
+                          "description": "Sigla do País padronizado internamente pelo ANYMARKET. Pode ser nulo se o country for nulo ou desconhecido.",
+                          "maxLength": 2
+                        },
+                        "countryNameNormalized": {
+                          "type": "string",
+                          "description": "Nome do País padronizado internamente pelo ANYMARKET. Pode ser nulo se o country for nulo ou UNKNOWN para desconhecido.",
+                          "maxLength": 100
+                        },
+                        "neighborhood": {
+                          "type": "string",
+                          "description": "Bairro",
+                          "maxLength": 255
+                        },
+                        "number": {
+                          "type": "string",
+                          "description": "Número",
+                          "maxLength": 100
+                        },
+                        "reference": {
+                          "type": "string",
+                          "description": "Referência",
+                          "maxLength": 255
+                        },
+                        "shipmentUserDocument": {
+                          "type": "string",
+                          "maxLength": 80
+                        },
+                        "shipmentUserDocumentType": {
+                          "type": "string",
+                          "title": "Tipos de documentos",
+                          "enum": [
+                            "CPF",
+                            "CNPJ",
+                            "OTHER",
+                            "DNI"
+                          ],
+                          "default": "OTHER",
+                          "readOnly": true,
+                          "description": ""
+                        },
+                        "shipmentUserName": {
+                          "type": "string",
+                          "maxLength": 255
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "Sigla do Estado padronizado internamente pelo ANYMARKET. Pode ser nulo se o state for nulo ou o valor enviado pelo Marketplace, se ele for desconhecido.",
+                          "maxLength": 255
+                        },
+                        "stateNameNormalized": {
+                          "type": "string",
+                          "description": "Nome do Estado padronizado internamente pelo ANYMARKET. Pode ser nulo se o state for nulo ou UNKNOWN para desconhecido.",
+                          "maxLength": 100
+                        },
+                        "street": {
+                          "type": "string",
+                          "description": "Rua",
+                          "maxLength": 255
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "description": "CEP",
+                          "maxLength": 255
+                        }
+                      },
+                      "required": [
+                        "address",
+                        "city",
+                        "country",
+                        "countryAcronymNormalized",
+                        "countryNameNormalized",
+                        "neighborhood",
+                        "number",
+                        "state",
+                        "stateNameNormalized",
+                        "street",
+                        "zipCode"
+                      ]
+                    },
+                    "anymarketAddress": {
+                      "type": "object",
+                      "required": [
+                        "address",
+                        "city",
+                        "country",
+                        "neighborhood",
+                        "number",
+                        "promisedShippingTime",
+                        "state",
+                        "stateAcronymNormalized",
+                        "street",
+                        "zipCode"
+                      ],
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "description": "Endereço",
+                          "maxLength": 500
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "Cidade",
+                          "maxLength": 255
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "Complemento",
+                          "maxLength": 500
+                        },
+                        "country": {
+                          "type": "string",
+                          "maxLength": 255,
+                          "description": "País"
+                        },
+                        "neighborhood": {
+                          "type": "string",
+                          "description": "Bairro",
+                          "maxLength": 255
+                        },
+                        "number": {
+                          "type": "string",
+                          "description": "Número",
+                          "maxLength": 100
+                        },
+                        "promisedShippingTime": {
+                          "type": "string",
+                          "description": "Data estimada de entrega",
+                          "example": "2023-06-15T21:25:52Z",
+                          "format": "date-time"
+                        },
+                        "receiverName": {
+                          "type": "string",
+                          "description": "Nome do remetente para entrega",
+                          "maxLength": 255
+                        },
+                        "reference": {
+                          "type": "string",
+                          "description": "Referência",
+                          "maxLength": 255
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "Estado enviado pelo marketplace, sem nenhuma normalização aplicada pelo ANYMARKET.",
+                          "maxLength": 255
+                        },
+                        "stateAcronymNormalized": {
+                          "type": "string",
+                          "maxLength": 2,
+                          "description": "Sigla do Estado padronizado internamente pelo ANYMARKET. Pode ser nulo se o state for nulo ou o valor enviado pelo Marketplace, se ele for desconhecido."
+                        },
+                        "street": {
+                          "type": "string",
+                          "description": "Rua",
+                          "maxLength": 255
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "description": "CEP",
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "buyer": {
+                      "type": "object",
+                      "required": [
+                        "document",
+                        "documentNumberNormalized",
+                        "documentType",
+                        "email",
+                        "name",
+                        "phone"
+                      ],
+                      "properties": {
+                        "cellPhone": {
+                          "type": "string",
+                          "description": "Celular do comprador",
+                          "maxLength": 255
+                        },
+                        "document": {
+                          "type": "string",
+                          "description": "Número do documento. Essa informação pode não ser preenchida para algum marketplace ou ecommerce.",
+                          "maxLength": 255
+                        },
+                        "documentNumberNormalized": {
+                          "type": "string",
+                          "description": "Número do documento normalizado pelo ANYMARKET. Somente números. Caso o document não seja um CPF ou CNPJ este campo irá retornar nulo."
+                        },
+                        "documentType": {
+                          "type": "string",
+                          "description": "Tipo do documento. Valores possíveis: CPF, CNPJ, OTHER\n",
+                          "enum": [
+                            "CPF",
+                            "CNPJ",
+                            "DNI",
+                            "OTHER"
+                          ]
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "E-mail do comprador",
+                          "maxLength": 255
+                        },
+                        "marketPlaceId": {
+                          "type": "string",
+                          "description": "ID no marketplace. Essa informação pode não existir para algum marketplace ou ecommerce.",
+                          "maxLength": 255
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Nome do comprador",
+                          "maxLength": 255
+                        },
+                        "phone": {
+                          "type": "string",
+                          "description": "Telefone do comprador",
+                          "maxLength": 255
+                        },
+                        "dateOfBirth": {
+                          "type": "string",
+                          "description": "Data de nascimento do comprador",
+                          "format": "date-time"
+                        },
+                        "companyStateTaxId": {
+                          "type": "string",
+                          "description": "Inscrição Estadual do comprador.",
+                          "maxLength": 25
+                        }
+                      }
+                    },
+                    "payments": {
+                      "description": "Dados referente a pagamento (Será enviado pelo Marketplace)",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "marketplaceId",
+                          "method",
+                          "paymentDetailNormalized",
+                          "paymentMethodNormalized"
+                        ],
+                        "properties": {
+                          "installments": {
+                            "type": "number",
+                            "description": "Número de parcelas do meio do pagamento. Deve-se dividir o número de parcelas pelo valor para encontrar o valor de cada parcela.",
+                            "format": "int64"
+                          },
+                          "marketplaceId": {
+                            "type": "string",
+                            "description": "ID do pagamento enviado pelo marketplace. Alguns marketplaces não disponibilizam o id, podendo o valor estar nulo ou com um valor fixo \"1\" dependendo da regra. (Exemplo- Cnova sempre tem apenas um pagamento para a compra, então o id do pagamento pode ser sempre \"1\")",
+                            "maxLength": 50
+                          },
+                          "method": {
+                            "type": "string",
+                            "description": "Método de pagamento. (Campo original, enviado pelo Marketplace ou Ecommerce)",
+                            "maxLength": 255
+                          },
+                          "paymentDetailNormalized": {
+                            "type": "string",
+                            "description": "Detalhamento do método de pagamento padronizado internamente pelo ANYMARKET. Caso for um valor desconhecido internamente irá retornar UNKNOWN. Se o method for nulo, este campo também será nulo.",
+                            "default": "UNKNOWN",
+                            "maxLength": 100
+                          },
+                          "paymentMethodNormalized": {
+                            "type": "string",
+                            "description": "Método de pagamento padronizado internamente pelo ANYMARKET. Caso for um valor desconhecido internamente irá retornar UNKNOWN. Se o method for nulo, este campo também será nulo.",
+                            "default": "UNKNOWN",
+                            "maxLength": 100
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "Status do pagamento enviado pelo marketplace",
+                            "maxLength": 255
+                          },
+                          "value": {
+                            "type": "number",
+                            "description": "Valor do pagamento (Em caso de cobrança de juros, o valor é adicionado ao total da compra. Ex: Mercado livre). O campo virá preenchido para grande parte dos Marketplaces, porém existem casos onde o Marketplace não informará o valor.\n",
+                            "format": "double"
+                          },
+                          "gatewayFee": {
+                            "type": "number",
+                            "description": "Taxa referente ao gateway de pagamento (Ex: MercadoPago).\n",
+                            "format": "double"
+                          },
+                          "marketplaceFee": {
+                            "type": "number",
+                            "description": "Taxa referente ao Marketplace.\n",
+                            "format": "double"
+                          },
+                          "documentPaymentInstitution": {
+                            "type": "string",
+                            "description": "Identificação através do CNPJ do responsavel pela transação de pagamento com cartão. tag card/CNPJ."
+                          },
+                          "cardOperator": {
+                            "type": "string",
+                            "description": "Código da bandeira da operadora de cartão de crédito e/ou débito. Conforme  publicada no Portal Nacional da Nota Fiscal Eletrônica. tag card/tBand"
+                          },
+                          "orderAuthorizationCardCode": {
+                            "type": "string",
+                            "description": "Número de autorização da operação cartão de crédito e/ou débito. tag card/cAuth"
+                          }
+                        }
+                      }
+                    },
+                    "items": {
+                      "description": "Dados referente aos produtos comprados",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "product": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID do produto gerado pelo ANYMARKET",
+                                "format": "int64"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "Título do produto",
+                                "maxLength": 150
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "title"
+                            ]
+                          },
+                          "sku": {
+                            "type": "object",
+                            "properties": {
+                              "ean": {
+                                "type": "string",
+                                "description": "Código de barras do SKU",
+                                "maxLength": 13
+                              },
+                              "id": {
+                                "type": "integer",
+                                "description": "ID do SKU gerado pelo ANYMARKET",
+                                "format": "int64"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "Título do SKU",
+                                "maxLength": 150
+                              },
+                              "partnerId": {
+                                "type": "string",
+                                "description": "Código do SKU no parceiro",
+                                "maxLength": 120
+                              },
+                              "externalId": {
+                                "type": "string",
+                                "description": "ID externo, utilizado em alguns marketplaces para controle interno destes.",
+                                "maxLength": 100,
+                                "deprecated": true
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "title",
+                              "partnerId"
+                            ]
+                          },
+                          "amount": {
+                            "type": "number",
+                            "description": "Quantidade do item",
+                            "format": "double"
+                          },
+                          "unit": {
+                            "type": "number",
+                            "description": "Preço do item",
+                            "format": "double"
+                          },
+                          "gross": {
+                            "type": "number",
+                            "description": "Valor bruto do item (amount * unit)",
+                            "format": "double"
+                          },
+                          "total": {
+                            "type": "number",
+                            "description": "Total do item com desconto aplicado (gross - discount)",
+                            "format": "double"
+                          },
+                          "discount": {
+                            "type": "number",
+                            "description": "Desconto do item",
+                            "format": "double"
+                          },
+                          "discountItemMetadata": {
+                            "type": "array",
+                            "description": "Indica a origem do desconto aplicado ao item (seller ou marketplace), quando informada pelo canal de venda. Cada campo de origem é omitido quando não informado.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "**COUPON**: indica que o item possui desconto do tipo Cupom no Mercado Livre.<br/>\n**FREE_ITEM**: indica que o item possui 100% de desconto e é do tipo Amostra grátis.",
+                                  "enum": [
+                                    "FREE_ITEM",
+                                    "COUPON"
+                                  ]
+                                },
+                                "discountProductSeller": {
+                                  "type": "number",
+                                  "format": "double",
+                                  "description": "Valor do desconto do item concedido pelo seller. Omitido quando não informado pelo canal."
+                                },
+                                "discountProductMarketplace": {
+                                  "type": "number",
+                                  "format": "double",
+                                  "description": "Valor do desconto do item concedido pelo marketplace. Omitido quando não informado pelo canal."
+                                }
+                              }
+                            }
+                          },
+                          "shippings": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "description": "ID gerado pelo ANYMARKET"
+                                },
+                                "shippingCarrierNormalized": {
+                                  "type": "string",
+                                  "default": "UNKNOWN",
+                                  "description": "Transportadora normalizada",
+                                  "maxLength": 100
+                                },
+                                "shippingCarrierTypeNormalized": {
+                                  "type": "string",
+                                  "default": "UNKNOWN",
+                                  "description": "Tipo de transpote normalizado",
+                                  "maxLength": 100
+                                },
+                                "shippingtype": {
+                                  "type": "string",
+                                  "description": "Nome da transportadora vinda do marketplace",
+                                  "maxLength": 255
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "shippingCarrierNormalized",
+                                "shippingCarrierTypeNormalized",
+                                "shippingtype"
+                              ]
+                            }
+                          },
+                          "customization": {
+                            "type": "object",
+                            "properties": {
+                              "customizationType": {
+                                "type": "string",
+                                "description": "Tipo da customização/personalização a ser realizada",
+                                "example": "Personalização de Nome",
+                                "maxLength": 255
+                              },
+                              "customizationQuantity": {
+                                "type": "number",
+                                "description": "Quantidade de itens a serem personalizados"
+                              },
+                              "customizationPrice": {
+                                "type": "number",
+                                "description": "Preço da personalização",
+                                "format": "double"
+                              },
+                              "customizationValue": {
+                                "type": "string",
+                                "description": "Conteúdo a ser preenchido na personalização",
+                                "maxLength": 255
+                              }
+                            }
+                          },
+                          "stocks": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "amount": {
+                                  "type": "number",
+                                  "description": "Quantidade em estoque do local",
+                                  "format": "double"
+                                },
+                                "stockLocalId": {
+                                  "type": "integer",
+                                  "description": "ID do estoque do local",
+                                  "format": "int64"
+                                },
+                                "stockName": {
+                                  "type": "string",
+                                  "description": "Descrição do local de estoque"
+                                }
+                              },
+                              "required": [
+                                "amount",
+                                "stockLocalId",
+                                "stockName"
+                              ]
+                            }
+                          },
+                          "marketPlaceId": {
+                            "type": "string",
+                            "description": "Id do item no marketplace / plataforma de e-commerce (Caso não informado, será o mesmo do sku)",
+                            "maxLength": 255
+                          },
+                          "orderItemId": {
+                            "type": "number",
+                            "description": "Id do item no pedido gerado pelo ANYMARKET",
+                            "format": "int64"
+                          },
+                          "idInMarketPlace": {
+                            "type": "string",
+                            "description": "Código do sku no marketplace",
+                            "maxLength": 255
+                          },
+                          "officialStoreId": {
+                            "type": "string",
+                            "description": "Id da loja oficial (Mercado Livre)",
+                            "readOnly": true,
+                            "maxLength": 20
+                          },
+                          "officialStoreName": {
+                            "type": "string",
+                            "description": "Descrição da loja oficial (Mercado Livre)",
+                            "readOnly": true,
+                            "maxLength": 200
+                          },
+                          "listingType": {
+                            "type": "string",
+                            "description": "Tipo de listagem do anúncio do item vendido (Mercado Livre)",
+                            "readOnly": true,
+                            "maxLength": 30
+                          },
+                          "freeShipping": {
+                            "type": "boolean",
+                            "description": "Determina se o frete é grátis"
+                          }
+                        },
+                        "required": [
+                          "product",
+                          "sku",
+                          "amount",
+                          "unit",
+                          "gross",
+                          "total",
+                          "discount",
+                          "orderItemId",
+                          "idInMarketPlace"
+                        ],
+                        "example": {
+                          "product": {
+                            "id": 0,
+                            "title": "string"
+                          },
+                          "sku": {
+                            "id": 0,
+                            "title": "string",
+                            "partnerId": "string",
+                            "externalId": "string",
+                            "ean": "string"
+                          },
+                          "amount": -1.7976931348623157e+308,
+                          "unit": -1.7976931348623157e+308,
+                          "gross": -1.7976931348623157e+308,
+                          "total": -1.7976931348623157e+308,
+                          "discount": -1.7976931348623157e+308,
+                          "discountItemMetadata": [
+                            {
+                              "type": "COUPON",
+                              "discountProductSeller": 5
+                            }
+                          ],
+                          "shippings": {
+                            "id": 0,
+                            "shippingtype": "string",
+                            "shippingCarrierNormalized": "string",
+                            "shippingCarrierTypeNormalized": "string"
+                          },
+                          "customization": {
+                            "customizationType": "Personalização de Nome",
+                            "customizationQuantity": 0,
+                            "customizationPrice": "string",
+                            "customizationValue": "string"
+                          },
+                          "stocks": [
+                            {
+                              "stockLocalId": 0,
+                              "stockName": "string",
+                              "amount": 0
+                            }
+                          ],
+                          "marketPlaceId": "string",
+                          "orderItemId": "string",
+                          "idInMarketPlace": "string",
+                          "officialStoreId": "string",
+                          "officialStoreName": "string",
+                          "listingType": "string",
+                          "freeShipping": true
+                        }
+                      }
+                    },
+                    "tracking": {
+                      "type": "object",
+                      "properties": {
+                        "carrier": {
+                          "type": "string",
+                          "description": "Nome da transportadora",
+                          "maxLength": 255
+                        },
+                        "date": {
+                          "type": "string",
+                          "description": "Data do rastreio (Necessário informar o fuso horario)",
+                          "format": "date-time"
+                        },
+                        "deliveredDate": {
+                          "type": "string",
+                          "description": "Data de entrega ao Cliente (Necessário informar o fuso horario)",
+                          "format": "date-time"
+                        },
+                        "estimateDate": {
+                          "type": "string",
+                          "description": "Data estimada (Necessário informar o fuso horario)",
+                          "format": "date-time"
+                        },
+                        "number": {
+                          "type": "string",
+                          "description": "Número de rastreio",
+                          "maxLength": 255
+                        },
+                        "shippedDate": {
+                          "type": "string",
+                          "description": "Data em que foi entregue a transportadora (Necessário informar o fuso horario)",
+                          "format": "date-time"
+                        },
+                        "url": {
+                          "type": "string",
+                          "description": "URL para o rastreamento",
+                          "maxLength": 255
+                        },
+                        "carrierDocument": {
+                          "type": "string",
+                          "description": "CNPJ da transportadora",
+                          "maxLength": 255
+                        },
+                        "bufferingDate": {
+                          "type": "string",
+                          "description": "Data que o pedido está agendado para envio (Apenas para pedidos com tempo de fabriação)",
+                          "format": "date-time"
+                        }
+                      }
+                    },
+                    "deliveryStatus": {
+                      "type": "string",
+                      "description": "Status do envio</br>\n  **UNKNOWN**: Envio pendente</br>\n  **IN_TRANSIT**: Pedido Enviado\n  **DELIVERED**: Pedido entregue</br>\n",
+                      "enum": [
+                        "UNKNOWN",
+                        "IN_TRANSIT",
+                        "DELIVERED",
+                        "HOLD_FOR_PICKUP",
+                        "DELAYED",
+                        "DELIVERED_LATE",
+                        "NOT_DELIVERY"
+                      ],
+                      "default": "UNKNOWN"
+                    },
+                    "pickup": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "ID da loja no ANYMARKET"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Nome da loja",
+                          "maxLength": 60
+                        },
+                        "partnerId": {
+                          "type": "integer",
+                          "description": "Código da loja no parceiro"
+                        },
+                        "marketplaceId": {
+                          "type": "string",
+                          "description": "ID da loja no marketplace",
+                          "maxLength": 255
+                        },
+                        "receiverName": {
+                          "type": "string",
+                          "description": "Nome de quem retira o pedido na loja",
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "idAccount": {
+                      "description": "ID da conta gerado automático pelo ANYMARKET",
+                      "type": "number"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "description": "Campos adicionais do pedido. Onde o Map possui uma key com no máximo 255 caracteres e o valor com no máximo 4000 caracteres",
+                      "properties": {
+                        "discountSummarized": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "Soma do desconto do pedido (discount) com a soma dos descontos de todos os itens (items[].discount). Retorna 0 quando não há descontos.",
+                          "example": 35.9
+                        },
+                        "number-of-packages": {
+                          "type": "string",
+                          "default": "",
+                          "description": "Quantidade de volumes para a impressão de etiqueta"
+                        },
+                        "cdZipCode": {
+                          "type": "string",
+                          "description": "CEP do Centro de Distribuição referente ao CNPJ de faturamento do pedido"
+                        },
+                        "needInvoiceXML": {
+                          "type": "string",
+                          "description": "Caso o marketplace exija a integração do arquivo XML com os dados de faturamento",
+                          "example": "true"
+                        },
+                        "mshops": {
+                          "type": "string",
+                          "description": "Caso o pedido tenha sido feito pelo canal de vendas Mercado Shops",
+                          "example": "true, false"
+                        },
+                        "Envvias": {
+                          "type": "string"
+                        },
+                        "VIAtotalDiscountAmount": {
+                          "type": "string"
+                        },
+                        "B2WshippingType": {
+                          "type": "string"
+                        },
+                        "logistic_type": {
+                          "type": "string",
+                          "description": "Tipo logistico do Mercado Livre",
+                          "example": "drop_off, cross_docking, xd_drop_off, self_service"
+                        },
+                        "printTag": {
+                          "type": "string"
+                        },
+                        "canceldetail_motivation": {
+                          "type": "string",
+                          "description": "Descrição do que foi o motivador do cancelamento, em alguns casos, pode ser aspectos fiscais, de fraude, entrega, entre outros"
+                        },
+                        "canceldetail_code": {
+                          "type": "string",
+                          "description": "Código identificador do respectiva cancelamento ou, em alguns causos, o código da causa que provocou o cancelamento"
+                        },
+                        "canceldetail_description": {
+                          "type": "string",
+                          "description": "Descrição do cancelamento ou da causa que o originou"
+                        },
+                        "canceldetail_requested_by": {
+                          "type": "string",
+                          "description": "Origem do solicitante do cancelamento, em alguns casos pode ser solicitado pelo marketplace, pelo seller ou até pelo comprador"
+                        }
+                      },
+                      "example": {
+                        "discountSummarized": 35.9,
+                        "number-of-packages": 1,
+                        "cdZipCode": "string",
+                        "needInvoiceXML": true,
+                        "mshops": true,
+                        "Envvias": "string",
+                        "VIAtotalDiscountAmount": "string",
+                        "B2WshippingType": "string",
+                        "logistic_type": "drop_off, cross_docking, xd_drop_off, self_service",
+                        "printTag": true,
+                        "canceldetail_motivation": "string",
+                        "canceldetail_code": "string",
+                        "canceldetail_description": "string",
+                        "canceldetail_requested_by": "string"
+                      }
+                    },
+                    "orderTypeName": {
+                      "type": "string",
+                      "description": "Nome do tipo de pedido",
+                      "example": "DBA",
+                      "maxLength": 20
+                    },
+                    "shippingId": {
+                      "type": "string",
+                      "description": "Id do envio MERCADO_LIVRE"
+                    },
+                    "discountMetadata": {
+                      "type": "array",
+                      "description": "Indica o valor do desconto quando informado pelo canal de venda.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "array",
+                            "description": "**COUPON**: indica que a venda possui desconto do tipo Cupom, quando informado pelo canal de venda.<br/>\n**FREE_ITEM**: indica que a venda possui 100% de desconto e é do tipo Amostra grátis, quando informado pelo canal de venda.",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "FREE_ITEM",
+                                "COUPON"
+                              ]
+                            }
+                          },
+                          "discountDetails": {
+                            "type": "array",
+                            "description": "Detalha a origem do desconto do pedido, quando informada pelo canal de venda. Campo e subcampos omitidos (não retornam como `null`) quando não informados. Aplica-se apenas a pedidos importados após a entrada em produção desta funcionalidade — pedidos já existentes na base não são reprocessados nem atualizados retroativamente.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "**COUPON**: indica que a venda possui desconto do tipo Cupom, quando informado pelo canal de venda.<br/>\n**FREE_ITEM**: indica que a venda possui 100% de desconto e é do tipo Amostra grátis, quando informado pelo canal de venda.",
+                                  "enum": [
+                                    "FREE_ITEM",
+                                    "COUPON"
+                                  ]
+                                },
+                                "discountOrderSeller": {
+                                  "type": "number",
+                                  "format": "double",
+                                  "description": "Valor do desconto do pedido custeado pelo vendedor. Omitido quando não informado."
+                                },
+                                "discountOrderMarketplace": {
+                                  "type": "number",
+                                  "format": "double",
+                                  "description": "Valor do desconto do pedido custeado pelo marketplace. Omitido quando não informado."
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "lastUpdate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data de atualização do pedido"
+                    }
+                  },
+                  "example": {
+                    "id": 0,
+                    "accountName": "string",
+                    "marketPlaceId": "string",
+                    "marketPlaceNumber": "string",
+                    "partnerId": "string",
+                    "marketPlace": "string",
+                    "subChannel": "string",
+                    "subChannelNormalized": "string",
+                    "createdAt": "2022-02-24T14:15:22Z",
+                    "paymentDate": "2022-02-24T14:15:22Z",
+                    "cancelDate": "2022-02-24T14:15:22Z",
+                    "shippingOptionId": "string",
+                    "transmissionStatus": "string",
+                    "status": "PENDING",
+                    "marketPlaceStatus": "string",
+                    "marketPlaceStatusComplement": "string",
+                    "documentIntermediator": "string",
+                    "intermediateRegistrationId": "string",
+                    "documentPaymentInstitution": "string",
+                    "fulfillment": true,
+                    "discount": 0,
+                    "freight": 0,
+                    "interestValue": 0,
+                    "gross": 0,
+                    "total": 0,
+                    "marketPlaceUrl": "string",
+                    "marketPlaceShipmentStatus": "string",
+                    "invoice": {
+                      "accessKey": "string",
+                      "series": "string",
+                      "number": "string",
+                      "date": "2022-02-24T14:15:22Z",
+                      "cfop": "string",
+                      "companyStateTaxId": "string",
+                      "linkNfe": "string",
+                      "invoiceLink": "string",
+                      "extraDescription": "string",
+                      "fiscalMetadata": {
+                        "operationType": "string",
+                        "emissionType": "string",
+                        "authorizationProtocol": "string"
+                      }
+                    },
+                    "shipping": {
+                      "city": "string",
+                      "state": "string",
+                      "stateNameNormalized": "string",
+                      "country": "string",
+                      "countryAcronymNormalized": "string",
+                      "countryNameNormalized": "string",
+                      "address": "string",
+                      "number": "string",
+                      "neighborhood": "string",
+                      "street": "string",
+                      "comment": "string",
+                      "reference": "string",
+                      "zipCode": "string",
+                      "receiverName": "string",
+                      "promisedShippingTime": "2019-08-24T14:15:22Z"
+                    },
+                    "billingAddress": {
+                      "city": "string",
+                      "state": "string",
+                      "stateNameNormalized": "string",
+                      "country": "string",
+                      "countryAcronymNormalized": "string",
+                      "countryNameNormalized": "string",
+                      "street": "string",
+                      "number": "string",
+                      "neighborhood": "string",
+                      "comment": "string",
+                      "reference": "string",
+                      "zipCode": "string"
+                    },
+                    "anymarketAddress": {
+                      "state": "string",
+                      "city": "string",
+                      "zipCode": "string",
+                      "neighborhood": "string",
+                      "address": "string",
+                      "street": "string",
+                      "number": "string",
+                      "comment": "string",
+                      "reference": "string",
+                      "receiverName": "string",
+                      "promisedShippingTime": "string"
+                    },
+                    "buyer": {
+                      "marketPlaceId": "string",
+                      "name": "string",
+                      "email": "string",
+                      "document": "string",
+                      "documentType": "string",
+                      "phone": "string",
+                      "cellPhone": "string",
+                      "documentNumberNormalized": "string"
+                    },
+                    "payments": [
+                      {
+                        "method": "string",
+                        "status": "string",
+                        "value": 0,
+                        "installments": 0,
+                        "marketplaceId": "string",
+                        "gatewayFee": 0,
+                        "marketplaceFee": 0,
+                        "paymentMethodNormalized": "string",
+                        "paymentDetailNormalized": "string",
+                        "documentPaymentInstitution": "string",
+                        "cardOperator": "string",
+                        "orderAuthorizationCardCode": "string"
+                      }
+                    ],
+                    "items": [
+                      {
+                        "product": {
+                          "id": 0,
+                          "title": "string"
+                        },
+                        "sku": {
+                          "id": 0,
+                          "title": "string",
+                          "partnerId": "string",
+                          "externalId": "string",
+                          "ean": "string"
+                        },
+                        "amount": 0,
+                        "unit": 0,
+                        "gross": 0,
+                        "total": 0,
+                        "discount": 0,
+                        "discountItemMetadata": [
+                          {
+                            "type": "COUPON",
+                            "discountProductSeller": 5
+                          }
+                        ],
+                        "shippings": [
+                          {
+                            "id": 0,
+                            "shippingtype": "string",
+                            "shippingCarrierNormalized": "string",
+                            "shippingCarrierTypeNormalized": "string"
+                          }
+                        ],
+                        "stocks": [
+                          {
+                            "stockLocalId": 0,
+                            "stockName": "string",
+                            "amount": 0
+                          }
+                        ],
+                        "marketPlaceId": "string",
+                        "orderItemId": "string",
+                        "idInMarketPlace": "string",
+                        "officialStoreId": "string",
+                        "officialStoreName": "string",
+                        "listingType": "string",
+                        "freeShipping": true
+                      },
+                      {
+                        "product": {
+                          "id": 1,
+                          "title": "string"
+                        },
+                        "sku": {
+                          "id": 1,
+                          "title": "string",
+                          "partnerId": "string",
+                          "externalId": "string",
+                          "ean": "string"
+                        },
+                        "amount": 0,
+                        "unit": 0,
+                        "gross": 0,
+                        "total": 0,
+                        "discount": 0,
+                        "discountItemMetadata": [
+                          {
+                            "type": "FREE_ITEM",
+                            "discountProductMarketplace": 8
+                          }
+                        ],
+                        "marketPlaceId": "string",
+                        "orderItemId": "string",
+                        "idInMarketPlace": "string",
+                        "officialStoreId": "string",
+                        "officialStoreName": "string",
+                        "listingType": "string",
+                        "freeShipping": true
+                      }
+                    ],
+                    "tracking": {
+                      "url": "string",
+                      "number": "string",
+                      "carrier": "string",
+                      "carrierDocument": "string",
+                      "date": "2019-08-24T14:15:22Z",
+                      "deliveredDate": "2019-08-24T14:15:22Z",
+                      "estimateDate": "2019-08-24T14:15:22Z",
+                      "shippedDate": "2019-08-24T14:15:22Z"
+                    },
+                    "deliveryStatus": "UNKNOWN",
+                    "idAccount": 0,
+                    "pickup": {
+                      "id": 0,
+                      "description": "string",
+                      "partnerId": 0,
+                      "marketplaceId": "string",
+                      "receiverName": "string"
+                    },
+                    "metadata": {
+                      "discountSummarized": 35.9,
+                      "number-of-packages": "1",
+                      "cdZipCode": "string",
+                      "needInvoiceXML": "true"
+                    },
+                    "discountMetadata": [
+                      {
+                        "type": [
+                          "COUPON"
+                        ],
+                        "discountDetails": [
+                          {
+                            "type": "COUPON",
+                            "discountOrderSeller": 10,
+                            "discountOrderMarketplace": 5.9
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": 0,
+                      "accountName": "string",
+                      "marketPlaceId": "string",
+                      "marketPlaceNumber": "string",
+                      "partnerId": "string",
+                      "marketPlace": "string",
+                      "subChannel": "string",
+                      "subChannelNormalized": "string",
+                      "createdAt": "2019-08-24T14:15:22Z",
+                      "paymentDate": "2019-08-24T14:15:22Z",
+                      "cancelDate": "2019-08-24T14:15:22Z",
+                      "shippingOptionId": "string",
+                      "transmissionStatus": "string",
+                      "status": "PENDING",
+                      "marketPlaceStatus": "string",
+                      "marketPlaceStatusComplement": "string",
+                      "documentIntermediator": "string",
+                      "intermediateRegistrationId": "string",
+                      "documentPaymentInstitution": "string",
+                      "fulfillment": true,
+                      "discount": 0,
+                      "freight": 0,
+                      "interestValue": 0,
+                      "gross": 0,
+                      "total": 0,
+                      "marketPlaceUrl": "string",
+                      "marketPlaceShipmentStatus": "string",
+                      "invoice": {
+                        "accessKey": "string",
+                        "series": "string",
+                        "number": "string",
+                        "date": "2019-08-24T14:15:22Z",
+                        "cfop": "string",
+                        "companyStateTaxId": "string",
+                        "linkNfe": "string",
+                        "invoiceLink": "string",
+                        "extraDescription": "string"
+                      },
+                      "shipping": {
+                        "city": "string",
+                        "state": "string",
+                        "stateNameNormalized": "string",
+                        "country": "string",
+                        "countryAcronymNormalized": "string",
+                        "countryNameNormalized": "string",
+                        "address": "string",
+                        "number": "string",
+                        "neighborhood": "string",
+                        "street": "string",
+                        "comment": "string",
+                        "reference": "string",
+                        "zipCode": "string",
+                        "receiverName": "string",
+                        "promisedShippingTime": "2019-08-24T14:15:22Z"
+                      },
+                      "billingAddress": {
+                        "city": "string",
+                        "state": "string",
+                        "stateNameNormalized": "string",
+                        "country": "string",
+                        "countryAcronymNormalized": "string",
+                        "countryNameNormalized": "string",
+                        "street": "string",
+                        "number": "string",
+                        "neighborhood": "string",
+                        "comment": "string",
+                        "reference": "string",
+                        "zipCode": "string"
+                      },
+                      "anymarketAddress": {
+                        "state": "string",
+                        "city": "string",
+                        "zipCode": "string",
+                        "neighborhood": "string",
+                        "address": "string",
+                        "street": "string",
+                        "number": "string",
+                        "comment": "string",
+                        "reference": "string",
+                        "receiverName": "string",
+                        "promisedShippingTime": "string"
+                      },
+                      "buyer": {
+                        "marketPlaceId": "string",
+                        "name": "string",
+                        "email": "string",
+                        "document": "string",
+                        "documentType": "string",
+                        "phone": "string",
+                        "cellPhone": "string",
+                        "documentNumberNormalized": "string"
+                      },
+                      "payments": [
+                        {
+                          "method": "string",
+                          "status": "string",
+                          "value": 0,
+                          "installments": 0,
+                          "marketplaceId": "string",
+                          "gatewayFee": 0,
+                          "marketplaceFee": 0,
+                          "paymentMethodNormalized": "string",
+                          "paymentDetailNormalized": "string"
+                        }
+                      ],
+                      "items": [
+                        {
+                          "product": {
+                            "id": 0,
+                            "title": "string"
+                          },
+                          "sku": {
+                            "id": 0,
+                            "title": "string",
+                            "partnerId": "string",
+                            "externalId": "string",
+                            "ean": "string"
+                          },
+                          "amount": 0,
+                          "unit": 0,
+                          "gross": 0,
+                          "total": 0,
+                          "discount": 0,
+                          "discountItemMetadata": [
+                            {
+                              "type": "COUPON",
+                              "discountProductSeller": 5
+                            }
+                          ],
+                          "shippings": [
+                            {
+                              "id": 0,
+                              "shippingtype": "string",
+                              "shippingCarrierNormalized": "string",
+                              "shippingCarrierTypeNormalized": "string"
+                            }
+                          ],
+                          "stocks": [
+                            {
+                              "stockLocalId": 0,
+                              "stockName": "string",
+                              "amount": 0
+                            }
+                          ],
+                          "marketPlaceId": "string",
+                          "orderItemId": "string",
+                          "idInMarketPlace": "string",
+                          "officialStoreId": "string",
+                          "officialStoreName": "string",
+                          "listingType": "string",
+                          "freeShipping": true
+                        },
+                        {
+                          "product": {
+                            "id": 1,
+                            "title": "string"
+                          },
+                          "sku": {
+                            "id": 1,
+                            "title": "string",
+                            "partnerId": "string",
+                            "externalId": "string",
+                            "ean": "string"
+                          },
+                          "amount": 0,
+                          "unit": 0,
+                          "gross": 0,
+                          "total": 0,
+                          "discount": 0,
+                          "discountItemMetadata": [
+                            {
+                              "type": "FREE_ITEM",
+                              "discountProductMarketplace": 8
+                            }
+                          ],
+                          "marketPlaceId": "string",
+                          "orderItemId": "string",
+                          "idInMarketPlace": "string",
+                          "officialStoreId": "string",
+                          "officialStoreName": "string",
+                          "listingType": "string",
+                          "freeShipping": true
+                        }
+                      ],
+                      "tracking": {
+                        "url": "string",
+                        "number": "string",
+                        "carrier": "string",
+                        "carrierDocument": "string",
+                        "date": "2019-08-24T14:15:22Z",
+                        "deliveredDate": "2019-08-24T14:15:22Z",
+                        "estimateDate": "2019-08-24T14:15:22Z",
+                        "shippedDate": "2019-08-24T14:15:22Z"
+                      },
+                      "deliverStatus": "UNKNOWN",
+                      "idAccount": 0,
+                      "pickup": {
+                        "id": 0,
+                        "description": "string",
+                        "partnerId": 0,
+                        "marketplaceId": "string",
+                        "receiverName": "string"
+                      },
+                      "metadata": {
+                        "number-of-packages": "1",
+                        "cdZipCode": "string",
+                        "needInvoiceXML": "true"
+                      },
+                      "discountMetadata": [
+                        {
+                          "type": [
+                            "COUPON"
+                          ],
+                          "discountDetails": [
+                            {
+                              "type": "COUPON",
+                              "discountOrderSeller": 10,
+                              "discountOrderMarketplace": 5.9
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "# Cria um pedido com os dados informados\nCria um pedido com os dados informados. Geralmente utilizado por parceiros Ecommerce.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "marketPlaceId",
+                  "marketPlaceNumber",
+                  "marketPlace",
+                  "createdAt",
+                  "transmissionStatus",
+                  "status",
+                  "marketPlaceStatus",
+                  "total",
+                  "buyer",
+                  "items"
+                ],
+                "properties": {
+                  "marketPlaceId": {
+                    "type": "string",
+                    "description": "ID do pedido no marketplace",
+                    "minLength": 0,
+                    "maxLength": 255
+                  },
+                  "marketPlaceNumber": {
+                    "type": "string",
+                    "description": "ID público do pedido no marketplace",
+                    "maxLength": 255
+                  },
+                  "marketPlace": {
+                    "type": "string",
+                    "title": "Marketplaces",
+                    "enum": [
+                      "MERCADO_LIVRE",
+                      "ALIEXPRESS",
+                      "AMAZON_GLOBAL_API",
+                      "ANGELONI",
+                      "ARMAZEM_PARAIBA",
+                      "B2W_NEW_API",
+                      "BABYBIZ",
+                      "BANCO_INTER",
+                      "BANDSHOP",
+                      "BELEZA_NA_WEB_NEW_API",
+                      "BRAVIUM",
+                      "C_A",
+                      "CARREFOUR",
+                      "CASA_VIDEO",
+                      "CASSOL_CENTERLAR",
+                      "CENTAURO_NEW_API",
+                      "CLAROSHOP_MEXICO",
+                      "COMFORTFLEX_NOVA_API",
+                      "COMPRA_CERTA",
+                      "COPPEL",
+                      "CSM",
+                      "DB1_MARKETPLACE",
+                      "DECATHLON",
+                      "DIGIGROW",
+                      "EFACIL",
+                      "ELEKTRA",
+                      "EOS",
+                      "EPOCA",
+                      "ESTANTE_VIRTUAL",
+                      "FALABELLA",
+                      "FARMADELIVERY",
+                      "FASTSHOP_NEW_API",
+                      "FENICIO",
+                      "FOODIES_STORE",
+                      "GFG",
+                      "GRUPO_MATEUS",
+                      "HELP_SELLER",
+                      "HITES",
+                      "HOUSE_OF_GAMERS",
+                      "ICBC_MALL",
+                      "IGA",
+                      "ITAU",
+                      "JUMPSELLER",
+                      "KABUM",
+                      "KOERICH",
+                      "LE_BISCUIT",
+                      "LEROY_MERLIN",
+                      "LIVESHOP",
+                      "LL_LOYALTY",
+                      "LOJA_DO_COOPERADO",
+                      "LOJA_DO_MECANICO",
+                      "LOJAS_COLOMBO",
+                      "LOJAS_IMPERIO",
+                      "LOJAS_LEBES_NEW_API",
+                      "LOJAS_MM",
+                      "LOJAS_QUERO_QUERO",
+                      "MADEIRA_MADEIRA",
+                      "MAGAZINE_LUIZA",
+                      "MAGENTO",
+                      "MAIS_CORREIOS",
+                      "MARCA_SELETA",
+                      "MARTINS_ATACADO",
+                      "MEGATONE",
+                      "MOBLY",
+                      "MULTIVAREJO_GPA",
+                      "NETSHOES",
+                      "NEXTSHOP",
+                      "NUVEMSHOP",
+                      "OLIST_NEW_API",
+                      "PAGUE_MENOS",
+                      "PARIS",
+                      "PHILIPS_STORE",
+                      "PITSTOP",
+                      "PNEUBEST",
+                      "POLISHOP",
+                      "POSTHAUS_NEW_API",
+                      "PRESTASHOP",
+                      "PRIVALIA",
+                      "RAIA_DROGASIL",
+                      "RAMARIM_NOVA_API",
+                      "RENNER",
+                      "RI_HAPPY_NEW_API",
+                      "RIACHUELO",
+                      "RIPLEY",
+                      "SENFF_SHOPPING",
+                      "SHEIN",
+                      "SHOPEE",
+                      "SHOPHUB",
+                      "SHOPIFY",
+                      "SHOPPING_BB",
+                      "SHOPPING_LIVELO",
+                      "SICOOB",
+                      "SICREDI",
+                      "STECK",
+                      "SUBLIMITY",
+                      "TA_TASHOP",
+                      "TENDA_ATACADO",
+                      "THE_HOME_DEPOT",
+                      "TIENDA_CLIC",
+                      "TIKTOK_SHOP",
+                      "TRAY",
+                      "TROCAFONE",
+                      "VALE_BONUS",
+                      "VENTURESHOP",
+                      "VINKLO_BY_FESTALAB",
+                      "VTEX",
+                      "WALMART",
+                      "WEB_CONTINENTAL_V2",
+                      "WEHOUSE",
+                      "WOOCOMMERCE",
+                      "WOOCOMMERCE2",
+                      "YA_PLACE_STORE",
+                      "ZEMA",
+                      "ZOOM"
+                    ],
+                    "description": "Descritivo de qual marketplace o pedido pertence",
+                    "example": "ALIEXPRESS"
+                  },
+                  "accountName": {
+                    "type": "string",
+                    "description": "Identificador da conta do Marketplace",
+                    "maxLength": 255
+                  },
+                  "partnerId": {
+                    "type": "string",
+                    "description": "Código do pedido no parceiro. Uma vez informado, não poderá ser alterado",
+                    "maxLength": 100
+                  },
+                  "idAccount": {
+                    "description": "ID da conta gerado automático pelo ANYMARKET",
+                    "type": "number"
+                  },
+                  "fulfillment": {
+                    "type": "boolean",
+                    "description": "Identifica se o pedido é fulfillment"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Data de criação do pedido",
+                    "format": "date-time"
+                  },
+                  "paymentDate": {
+                    "type": "string",
+                    "description": "Data de pagamento do pedido",
+                    "format": "date-time"
+                  },
+                  "transmissionStatus": {
+                    "type": "string",
+                    "description": "Status da transmissão</br></br>\n\n  **OK**: Pedido sincronizado com sucesso com o Marketplace</br>\n  **ERROR**: Ocorreu erro na sincronização com o Marketplace</br>\n  **WAITING**: Aguardando sincronização com o Marketplace</br>\n",
+                    "enum": [
+                      "OK",
+                      "ERROR",
+                      "WAITING"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Status do pedido</br></br>\n\n  **INVOICED**: Faturado. Mudando para essa situação é necessário informar: número da nota, número de série, data de emissão e chave de acesso</br>\n  **PAID_WAITING_DELIVERY**: Enviado (aguardando entrega). Mudando para essa situação é necessário informar: URL de rastreamento, número de rastreio, nome da transportadora, data de envio</br>\n  **PAID_WAITING_SHIP**: Pago (está aguardando envio)</br>\n  **PENDING**: Pendente (Ainda não foi pago. Existe parâmetro para que o ANYMARKET importe do MarketPlace o pedido que ainda não foi pago)</br>\n",
+                    "enum": [
+                      "PENDING",
+                      "PAID_WAITING_SHIP",
+                      "INVOICED",
+                      "PAID_WAITING_DELIVERY",
+                      "CONCLUDED",
+                      "CANCELED"
+                    ]
+                  },
+                  "marketPlaceStatus": {
+                    "type": "string",
+                    "description": "Situação do pedido no marketplace. Cada marketplace possui situações diferentes. Ex: no mercado livre não existe a situação faturado\n",
+                    "maxLength": 255
+                  },
+                  "marketPlaceStatusComplement": {
+                    "type": "string",
+                    "description": "Informação complementar à situação do pedido no marketplace. Cada marketplace possui situações diferentes. Ex: na Dafiti o pedido pode ser marcado como falha de entrega e a causa pode ser armazenada nesse atributo\n",
+                    "maxLength": 1000
+                  },
+                  "documentIntermediator": {
+                    "type": "string",
+                    "description": "Identificador de intermediador da Transação CNPJ",
+                    "maxLength": 14
+                  },
+                  "intermediateRegistrationId": {
+                    "type": "string",
+                    "description": "Identificador  do cadastro (vendedor ou usuário)  no intermediador",
+                    "maxLength": 60
+                  },
+                  "documentPaymentInstitution": {
+                    "type": "string",
+                    "description": "Identificador de Instituição de pagamento CNPJ",
+                    "maxLength": 14
+                  },
+                  "discount": {
+                    "type": "number",
+                    "description": "Desconto do pedido",
+                    "format": "double"
+                  },
+                  "freight": {
+                    "type": "number",
+                    "description": "Valor de frete",
+                    "format": "double"
+                  },
+                  "sellerFreight": {
+                    "type": "number",
+                    "description": "Custo de Frete do Seller",
+                    "format": "double"
+                  },
+                  "interestValue": {
+                    "type": "number",
+                    "description": "Valor dos juros",
+                    "format": "double"
+                  },
+                  "gross": {
+                    "type": "number",
+                    "description": "Total bruto sem o valor de frete",
+                    "format": "double"
+                  },
+                  "total": {
+                    "type": "number",
+                    "description": "Total do pedido com o valor de frete",
+                    "format": "double"
+                  },
+                  "marketPlaceUrl": {
+                    "type": "string",
+                    "description": "URL do pedido no marketplace",
+                    "format": "uri"
+                  },
+                  "marketPlaceShipmentStatus": {
+                    "type": "string",
+                    "description": "Situação de envio do pedido no marketplace. Cada marketplace possui situações diferentes",
+                    "maxLength": 255
+                  },
+                  "shipping": {
+                    "type": "object",
+                    "required": [
+                      "city",
+                      "state",
+                      "address",
+                      "number",
+                      "neighborhood",
+                      "country",
+                      "street",
+                      "zipCode",
+                      "receiverName"
+                    ],
+                    "properties": {
+                      "city": {
+                        "type": "string",
+                        "description": "Cidade",
+                        "maxLength": 255
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "Estado",
+                        "maxLength": 255
+                      },
+                      "stateNameNormalized": {
+                        "type": "string",
+                        "description": "Nome do Estado padronizado internamente pelo ANYMARKET. Pode ser nulo se o state for nulo ou UNKNOWN para desconhecido.",
+                        "maxLength": 100
+                      },
+                      "address": {
+                        "type": "string",
+                        "description": "Endereço",
+                        "maxLength": 500
+                      },
+                      "number": {
+                        "type": "string",
+                        "description": "Número",
+                        "maxLength": 100
+                      },
+                      "neighborhood": {
+                        "type": "string",
+                        "description": "Bairro",
+                        "maxLength": 255
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "País",
+                        "maxLength": 255
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "Rua",
+                        "maxLength": 255
+                      },
+                      "comment": {
+                        "type": "string",
+                        "description": "Complemento",
+                        "maxLength": 500
+                      },
+                      "reference": {
+                        "type": "string",
+                        "description": "Referência",
+                        "maxLength": 255
+                      },
+                      "zipCode": {
+                        "type": "string",
+                        "description": "CEP",
+                        "maxLength": 255
+                      },
+                      "receiverName": {
+                        "type": "string",
+                        "description": "Nome do remetente para entrega",
+                        "maxLength": 255
+                      },
+                      "promisedShippingTime": {
+                        "type": "string",
+                        "description": "Data acordada para entrega",
+                        "example": "2024-09-17T03:00:00Z"
+                      },
+                      "promisedDispatchTime": {
+                        "type": "string",
+                        "description": "Data prevista de coleta",
+                        "example": "2024-09-17T03:00:00Z"
+                      }
+                    }
+                  },
+                  "billingAddress": {
+                    "type": "object",
+                    "required": [
+                      "city",
+                      "state",
+                      "street",
+                      "number",
+                      "neighborhood",
+                      "zipCode"
+                    ],
+                    "properties": {
+                      "city": {
+                        "type": "string",
+                        "description": "Cidade",
+                        "maxLength": 255
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "Estado",
+                        "maxLength": 255
+                      },
+                      "stateNameNormalized": {
+                        "type": "string",
+                        "description": "Nome do Estado padronizado internamente pelo ANYMARKET. Pode ser nulo se o state for nulo ou UNKNOWN para desconhecido.",
+                        "maxLength": 100
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "País",
+                        "maxLength": 255
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "Rua",
+                        "maxLength": 255
+                      },
+                      "number": {
+                        "type": "string",
+                        "description": "Número",
+                        "maxLength": 100
+                      },
+                      "neighborhood": {
+                        "type": "string",
+                        "description": "Bairro",
+                        "maxLength": 255
+                      },
+                      "comment": {
+                        "type": "string",
+                        "description": "Complemento",
+                        "maxLength": 500
+                      },
+                      "reference": {
+                        "type": "string",
+                        "description": "Referência",
+                        "maxLength": 255
+                      },
+                      "zipCode": {
+                        "type": "string",
+                        "description": "CEP",
+                        "maxLength": 255
+                      }
+                    }
+                  },
+                  "buyer": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "documentType",
+                      "document",
+                      "email",
+                      "phone"
+                    ],
+                    "properties": {
+                      "marketPlaceId": {
+                        "type": "string",
+                        "description": "ID no marketplace. Essa informação pode não existir para algum marketplace ou ecommerce."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Nome do comprador",
+                        "maxLength": 255
+                      },
+                      "documentType": {
+                        "type": "string",
+                        "description": "Tipo do documento. Valores possíveis: CPF, CNPJ, OTHER\n"
+                      },
+                      "document": {
+                        "type": "string",
+                        "description": "Número do documento. Essa informação pode não ser preenchida para algum marketplace ou ecommerce."
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "E-mail do comprador",
+                        "maxLength": 255
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "description": "Data de nascimento do comprador",
+                        "format": "date-time"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "description": "Telefone do comprador",
+                        "maxLength": 30
+                      },
+                      "cellPhone": {
+                        "type": "string",
+                        "description": "Celular do comprador",
+                        "maxLength": 30
+                      },
+                      "documentNumberNormalized": {
+                        "type": "string",
+                        "description": "Número do documento normalizado pelo ANYMARKET. Somente números. Caso o document não seja um CPF ou CNPJ este campo irá retornar nulo."
+                      },
+                      "companyStateTaxId": {
+                        "type": "string",
+                        "description": "Inscrição Estadual do comprador."
+                      }
+                    },
+                    "description": ""
+                  },
+                  "payments": {
+                    "description": "Dados referente a pagamento (Será enviado pelo Marketplace)",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "method": {
+                          "type": "string",
+                          "description": "Método de pagamento"
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "Status do pagamento enviado pelo marketplace"
+                        },
+                        "value": {
+                          "type": "number",
+                          "description": "Valor do pagamento (Em caso de cobrança de juros, o valor é adicionado ao total da compra. Ex: Mercado livre)\n",
+                          "format": "double"
+                        },
+                        "installments": {
+                          "type": "number",
+                          "description": "Número de parcelas do meio do pagamento. Deve-se dividir o número de parcelas pelo valor para encontrar o valor de cada parcela.",
+                          "format": "int64"
+                        },
+                        "marketplaceId": {
+                          "type": "string",
+                          "description": "ID do pagamento enviado pelo marketplace. Alguns marketplaces não disponibilizam o id, podendo o valor estar nulo ou com um valor fixo \"1\" dependendo da regra. (Exemplo- Cnova sempre tem apenas um pagamento para a compra, então o id do pagamento pode ser sempre \"1\")"
+                        },
+                        "gatewayFee": {
+                          "type": "number",
+                          "description": "Taxa referente ao gateway de pagamento (Ex: MercadoPago).\n",
+                          "format": "double"
+                        },
+                        "marketplaceFee": {
+                          "type": "number",
+                          "description": "Taxa referente ao Marketplace.\n",
+                          "format": "double"
+                        },
+                        "paymentMethodNormalized": {
+                          "type": "string",
+                          "description": "Método de pagamento padronizado internamente pelo ANYMARKET. Caso for um valor desconhecido internamente irá retornar UNKNOWN. Se o method for nulo, este campo também será nulo."
+                        },
+                        "paymentDetailNormalized": {
+                          "type": "string",
+                          "description": "Detalhamento do método de pagamento padronizado internamente pelo ANYMARKET. Caso for um valor desconhecido internamente irá retornar UNKNOWN. Se o method for nulo, este campo também será nulo."
+                        },
+                        "documentPaymentInstitution": {
+                          "type": "string",
+                          "description": "Identificação através do CNPJ do responsavel pela transação de pagamento com cartão. tag card/CNPJ."
+                        },
+                        "cardOperator": {
+                          "type": "string",
+                          "description": "Código da bandeira da operadora de cartão de crédito e/ou débito. Conforme  publicada no Portal Nacional da Nota Fiscal Eletrônica. tag card/tBand"
+                        },
+                        "orderAuthorizationCardCode": {
+                          "type": "string",
+                          "description": "Número de autorização da operação cartão de crédito e/ou débito. tag card/cAuth"
+                        }
+                      },
+                      "required": [
+                        "method",
+                        "value",
+                        "installments"
+                      ]
+                    }
+                  },
+                  "items": {
+                    "description": "Dados referente aos produtos comprados",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "sku",
+                        "product",
+                        "amount",
+                        "unit",
+                        "gross",
+                        "total"
+                      ],
+                      "properties": {
+                        "sku": {
+                          "description": "Informações da SKU",
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "description": "Titulo da SKU no MarketPlace"
+                            },
+                            "partnerId": {
+                              "type": "string",
+                              "description": "Código do SKU no parceiro"
+                            }
+                          }
+                        },
+                        "product": {
+                          "description": "Informações do produto",
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "description": "Titulo da SKU no MarketPlace"
+                            }
+                          }
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "description": "Quantidade do item"
+                        },
+                        "unit": {
+                          "type": "number",
+                          "description": "Valor unitário",
+                          "format": "double"
+                        },
+                        "discount": {
+                          "type": "number",
+                          "description": "Desconto do item",
+                          "format": "double"
+                        },
+                        "discountItemMetadata": {
+                          "type": "array",
+                          "description": "Indica a origem do desconto aplicado ao item (seller ou marketplace), quando informada pelo canal de venda. Cada campo de origem é omitido quando não informado.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "**COUPON**: indica que o item possui desconto do tipo Cupom no Mercado Livre.<br/>\n**FREE_ITEM**: indica que o item possui 100% de desconto e é do tipo Amostra grátis.",
+                                "enum": [
+                                  "FREE_ITEM",
+                                  "COUPON"
+                                ]
+                              },
+                              "discountProductSeller": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "Valor do desconto do item concedido pelo seller. Omitido quando não informado pelo canal."
+                              },
+                              "discountProductMarketplace": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "Valor do desconto do item concedido pelo marketplace. Omitido quando não informado pelo canal."
+                              }
+                            }
+                          }
+                        },
+                        "gross": {
+                          "type": "number",
+                          "description": "Valor bruto sem desconto",
+                          "format": "double"
+                        },
+                        "total": {
+                          "type": "number",
+                          "description": "Total do item com desconto",
+                          "format": "double"
+                        },
+                        "marketPlaceId": {
+                          "type": "string",
+                          "description": "ID do item no marketplace / plataforma de e-commerce (Caso não informado, será o mesmo do sku)"
+                        },
+                        "shippings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "shippingtype"
+                            ],
+                            "properties": {
+                              "shippingtype": {
+                                "type": "string",
+                                "description": "Forma de envio selecionado pelo cliente"
+                              },
+                              "shippingCarrierNormalized": {
+                                "type": "string",
+                                "description": "Nome da transportadora padronizado internamente pelo ANYMARKET. Caso for um valor desconhecido internamente irá retornar UNKNOWN. Se o shippingType for nulo, este campo também será nulo."
+                              },
+                              "shippingCarrierTypeNormalized": {
+                                "type": "string",
+                                "description": "Serviço da transportadora padronizado internamente pelo ANYMARKET. Caso for um valor desconhecido internamente irá retornar UNKNOWN. Se o shippingType for nulo, este campo também será nulo."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "deliverStatus": {
+                    "type": "string",
+                    "description": "Status do envio:<br>\n  **UNKNOWN**: Envio pendente<br>\n  **SHIPPED**: Pedido Enviado<br>\n  **CONCLUDED**: Pedido entregue<br>\n",
+                    "enum": [
+                      "UNKNOWN",
+                      "SHIPPED",
+                      "CONCLUDED"
+                    ]
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "description": "Campos adicionais do pedido. Onde o Map possui uma key com no máximo 255 caracteres e o valor com no máximo 4000 caracteres",
+                    "properties": {
+                      "discountSummarized": {
+                        "type": "number",
+                        "format": "double",
+                        "description": "Soma do desconto do pedido (discount) com a soma dos descontos de todos os itens (items[].discount). Retorna 0 quando não há descontos.",
+                        "example": 35.9
+                      },
+                      "number-of-packages": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Quantidade de volumes para a impressão de etiqueta"
+                      },
+                      "cdZipCode": {
+                        "type": "string",
+                        "description": "CEP do Centro de Distribuição referente ao CNPJ de faturamento do pedido"
+                      },
+                      "needInvoiceXML": {
+                        "type": "string",
+                        "description": "Caso o marketplace exija a integração do arquivo XML com os dados de faturamento",
+                        "example": "true"
+                      },
+                      "mshops": {
+                        "type": "string",
+                        "description": "Caso o pedido tenha sido feito pelo canal de vendas Mercado Shops",
+                        "example": "true, false"
+                      },
+                      "Envvias": {
+                        "type": "string"
+                      },
+                      "VIAtotalDiscountAmount": {
+                        "type": "string"
+                      },
+                      "B2WshippingType": {
+                        "type": "string"
+                      },
+                      "logistic_type": {
+                        "type": "string",
+                        "description": "Tipo logistico do Mercado Livre",
+                        "example": "drop_off, cross_docking, xd_drop_off, self_service"
+                      },
+                      "printTag": {
+                        "type": "string"
+                      },
+                      "canceldetail_motivation": {
+                        "type": "string",
+                        "description": "Descrição do que foi o motivador do cancelamento, em alguns casos, pode ser aspectos fiscais, de fraude, entrega, entre outros"
+                      },
+                      "canceldetail_code": {
+                        "type": "string",
+                        "description": "Código identificador do respectiva cancelamento ou, em alguns causos, o código da causa que provocou o cancelamento"
+                      },
+                      "canceldetail_description": {
+                        "type": "string",
+                        "description": "Descrição do cancelamento ou da causa que o originou"
+                      },
+                      "canceldetail_requested_by": {
+                        "type": "string",
+                        "description": "Origem do solicitante do cancelamento, em alguns casos pode ser solicitado pelo marketplace, pelo seller ou até pelo comprador"
+                      }
+                    },
+                    "example": {
+                      "discountSummarized": 35.9,
+                      "number-of-packages": 1,
+                      "cdZipCode": "string",
+                      "needInvoiceXML": true,
+                      "mshops": true,
+                      "Envvias": "string",
+                      "VIAtotalDiscountAmount": "string",
+                      "B2WshippingType": "string",
+                      "logistic_type": "drop_off, cross_docking, xd_drop_off, self_service",
+                      "printTag": true,
+                      "canceldetail_motivation": "string",
+                      "canceldetail_code": "string",
+                      "canceldetail_description": "string",
+                      "canceldetail_requested_by": "string"
+                    }
+                  },
+                  "discountMetadata": {
+                    "type": "array",
+                    "description": "Indica o valor do desconto quando informado pelo canal de venda.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "array",
+                          "description": "**COUPON**: indica que a venda possui desconto do tipo Cupom, quando informado pelo canal de venda.<br/>\n**FREE_ITEM**: indica que a venda possui 100% de desconto e é do tipo Amostra grátis, quando informado pelo canal de venda.",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "FREE_ITEM",
+                              "COUPON"
+                            ]
+                          }
+                        },
+                        "discountDetails": {
+                          "type": "array",
+                          "description": "Detalha a origem do desconto do pedido, quando informada pelo canal de venda. Campo e subcampos omitidos (não retornam como `null`) quando não informados. Aplica-se apenas a pedidos importados após a entrada em produção desta funcionalidade — pedidos já existentes na base não são reprocessados nem atualizados retroativamente.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "**COUPON**: indica que a venda possui desconto do tipo Cupom, quando informado pelo canal de venda.<br/>\n**FREE_ITEM**: indica que a venda possui 100% de desconto e é do tipo Amostra grátis, quando informado pelo canal de venda.",
+                                "enum": [
+                                  "FREE_ITEM",
+                                  "COUPON"
+                                ]
+                              },
+                              "discountOrderSeller": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "Valor do desconto do pedido custeado pelo vendedor. Omitido quando não informado."
+                              },
+                              "discountOrderMarketplace": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "Valor do desconto do pedido custeado pelo marketplace. Omitido quando não informado."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "marketPlaceId": "string",
+                  "marketPlaceNumber": "string",
+                  "marketPlace": "B2W",
+                  "accountName": "string",
+                  "partnerId": "string",
+                  "idAccount": 0,
+                  "fulfillment": true,
+                  "createdAt": "2019-08-24T14:15:22Z",
+                  "paymentDate": "2019-08-24T14:15:22Z",
+                  "transmissionStatus": "OK",
+                  "status": "PENDING",
+                  "marketPlaceStatus": "string",
+                  "marketPlaceStatusComplement": "string",
+                  "documentIntermediator": "string",
+                  "intermediateRegistrationId": "string",
+                  "documentPaymentInstitution": "string",
+                  "discount": 0,
+                  "freight": 0,
+                  "interestValue": 0,
+                  "gross": 0,
+                  "total": 0,
+                  "marketPlaceUrl": "http://example.com",
+                  "marketPlaceShipmentStatus": "string",
+                  "shipping": {
+                    "city": "string",
+                    "state": "string",
+                    "stateNameNormalized": "string",
+                    "address": "string",
+                    "number": "string",
+                    "neighborhood": "string",
+                    "country": "string",
+                    "street": "string",
+                    "comment": "string",
+                    "reference": "string",
+                    "zipCode": "string",
+                    "receiverName": "string",
+                    "promisedShippingTime": "2019-08-24T14:15:22Z"
+                  },
+                  "billingAddress": {
+                    "city": "string",
+                    "state": "string",
+                    "stateNameNormalized": "string",
+                    "country": "string",
+                    "street": "string",
+                    "number": "string",
+                    "neighborhood": "string",
+                    "comment": "string",
+                    "reference": "string",
+                    "zipCode": "string"
+                  },
+                  "anymarketAddress": {
+                    "state": "string",
+                    "city": "string",
+                    "zipCode": "string",
+                    "neighborhood": "string",
+                    "address": "string",
+                    "street": "string",
+                    "number": "string",
+                    "comment": "string",
+                    "reference": "string",
+                    "receiverName": "string",
+                    "promisedShippingTime": "string"
+                  },
+                  "buyer": {
+                    "marketPlaceId": "string",
+                    "name": "string",
+                    "documentType": "string",
+                    "document": "string",
+                    "email": "string",
+                    "phone": "string",
+                    "cellPhone": "string",
+                    "documentNumberNormalized": "string"
+                  },
+                  "payments": [
+                    {
+                      "method": "string",
+                      "status": "string",
+                      "value": 0,
+                      "installments": 0,
+                      "marketplaceId": "string",
+                      "gatewayFee": 0,
+                      "marketplaceFee": 0,
+                      "paymentMethodNormalized": "string",
+                      "paymentDetailNormalized": "string",
+                      "documentPaymentInstitution": "string",
+                      "cardOperator": "string",
+                      "orderAuthorizationCardCode": "string"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "sku": {
+                        "title": "string",
+                        "partnerId": "string"
+                      },
+                      "product": {
+                        "title": "string"
+                      },
+                      "amount": 0,
+                      "unit": 0,
+                      "discount": 0,
+                      "discountItemMetadata": [
+                        {
+                          "type": "COUPON",
+                          "discountProductSeller": 5
+                        }
+                      ],
+                      "gross": 0,
+                      "total": 0,
+                      "marketPlaceId": "string",
+                      "shippings": [
+                        {
+                          "shippingtype": "string",
+                          "shippingCarrierNormalized": "string",
+                          "shippingCarrierTypeNormalized": "string"
+                        }
+                      ]
+                    },
+                    {
+                      "sku": {
+                        "title": "string",
+                        "partnerId": "string"
+                      },
+                      "product": {
+                        "title": "string"
+                      },
+                      "amount": 0,
+                      "unit": 0,
+                      "discount": 0,
+                      "discountItemMetadata": [
+                        {
+                          "type": "FREE_ITEM",
+                          "discountProductMarketplace": 8
+                        }
+                      ],
+                      "gross": 0,
+                      "total": 0,
+                      "marketPlaceId": "string"
+                    }
+                  ],
+                  "deliverStatus": "UNKNOWN",
+                  "metadata": {
+                    "number-of-packages": "1",
+                    "cdZipCode": "string",
+                    "needInvoiceXML": "true"
+                  },
+                  "discountMetadata": [
+                    {
+                      "type": [
+                        "COUPON"
+                      ],
+                      "discountDetails": [
+                        {
+                          "type": "COUPON",
+                          "discountOrderSeller": 10,
+                          "discountOrderMarketplace": 5.9
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "id": 0,
+                    "accountName": "string",
+                    "marketPlaceId": "string",
+                    "marketPlaceNumber": "string",
+                    "partnerId": "string",
+                    "marketPlace": "string",
+                    "subChannel": "string",
+                    "subChannelNormalized": "string",
+                    "createdAt": "2022-02-24T14:15:22Z",
+                    "paymentDate": "2022-02-24T14:15:22Z",
+                    "cancelDate": "2022-02-24T14:15:22Z",
+                    "shippingOptionId": "string",
+                    "transmissionStatus": "string",
+                    "status": "PENDING",
+                    "marketPlaceStatus": "string",
+                    "marketPlaceStatusComplement": "string",
+                    "documentIntermediator": "string",
+                    "intermediateRegistrationId": "string",
+                    "documentPaymentInstitution": "string",
+                    "fulfillment": true,
+                    "discount": 0,
+                    "freight": 0,
+                    "interestValue": 0,
+                    "gross": 0,
+                    "total": 0,
+                    "marketPlaceUrl": "string",
+                    "marketPlaceShipmentStatus": "string",
+                    "invoice": {
+                      "accessKey": "string",
+                      "series": "string",
+                      "number": "string",
+                      "date": "2022-02-24T14:15:22Z",
+                      "cfop": "string",
+                      "companyStateTaxId": "string",
+                      "linkNfe": "string",
+                      "invoiceLink": "string",
+                      "extraDescription": "string"
+                    },
+                    "shipping": {
+                      "city": "string",
+                      "state": "string",
+                      "stateNameNormalized": "string",
+                      "country": "string",
+                      "countryAcronymNormalized": "string",
+                      "countryNameNormalized": "string",
+                      "address": "string",
+                      "number": "string",
+                      "neighborhood": "string",
+                      "street": "string",
+                      "comment": "string",
+                      "reference": "string",
+                      "zipCode": "string",
+                      "receiverName": "string",
+                      "promisedShippingTime": "2019-08-24T14:15:22Z"
+                    },
+                    "billingAddress": {
+                      "city": "string",
+                      "state": "string",
+                      "stateNameNormalized": "string",
+                      "country": "string",
+                      "countryAcronymNormalized": "string",
+                      "countryNameNormalized": "string",
+                      "street": "string",
+                      "number": "string",
+                      "neighborhood": "string",
+                      "comment": "string",
+                      "reference": "string",
+                      "zipCode": "string"
+                    },
+                    "anymarketAddress": {
+                      "state": "string",
+                      "city": "string",
+                      "zipCode": "string",
+                      "neighborhood": "string",
+                      "address": "string",
+                      "street": "string",
+                      "number": "string",
+                      "comment": "string",
+                      "reference": "string",
+                      "receiverName": "string",
+                      "promisedShippingTime": "string"
+                    },
+                    "buyer": {
+                      "marketPlaceId": "string",
+                      "name": "string",
+                      "email": "string",
+                      "document": "string",
+                      "documentType": "string",
+                      "phone": "string",
+                      "cellPhone": "string",
+                      "documentNumberNormalized": "string"
+                    },
+                    "payments": [
+                      {
+                        "method": "string",
+                        "status": "string",
+                        "value": 0,
+                        "installments": 0,
+                        "marketplaceId": "string",
+                        "gatewayFee": 0,
+                        "marketplaceFee": 0,
+                        "paymentMethodNormalized": "string",
+                        "paymentDetailNormalized": "string"
+                      }
+                    ],
+                    "items": [
+                      {
+                        "product": {
+                          "id": 0,
+                          "title": "string"
+                        },
+                        "sku": {
+                          "id": 0,
+                          "title": "string",
+                          "partnerId": "string",
+                          "externalId": "string",
+                          "ean": "string"
+                        },
+                        "amount": 0,
+                        "unit": 0,
+                        "gross": 0,
+                        "total": 0,
+                        "discount": 0,
+                        "discountItemMetadata": [
+                          {
+                            "type": "COUPON",
+                            "discountProductSeller": 5
+                          }
+                        ],
+                        "shippings": [
+                          {
+                            "id": 0,
+                            "shippingtype": "string",
+                            "shippingCarrierNormalized": "string",
+                            "shippingCarrierTypeNormalized": "string"
+                          }
+                        ],
+                        "stocks": [
+                          {
+                            "stockLocalId": 0,
+                            "stockName": "string",
+                            "amount": 0
+                          }
+                        ],
+                        "marketPlaceId": "string",
+                        "orderItemId": "string",
+                        "idInMarketPlace": "string",
+                        "officialStoreId": "string",
+                        "officialStoreName": "string",
+                        "listingType": "string",
+                        "freeShipping": true
+                      },
+                      {
+                        "product": {
+                          "id": 1,
+                          "title": "string"
+                        },
+                        "sku": {
+                          "id": 1,
+                          "title": "string",
+                          "partnerId": "string",
+                          "externalId": "string",
+                          "ean": "string"
+                        },
+                        "amount": 0,
+                        "unit": 0,
+                        "gross": 0,
+                        "total": 0,
+                        "discount": 0,
+                        "discountItemMetadata": [
+                          {
+                            "type": "FREE_ITEM",
+                            "discountProductMarketplace": 8
+                          }
+                        ],
+                        "marketPlaceId": "string",
+                        "orderItemId": "string",
+                        "idInMarketPlace": "string",
+                        "officialStoreId": "string",
+                        "officialStoreName": "string",
+                        "listingType": "string",
+                        "freeShipping": true
+                      }
+                    ],
+                    "tracking": {
+                      "url": "string",
+                      "number": "string",
+                      "carrier": "string",
+                      "carrierDocument": "string",
+                      "date": "2019-08-24T14:15:22Z",
+                      "deliveredDate": "2019-08-24T14:15:22Z",
+                      "estimateDate": "2019-08-24T14:15:22Z",
+                      "shippedDate": "2019-08-24T14:15:22Z"
+                    },
+                    "deliverStatus": "UNKNOWN",
+                    "idAccount": 0,
+                    "pickup": {
+                      "id": 0,
+                      "description": "string",
+                      "partnerId": 0,
+                      "marketplaceId": "string",
+                      "receiverName": "string"
+                    },
+                    "metadata": {
+                      "number-of-packages": "1",
+                      "cdZipCode": "string",
+                      "needInvoiceXML": "true"
+                    },
+                    "discountMetadata": [
+                      {
+                        "type": [
+                          "COUPON"
+                        ],
+                        "discountDetails": [
+                          {
+                            "type": "COUPON",
+                            "discountOrderSeller": 10,
+                            "discountOrderMarketplace": 5.9
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "Pedido"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

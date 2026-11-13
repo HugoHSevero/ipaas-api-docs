@@ -1,0 +1,221 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anymarket - Pedidos",
+    "version": "2.0",
+    "description": "",
+    "contact": {
+      "name": "ANYMARKET Developers",
+      "url": "https://suporte.anymarket.com.br/"
+    },
+    "x-logo": {
+      "url": "https://anymarket.com.br/wp-content/uploads/2018/07/icon-anymarket-300x300.png"
+    },
+    "x-preferred": true,
+    "x-providerName": "V2 API"
+  },
+  "servers": [
+    {
+      "url": "https://sandbox-api.anymarket.com.br/v2",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.anymarket.com.br/v2",
+      "description": "Produção"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cotar Frete",
+      "description": "Gerenciamento de frete"
+    },
+    {
+      "name": "Emissão de Etiquetas",
+      "description": "Gerenciamento de emissão de etiquetas"
+    },
+    {
+      "name": "Feed pedido",
+      "description": "Gerenciamento de feed de pedidos"
+    },
+    {
+      "name": "Mensageria",
+      "description": "Gerenciamento de mensagens nos pedidos"
+    },
+    {
+      "name": "Pedido",
+      "description": "Gerenciamento de pedidos"
+    },
+    {
+      "name": "Fulfillment",
+      "description": "Gerenciamento de pedidos fulfillment"
+    },
+    {
+      "name": "Devolução",
+      "description": "Gerenciamento de devolução"
+    },
+    {
+      "name": "Perguntas",
+      "description": "Gerenciamento de perguntas"
+    },
+    {
+      "name": "Documentos Fiscais",
+      "description": "Gerenciamento de documentos fiscais"
+    }
+  ],
+  "paths": {
+    "/questions/{id}/answers": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID da pergunta"
+        }
+      ],
+      "get": {
+        "summary": "/questions/{id}/answers",
+        "tags": [
+          "Perguntas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "links": {
+                      "type": "array",
+                      "description": "Referências de paginação",
+                      "uniqueItems": false,
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "items": {
+                        "title": "PageLinks",
+                        "type": "object",
+                        "properties": {
+                          "rel": {
+                            "type": "string",
+                            "description": "Relacionamento do hyperlink",
+                            "example": "next"
+                          },
+                          "href": {
+                            "type": "string",
+                            "description": "URL de definição do recurso",
+                            "example": "https://.../v2/{rota}?limit=5&offset=5"
+                          }
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "array",
+                      "description": "Lista de pedidos",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID da resposta gerado pelo ANYMARKET",
+                            "format": "int64",
+                            "minimum": 0
+                          },
+                          "answer": {
+                            "type": "string",
+                            "description": "Resposta",
+                            "maxLength": 2000
+                          }
+                        },
+                        "required": [
+                          "answer"
+                        ]
+                      }
+                    },
+                    "page": {
+                      "title": "PageMetadata",
+                      "type": "object",
+                      "properties": {
+                        "size": {
+                          "type": "integer",
+                          "description": "Tamanho da página",
+                          "format": "int64",
+                          "readOnly": true
+                        },
+                        "totalElements": {
+                          "type": "integer",
+                          "description": "Total de elementos existentes",
+                          "format": "int64",
+                          "readOnly": true
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "description": "Total de páginas disponíveis",
+                          "format": "int64",
+                          "readOnly": true
+                        },
+                        "number": {
+                          "type": "integer",
+                          "description": "Número da página atual",
+                          "format": "int64",
+                          "readOnly": true
+                        }
+                      }
+                    }
+                  },
+                  "title": "Page_Order",
+                  "description": ""
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "title": "404 - Not Found",
+                  "example": {
+                    "code": "404",
+                    "message": "Recurso com o id 'xxx' não encontrado."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-questions-id-answers",
+        "description": "# Consulta as respostas de uma pergunta\nConsulta as respostas de uma pergunta. Atualmente apenas para o MarketPlace MercadoLivre."
+      }
+    }
+  },
+  "security": [
+    {
+      "gumgaToken": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "gumgaToken": {
+        "name": "gumgaToken",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Token de segurança fornecido pela Anymarket"
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@
       "name": "Produção",
       "environment": "Produção",
       "authModel": "TOKEN",
-      "token": "<token de private app da HubSpot, cadastrar na interface>"
+      "token": "<service key da HubSpot, cadastrar na interface>"
     }
   ],
   "services": [

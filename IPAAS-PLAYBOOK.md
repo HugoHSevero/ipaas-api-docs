@@ -258,6 +258,8 @@ Ou seja: **não use o `testAccount` como critério de validação da credencial.
 
 Ícones vistos em uso: `product`, `light-bulb`, `adb`. A lista completa de valores válidos não foi levantada.
 
+**A listagem de serviços corta em 100 sem paginação.** `GET /ipaas/api/v3/application-services?applicationId={id}` sem `page`/`pageSize` devolve no máximo **100** serviços, sem aviso. Verificado no HubSpot (105 serviços): a chamada simples trouxe 100 e escondeu 5; com `&page=1&pageSize=500` vieram os 105. Em app com muitos serviços, passe sempre a paginação, senão uma conferência parece ter perdido serviços que existem.
+
 Para remover um serviço: `DELETE /ipaas/api/v3/application-services/{id}` → **204** com corpo vazio — verificado, inclusive em serviço que já tinha recursos importados. Útil para limpar serviços de teste; a bissecção desta sessão criou 56 deles e todos saíram por aqui.
 
 ### 2.5 Importar o Swagger — verificado
@@ -423,6 +425,23 @@ Verificado por bissecção com uma spec de uma operação por arquivo: na spec d
 **A validação tem que rodar na spec dereferenciada, não na fonte.** Na fonte os schemas estão atrás de `$ref` e uma checagem estrutural não os alcança — o array sem `items` do WhatsApp estava dentro de `#/components/schemas/Message` e passava batido.
 
 **`discriminator` sobrevive à dereferência e vira referência pendurada.** O `mapping` aponta para `#/components/schemas/...`, que o `dereference.py` descarta do arquivo. Como os valores são strings e não chaves `$ref`, a checagem de `$ref` restante não os pega. O `oneOf` ao lado já tem os membros expandidos, então remover o `discriminator` não perde campo nenhum.
+
+**Grupos circulares de schemas explodem a dereferência.** Quando vários schemas se referenciam em círculo (A → B → C → A), a dereferência expande cada caminho possível pelo grupo. Com um schema que contém a si mesmo isso é barato e o `dereference.py` trunca no ponto do ciclo. Com grupos grandes, o custo cresce de forma combinatória. Verificado no HubSpot:
+
+| Spec | Grupo circular | Sem tratamento |
+|---|---|---|
+| Media Bridge | 86 schemas (linguagem de expressões) | profundidade estoura; cortando só as referências internas, o arquivo ainda dá 29,7 MB |
+| Pipeline Governance e mais duas | 7 schemas de filtros (`PublicAndFilterBranch`...) | a geração passa de 5 minutos sem terminar |
+
+Solução usada (`hubspot/gerar.py`): achar os grupos (componentes fortemente conexos do grafo de `$ref`) e, nos grupos com mais de 3 schemas, trocar **toda** referência a um membro por um objeto genérico. A Media Bridge caiu para 1 MB. Perde-se o detalhe campo a campo nesses pontos; o corpo real pode ir em `configurations.inBody`.
+
+**`$ref` sem destino na spec oficial derruba o `dereference.py`.** A spec do HubDB referencia `#/components/schemas/HubDbTableRowV3Wrapper`, que não existe no arquivo. O script aborta com `KeyError`. Não invente o schema: troque o ponto por um objeto genérico e registre no README do app.
+
+**`$ref` circular simples agora é truncado, não abortado.** O `dereference.py` levantava `RecursionError` quando um schema contém a si mesmo (`ArrayFieldSchema`, `LayoutSection`, `PublicListFolder` no HubSpot). Passou a emitir um objeto genérico no ponto do ciclo e listar o caso no console.
+
+**Spec de 3,5 MB importa.** As maiores do HubSpot (páginas e posts do CMS, 3,3 a 3,5 MB) importaram completas com polling de até 2 minutos. Até então a maior importada tinha menos de 1 MB.
+
+**`summary` vazio na spec oficial.** O nome do recurso vem do `summary`; o HubSpot deixa `POST /crm/objects/2026-09/{objectType}/search` sem ele. Preencha com o `operationId` antes de importar.
 
 **OpenAPI 3.1 continua não verificado.** A spec da Meta é 3.1.0 e foi **rebaixada para 3.0.3** antes de importar, com sucesso. Como o rebaixamento veio primeiro, não se sabe se o importador aceitaria 3.1 direto. Rebaixar é barato quando a spec não usa recursos de 3.1 de fato (a da Meta não usava: nenhum `type` como lista, nenhum `$defs`, e usava até `nullable`, que é de 3.0).
 
@@ -745,6 +764,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Trello | `API_KEY` (query `key` + `token`) | 151 em 5 serviços | 151 recursos importados; exigiu injetar `tags` (a spec oficial não tem nenhuma) e remover `securitySchemes` em query, que quebrava o importador; conta com **duas** chaves em query criada; diagrama com 6 steps em 4 serviços executado `DONE`, criando cartão real e encadeando `{{{id4.id}}}` |
 | Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
 | WhatsApp | `TOKEN` (Bearer) | 100 em 6 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 100; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 6 domínios; 100 recursos importados e conferidos campo a campo. Diagrama com 5 steps executado `DONE` em 11,4s, com os payloads reais de cada serviço. A entrega **passou a funcionar** depois que um número próprio brasileiro verificado (`VERIFIED`/`LIVE`) substituiu o número de teste americano e a WABA ficou `account_review_status: APPROVED`: template (primeiro contato) e texto livre (janela de 24h aberta) chegaram no aparelho, tanto por chamada direta quanto pelo diagrama. Antes, com o número de teste, os envios recebiam `accepted` e **não entregavam** (erro `130497`, cross-country para o Brasil em conta sem verificação de negócio, só visível no webhook de status). Trocar de número **não** exigiu recriar ambiente/conta nem reimportar: só mudar `phone_number_id`/`WABA-ID` no `inPath` dos steps (ver `whatsapp/CADASTRO-NUMERO.md`). Três armadilhas novas achadas: **import assíncrono** (200 não significa concluído), **`array` sem `items` no `requestBody`** zerando a spec em silêncio, e **`PUT` de conta sem `active: true`** desativando a credencial. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real |
+| HubSpot | `TOKEN` (Bearer, **service key**) | 1.187 em 105 serviços | Spec oficial (`HubSpot/HubSpot-public-api-spec-collection`, versão por data `2026-09`), recortada por `hubspot/gerar.py` a partir de `hubspot/servicos.json`, sem operação repetida entre serviços. `securitySchemes` (`oauth2`, `apiKey` em query e header) trocados por um `http bearer`, aceito pelo importador. 105 serviços e 1.187 recursos importados num app só, conferidos: 0 resposta como `response` string. Diagrama com 3 steps (listar proprietários, criar contato via `inBody`, ler contato encadeando `{{{id2.id}}}`) executado `DONE` em 8,2s. Armadilhas novas: grupos circulares de schemas que explodem a dereferência, `$ref` sem destino na fonte, listagem de serviços cortada em 100 sem paginação. Private apps legados não podem mais ser criados; a credencial é a service key |
 
 ---
 
@@ -914,6 +934,26 @@ Para gerar o certo, o usuário do sistema precisa ter o **app** atribuído como 
 A versão da Graph API está na **URL do ambiente**, não em parâmetro, porque os paths da spec tiveram o `/{Version}` removido. Trocar de versão exige regerar as specs, não reconfigurar o ambiente.
 
 A serviço da rastreabilidade: a bissecção que achou a armadilha do `array` sem `items` (seção 4) criou 56 serviços `ZZ ...` neste app, todos removidos depois com `DELETE /v3/application-services/{id}`.
+
+### HubSpot — `TOKEN` (Bearer, service key)
+
+Um app só, com o domínio no nome de cada serviço (`CRM - Contatos`, `CMS - Posts do blog`). Detalhes do recorte e da geração em [`hubspot/README.md`](./hubspot/README.md).
+
+| Item | Id |
+|---|---|
+| App (`componentId`) | `8ecae12e-fd4f-48a3-a0b7-277eeb977f54` |
+| Ambiente `Produção` (`https://api.hubapi.com`) | `b3d56294-56a9-409d-b336-40d5ca03b701` |
+| Conta `Produção` (service key) | `174d74b0-5d2c-4610-9fa9-5a4dc747d1da` |
+| Serviço `CRM - Proprietários` (teste do import) | `c80c6061-17c6-43e4-9ed7-17fa55ad3513` |
+| Serviço `CRM - Contatos` | `09693b52-943c-44dd-95e6-40c0d0f08933` |
+| Demais 103 serviços | listar com `GET /v3/application-services?applicationId=...&page=1&pageSize=500` |
+| Diagrama `Valida HubSpot` (`integrationId`) | `a9d26ba7-19c9-4579-9583-83145008f918` |
+
+**A credencial é service key, não private app.** A HubSpot recomenda service keys para integração de sistema a sistema numa conta (beta público desde fevereiro de 2026), e a criação de private apps legados foi desligada em setembro/outubro de 2026 (fontes de terceiros; não confirmado na documentação oficial). A service key vai como Bearer e encaixa no modelo `TOKEN`. Ela **só serve para REST**: operações que dependem de app de desenvolvedor (`{appId}` no path, como Media Bridge, webhooks, extensões de CRM) não funcionam com ela.
+
+**O header `Authorization` vazio do recurso não atrapalha.** O `http bearer` da spec vira um campo `Authorization` em cada recurso; deixado vazio no step, a conta injeta o token normalmente. Verificado na execução `DONE`.
+
+A chave usada é de uma conta HubSpot gratuita de teste, com escopos mínimos (`crm.objects.owners.read`, `crm.objects.contacts.read`, `crm.objects.contacts.write`), e **deve ser rotacionada**. A execução criou o contato `265234707503` (`ipaas-teste-1795549572011@example.com`); reexecutar cria um novo a cada vez.
 
 ---
 

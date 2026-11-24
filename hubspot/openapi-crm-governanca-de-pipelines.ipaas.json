@@ -1,0 +1,2610 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - CRM - Governança de pipelines",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    },
+    {
+      "name": "Advanced"
+    }
+  ],
+  "paths": {
+    "/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve rules",
+        "description": "Retrieve the rules associated with a specific pipeline in your HubSpot account. This endpoint allows you to access governance validation rules and approval stages for the specified pipeline. It is useful for understanding the constraints and approval processes applied to the pipeline.",
+        "operationId": "get-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the pipeline rules are being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline whose rules are being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "governanceValidationRules",
+                    "id",
+                    "objectTypeId",
+                    "pipelineId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "approvalStage": {
+                      "required": [
+                        "approvalMode",
+                        "approverUserIds",
+                        "pipelineStageId"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "approvalComment": {
+                          "type": "string",
+                          "description": "A string that allows for an optional comment or note regarding the approval process.",
+                          "example": null
+                        },
+                        "approvalMode": {
+                          "type": "string",
+                          "description": "Specifies the mode of approval required. It can be either 'ALL', meaning all approvers must approve, or 'ANY', meaning any one approver can approve. It is a string.",
+                          "example": null,
+                          "enum": [
+                            "ALL",
+                            "ANY"
+                          ]
+                        },
+                        "approverUserIds": {
+                          "type": "array",
+                          "description": "An array of user IDs representing the users who are designated as approvers for this stage. Each user ID is a string.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        },
+                        "conditionalApprovalFilterBranch": {
+                          "description": "Defines the conditions under which the approval is required. It can be one of several filter branch types, such as PublicOrFilterBranch or PublicAndFilterBranch, which determine the logical conditions for approval.",
+                          "example": null,
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            }
+                          ]
+                        },
+                        "pipelineStageId": {
+                          "type": "string",
+                          "description": "The unique identifier for the pipeline stage that this approval rule applies to. It is a string.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the pipeline rule was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "governanceValidationRules": {
+                      "required": [
+                        "noBackwardsMovementRule",
+                        "noSkippingStagesRule",
+                        "objectCreationRule"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "noBackwardsMovementRule": {
+                          "required": [
+                            "enabledForAllStages",
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "enabledForAllStages": {
+                              "type": "boolean",
+                              "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                              "example": null
+                            },
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        },
+                        "noSkippingStagesRule": {
+                          "required": [
+                            "enabledForAllStages",
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "enabledForAllStages": {
+                              "type": "boolean",
+                              "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                              "example": null
+                            },
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        },
+                        "objectCreationRule": {
+                          "required": [
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the IDs of pipeline stages where objects can be created.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline rule.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object the pipeline rule is associated with.",
+                      "example": null
+                    },
+                    "pipelineId": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline to which the rule applies.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the pipeline rule was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update rules (Replace)",
+        "description": "Update the rules for a specific pipeline in your HubSpot account. This endpoint allows you to modify governance validation rules and approval stages associated with a pipeline. It requires specifying the object type and pipeline identifiers.",
+        "operationId": "put-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the pipeline rules are being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline whose rules are being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "governanceValidationRules"
+                ],
+                "type": "object",
+                "properties": {
+                  "approvalStage": {
+                    "required": [
+                      "approvalMode",
+                      "approverUserIds",
+                      "pipelineStageId"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "approvalComment": {
+                        "type": "string",
+                        "description": "A string that allows an optional comment to be added to the approval rule.",
+                        "example": null
+                      },
+                      "approvalMode": {
+                        "type": "string",
+                        "description": "Specifies the mode of approval required. It can be either 'ALL', meaning all specified users must approve, or 'ANY', meaning any one of the specified users can approve.",
+                        "example": null,
+                        "enum": [
+                          "ALL",
+                          "ANY"
+                        ]
+                      },
+                      "approverUserIds": {
+                        "type": "array",
+                        "description": "An array of user IDs representing the users who are authorized to approve the stage transition. Each ID is a string.",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "conditionalApprovalFilterBranch": {
+                        "description": "Defines conditional logic for the approval process using a filter branch. It can be one of several types, such as PublicOrFilterBranch or PublicAndFilterBranch, to specify complex approval conditions.",
+                        "example": null,
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                          },
+                          {
+                            "type": "object",
+                            "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                          },
+                          {
+                            "type": "object",
+                            "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                          },
+                          {
+                            "type": "object",
+                            "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                          },
+                          {
+                            "type": "object",
+                            "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                          },
+                          {
+                            "type": "object",
+                            "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                          },
+                          {
+                            "type": "object",
+                            "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                          }
+                        ]
+                      },
+                      "pipelineStageId": {
+                        "type": "string",
+                        "description": "The unique identifier for the pipeline stage that the approval rule applies to. It is a string.",
+                        "example": null
+                      }
+                    },
+                    "example": null
+                  },
+                  "governanceValidationRules": {
+                    "required": [
+                      "noBackwardsMovementRule",
+                      "noSkippingStagesRule",
+                      "objectCreationRule"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "noBackwardsMovementRule": {
+                        "required": [
+                          "enabledForAllStages",
+                          "pipelineStageIds"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "enabledForAllStages": {
+                            "type": "boolean",
+                            "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                            "example": null
+                          },
+                          "pipelineStageIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      },
+                      "noSkippingStagesRule": {
+                        "required": [
+                          "enabledForAllStages",
+                          "pipelineStageIds"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "enabledForAllStages": {
+                            "type": "boolean",
+                            "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                            "example": null
+                          },
+                          "pipelineStageIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      },
+                      "objectCreationRule": {
+                        "required": [
+                          "pipelineStageIds"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "pipelineStageIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the IDs of pipeline stages where objects can be created.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "governanceValidationRules",
+                    "id",
+                    "objectTypeId",
+                    "pipelineId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "approvalStage": {
+                      "required": [
+                        "approvalMode",
+                        "approverUserIds",
+                        "pipelineStageId"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "approvalComment": {
+                          "type": "string",
+                          "description": "A string that allows for an optional comment or note regarding the approval process.",
+                          "example": null
+                        },
+                        "approvalMode": {
+                          "type": "string",
+                          "description": "Specifies the mode of approval required. It can be either 'ALL', meaning all approvers must approve, or 'ANY', meaning any one approver can approve. It is a string.",
+                          "example": null,
+                          "enum": [
+                            "ALL",
+                            "ANY"
+                          ]
+                        },
+                        "approverUserIds": {
+                          "type": "array",
+                          "description": "An array of user IDs representing the users who are designated as approvers for this stage. Each user ID is a string.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        },
+                        "conditionalApprovalFilterBranch": {
+                          "description": "Defines the conditions under which the approval is required. It can be one of several filter branch types, such as PublicOrFilterBranch or PublicAndFilterBranch, which determine the logical conditions for approval.",
+                          "example": null,
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            }
+                          ]
+                        },
+                        "pipelineStageId": {
+                          "type": "string",
+                          "description": "The unique identifier for the pipeline stage that this approval rule applies to. It is a string.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the pipeline rule was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "governanceValidationRules": {
+                      "required": [
+                        "noBackwardsMovementRule",
+                        "noSkippingStagesRule",
+                        "objectCreationRule"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "noBackwardsMovementRule": {
+                          "required": [
+                            "enabledForAllStages",
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "enabledForAllStages": {
+                              "type": "boolean",
+                              "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                              "example": null
+                            },
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        },
+                        "noSkippingStagesRule": {
+                          "required": [
+                            "enabledForAllStages",
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "enabledForAllStages": {
+                              "type": "boolean",
+                              "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                              "example": null
+                            },
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        },
+                        "objectCreationRule": {
+                          "required": [
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the IDs of pipeline stages where objects can be created.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline rule.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object the pipeline rule is associated with.",
+                      "example": null
+                    },
+                    "pipelineId": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline to which the rule applies.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the pipeline rule was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete",
+        "description": "Delete a specific set of pipeline rules associated with a given object type and pipeline ID in your HubSpot account. This operation is useful for removing obsolete or incorrect rules from a pipeline. Ensure that the objectTypeId and pipelineId are correctly specified to avoid unintended deletions.",
+        "operationId": "delete-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type associated with the pipeline rules to delete.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline whose rules are to be deleted.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update rules (Partial)",
+        "description": "Update the rules for a specific pipeline within a given object type in HubSpot. This operation allows you to modify governance validation rules and approval stages for the specified pipeline. It is useful for maintaining or altering the workflow rules associated with your pipelines.",
+        "operationId": "patch-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the pipeline rules are being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline whose rules are being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "approvalStage": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "A rule that defines the approval process for a specific pipeline stage. It is defined using the PublicApprovalStageRuleRequest schema.",
+                    "example": null
+                  },
+                  "noBackwardsMovementRule": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "A rule that prevents moving backwards in the pipeline stages. It is defined using the PublicSequenceValidationRule schema.",
+                    "example": null
+                  },
+                  "noSkippingStagesRule": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "A rule that prevents skipping stages in the pipeline. It is defined using the PublicSequenceValidationRule schema.",
+                    "example": null
+                  },
+                  "objectCreationRule": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "A rule that specifies conditions for object creation within the pipeline. It is defined using the PublicObjectCreationRule schema.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "governanceValidationRules",
+                    "id",
+                    "objectTypeId",
+                    "pipelineId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "approvalStage": {
+                      "required": [
+                        "approvalMode",
+                        "approverUserIds",
+                        "pipelineStageId"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "approvalComment": {
+                          "type": "string",
+                          "description": "A string that allows for an optional comment or note regarding the approval process.",
+                          "example": null
+                        },
+                        "approvalMode": {
+                          "type": "string",
+                          "description": "Specifies the mode of approval required. It can be either 'ALL', meaning all approvers must approve, or 'ANY', meaning any one approver can approve. It is a string.",
+                          "example": null,
+                          "enum": [
+                            "ALL",
+                            "ANY"
+                          ]
+                        },
+                        "approverUserIds": {
+                          "type": "array",
+                          "description": "An array of user IDs representing the users who are designated as approvers for this stage. Each user ID is a string.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        },
+                        "conditionalApprovalFilterBranch": {
+                          "description": "Defines the conditions under which the approval is required. It can be one of several filter branch types, such as PublicOrFilterBranch or PublicAndFilterBranch, which determine the logical conditions for approval.",
+                          "example": null,
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            },
+                            {
+                              "type": "object",
+                              "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                            }
+                          ]
+                        },
+                        "pipelineStageId": {
+                          "type": "string",
+                          "description": "The unique identifier for the pipeline stage that this approval rule applies to. It is a string.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the pipeline rule was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "governanceValidationRules": {
+                      "required": [
+                        "noBackwardsMovementRule",
+                        "noSkippingStagesRule",
+                        "objectCreationRule"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "noBackwardsMovementRule": {
+                          "required": [
+                            "enabledForAllStages",
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "enabledForAllStages": {
+                              "type": "boolean",
+                              "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                              "example": null
+                            },
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        },
+                        "noSkippingStagesRule": {
+                          "required": [
+                            "enabledForAllStages",
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "enabledForAllStages": {
+                              "type": "boolean",
+                              "description": "A boolean indicating whether the validation rule is enabled for all stages in the pipeline.",
+                              "example": null
+                            },
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the specific pipeline stage IDs for which the validation rule is applicable.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        },
+                        "objectCreationRule": {
+                          "required": [
+                            "pipelineStageIds"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "pipelineStageIds": {
+                              "type": "array",
+                              "description": "An array of strings representing the IDs of pipeline stages where objects can be created.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline rule.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object the pipeline rule is associated with.",
+                      "example": null
+                    },
+                    "pipelineId": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline to which the rule applies.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the pipeline rule was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}/approvals/start": {
+      "post": {
+        "tags": [
+          "Advanced"
+        ],
+        "summary": "Start Approval",
+        "description": "Initiate the approval process for a specific pipeline within a given object type. This endpoint is useful for triggering approval workflows that are associated with pipeline stages, ensuring that the necessary approvals are obtained before proceeding with further actions in the pipeline.",
+        "operationId": "post-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}/approvals/start_/crm/pipelines-rules/2026-09-beta/{objectTypeId}/{pipelineId}/approvals/start",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the approval process is being started.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline for which the approval process is being initiated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "objectId"
+                ],
+                "type": "object",
+                "properties": {
+                  "objectId": {
+                    "type": "integer",
+                    "description": "The unique identifier of the object for which the approval request is being created. It is an integer formatted as int64.",
+                    "format": "int64",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "approvalStatus",
+                    "createdAt",
+                    "id",
+                    "objectId",
+                    "objectTypeId",
+                    "pipelineId",
+                    "pipelineStageId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "approvalId": {
+                      "type": "string",
+                      "description": "The unique identifier for the approval process instance associated with this object.",
+                      "example": null
+                    },
+                    "approvalStatus": {
+                      "type": "string",
+                      "description": "The current approval status of the object. This indicates whether the object is approved, pending approval, or rejected.",
+                      "example": null,
+                      "enum": [
+                        "APPROVED",
+                        "NO_APPROVAL_NEEDED",
+                        "NOT_APPLICABLE",
+                        "PENDING",
+                        "REJECTED"
+                      ]
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when this approval status record was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for this approval status object.",
+                      "example": null
+                    },
+                    "objectId": {
+                      "type": "string",
+                      "description": "The unique identifier of the object whose approval status is being tracked.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The type identifier of the object, indicating what kind of object is being approved.",
+                      "example": null
+                    },
+                    "pipelineId": {
+                      "type": "string",
+                      "description": "The unique identifier of the pipeline in which the object is located.",
+                      "example": null
+                    },
+                    "pipelineStageId": {
+                      "type": "string",
+                      "description": "The unique identifier of the pipeline stage where the object currently resides.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when this approval status record was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}/approvals/{objectId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve Approval",
+        "description": "Retrieve the approval status of a specific object within a pipeline. This endpoint is useful for checking the current approval state of an object, which can be critical in workflows that require validation or authorization steps.",
+        "operationId": "get-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}/approvals/{objectId}",
+        "parameters": [
+          {
+            "name": "objectId",
+            "in": "path",
+            "description": "The unique identifier of the object for which the approval status is being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          },
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier for the type of object being referenced.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline containing the object.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "approvalStatus",
+                    "createdAt",
+                    "id",
+                    "objectId",
+                    "objectTypeId",
+                    "pipelineId",
+                    "pipelineStageId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "approvalId": {
+                      "type": "string",
+                      "description": "The unique identifier for the approval process instance associated with this object.",
+                      "example": null
+                    },
+                    "approvalStatus": {
+                      "type": "string",
+                      "description": "The current approval status of the object. This indicates whether the object is approved, pending approval, or rejected.",
+                      "example": null,
+                      "enum": [
+                        "APPROVED",
+                        "NO_APPROVAL_NEEDED",
+                        "NOT_APPLICABLE",
+                        "PENDING",
+                        "REJECTED"
+                      ]
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when this approval status record was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for this approval status object.",
+                      "example": null
+                    },
+                    "objectId": {
+                      "type": "string",
+                      "description": "The unique identifier of the object whose approval status is being tracked.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The type identifier of the object, indicating what kind of object is being approved.",
+                      "example": null
+                    },
+                    "pipelineId": {
+                      "type": "string",
+                      "description": "The unique identifier of the pipeline in which the object is located.",
+                      "example": null
+                    },
+                    "pipelineStageId": {
+                      "type": "string",
+                      "description": "The unique identifier of the pipeline stage where the object currently resides.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when this approval status record was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}/stage-edit-permissions": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve permissions",
+        "description": "Retrieve the stage edit permissions for a specific pipeline in your HubSpot account. This endpoint allows you to view the permissions set for editing stages within a given pipeline, identified by its object type and pipeline ID. This can be useful for managing access and ensuring that only authorized users can modify pipeline stages.",
+        "operationId": "get-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}/stage-edit-permissions",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the pipeline stage edit permissions are being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline whose stage edit permissions are being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "id",
+                    "objectTypeId",
+                    "pipelineId",
+                    "stages",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when these permissions were created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for this set of pipeline stage permissions.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object associated with these permissions.",
+                      "example": null
+                    },
+                    "pipelineId": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline to which these stage permissions apply.",
+                      "example": null
+                    },
+                    "stages": {
+                      "type": "array",
+                      "description": "An array of stage permissions, each defining access rules for a specific stage within the pipeline.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "label",
+                          "permissionMode",
+                          "pipelineStageId",
+                          "superAdmin",
+                          "teamIds",
+                          "userIds"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string",
+                            "description": "A descriptive label for the stage, used for display purposes. It is a string that helps identify the stage's purpose or function.",
+                            "example": null
+                          },
+                          "permissionMode": {
+                            "type": "string",
+                            "description": "Defines the mode of permission for the stage. It is a string that can be either 'OPEN' or 'RESTRICTED', indicating whether the stage is accessible to all users or restricted to certain users or teams.",
+                            "example": null,
+                            "enum": [
+                              "OPEN",
+                              "RESTRICTED"
+                            ]
+                          },
+                          "pipelineStageId": {
+                            "type": "string",
+                            "description": "The unique identifier for the pipeline stage. It is a string that distinguishes this stage from others within the pipeline.",
+                            "example": null
+                          },
+                          "superAdmin": {
+                            "type": "boolean",
+                            "description": "A boolean value indicating whether super administrators have access to this stage. If true, super admins can access the stage regardless of other permissions.",
+                            "example": null
+                          },
+                          "teamIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the IDs of teams that have access to this stage. This property is used to specify which teams are allowed to interact with the stage.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          },
+                          "userIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the IDs of individual users who have access to this stage. This property allows for specifying user-level access control.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when these permissions were last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update permissions",
+        "description": "Update the stage edit permissions for a specific pipeline in your HubSpot account. This endpoint allows you to modify which users or teams have access to edit stages within a specified pipeline. It is useful for managing access control and ensuring that only authorized personnel can make changes to the pipeline stages.",
+        "operationId": "put-/crm/pipelines-rules/2026-09/{objectTypeId}/{pipelineId}/stage-edit-permissions",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type associated with the pipeline.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "description": "The unique identifier of the pipeline for which stage edit permissions are being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "stages"
+                ],
+                "type": "object",
+                "properties": {
+                  "stages": {
+                    "type": "array",
+                    "description": "An array of stage permission requests, each defined by the PublicStagePermissionRequest schema. This property specifies the permissions to be updated for each stage in the pipeline.",
+                    "example": null,
+                    "items": {
+                      "required": [
+                        "permissionMode",
+                        "pipelineStageId",
+                        "superAdmin",
+                        "teamIds",
+                        "userIds"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "permissionMode": {
+                          "type": "string",
+                          "description": "The mode of permission for the stage. It is a string that can be either 'OPEN' or 'RESTRICTED', indicating the level of access allowed.",
+                          "example": null,
+                          "enum": [
+                            "OPEN",
+                            "RESTRICTED"
+                          ]
+                        },
+                        "pipelineStageId": {
+                          "type": "string",
+                          "description": "The unique identifier for the pipeline stage. It is a string that specifies which stage the permissions apply to.",
+                          "example": null
+                        },
+                        "superAdmin": {
+                          "type": "boolean",
+                          "description": "A boolean indicating whether super admin users have permission to edit the stage.",
+                          "example": null
+                        },
+                        "teamIds": {
+                          "type": "array",
+                          "description": "An array of strings representing the IDs of teams that have permission to edit the stage.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        },
+                        "userIds": {
+                          "type": "array",
+                          "description": "An array of strings representing the IDs of individual users who have permission to edit the stage.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    }
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "id",
+                    "objectTypeId",
+                    "pipelineId",
+                    "stages",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when these permissions were created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for this set of pipeline stage permissions.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object associated with these permissions.",
+                      "example": null
+                    },
+                    "pipelineId": {
+                      "type": "string",
+                      "description": "The unique identifier for the pipeline to which these stage permissions apply.",
+                      "example": null
+                    },
+                    "stages": {
+                      "type": "array",
+                      "description": "An array of stage permissions, each defining access rules for a specific stage within the pipeline.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "label",
+                          "permissionMode",
+                          "pipelineStageId",
+                          "superAdmin",
+                          "teamIds",
+                          "userIds"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string",
+                            "description": "A descriptive label for the stage, used for display purposes. It is a string that helps identify the stage's purpose or function.",
+                            "example": null
+                          },
+                          "permissionMode": {
+                            "type": "string",
+                            "description": "Defines the mode of permission for the stage. It is a string that can be either 'OPEN' or 'RESTRICTED', indicating whether the stage is accessible to all users or restricted to certain users or teams.",
+                            "example": null,
+                            "enum": [
+                              "OPEN",
+                              "RESTRICTED"
+                            ]
+                          },
+                          "pipelineStageId": {
+                            "type": "string",
+                            "description": "The unique identifier for the pipeline stage. It is a string that distinguishes this stage from others within the pipeline.",
+                            "example": null
+                          },
+                          "superAdmin": {
+                            "type": "boolean",
+                            "description": "A boolean value indicating whether super administrators have access to this stage. If true, super admins can access the stage regardless of other permissions.",
+                            "example": null
+                          },
+                          "teamIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the IDs of teams that have access to this stage. This property is used to specify which teams are allowed to interact with the stage.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          },
+                          "userIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the IDs of individual users who have access to this stage. This property allows for specifying user-level access control.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when these permissions were last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error condition, with properties as arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that uniquely identifies the request for tracking and debugging purposes.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects that provide detailed information about each error encountered.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object with additional properties. Each property is an array of strings providing further details.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing related links, where each key is a string and the value is a string representing a URL.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing more specific details about the error category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

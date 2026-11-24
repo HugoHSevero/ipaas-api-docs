@@ -1,0 +1,709 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Atividades - Transcrições",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Advanced"
+    },
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/crm/extensions/calling/2026-09/transcripts": {
+      "post": {
+        "tags": [
+          "Advanced"
+        ],
+        "summary": "Create Transcript",
+        "description": "Create a new transcript for a call in your HubSpot account. This endpoint allows you to submit the details of a call transcript, including engagement ID and utterances, to be stored and managed within HubSpot. This is useful for integrating call transcription data into your CRM workflows.",
+        "operationId": "post-/crm/extensions/calling/2026-09/transcripts_/crm/extensions/calling/2026-03/transcripts",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "engagementId",
+                  "transcriptCreateUtterances"
+                ],
+                "type": "object",
+                "properties": {
+                  "engagementId": {
+                    "type": "integer",
+                    "description": "The unique identifier for the engagement associated with this transcript. It is an integer in int64 format.",
+                    "format": "int64",
+                    "example": null
+                  },
+                  "transcriptCreateUtterances": {
+                    "type": "array",
+                    "description": "An array of utterances that make up the transcript. Each utterance is represented by a TranscriptCreateUtterance object.",
+                    "example": null,
+                    "items": {
+                      "required": [
+                        "endTimeMillis",
+                        "speaker",
+                        "startTimeMillis",
+                        "text"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "endTimeMillis": {
+                          "type": "integer",
+                          "description": "The end time of the utterance in milliseconds, represented as an integer.",
+                          "format": "int64",
+                          "example": null
+                        },
+                        "languageCode": {
+                          "type": "string",
+                          "description": "The language code of the utterance, represented as a string.",
+                          "example": null
+                        },
+                        "speaker": {
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "string",
+                              "description": "The email address of the speaker, represented as a string.",
+                              "example": null
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A unique identifier for the speaker, represented as a string.",
+                              "example": null
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "The name of the speaker, represented as a string.",
+                              "example": null
+                            }
+                          },
+                          "example": null
+                        },
+                        "startTimeMillis": {
+                          "type": "integer",
+                          "description": "The start time of the utterance in milliseconds, represented as an integer.",
+                          "format": "int64",
+                          "example": null
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "The content of the utterance as a string.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    }
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "id"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the created transcript, represented as a string.",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/extensions/calling/2026-09/transcripts/{transcriptId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve transcript",
+        "description": "Retrieve a specific call transcript by its unique identifier. This endpoint allows you to access the details of a transcript, including its creation and update timestamps, engagement ID, source, and the transcript utterances. It is useful for reviewing and analyzing call interactions stored in your HubSpot account.",
+        "operationId": "get-/crm/extensions/calling/2026-09/transcripts/{transcriptId}_/crm/extensions/calling/2026-03/transcripts/{transcriptId}",
+        "parameters": [
+          {
+            "name": "transcriptId",
+            "in": "path",
+            "description": "The unique identifier of the transcript to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "engagementId",
+                    "id",
+                    "transcriptSource",
+                    "transcriptUtterances",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when this transcript was created, in ISO 8601 date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "engagementId": {
+                      "type": "integer",
+                      "description": "The unique identifier for the engagement associated with this transcript. It is an integer in int64 format.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for this transcript, represented as a string.",
+                      "example": null
+                    },
+                    "transcriptSource": {
+                      "type": "string",
+                      "description": "Indicates the origin of the transcript, which can be either 'HUBSPOT_GENERATED' or 'INTEGRATOR_GENERATED'.",
+                      "example": null,
+                      "enum": [
+                        "HUBSPOT_GENERATED",
+                        "INTEGRATOR_GENERATED"
+                      ]
+                    },
+                    "transcriptUtterances": {
+                      "type": "array",
+                      "description": "An array of utterances that make up the transcript. Each utterance contains details such as text, timing, and speaker information.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "endTimeMillis",
+                          "id",
+                          "startTimeMillis",
+                          "text"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "endTimeMillis": {
+                            "type": "integer",
+                            "description": "The end time of the utterance, given as a Unix timestamp in milliseconds. It marks when the utterance ended.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "A unique identifier for the utterance, represented as a string.",
+                            "example": null
+                          },
+                          "languageCode": {
+                            "type": "string",
+                            "description": "The language code of the utterance, represented as a string. This indicates the language in which the text was spoken.",
+                            "example": null
+                          },
+                          "speaker": {
+                            "required": [
+                              "id",
+                              "name"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string",
+                                "description": "The email address of the speaker, represented as a string.",
+                                "example": null
+                              },
+                              "id": {
+                                "type": "string",
+                                "description": "A unique identifier for the speaker, represented as a string.",
+                                "example": null
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the speaker, represented as a string.",
+                                "example": null
+                              }
+                            },
+                            "example": null
+                          },
+                          "startTimeMillis": {
+                            "type": "integer",
+                            "description": "The start time of the utterance, given as a Unix timestamp in milliseconds. It marks when the utterance began.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "text": {
+                            "type": "string",
+                            "description": "The spoken text of the utterance. It is a string representing the actual words spoken.",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when this transcript was last updated, in ISO 8601 date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete transcript",
+        "description": "Delete a specific call transcript from your HubSpot account using its unique identifier. This operation is useful for managing and cleaning up transcript data that is no longer needed.",
+        "operationId": "delete-/crm/extensions/calling/2026-09/transcripts/{transcriptId}_/crm/extensions/calling/2026-03/transcripts/{transcriptId}",
+        "parameters": [
+          {
+            "name": "transcriptId",
+            "in": "path",
+            "description": "The unique identifier of the transcript to delete.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

@@ -1,0 +1,3316 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Extensões CRM - Cartões de CRM",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    },
+    {
+      "name": "Advanced"
+    }
+  ],
+  "paths": {
+    "/crm/extensions/cards-dev/2026-09/sample-response": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Get sample card detail response",
+        "description": "Returns an example card detail response. This is the payload with displayed details for a card that will be shown to a user. An app should send this in response to the data fetch request.",
+        "operationId": "get-/crm/extensions/cards-dev/2026-09/sample-response_getCardsSampleResponse",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "responseVersion",
+                    "sections",
+                    "totalCount"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "allItemsLinkUrl": {
+                      "type": "string",
+                      "description": "URL to a page the integrator has built that displays all details for this card. This URL will be displayed to users under a `See more [x]` link if there are more than five items in your response, where `[x]` is the value of `itemLabel`.",
+                      "example": null
+                    },
+                    "cardLabel": {
+                      "type": "string",
+                      "description": "The label to be used for the `allItemsLinkUrl` link (e.g. 'See more tickets'). If not provided, this falls back to the card's title.",
+                      "example": null
+                    },
+                    "responseVersion": {
+                      "type": "string",
+                      "description": "The number version of the response.",
+                      "example": null,
+                      "enum": [
+                        "v1",
+                        "v3"
+                      ]
+                    },
+                    "sections": {
+                      "type": "array",
+                      "description": "A list of up to five valid card sub categories.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "actions",
+                          "id",
+                          "title",
+                          "tokens"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "actions": {
+                            "type": "array",
+                            "description": "A list of actions associated with the card, which can include action hooks, confirmation action hooks, or iframes.",
+                            "example": null,
+                            "items": {
+                              "example": null,
+                              "oneOf": [
+                                {
+                                  "title": "ACTION_HOOK",
+                                  "required": [
+                                    "httpMethod",
+                                    "propertyNamesIncluded",
+                                    "type",
+                                    "url"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "confirmation": {
+                                      "required": [
+                                        "cancelButtonLabel",
+                                        "confirmButtonLabel",
+                                        "prompt"
+                                      ],
+                                      "type": "object",
+                                      "properties": {
+                                        "cancelButtonLabel": {
+                                          "type": "string",
+                                          "description": "The label for the button that cancels the action.",
+                                          "example": null
+                                        },
+                                        "confirmButtonLabel": {
+                                          "type": "string",
+                                          "description": "The label for the button that confirms the action.",
+                                          "example": null
+                                        },
+                                        "prompt": {
+                                          "type": "string",
+                                          "description": "The message displayed to the user to confirm the action.",
+                                          "example": null
+                                        }
+                                      },
+                                      "example": null
+                                    },
+                                    "httpMethod": {
+                                      "type": "string",
+                                      "description": "The HTTP method to be used when making the call, which can be set to GET, POST, PUT, DELETE, or PATCH. If using GET or DELETE",
+                                      "example": null,
+                                      "enum": [
+                                        "CONNECT",
+                                        "DELETE",
+                                        "GET",
+                                        "HEAD",
+                                        "OPTIONS",
+                                        "PATCH",
+                                        "POST",
+                                        "PUT",
+                                        "TRACE"
+                                      ]
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "description": "The label for this property as you'd like it displayed to users.",
+                                      "example": null
+                                    },
+                                    "propertyNamesIncluded": {
+                                      "type": "array",
+                                      "description": "A list of property names that will be included on the action. See the documentation for more information",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "description": "The type of status.",
+                                      "example": null,
+                                      "default": "ACTION_HOOK",
+                                      "enum": [
+                                        "ACTION_HOOK"
+                                      ]
+                                    },
+                                    "url": {
+                                      "type": "string",
+                                      "description": "The URL endpoint that will be called when the action is triggered.",
+                                      "example": null
+                                    }
+                                  },
+                                  "example": null,
+                                  "x-hubspot-sub-type-impl": true
+                                },
+                                {
+                                  "title": "IFRAME",
+                                  "required": [
+                                    "height",
+                                    "propertyNamesIncluded",
+                                    "type",
+                                    "url",
+                                    "width"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "height": {
+                                      "type": "integer",
+                                      "description": "The height of the iframe in pixels.",
+                                      "format": "int32",
+                                      "example": null
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "description": "The label for this property as you'd like it displayed to users.",
+                                      "example": null
+                                    },
+                                    "propertyNamesIncluded": {
+                                      "type": "array",
+                                      "description": "A list of property names that will be included on the url of the iframe.",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "description": "The type of status.",
+                                      "example": null,
+                                      "default": "IFRAME",
+                                      "enum": [
+                                        "IFRAME"
+                                      ]
+                                    },
+                                    "url": {
+                                      "type": "string",
+                                      "description": "The URL endpoint that will be loaded in the iframe when triggered.",
+                                      "example": null
+                                    },
+                                    "width": {
+                                      "type": "integer",
+                                      "description": "The width of the iframe in pixels.",
+                                      "format": "int32",
+                                      "example": null
+                                    }
+                                  },
+                                  "example": null,
+                                  "x-hubspot-sub-type-impl": true
+                                }
+                              ]
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the card.",
+                            "example": null
+                          },
+                          "linkUrl": {
+                            "type": "string",
+                            "description": "A URL used on the title of the card",
+                            "example": null
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "The top-level title for this card. Displayed to users in the CRM UI.",
+                            "example": null
+                          },
+                          "tokens": {
+                            "type": "array",
+                            "description": "A collection of tokens representing specific properties related to the card.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "value"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "dataType": {
+                                  "type": "string",
+                                  "description": "Type of data represented by this property.",
+                                  "example": null,
+                                  "enum": [
+                                    "BOOLEAN",
+                                    "CURRENCY",
+                                    "DATE",
+                                    "DATETIME",
+                                    "EMAIL",
+                                    "LINK",
+                                    "NUMERIC",
+                                    "STATUS",
+                                    "STRING"
+                                  ]
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "description": "The label for this property as you'd like it displayed to users.",
+                                  "example": null
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "An internal identifier for this property. This value must be unique TODO.",
+                                  "example": null
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "description": "The value of the property",
+                                  "example": null
+                                }
+                              },
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "topLevelActions": {
+                      "required": [
+                        "secondary"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "primary": {
+                          "description": "Defines the primary action for a card, which can be either an action hook or an iframe.",
+                          "example": null,
+                          "oneOf": [
+                            {
+                              "title": "ACTION_HOOK",
+                              "required": [
+                                "httpMethod",
+                                "propertyNamesIncluded",
+                                "type",
+                                "url"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "confirmation": {
+                                  "required": [
+                                    "cancelButtonLabel",
+                                    "confirmButtonLabel",
+                                    "prompt"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "cancelButtonLabel": {
+                                      "type": "string",
+                                      "description": "The label for the button that cancels the action.",
+                                      "example": null
+                                    },
+                                    "confirmButtonLabel": {
+                                      "type": "string",
+                                      "description": "The label for the button that confirms the action.",
+                                      "example": null
+                                    },
+                                    "prompt": {
+                                      "type": "string",
+                                      "description": "The message displayed to the user to confirm the action.",
+                                      "example": null
+                                    }
+                                  },
+                                  "example": null
+                                },
+                                "httpMethod": {
+                                  "type": "string",
+                                  "description": "The HTTP method to be used when making the call, which can be set to GET, POST, PUT, DELETE, or PATCH. If using GET or DELETE",
+                                  "example": null,
+                                  "enum": [
+                                    "CONNECT",
+                                    "DELETE",
+                                    "GET",
+                                    "HEAD",
+                                    "OPTIONS",
+                                    "PATCH",
+                                    "POST",
+                                    "PUT",
+                                    "TRACE"
+                                  ]
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "description": "The label for this property as you'd like it displayed to users.",
+                                  "example": null
+                                },
+                                "propertyNamesIncluded": {
+                                  "type": "array",
+                                  "description": "A list of property names that will be included on the action. See the documentation for more information",
+                                  "example": null,
+                                  "items": {
+                                    "type": "string",
+                                    "example": null
+                                  }
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of status.",
+                                  "example": null,
+                                  "default": "ACTION_HOOK",
+                                  "enum": [
+                                    "ACTION_HOOK"
+                                  ]
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "The URL endpoint that will be called when the action is triggered.",
+                                  "example": null
+                                }
+                              },
+                              "example": null,
+                              "x-hubspot-sub-type-impl": true
+                            },
+                            {
+                              "title": "IFRAME",
+                              "required": [
+                                "height",
+                                "propertyNamesIncluded",
+                                "type",
+                                "url",
+                                "width"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "height": {
+                                  "type": "integer",
+                                  "description": "The height of the iframe in pixels.",
+                                  "format": "int32",
+                                  "example": null
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "description": "The label for this property as you'd like it displayed to users.",
+                                  "example": null
+                                },
+                                "propertyNamesIncluded": {
+                                  "type": "array",
+                                  "description": "A list of property names that will be included on the url of the iframe.",
+                                  "example": null,
+                                  "items": {
+                                    "type": "string",
+                                    "example": null
+                                  }
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of status.",
+                                  "example": null,
+                                  "default": "IFRAME",
+                                  "enum": [
+                                    "IFRAME"
+                                  ]
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "The URL endpoint that will be loaded in the iframe when triggered.",
+                                  "example": null
+                                },
+                                "width": {
+                                  "type": "integer",
+                                  "description": "The width of the iframe in pixels.",
+                                  "format": "int32",
+                                  "example": null
+                                }
+                              },
+                              "example": null,
+                              "x-hubspot-sub-type-impl": true
+                            }
+                          ]
+                        },
+                        "secondary": {
+                          "type": "array",
+                          "description": "Specifies a list of secondary actions for a card, each of which can be an action hook or an iframe.",
+                          "example": null,
+                          "items": {
+                            "example": null,
+                            "oneOf": [
+                              {
+                                "title": "ACTION_HOOK",
+                                "required": [
+                                  "httpMethod",
+                                  "propertyNamesIncluded",
+                                  "type",
+                                  "url"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "confirmation": {
+                                    "required": [
+                                      "cancelButtonLabel",
+                                      "confirmButtonLabel",
+                                      "prompt"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                      "cancelButtonLabel": {
+                                        "type": "string",
+                                        "description": "The label for the button that cancels the action.",
+                                        "example": null
+                                      },
+                                      "confirmButtonLabel": {
+                                        "type": "string",
+                                        "description": "The label for the button that confirms the action.",
+                                        "example": null
+                                      },
+                                      "prompt": {
+                                        "type": "string",
+                                        "description": "The message displayed to the user to confirm the action.",
+                                        "example": null
+                                      }
+                                    },
+                                    "example": null
+                                  },
+                                  "httpMethod": {
+                                    "type": "string",
+                                    "description": "The HTTP method to be used when making the call, which can be set to GET, POST, PUT, DELETE, or PATCH. If using GET or DELETE",
+                                    "example": null,
+                                    "enum": [
+                                      "CONNECT",
+                                      "DELETE",
+                                      "GET",
+                                      "HEAD",
+                                      "OPTIONS",
+                                      "PATCH",
+                                      "POST",
+                                      "PUT",
+                                      "TRACE"
+                                    ]
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "description": "The label for this property as you'd like it displayed to users.",
+                                    "example": null
+                                  },
+                                  "propertyNamesIncluded": {
+                                    "type": "array",
+                                    "description": "A list of property names that will be included on the action. See the documentation for more information",
+                                    "example": null,
+                                    "items": {
+                                      "type": "string",
+                                      "example": null
+                                    }
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "The type of status.",
+                                    "example": null,
+                                    "default": "ACTION_HOOK",
+                                    "enum": [
+                                      "ACTION_HOOK"
+                                    ]
+                                  },
+                                  "url": {
+                                    "type": "string",
+                                    "description": "The URL endpoint that will be called when the action is triggered.",
+                                    "example": null
+                                  }
+                                },
+                                "example": null,
+                                "x-hubspot-sub-type-impl": true
+                              },
+                              {
+                                "title": "IFRAME",
+                                "required": [
+                                  "height",
+                                  "propertyNamesIncluded",
+                                  "type",
+                                  "url",
+                                  "width"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "height": {
+                                    "type": "integer",
+                                    "description": "The height of the iframe in pixels.",
+                                    "format": "int32",
+                                    "example": null
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "description": "The label for this property as you'd like it displayed to users.",
+                                    "example": null
+                                  },
+                                  "propertyNamesIncluded": {
+                                    "type": "array",
+                                    "description": "A list of property names that will be included on the url of the iframe.",
+                                    "example": null,
+                                    "items": {
+                                      "type": "string",
+                                      "example": null
+                                    }
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "The type of status.",
+                                    "example": null,
+                                    "default": "IFRAME",
+                                    "enum": [
+                                      "IFRAME"
+                                    ]
+                                  },
+                                  "url": {
+                                    "type": "string",
+                                    "description": "The URL endpoint that will be loaded in the iframe when triggered.",
+                                    "example": null
+                                  },
+                                  "width": {
+                                    "type": "integer",
+                                    "description": "The width of the iframe in pixels.",
+                                    "format": "int32",
+                                    "example": null
+                                  }
+                                },
+                                "example": null,
+                                "x-hubspot-sub-type-impl": true
+                              }
+                            ]
+                          }
+                        },
+                        "settings": {
+                          "title": "IFRAME",
+                          "required": [
+                            "height",
+                            "propertyNamesIncluded",
+                            "type",
+                            "url",
+                            "width"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "height": {
+                              "type": "integer",
+                              "description": "The height of the iframe in pixels.",
+                              "format": "int32",
+                              "example": null
+                            },
+                            "label": {
+                              "type": "string",
+                              "description": "The label for this property as you'd like it displayed to users.",
+                              "example": null
+                            },
+                            "propertyNamesIncluded": {
+                              "type": "array",
+                              "description": "A list of property names that will be included on the url of the iframe.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "The type of status.",
+                              "example": null,
+                              "default": "IFRAME",
+                              "enum": [
+                                "IFRAME"
+                              ]
+                            },
+                            "url": {
+                              "type": "string",
+                              "description": "The URL endpoint that will be loaded in the iframe when triggered.",
+                              "example": null
+                            },
+                            "width": {
+                              "type": "integer",
+                              "description": "The width of the iframe in pixels.",
+                              "format": "int32",
+                              "example": null
+                            }
+                          },
+                          "example": null,
+                          "x-hubspot-sub-type-impl": true
+                        }
+                      },
+                      "example": null
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "description": "The total number of card properties that will be sent in this response.",
+                      "format": "int32",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/extensions/cards-dev/2026-09/{appId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Get all cards",
+        "description": "Returns a list of cards for a given app.",
+        "operationId": "get-/crm/extensions/cards-dev/2026-09/{appId}_getAll",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which to retrieve the cards. It must be an integer.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "A list of card responses",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "actions",
+                          "auditHistory",
+                          "display",
+                          "fetch",
+                          "id",
+                          "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "actions": {
+                            "required": [
+                              "baseUrls"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "baseUrls": {
+                                "type": "array",
+                                "description": "A list of URL prefixes that will be accepted for card action URLs. If your data fetch response includes an action URL that doesn't begin with one of these values, it will result in an error and the card will not be displayed.",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          },
+                          "auditHistory": {
+                            "type": "array",
+                            "description": "A list of actions performed on the card, including creation, deletion, and updates.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "actionType",
+                                "applicationId",
+                                "authSource",
+                                "changedAt",
+                                "initiatingUserId",
+                                "objectTypeId"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "actionType": {
+                                  "type": "string",
+                                  "description": "The type of action performed, with possible values: CREATE, DELETE, UPDATE.",
+                                  "example": null,
+                                  "enum": [
+                                    "CREATE",
+                                    "DELETE",
+                                    "UPDATE"
+                                  ]
+                                },
+                                "applicationId": {
+                                  "type": "integer",
+                                  "description": "The ID of the application associated with the card.",
+                                  "format": "int32",
+                                  "example": null
+                                },
+                                "authSource": {
+                                  "type": "string",
+                                  "description": "The source of authentication for the action, with possible values: APP, EXTERNAL, INTERNAL.",
+                                  "example": null,
+                                  "enum": [
+                                    "APP",
+                                    "EXTERNAL",
+                                    "INTERNAL"
+                                  ]
+                                },
+                                "changedAt": {
+                                  "type": "integer",
+                                  "description": "The timestamp indicating when the change occurred.",
+                                  "format": "int64",
+                                  "example": null
+                                },
+                                "initiatingUserId": {
+                                  "type": "integer",
+                                  "description": "The ID of the user who initiated the action.",
+                                  "format": "int32",
+                                  "example": null
+                                },
+                                "objectTypeId": {
+                                  "type": "integer",
+                                  "description": "The ID of the card.",
+                                  "format": "int64",
+                                  "example": null
+                                }
+                              },
+                              "example": null
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date and time when the card was created.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "display": {
+                            "required": [
+                              "properties"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "properties": {
+                                "type": "array",
+                                "description": "Card display properties. These will will be rendered as \"label : value\" pairs in the card UI. See the [example card](#) in the overview docs for more details.",
+                                "example": null,
+                                "items": {
+                                  "required": [
+                                    "dataType",
+                                    "label",
+                                    "name",
+                                    "options"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "dataType": {
+                                      "type": "string",
+                                      "description": "Type of data represented by this property.",
+                                      "example": null,
+                                      "enum": [
+                                        "BOOLEAN",
+                                        "CURRENCY",
+                                        "DATE",
+                                        "DATETIME",
+                                        "EMAIL",
+                                        "LINK",
+                                        "NUMERIC",
+                                        "STATUS",
+                                        "STRING"
+                                      ]
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "description": "The label for this property as you'd like it displayed to users.",
+                                      "example": null
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "description": "An internal identifier for this property. This value must be unique TODO.",
+                                      "example": null
+                                    },
+                                    "options": {
+                                      "type": "array",
+                                      "description": "An array of available options that can be displayed. Only used in when `dataType` is `STATUS`.",
+                                      "example": null,
+                                      "items": {
+                                        "required": [
+                                          "label",
+                                          "name",
+                                          "type"
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                          "label": {
+                                            "type": "string",
+                                            "description": "The text that will be displayed to users for this option.",
+                                            "example": null
+                                          },
+                                          "name": {
+                                            "type": "string",
+                                            "description": "JSON-friendly unique name for option.",
+                                            "example": null
+                                          },
+                                          "type": {
+                                            "type": "string",
+                                            "description": "The type of status.",
+                                            "example": null,
+                                            "enum": [
+                                              "DANGER",
+                                              "DEFAULT",
+                                              "INFO",
+                                              "SUCCESS",
+                                              "WARNING"
+                                            ]
+                                          }
+                                        },
+                                        "example": null
+                                      }
+                                    }
+                                  },
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          },
+                          "fetch": {
+                            "required": [
+                              "objectTypes",
+                              "targetUrl"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "objectTypes": {
+                                "type": "array",
+                                "description": "An array of CRM object types where this card should be displayed. HubSpot will call your target URL whenever a user visits a record page of the types defined here.",
+                                "example": null,
+                                "items": {
+                                  "required": [
+                                    "name",
+                                    "propertiesToSend"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string",
+                                      "description": "A CRM object type where this card should be displayed.",
+                                      "example": null,
+                                      "enum": [
+                                        "companies",
+                                        "contacts",
+                                        "deals",
+                                        "marketing_events",
+                                        "tickets"
+                                      ]
+                                    },
+                                    "propertiesToSend": {
+                                      "type": "array",
+                                      "description": "An array of properties that should be sent to this card's target URL when the data fetch request is made. Must be valid properties for the corresponding CRM object type.",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    }
+                                  },
+                                  "example": null
+                                }
+                              },
+                              "targetUrl": {
+                                "type": "string",
+                                "description": "URL to a service endpoint that will respond with details for this card. HubSpot will call this endpoint each time a user visits a CRM record page where this card should be displayed.",
+                                "example": null
+                              }
+                            },
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique id of the card.",
+                            "example": null
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "The top-level title for this card. Displayed to users in the CRM UI.",
+                            "example": null
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date and time when the card was last updated.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Create a new card",
+        "description": "Defines a new card that will become active on an account when this app is installed.",
+        "operationId": "post-/crm/extensions/cards-dev/2026-09/{appId}_create",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which the card is being created. This is an integer value.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "actions",
+                  "display",
+                  "fetch",
+                  "title"
+                ],
+                "type": "object",
+                "properties": {
+                  "actions": {
+                    "required": [
+                      "baseUrls"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "baseUrls": {
+                        "type": "array",
+                        "description": "A list of URL prefixes that will be accepted for card action URLs. If your data fetch response includes an action URL that doesn't begin with one of these values, it will result in an error and the card will not be displayed.",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      }
+                    },
+                    "example": null
+                  },
+                  "display": {
+                    "required": [
+                      "properties"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "properties": {
+                        "type": "array",
+                        "description": "Card display properties. These will will be rendered as \"label : value\" pairs in the card UI. See the [example card](#) in the overview docs for more details.",
+                        "example": null,
+                        "items": {
+                          "required": [
+                            "dataType",
+                            "label",
+                            "name",
+                            "options"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "dataType": {
+                              "type": "string",
+                              "description": "Type of data represented by this property.",
+                              "example": null,
+                              "enum": [
+                                "BOOLEAN",
+                                "CURRENCY",
+                                "DATE",
+                                "DATETIME",
+                                "EMAIL",
+                                "LINK",
+                                "NUMERIC",
+                                "STATUS",
+                                "STRING"
+                              ]
+                            },
+                            "label": {
+                              "type": "string",
+                              "description": "The label for this property as you'd like it displayed to users.",
+                              "example": null
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "An internal identifier for this property. This value must be unique TODO.",
+                              "example": null
+                            },
+                            "options": {
+                              "type": "array",
+                              "description": "An array of available options that can be displayed. Only used in when `dataType` is `STATUS`.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "label",
+                                  "name",
+                                  "type"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string",
+                                    "description": "The text that will be displayed to users for this option.",
+                                    "example": null
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "JSON-friendly unique name for option.",
+                                    "example": null
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "The type of status.",
+                                    "example": null,
+                                    "enum": [
+                                      "DANGER",
+                                      "DEFAULT",
+                                      "INFO",
+                                      "SUCCESS",
+                                      "WARNING"
+                                    ]
+                                  }
+                                },
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        }
+                      }
+                    },
+                    "example": null
+                  },
+                  "fetch": {
+                    "required": [
+                      "cardType",
+                      "objectTypes",
+                      "targetUrl"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "cardType": {
+                        "type": "string",
+                        "description": "A deprecated field to determine the type of card returned.",
+                        "example": null,
+                        "enum": [
+                          "EXTERNAL",
+                          "SERVERLESS"
+                        ]
+                      },
+                      "objectTypes": {
+                        "type": "array",
+                        "description": "An array of CRM object types where this card should be displayed. HubSpot will call your data fetch URL whenever a user visits a record page of the types defined here.",
+                        "example": null,
+                        "items": {
+                          "required": [
+                            "name",
+                            "propertiesToSend"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "description": "A CRM object type where this card should be displayed.",
+                              "example": null,
+                              "enum": [
+                                "companies",
+                                "contacts",
+                                "deals",
+                                "marketing_events",
+                                "tickets"
+                              ]
+                            },
+                            "propertiesToSend": {
+                              "type": "array",
+                              "description": "An array of properties that should be sent to this card's target URL when the data fetch request is made. Must be valid properties for the corresponding CRM object type.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        }
+                      },
+                      "serverlessFunction": {
+                        "type": "string",
+                        "description": "A deprecated field to specify serverless functionality with the card",
+                        "example": null
+                      },
+                      "targetUrl": {
+                        "type": "string",
+                        "description": "URL to a service endpoints that will respond with card details. HubSpot will call this endpoint each time a user visits a CRM record page where this card should be displayed.",
+                        "example": null
+                      }
+                    },
+                    "example": null
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "The top-level title for this card. Displayed to users in the CRM UI.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "headers": {
+              "Location": {
+                "description": "URL of the newly created resource",
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string",
+                  "example": null
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "actions",
+                    "auditHistory",
+                    "display",
+                    "fetch",
+                    "id",
+                    "title"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "actions": {
+                      "required": [
+                        "baseUrls"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "baseUrls": {
+                          "type": "array",
+                          "description": "A list of URL prefixes that will be accepted for card action URLs. If your data fetch response includes an action URL that doesn't begin with one of these values, it will result in an error and the card will not be displayed.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    },
+                    "auditHistory": {
+                      "type": "array",
+                      "description": "A list of actions performed on the card, including creation, deletion, and updates.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "actionType",
+                          "applicationId",
+                          "authSource",
+                          "changedAt",
+                          "initiatingUserId",
+                          "objectTypeId"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "actionType": {
+                            "type": "string",
+                            "description": "The type of action performed, with possible values: CREATE, DELETE, UPDATE.",
+                            "example": null,
+                            "enum": [
+                              "CREATE",
+                              "DELETE",
+                              "UPDATE"
+                            ]
+                          },
+                          "applicationId": {
+                            "type": "integer",
+                            "description": "The ID of the application associated with the card.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "authSource": {
+                            "type": "string",
+                            "description": "The source of authentication for the action, with possible values: APP, EXTERNAL, INTERNAL.",
+                            "example": null,
+                            "enum": [
+                              "APP",
+                              "EXTERNAL",
+                              "INTERNAL"
+                            ]
+                          },
+                          "changedAt": {
+                            "type": "integer",
+                            "description": "The timestamp indicating when the change occurred.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "initiatingUserId": {
+                            "type": "integer",
+                            "description": "The ID of the user who initiated the action.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "objectTypeId": {
+                            "type": "integer",
+                            "description": "The ID of the card.",
+                            "format": "int64",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the card was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "display": {
+                      "required": [
+                        "properties"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "properties": {
+                          "type": "array",
+                          "description": "Card display properties. These will will be rendered as \"label : value\" pairs in the card UI. See the [example card](#) in the overview docs for more details.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "dataType",
+                              "label",
+                              "name",
+                              "options"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "dataType": {
+                                "type": "string",
+                                "description": "Type of data represented by this property.",
+                                "example": null,
+                                "enum": [
+                                  "BOOLEAN",
+                                  "CURRENCY",
+                                  "DATE",
+                                  "DATETIME",
+                                  "EMAIL",
+                                  "LINK",
+                                  "NUMERIC",
+                                  "STATUS",
+                                  "STRING"
+                                ]
+                              },
+                              "label": {
+                                "type": "string",
+                                "description": "The label for this property as you'd like it displayed to users.",
+                                "example": null
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "An internal identifier for this property. This value must be unique TODO.",
+                                "example": null
+                              },
+                              "options": {
+                                "type": "array",
+                                "description": "An array of available options that can be displayed. Only used in when `dataType` is `STATUS`.",
+                                "example": null,
+                                "items": {
+                                  "required": [
+                                    "label",
+                                    "name",
+                                    "type"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string",
+                                      "description": "The text that will be displayed to users for this option.",
+                                      "example": null
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "description": "JSON-friendly unique name for option.",
+                                      "example": null
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "description": "The type of status.",
+                                      "example": null,
+                                      "enum": [
+                                        "DANGER",
+                                        "DEFAULT",
+                                        "INFO",
+                                        "SUCCESS",
+                                        "WARNING"
+                                      ]
+                                    }
+                                  },
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    },
+                    "fetch": {
+                      "required": [
+                        "objectTypes",
+                        "targetUrl"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "objectTypes": {
+                          "type": "array",
+                          "description": "An array of CRM object types where this card should be displayed. HubSpot will call your target URL whenever a user visits a record page of the types defined here.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "name",
+                              "propertiesToSend"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "A CRM object type where this card should be displayed.",
+                                "example": null,
+                                "enum": [
+                                  "companies",
+                                  "contacts",
+                                  "deals",
+                                  "marketing_events",
+                                  "tickets"
+                                ]
+                              },
+                              "propertiesToSend": {
+                                "type": "array",
+                                "description": "An array of properties that should be sent to this card's target URL when the data fetch request is made. Must be valid properties for the corresponding CRM object type.",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          }
+                        },
+                        "targetUrl": {
+                          "type": "string",
+                          "description": "URL to a service endpoint that will respond with details for this card. HubSpot will call this endpoint each time a user visits a CRM record page where this card should be displayed.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique id of the card.",
+                      "example": null
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The top-level title for this card. Displayed to users in the CRM UI.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the card was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/extensions/cards-dev/2026-09/{appId}/views/migrate": {
+      "post": {
+        "tags": [
+          "Advanced"
+        ],
+        "summary": "Migrate Card Views",
+        "description": "Swaps a Legacy CRM Card with an App Card in views. Reference the \"Migrate a legacy CRM card to an app card\" docs for more information",
+        "operationId": "post-/crm/extensions/cards-dev/2026-09/{appId}/views/migrate_/crm/v3/extensions/cards-dev/{appId}/views/migrate",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which views are being migrated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "allowDuplicateAppCardIds",
+                  "appCardId",
+                  "legacyCrmCardId"
+                ],
+                "type": "object",
+                "properties": {
+                  "allowDuplicateAppCardIds": {
+                    "type": "boolean",
+                    "description": "A boolean flag indicating whether duplicate app card IDs are allowed during the migration process.",
+                    "example": null
+                  },
+                  "appCardId": {
+                    "type": "integer",
+                    "description": "The unique identifier for the new app card to which views will be migrated. This is an integer in int64 format.",
+                    "format": "int64",
+                    "example": null
+                  },
+                  "helpdeskAppCardId": {
+                    "type": "integer",
+                    "description": "The unique identifier for the helpdesk app card, if applicable. This is an integer in int64 format.",
+                    "format": "int64",
+                    "example": null
+                  },
+                  "legacyCrmCardId": {
+                    "type": "integer",
+                    "description": "The unique identifier for the legacy CRM card. This is an integer in int64 format.",
+                    "format": "int64",
+                    "example": null
+                  },
+                  "tabAppCardId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "endedAt": {
+                      "type": "integer",
+                      "description": "The timestamp for when the migration ended.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the progress of the migration.",
+                      "example": null
+                    },
+                    "remainingPortalCount": {
+                      "type": "integer",
+                      "description": "The number of portals that remain to be swapped from the Legacy CRM Card to the App Card",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "startedAt": {
+                      "type": "integer",
+                      "description": "The timestamp for when the migration started.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "totalPortalCount": {
+                      "type": "integer",
+                      "description": "The total number of portals that have access to the Legacy CRM Card",
+                      "format": "int64",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/extensions/cards-dev/2026-09/{appId}/{cardId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Get a card.",
+        "description": "Returns the definition for a card with the given ID.",
+        "operationId": "get-/crm/extensions/cards-dev/2026-09/{appId}/{cardId}_getById",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app associated with the card. This should be an integer.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "cardId",
+            "in": "path",
+            "description": "The unique identifier of the card to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "actions",
+                    "auditHistory",
+                    "display",
+                    "fetch",
+                    "id",
+                    "title"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "actions": {
+                      "required": [
+                        "baseUrls"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "baseUrls": {
+                          "type": "array",
+                          "description": "A list of URL prefixes that will be accepted for card action URLs. If your data fetch response includes an action URL that doesn't begin with one of these values, it will result in an error and the card will not be displayed.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    },
+                    "auditHistory": {
+                      "type": "array",
+                      "description": "A list of actions performed on the card, including creation, deletion, and updates.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "actionType",
+                          "applicationId",
+                          "authSource",
+                          "changedAt",
+                          "initiatingUserId",
+                          "objectTypeId"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "actionType": {
+                            "type": "string",
+                            "description": "The type of action performed, with possible values: CREATE, DELETE, UPDATE.",
+                            "example": null,
+                            "enum": [
+                              "CREATE",
+                              "DELETE",
+                              "UPDATE"
+                            ]
+                          },
+                          "applicationId": {
+                            "type": "integer",
+                            "description": "The ID of the application associated with the card.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "authSource": {
+                            "type": "string",
+                            "description": "The source of authentication for the action, with possible values: APP, EXTERNAL, INTERNAL.",
+                            "example": null,
+                            "enum": [
+                              "APP",
+                              "EXTERNAL",
+                              "INTERNAL"
+                            ]
+                          },
+                          "changedAt": {
+                            "type": "integer",
+                            "description": "The timestamp indicating when the change occurred.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "initiatingUserId": {
+                            "type": "integer",
+                            "description": "The ID of the user who initiated the action.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "objectTypeId": {
+                            "type": "integer",
+                            "description": "The ID of the card.",
+                            "format": "int64",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the card was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "display": {
+                      "required": [
+                        "properties"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "properties": {
+                          "type": "array",
+                          "description": "Card display properties. These will will be rendered as \"label : value\" pairs in the card UI. See the [example card](#) in the overview docs for more details.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "dataType",
+                              "label",
+                              "name",
+                              "options"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "dataType": {
+                                "type": "string",
+                                "description": "Type of data represented by this property.",
+                                "example": null,
+                                "enum": [
+                                  "BOOLEAN",
+                                  "CURRENCY",
+                                  "DATE",
+                                  "DATETIME",
+                                  "EMAIL",
+                                  "LINK",
+                                  "NUMERIC",
+                                  "STATUS",
+                                  "STRING"
+                                ]
+                              },
+                              "label": {
+                                "type": "string",
+                                "description": "The label for this property as you'd like it displayed to users.",
+                                "example": null
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "An internal identifier for this property. This value must be unique TODO.",
+                                "example": null
+                              },
+                              "options": {
+                                "type": "array",
+                                "description": "An array of available options that can be displayed. Only used in when `dataType` is `STATUS`.",
+                                "example": null,
+                                "items": {
+                                  "required": [
+                                    "label",
+                                    "name",
+                                    "type"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string",
+                                      "description": "The text that will be displayed to users for this option.",
+                                      "example": null
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "description": "JSON-friendly unique name for option.",
+                                      "example": null
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "description": "The type of status.",
+                                      "example": null,
+                                      "enum": [
+                                        "DANGER",
+                                        "DEFAULT",
+                                        "INFO",
+                                        "SUCCESS",
+                                        "WARNING"
+                                      ]
+                                    }
+                                  },
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    },
+                    "fetch": {
+                      "required": [
+                        "objectTypes",
+                        "targetUrl"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "objectTypes": {
+                          "type": "array",
+                          "description": "An array of CRM object types where this card should be displayed. HubSpot will call your target URL whenever a user visits a record page of the types defined here.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "name",
+                              "propertiesToSend"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "A CRM object type where this card should be displayed.",
+                                "example": null,
+                                "enum": [
+                                  "companies",
+                                  "contacts",
+                                  "deals",
+                                  "marketing_events",
+                                  "tickets"
+                                ]
+                              },
+                              "propertiesToSend": {
+                                "type": "array",
+                                "description": "An array of properties that should be sent to this card's target URL when the data fetch request is made. Must be valid properties for the corresponding CRM object type.",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          }
+                        },
+                        "targetUrl": {
+                          "type": "string",
+                          "description": "URL to a service endpoint that will respond with details for this card. HubSpot will call this endpoint each time a user visits a CRM record page where this card should be displayed.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique id of the card.",
+                      "example": null
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The top-level title for this card. Displayed to users in the CRM UI.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the card was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete a card",
+        "description": "Permanently deletes a card definition with the given ID. Once deleted, data fetch requests for this card will no longer be sent to your service. This can't be undone.",
+        "operationId": "delete-/crm/extensions/cards-dev/2026-09/{appId}/{cardId}_archive",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the application associated with the card.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "cardId",
+            "in": "path",
+            "description": "The unique identifier of the card to delete.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update a card",
+        "description": "Update a card definition with new details.",
+        "operationId": "patch-/crm/extensions/cards-dev/2026-09/{appId}/{cardId}_update",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app associated with the card.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "cardId",
+            "in": "path",
+            "description": "The unique identifier of the card to update.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actions": {
+                    "required": [
+                      "baseUrls"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "baseUrls": {
+                        "type": "array",
+                        "description": "A list of URL prefixes that will be accepted for card action URLs. If your data fetch response includes an action URL that doesn't begin with one of these values, it will result in an error and the card will not be displayed.",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      }
+                    },
+                    "example": null
+                  },
+                  "display": {
+                    "required": [
+                      "properties"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "properties": {
+                        "type": "array",
+                        "description": "Card display properties. These will will be rendered as \"label : value\" pairs in the card UI. See the [example card](#) in the overview docs for more details.",
+                        "example": null,
+                        "items": {
+                          "required": [
+                            "dataType",
+                            "label",
+                            "name",
+                            "options"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "dataType": {
+                              "type": "string",
+                              "description": "Type of data represented by this property.",
+                              "example": null,
+                              "enum": [
+                                "BOOLEAN",
+                                "CURRENCY",
+                                "DATE",
+                                "DATETIME",
+                                "EMAIL",
+                                "LINK",
+                                "NUMERIC",
+                                "STATUS",
+                                "STRING"
+                              ]
+                            },
+                            "label": {
+                              "type": "string",
+                              "description": "The label for this property as you'd like it displayed to users.",
+                              "example": null
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "An internal identifier for this property. This value must be unique TODO.",
+                              "example": null
+                            },
+                            "options": {
+                              "type": "array",
+                              "description": "An array of available options that can be displayed. Only used in when `dataType` is `STATUS`.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "label",
+                                  "name",
+                                  "type"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string",
+                                    "description": "The text that will be displayed to users for this option.",
+                                    "example": null
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "JSON-friendly unique name for option.",
+                                    "example": null
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "The type of status.",
+                                    "example": null,
+                                    "enum": [
+                                      "DANGER",
+                                      "DEFAULT",
+                                      "INFO",
+                                      "SUCCESS",
+                                      "WARNING"
+                                    ]
+                                  }
+                                },
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        }
+                      }
+                    },
+                    "example": null
+                  },
+                  "fetch": {
+                    "required": [
+                      "objectTypes"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "cardType": {
+                        "type": "string",
+                        "description": "A deprecated field to determine the type of card returned.",
+                        "example": null,
+                        "enum": [
+                          "EXTERNAL",
+                          "SERVERLESS"
+                        ]
+                      },
+                      "objectTypes": {
+                        "type": "array",
+                        "description": "An array of CRM object types where this card should be displayed. HubSpot will call your target URL whenever a user visits a record page of the types defined here.",
+                        "example": null,
+                        "items": {
+                          "required": [
+                            "name",
+                            "propertiesToSend"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "description": "A CRM object type where this card should be displayed.",
+                              "example": null,
+                              "enum": [
+                                "companies",
+                                "contacts",
+                                "deals",
+                                "marketing_events",
+                                "tickets"
+                              ]
+                            },
+                            "propertiesToSend": {
+                              "type": "array",
+                              "description": "An array of properties that should be sent to this card's target URL when the data fetch request is made. Must be valid properties for the corresponding CRM object type.",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            }
+                          },
+                          "example": null
+                        }
+                      },
+                      "serverlessFunction": {
+                        "type": "string",
+                        "description": "A deprecated field to specify serverless functionality with the card",
+                        "example": null
+                      },
+                      "targetUrl": {
+                        "type": "string",
+                        "description": "URL to a service endpoint that will respond with details for this card. HubSpot will call this endpoint each time a user visits a CRM record page where this card should be displayed.",
+                        "example": null
+                      }
+                    },
+                    "example": null
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "The top-level title for this card. Displayed to users in the CRM UI.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "actions",
+                    "auditHistory",
+                    "display",
+                    "fetch",
+                    "id",
+                    "title"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "actions": {
+                      "required": [
+                        "baseUrls"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "baseUrls": {
+                          "type": "array",
+                          "description": "A list of URL prefixes that will be accepted for card action URLs. If your data fetch response includes an action URL that doesn't begin with one of these values, it will result in an error and the card will not be displayed.",
+                          "example": null,
+                          "items": {
+                            "type": "string",
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    },
+                    "auditHistory": {
+                      "type": "array",
+                      "description": "A list of actions performed on the card, including creation, deletion, and updates.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "actionType",
+                          "applicationId",
+                          "authSource",
+                          "changedAt",
+                          "initiatingUserId",
+                          "objectTypeId"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "actionType": {
+                            "type": "string",
+                            "description": "The type of action performed, with possible values: CREATE, DELETE, UPDATE.",
+                            "example": null,
+                            "enum": [
+                              "CREATE",
+                              "DELETE",
+                              "UPDATE"
+                            ]
+                          },
+                          "applicationId": {
+                            "type": "integer",
+                            "description": "The ID of the application associated with the card.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "authSource": {
+                            "type": "string",
+                            "description": "The source of authentication for the action, with possible values: APP, EXTERNAL, INTERNAL.",
+                            "example": null,
+                            "enum": [
+                              "APP",
+                              "EXTERNAL",
+                              "INTERNAL"
+                            ]
+                          },
+                          "changedAt": {
+                            "type": "integer",
+                            "description": "The timestamp indicating when the change occurred.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "initiatingUserId": {
+                            "type": "integer",
+                            "description": "The ID of the user who initiated the action.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "objectTypeId": {
+                            "type": "integer",
+                            "description": "The ID of the card.",
+                            "format": "int64",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the card was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "display": {
+                      "required": [
+                        "properties"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "properties": {
+                          "type": "array",
+                          "description": "Card display properties. These will will be rendered as \"label : value\" pairs in the card UI. See the [example card](#) in the overview docs for more details.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "dataType",
+                              "label",
+                              "name",
+                              "options"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "dataType": {
+                                "type": "string",
+                                "description": "Type of data represented by this property.",
+                                "example": null,
+                                "enum": [
+                                  "BOOLEAN",
+                                  "CURRENCY",
+                                  "DATE",
+                                  "DATETIME",
+                                  "EMAIL",
+                                  "LINK",
+                                  "NUMERIC",
+                                  "STATUS",
+                                  "STRING"
+                                ]
+                              },
+                              "label": {
+                                "type": "string",
+                                "description": "The label for this property as you'd like it displayed to users.",
+                                "example": null
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "An internal identifier for this property. This value must be unique TODO.",
+                                "example": null
+                              },
+                              "options": {
+                                "type": "array",
+                                "description": "An array of available options that can be displayed. Only used in when `dataType` is `STATUS`.",
+                                "example": null,
+                                "items": {
+                                  "required": [
+                                    "label",
+                                    "name",
+                                    "type"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string",
+                                      "description": "The text that will be displayed to users for this option.",
+                                      "example": null
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "description": "JSON-friendly unique name for option.",
+                                      "example": null
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "description": "The type of status.",
+                                      "example": null,
+                                      "enum": [
+                                        "DANGER",
+                                        "DEFAULT",
+                                        "INFO",
+                                        "SUCCESS",
+                                        "WARNING"
+                                      ]
+                                    }
+                                  },
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    },
+                    "fetch": {
+                      "required": [
+                        "objectTypes",
+                        "targetUrl"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "objectTypes": {
+                          "type": "array",
+                          "description": "An array of CRM object types where this card should be displayed. HubSpot will call your target URL whenever a user visits a record page of the types defined here.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "name",
+                              "propertiesToSend"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "A CRM object type where this card should be displayed.",
+                                "example": null,
+                                "enum": [
+                                  "companies",
+                                  "contacts",
+                                  "deals",
+                                  "marketing_events",
+                                  "tickets"
+                                ]
+                              },
+                              "propertiesToSend": {
+                                "type": "array",
+                                "description": "An array of properties that should be sent to this card's target URL when the data fetch request is made. Must be valid properties for the corresponding CRM object type.",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              }
+                            },
+                            "example": null
+                          }
+                        },
+                        "targetUrl": {
+                          "type": "string",
+                          "description": "URL to a service endpoint that will respond with details for this card. HubSpot will call this endpoint each time a user visits a CRM record page where this card should be displayed.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique id of the card.",
+                      "example": null
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The top-level title for this card. Displayed to users in the CRM UI.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the card was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "Node",
+    "Python",
+    "Ruby",
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

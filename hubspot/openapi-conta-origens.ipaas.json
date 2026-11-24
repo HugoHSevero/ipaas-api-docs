@@ -1,0 +1,1270 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Conta - Origens",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    },
+    {
+      "name": "Advanced"
+    }
+  ],
+  "paths": {
+    "/meta/network-origins/2026-09/ip-ranges": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve IP Ranges",
+        "description": "Retrieve the list of IP ranges associated with different services and directions. This endpoint can be used to obtain IP range information for specific services such as EMAIL, API, DNS, WEB_SCRAPING, and TEST_SERVICE. The results can be filtered by the direction of network traffic, either INGRESS or EGRESS.",
+        "operationId": "get-/meta/network-origins/2026-09/ip-ranges_/meta/network-origins/2026-09-beta/ip-ranges",
+        "parameters": [
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "An array of directions to filter the IP ranges. Valid values are INGRESS and EGRESS.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null,
+                "enum": [
+                  "INGRESS",
+                  "EGRESS"
+                ]
+              }
+            }
+          },
+          {
+            "name": "service",
+            "in": "query",
+            "description": "An array of services to filter the IP ranges. Valid values are EMAIL, API, DNS, WEB_SCRAPING, and TEST_SERVICE.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null,
+                "enum": [
+                  "EMAIL",
+                  "API",
+                  "DNS",
+                  "WEB_SCRAPING",
+                  "TEST_SERVICE"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "An array of IpRange objects, each representing a specific IP range with associated metadata such as CIDR, direction, service, and description.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "cidr",
+                          "description",
+                          "direction",
+                          "service"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "cidr": {
+                            "type": "string",
+                            "description": "The CIDR notation representing the IP range.",
+                            "example": null
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "A description of the IP range.",
+                            "example": null
+                          },
+                          "direction": {
+                            "type": "string",
+                            "description": "The direction of the IP traffic, which can be INGRESS or EGRESS.",
+                            "example": null,
+                            "enum": [
+                              "EGRESS",
+                              "INGRESS"
+                            ]
+                          },
+                          "service": {
+                            "type": "string",
+                            "description": "The service associated with the IP range, such as EMAIL, API, DNS, or WEB_SCRAPING.",
+                            "example": null,
+                            "enum": [
+                              "API",
+                              "DNS",
+                              "EMAIL",
+                              "TEST_SERVICE",
+                              "WEB_SCRAPING"
+                            ]
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/meta/network-origins/2026-09/ip-ranges/simple": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve IP Ranges",
+        "description": "Retrieve a simplified list of IP ranges associated with specific network origins in the HubSpot system. This endpoint allows filtering by direction and service type, making it useful for understanding network configurations and managing access controls.",
+        "operationId": "get-/meta/network-origins/2026-09/ip-ranges/simple_/meta/network-origins/2026-09-beta/ip-ranges/simple",
+        "parameters": [
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "An array specifying the direction of the IP traffic. Valid values are 'INGRESS' and 'EGRESS'.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null,
+                "enum": [
+                  "INGRESS",
+                  "EGRESS"
+                ]
+              }
+            }
+          },
+          {
+            "name": "service",
+            "in": "query",
+            "description": "An array specifying the service type for which the IP ranges are applicable. Valid values include 'EMAIL', 'API', 'DNS', 'WEB_SCRAPING', and 'TEST_SERVICE'.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null,
+                "enum": [
+                  "EMAIL",
+                  "API",
+                  "DNS",
+                  "WEB_SCRAPING",
+                  "TEST_SERVICE"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/meta/network-origins/2026-09/ip-ranges/webhook-subscriptions/{appId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve subscriptions",
+        "description": "Retrieve the list of webhook subscriptions for a specific app identified by the appId. This endpoint returns the webhook subscription details associated with the provided appId, allowing you to manage and monitor webhook integrations effectively.",
+        "operationId": "get-/meta/network-origins/2026-09/ip-ranges/webhook-subscriptions/{appId}_/meta/network-origins/2026-09-beta/ip-ranges/webhook-subscriptions/{appId}",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": ".+",
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "An array of webhook subscriptions. Each item in the array is a WebhookSubscription object.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "appId",
+                          "createdAt",
+                          "id",
+                          "portalId",
+                          "updatedAt",
+                          "webhookUrl"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "appId": {
+                            "type": "integer",
+                            "description": "The unique identifier of the application that owns the webhook subscription. It is an integer.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "The timestamp when the webhook subscription was created, represented as an integer in int64 format.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "createdByUserId": {
+                            "type": "integer",
+                            "description": "The unique identifier of the user who created the webhook subscription. It is an integer.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "integer",
+                            "description": "The unique identifier of the webhook subscription. It is an integer formatted as int64.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "portalId": {
+                            "type": "integer",
+                            "description": "The unique identifier of the HubSpot portal associated with the webhook subscription. It is an integer.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "updatedAt": {
+                            "type": "integer",
+                            "description": "The timestamp when the webhook subscription was last updated, represented as an integer in int64 format.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "webhookUrl": {
+                            "type": "string",
+                            "description": "The URL to which the webhook events will be sent. It is a string.",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Create webhook subscription",
+        "description": "Create a new webhook subscription for the specified app in your HubSpot account. This endpoint requires a valid webhook URL in the request body. Upon successful creation, the response includes the details of the new subscription along with a URL to access it.",
+        "operationId": "post-/meta/network-origins/2026-09/ip-ranges/webhook-subscriptions/{appId}_/meta/network-origins/2026-09-beta/ip-ranges/webhook-subscriptions/{appId}",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": ".+",
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "webhookUrl"
+                ],
+                "type": "object",
+                "properties": {
+                  "webhookUrl": {
+                    "type": "string",
+                    "description": "The URL to which webhook events will be sent. This must be a valid URL in string format.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "headers": {
+              "Location": {
+                "description": "URL of the newly created resource",
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string",
+                  "example": null
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "appId",
+                    "createdAt",
+                    "id",
+                    "portalId",
+                    "updatedAt",
+                    "webhookUrl"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "appId": {
+                      "type": "integer",
+                      "description": "The unique identifier of the application that owns the webhook subscription. It is an integer.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "The timestamp when the webhook subscription was created, represented as an integer in int64 format.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "createdByUserId": {
+                      "type": "integer",
+                      "description": "The unique identifier of the user who created the webhook subscription. It is an integer.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "integer",
+                      "description": "The unique identifier of the webhook subscription. It is an integer formatted as int64.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "portalId": {
+                      "type": "integer",
+                      "description": "The unique identifier of the HubSpot portal associated with the webhook subscription. It is an integer.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "integer",
+                      "description": "The timestamp when the webhook subscription was last updated, represented as an integer in int64 format.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "webhookUrl": {
+                      "type": "string",
+                      "description": "The URL to which the webhook events will be sent. It is a string.",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/meta/network-origins/2026-09/ip-ranges/webhook-subscriptions/{appId}/{subscription-id}": {
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete subscription",
+        "description": "Remove a specific webhook subscription for a given app. This operation is useful when you want to stop receiving webhook events for a particular subscription. The endpoint requires authentication and the subscription ID to identify which subscription to delete.",
+        "operationId": "delete-/meta/network-origins/2026-09/ip-ranges/webhook-subscriptions/{appId}/{subscription-id}_/meta/network-origins/2026-09-beta/ip-ranges/webhook-subscriptions/{appId}/{subscription-id}",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": ".+",
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "subscription-id",
+            "in": "path",
+            "description": "The unique identifier of the webhook subscription to delete.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/meta/network-origins/2026-09/ip-ranges/webhook-subscriptions/{appId}/{subscription-id}/test": {
+      "post": {
+        "tags": [
+          "Advanced"
+        ],
+        "summary": "Test webhook subscription",
+        "description": "Trigger a test for a specific webhook subscription identified by the subscription ID. This endpoint is useful for verifying the configuration and functionality of webhook subscriptions in your application.",
+        "operationId": "post-/meta/network-origins/2026-09/ip-ranges/webhook-subscriptions/{appId}/{subscription-id}/test_/meta/network-origins/2026-09-beta/ip-ranges/webhook-subscriptions/{appId}/{subscription-id}/test",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": ".+",
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "subscription-id",
+            "in": "path",
+            "description": "The unique identifier of the webhook subscription to test.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

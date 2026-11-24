@@ -1,0 +1,1305 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Atividades - Resumo de conversas (notetaker)",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/notetaker/2026-09/conversation/recap/{objectTypeId}/{objectId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve conversation recap data",
+        "description": "Retrieve a recap of a conversation based on the specified object type and object ID. This endpoint provides a variety of insights related to the conversation, including summary, action items, questions asked, call stats, participants, and recording URL.",
+        "operationId": "get-/notetaker/2026-09/conversation/recap/{objectTypeId}/{objectId}",
+        "parameters": [
+          {
+            "name": "objectId",
+            "in": "path",
+            "description": "The unique identifier of the object for which the conversation recap is being retrieved. This is a required integer parameter.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The type of the object for which the conversation recap is being retrieved. This is a required string parameter.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "actionItems",
+                    "callStats",
+                    "notes",
+                    "participants",
+                    "questionsAsked",
+                    "recordingUrl"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "actionItems": {
+                      "required": [
+                        "items",
+                        "status"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "required": [
+                            "category",
+                            "context",
+                            "errors",
+                            "links",
+                            "message",
+                            "status"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "type": "string",
+                              "description": "A string representing the category of the error.",
+                              "example": null
+                            },
+                            "context": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              },
+                              "description": "An object containing additional context about the error condition, where each key maps to an array of strings.",
+                              "example": null
+                            },
+                            "errors": {
+                              "type": "array",
+                              "description": "An array of ErrorDetail objects providing further information about the error.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "message"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                                    "example": null
+                                  },
+                                  "context": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                                    "example": "{missingScopes=[scope1, scope2]}"
+                                  },
+                                  "in": {
+                                    "type": "string",
+                                    "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                                    "example": null
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                                    "example": null
+                                  },
+                                  "subCategory": {
+                                    "type": "string",
+                                    "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                                    "example": null
+                                  }
+                                },
+                                "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                                "example": null
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A string that serves as a unique identifier for the error instance.",
+                              "example": null
+                            },
+                            "links": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string",
+                                "example": null
+                              },
+                              "description": "An object mapping link names to associated URIs that contain documentation or recommended remediation steps related to the error.",
+                              "example": null
+                            },
+                            "message": {
+                              "type": "string",
+                              "description": "A string containing a human-readable message describing the error.",
+                              "example": null
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A string representing the status of the error.",
+                              "example": null
+                            },
+                            "subCategory": {
+                              "type": "object",
+                              "properties": {},
+                              "description": "An object providing more specific details about the error category.",
+                              "example": null
+                            }
+                          },
+                          "description": "Ye olde error",
+                          "example": null
+                        },
+                        "items": {
+                          "type": "array",
+                          "description": "The list of action items extracted from the conversation. Populated when status is SUCCEEDED; empty otherwise.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "id",
+                              "title"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "assignee": {
+                                "type": "string",
+                                "description": "A string indicating the individual assigned to the action item. This property is optional.",
+                                "example": null
+                              },
+                              "assigneeObjectId": {
+                                "type": "string",
+                                "description": "The id of the HubSpot user or contact assigned to this action item, if found. This property is optional.",
+                                "example": null
+                              },
+                              "id": {
+                                "type": "string",
+                                "description": "The unique identifier for the action item, represented as a string.",
+                                "example": null
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "A string representing the title or main description of the action item. This property is required.",
+                                "example": null
+                              }
+                            },
+                            "example": null
+                          }
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "The current state of action item generation. SUCCEEDED — action items are available. NOT_FOUND — no action items have been generated for this engagement. IN_PROGRESS — generation is currently underway. FAILED — an error occurred while retrieving action items.",
+                          "example": null,
+                          "enum": [
+                            "FAILED",
+                            "IN_PROGRESS",
+                            "NOT_FOUND",
+                            "NOT_SUPPORTED",
+                            "SUCCEEDED"
+                          ]
+                        }
+                      },
+                      "example": null
+                    },
+                    "callStats": {
+                      "required": [
+                        "hasTranscript",
+                        "status"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "durationMs": {
+                          "type": "integer",
+                          "description": "The length of the recorded conversation in milliseconds.",
+                          "format": "int64",
+                          "example": null
+                        },
+                        "error": {
+                          "required": [
+                            "category",
+                            "context",
+                            "errors",
+                            "links",
+                            "message",
+                            "status"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "type": "string",
+                              "description": "A string representing the category of the error.",
+                              "example": null
+                            },
+                            "context": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              },
+                              "description": "An object containing additional context about the error condition, where each key maps to an array of strings.",
+                              "example": null
+                            },
+                            "errors": {
+                              "type": "array",
+                              "description": "An array of ErrorDetail objects providing further information about the error.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "message"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                                    "example": null
+                                  },
+                                  "context": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                                    "example": "{missingScopes=[scope1, scope2]}"
+                                  },
+                                  "in": {
+                                    "type": "string",
+                                    "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                                    "example": null
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                                    "example": null
+                                  },
+                                  "subCategory": {
+                                    "type": "string",
+                                    "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                                    "example": null
+                                  }
+                                },
+                                "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                                "example": null
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A string that serves as a unique identifier for the error instance.",
+                              "example": null
+                            },
+                            "links": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string",
+                                "example": null
+                              },
+                              "description": "An object mapping link names to associated URIs that contain documentation or recommended remediation steps related to the error.",
+                              "example": null
+                            },
+                            "message": {
+                              "type": "string",
+                              "description": "A string containing a human-readable message describing the error.",
+                              "example": null
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A string representing the status of the error.",
+                              "example": null
+                            },
+                            "subCategory": {
+                              "type": "object",
+                              "properties": {},
+                              "description": "An object providing more specific details about the error category.",
+                              "example": null
+                            }
+                          },
+                          "description": "Ye olde error",
+                          "example": null
+                        },
+                        "hasTranscript": {
+                          "type": "boolean",
+                          "description": "Whether a transcript for a conversation is found.",
+                          "example": null
+                        },
+                        "ownerTalkTimePercentage": {
+                          "type": "string",
+                          "description": "The percentage of talk-time attributed to the owner participant.",
+                          "example": null
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "The status of fetching call stats. Either SUCCEEDED, NOT_FOUND, or FAILED.",
+                          "example": null,
+                          "enum": [
+                            "FAILED",
+                            "IN_PROGRESS",
+                            "NOT_FOUND",
+                            "NOT_SUPPORTED",
+                            "SUCCEEDED"
+                          ]
+                        }
+                      },
+                      "example": null
+                    },
+                    "notes": {
+                      "required": [
+                        "status"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "required": [
+                            "category",
+                            "context",
+                            "errors",
+                            "links",
+                            "message",
+                            "status"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "type": "string",
+                              "description": "A string representing the category of the error.",
+                              "example": null
+                            },
+                            "context": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              },
+                              "description": "An object containing additional context about the error condition, where each key maps to an array of strings.",
+                              "example": null
+                            },
+                            "errors": {
+                              "type": "array",
+                              "description": "An array of ErrorDetail objects providing further information about the error.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "message"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                                    "example": null
+                                  },
+                                  "context": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                                    "example": "{missingScopes=[scope1, scope2]}"
+                                  },
+                                  "in": {
+                                    "type": "string",
+                                    "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                                    "example": null
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                                    "example": null
+                                  },
+                                  "subCategory": {
+                                    "type": "string",
+                                    "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                                    "example": null
+                                  }
+                                },
+                                "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                                "example": null
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A string that serves as a unique identifier for the error instance.",
+                              "example": null
+                            },
+                            "links": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string",
+                                "example": null
+                              },
+                              "description": "An object mapping link names to associated URIs that contain documentation or recommended remediation steps related to the error.",
+                              "example": null
+                            },
+                            "message": {
+                              "type": "string",
+                              "description": "A string containing a human-readable message describing the error.",
+                              "example": null
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A string representing the status of the error.",
+                              "example": null
+                            },
+                            "subCategory": {
+                              "type": "object",
+                              "properties": {},
+                              "description": "An object providing more specific details about the error category.",
+                              "example": null
+                            }
+                          },
+                          "description": "Ye olde error",
+                          "example": null
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "The status of fetching the notes. Either SUCCEEDED, NOT_FOUND, or FAILED.",
+                          "example": null,
+                          "enum": [
+                            "FAILED",
+                            "IN_PROGRESS",
+                            "NOT_FOUND",
+                            "NOT_SUPPORTED",
+                            "SUCCEEDED"
+                          ]
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "A string containing the notes from the conversation recap.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "participants": {
+                      "required": [
+                        "items",
+                        "status"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "required": [
+                            "category",
+                            "context",
+                            "errors",
+                            "links",
+                            "message",
+                            "status"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "type": "string",
+                              "description": "A string representing the category of the error.",
+                              "example": null
+                            },
+                            "context": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              },
+                              "description": "An object containing additional context about the error condition, where each key maps to an array of strings.",
+                              "example": null
+                            },
+                            "errors": {
+                              "type": "array",
+                              "description": "An array of ErrorDetail objects providing further information about the error.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "message"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                                    "example": null
+                                  },
+                                  "context": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                                    "example": "{missingScopes=[scope1, scope2]}"
+                                  },
+                                  "in": {
+                                    "type": "string",
+                                    "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                                    "example": null
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                                    "example": null
+                                  },
+                                  "subCategory": {
+                                    "type": "string",
+                                    "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                                    "example": null
+                                  }
+                                },
+                                "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                                "example": null
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A string that serves as a unique identifier for the error instance.",
+                              "example": null
+                            },
+                            "links": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string",
+                                "example": null
+                              },
+                              "description": "An object mapping link names to associated URIs that contain documentation or recommended remediation steps related to the error.",
+                              "example": null
+                            },
+                            "message": {
+                              "type": "string",
+                              "description": "A string containing a human-readable message describing the error.",
+                              "example": null
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A string representing the status of the error.",
+                              "example": null
+                            },
+                            "subCategory": {
+                              "type": "object",
+                              "properties": {},
+                              "description": "An object providing more specific details about the error category.",
+                              "example": null
+                            }
+                          },
+                          "description": "Ye olde error",
+                          "example": null
+                        },
+                        "items": {
+                          "type": "array",
+                          "description": "An array of participant information objects, each containing details about a participant in the conversation.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "isHost",
+                              "name"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string",
+                                "description": "The email address of the participant. Only present when the participant is a HubSpot Contact.",
+                                "example": null
+                              },
+                              "isHost": {
+                                "type": "boolean",
+                                "description": "Whether this participant was the host of the conversation.",
+                                "example": null
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the participant. ",
+                                "example": null
+                              },
+                              "phoneNumber": {
+                                "type": "string",
+                                "description": "The phone number of the participant. Only present when the participant is a HubSpot Contact.",
+                                "example": null
+                              }
+                            },
+                            "example": null
+                          }
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "The status of fetching participants. Either SUCCEEDED or FAILED.",
+                          "example": null,
+                          "enum": [
+                            "FAILED",
+                            "IN_PROGRESS",
+                            "NOT_FOUND",
+                            "NOT_SUPPORTED",
+                            "SUCCEEDED"
+                          ]
+                        }
+                      },
+                      "example": null
+                    },
+                    "questionsAsked": {
+                      "required": [
+                        "questionsAndAnswers",
+                        "status"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "required": [
+                            "category",
+                            "context",
+                            "errors",
+                            "links",
+                            "message",
+                            "status"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "type": "string",
+                              "description": "A string representing the category of the error.",
+                              "example": null
+                            },
+                            "context": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              },
+                              "description": "An object containing additional context about the error condition, where each key maps to an array of strings.",
+                              "example": null
+                            },
+                            "errors": {
+                              "type": "array",
+                              "description": "An array of ErrorDetail objects providing further information about the error.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "message"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                                    "example": null
+                                  },
+                                  "context": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                                    "example": "{missingScopes=[scope1, scope2]}"
+                                  },
+                                  "in": {
+                                    "type": "string",
+                                    "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                                    "example": null
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                                    "example": null
+                                  },
+                                  "subCategory": {
+                                    "type": "string",
+                                    "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                                    "example": null
+                                  }
+                                },
+                                "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                                "example": null
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A string that serves as a unique identifier for the error instance.",
+                              "example": null
+                            },
+                            "links": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string",
+                                "example": null
+                              },
+                              "description": "An object mapping link names to associated URIs that contain documentation or recommended remediation steps related to the error.",
+                              "example": null
+                            },
+                            "message": {
+                              "type": "string",
+                              "description": "A string containing a human-readable message describing the error.",
+                              "example": null
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A string representing the status of the error.",
+                              "example": null
+                            },
+                            "subCategory": {
+                              "type": "object",
+                              "properties": {},
+                              "description": "An object providing more specific details about the error category.",
+                              "example": null
+                            }
+                          },
+                          "description": "Ye olde error",
+                          "example": null
+                        },
+                        "questionsAndAnswers": {
+                          "type": "array",
+                          "description": "A list of question and answer pairs. ",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "question"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "answer": {
+                                "type": "object",
+                                "properties": {
+                                  "speakerName": {
+                                    "type": "string",
+                                    "description": "The speaker attributed to this statement.",
+                                    "example": null
+                                  },
+                                  "text": {
+                                    "type": "string",
+                                    "description": "The time at which this statement occurred.",
+                                    "example": null
+                                  },
+                                  "timestampSeconds": {
+                                    "type": "number",
+                                    "description": "The time in a recorded conversation at which this statement occurred.",
+                                    "example": null
+                                  }
+                                },
+                                "example": null
+                              },
+                              "question": {
+                                "type": "object",
+                                "properties": {
+                                  "speakerName": {
+                                    "type": "string",
+                                    "description": "The speaker attributed to this statement.",
+                                    "example": null
+                                  },
+                                  "text": {
+                                    "type": "string",
+                                    "description": "The time at which this statement occurred.",
+                                    "example": null
+                                  },
+                                  "timestampSeconds": {
+                                    "type": "number",
+                                    "description": "The time in a recorded conversation at which this statement occurred.",
+                                    "example": null
+                                  }
+                                },
+                                "example": null
+                              }
+                            },
+                            "example": null
+                          }
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "The status of fetching questions and answers. Either FAILED, NOT_FOUND, or SUCCEEDED.",
+                          "example": null,
+                          "enum": [
+                            "FAILED",
+                            "IN_PROGRESS",
+                            "NOT_FOUND",
+                            "NOT_SUPPORTED",
+                            "SUCCEEDED"
+                          ]
+                        }
+                      },
+                      "example": null
+                    },
+                    "recordingUrl": {
+                      "required": [
+                        "status"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "required": [
+                            "category",
+                            "context",
+                            "errors",
+                            "links",
+                            "message",
+                            "status"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "type": "string",
+                              "description": "A string representing the category of the error.",
+                              "example": null
+                            },
+                            "context": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              },
+                              "description": "An object containing additional context about the error condition, where each key maps to an array of strings.",
+                              "example": null
+                            },
+                            "errors": {
+                              "type": "array",
+                              "description": "An array of ErrorDetail objects providing further information about the error.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "message"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                                    "example": null
+                                  },
+                                  "context": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                                    "example": "{missingScopes=[scope1, scope2]}"
+                                  },
+                                  "in": {
+                                    "type": "string",
+                                    "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                                    "example": null
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                                    "example": null
+                                  },
+                                  "subCategory": {
+                                    "type": "string",
+                                    "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                                    "example": null
+                                  }
+                                },
+                                "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                                "example": null
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A string that serves as a unique identifier for the error instance.",
+                              "example": null
+                            },
+                            "links": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string",
+                                "example": null
+                              },
+                              "description": "An object mapping link names to associated URIs that contain documentation or recommended remediation steps related to the error.",
+                              "example": null
+                            },
+                            "message": {
+                              "type": "string",
+                              "description": "A string containing a human-readable message describing the error.",
+                              "example": null
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A string representing the status of the error.",
+                              "example": null
+                            },
+                            "subCategory": {
+                              "type": "object",
+                              "properties": {},
+                              "description": "An object providing more specific details about the error category.",
+                              "example": null
+                            }
+                          },
+                          "description": "Ye olde error",
+                          "example": null
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "The status of creating a URL. Either FAILED, NOT_FOUND, or SUCCEEDED.",
+                          "example": null,
+                          "enum": [
+                            "FAILED",
+                            "IN_PROGRESS",
+                            "NOT_FOUND",
+                            "NOT_SUPPORTED",
+                            "SUCCEEDED"
+                          ]
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "The URL of the recording as a string.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "summary": {
+                      "required": [
+                        "status"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "required": [
+                            "category",
+                            "context",
+                            "errors",
+                            "links",
+                            "message",
+                            "status"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "type": "string",
+                              "description": "A string representing the category of the error.",
+                              "example": null
+                            },
+                            "context": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "example": null,
+                                "items": {
+                                  "type": "string",
+                                  "example": null
+                                }
+                              },
+                              "description": "An object containing additional context about the error condition, where each key maps to an array of strings.",
+                              "example": null
+                            },
+                            "errors": {
+                              "type": "array",
+                              "description": "An array of ErrorDetail objects providing further information about the error.",
+                              "example": null,
+                              "items": {
+                                "required": [
+                                  "message"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                  "code": {
+                                    "type": "string",
+                                    "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                                    "example": null
+                                  },
+                                  "context": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "array",
+                                      "example": null,
+                                      "items": {
+                                        "type": "string",
+                                        "example": null
+                                      }
+                                    },
+                                    "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                                    "example": "{missingScopes=[scope1, scope2]}"
+                                  },
+                                  "in": {
+                                    "type": "string",
+                                    "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                                    "example": null
+                                  },
+                                  "message": {
+                                    "type": "string",
+                                    "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                                    "example": null
+                                  },
+                                  "subCategory": {
+                                    "type": "string",
+                                    "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                                    "example": null
+                                  }
+                                },
+                                "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                                "example": null
+                              }
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "A string that serves as a unique identifier for the error instance.",
+                              "example": null
+                            },
+                            "links": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string",
+                                "example": null
+                              },
+                              "description": "An object mapping link names to associated URIs that contain documentation or recommended remediation steps related to the error.",
+                              "example": null
+                            },
+                            "message": {
+                              "type": "string",
+                              "description": "A string containing a human-readable message describing the error.",
+                              "example": null
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "A string representing the status of the error.",
+                              "example": null
+                            },
+                            "subCategory": {
+                              "type": "object",
+                              "properties": {},
+                              "description": "An object providing more specific details about the error category.",
+                              "example": null
+                            }
+                          },
+                          "description": "Ye olde error",
+                          "example": null
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "The current state of summary generation. SUCCEEDED — summary is available. NOT_FOUND — no summary has been generated for this engagement. FAILED — an error occurred while retrieving the summary.",
+                          "example": null,
+                          "enum": [
+                            "FAILED",
+                            "IN_PROGRESS",
+                            "NOT_FOUND",
+                            "NOT_SUPPORTED",
+                            "SUCCEEDED"
+                          ]
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "The AI-generated summary text for the conversation. Present when status is SUCCEEDED; absent otherwise.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category, represented as a string.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object providing context about the error condition, where each property is an array of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request, used for tracking and support purposes. It is a string in UUID format.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array containing further information about the error, with each item being an ErrorDetail object.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This helps identify the type of error that occurred.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "An object providing context about the error condition. It contains additional properties that offer more details, such as missing scopes or other relevant information.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. It provides context about the location of the error.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human-readable message describing the error along with remediation steps where appropriate. This is a required field.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. It offers further classification of the error.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps. Each link is represented as a string.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate. It is a string.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category providing more detailed information about the error. It is a string.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

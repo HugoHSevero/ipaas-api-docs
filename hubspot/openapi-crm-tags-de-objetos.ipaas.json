@@ -1,0 +1,1833 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - CRM - Tags de objetos",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/crm/object-tags/2026-09/{objectTypeId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve tags",
+        "description": "Retrieve CRM object tags for a specified object type in your HubSpot account. This endpoint allows you to access tags associated with a particular object type, which can be useful for categorizing and managing CRM data effectively.",
+        "operationId": "get-/crm/object-tags/2026-09/{objectTypeId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which to retrieve tags.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "An array of CRM object tags. Each item in the array is a PublicCrmObjectTag object.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "color",
+                          "createdAt",
+                          "displayOrder",
+                          "filterBranch",
+                          "filterPipelineIds",
+                          "id",
+                          "name",
+                          "objectTypeId",
+                          "updatedAt"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "color": {
+                            "type": "string",
+                            "description": "The color associated with the CRM object tag, represented as a string.",
+                            "example": null
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date and time when the tag was created, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "createdBy": {
+                            "type": "integer",
+                            "description": "An integer representing the ID of the user who created the tag.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "A string providing a description of the CRM object tag.",
+                            "example": null
+                          },
+                          "displayOrder": {
+                            "type": "integer",
+                            "description": "An integer indicating the display order of the tag.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "filterBranch": {
+                            "description": "A complex object defining the filter branch associated with the tag, which can include various filter types and branches.",
+                            "example": null,
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                              },
+                              {
+                                "type": "object",
+                                "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                              },
+                              {
+                                "type": "object",
+                                "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                              },
+                              {
+                                "type": "object",
+                                "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                              },
+                              {
+                                "type": "object",
+                                "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                              },
+                              {
+                                "type": "object",
+                                "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                              },
+                              {
+                                "type": "object",
+                                "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                              }
+                            ]
+                          },
+                          "filterPipelineIds": {
+                            "type": "array",
+                            "description": "An array of strings representing the pipeline IDs that this tag is associated with.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the CRM object tag, represented as a string.",
+                            "example": null
+                          },
+                          "lastModifiedBy": {
+                            "type": "integer",
+                            "description": "An integer representing the ID of the user who last modified the tag.",
+                            "format": "int64",
+                            "example": null
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the CRM object tag, represented as a string.",
+                            "example": null
+                          },
+                          "objectTypeId": {
+                            "type": "string",
+                            "description": "The identifier for the type of object this tag is associated with, represented as a string.",
+                            "example": null
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date and time when the tag was last updated, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error, with properties that are arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that acts as a unique identifier for the error instance, useful for tracking and debugging.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects, each providing additional information about specific issues related to the error.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition. It is an object where each key is a string and each value is an array of strings, providing additional information about the error.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing URLs that provide further information or actions related to the error.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing a more specific classification of the error within its category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Create tag",
+        "description": "Create a new CRM object tag for a specified object type in your HubSpot account. This endpoint allows you to define properties such as name, color, and filter criteria for the tag. It is useful for categorizing and organizing CRM objects based on custom criteria.",
+        "operationId": "post-/crm/object-tags/2026-09/{objectTypeId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the tag is being created.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "color",
+                  "displayOrder",
+                  "filterBranch",
+                  "filterPipelineIds",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "color": {
+                    "type": "string",
+                    "description": "The color associated with the CRM object tag. It is a string value.",
+                    "example": null
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A string providing additional information about the CRM object tag.",
+                    "example": null
+                  },
+                  "displayOrder": {
+                    "type": "integer",
+                    "description": "An integer indicating the order in which the tag should be displayed.",
+                    "format": "int32",
+                    "example": null
+                  },
+                  "filterBranch": {
+                    "description": "Defines the filter criteria for the CRM object tag. It can be one of several filter branch types.",
+                    "example": null,
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      }
+                    ]
+                  },
+                  "filterPipelineIds": {
+                    "type": "array",
+                    "description": "An array of strings representing the IDs of the pipelines to which the tag applies.",
+                    "example": null,
+                    "items": {
+                      "type": "string",
+                      "example": null
+                    }
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the CRM object tag. It is a string value.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "headers": {
+              "Location": {
+                "description": "URL of the newly created resource",
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string",
+                  "example": null
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "color",
+                    "createdAt",
+                    "displayOrder",
+                    "filterBranch",
+                    "filterPipelineIds",
+                    "id",
+                    "name",
+                    "objectTypeId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "color": {
+                      "type": "string",
+                      "description": "The color associated with the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "createdBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who created the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A string providing a description of the CRM object tag.",
+                      "example": null
+                    },
+                    "displayOrder": {
+                      "type": "integer",
+                      "description": "An integer indicating the display order of the tag.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "filterBranch": {
+                      "description": "A complex object defining the filter branch associated with the tag, which can include various filter types and branches.",
+                      "example": null,
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        }
+                      ]
+                    },
+                    "filterPipelineIds": {
+                      "type": "array",
+                      "description": "An array of strings representing the pipeline IDs that this tag is associated with.",
+                      "example": null,
+                      "items": {
+                        "type": "string",
+                        "example": null
+                      }
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "lastModifiedBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who last modified the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object this tag is associated with, represented as a string.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error, with properties that are arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that acts as a unique identifier for the error instance, useful for tracking and debugging.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects, each providing additional information about specific issues related to the error.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition. It is an object where each key is a string and each value is an array of strings, providing additional information about the error.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing URLs that provide further information or actions related to the error.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing a more specific classification of the error within its category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/object-tags/2026-09/{objectTypeId}/{tagId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve Tag",
+        "description": "Retrieve a specific CRM object tag using its unique identifiers. This endpoint is useful for obtaining details about a particular tag associated with a CRM object type, which can help in managing or analyzing tagged data within your HubSpot account.",
+        "operationId": "get-/crm/object-tags/2026-09/{objectTypeId}/{tagId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the CRM object type to which the tag belongs.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "tagId",
+            "in": "path",
+            "description": "The unique identifier of the tag to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "color",
+                    "createdAt",
+                    "displayOrder",
+                    "filterBranch",
+                    "filterPipelineIds",
+                    "id",
+                    "name",
+                    "objectTypeId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "color": {
+                      "type": "string",
+                      "description": "The color associated with the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "createdBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who created the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A string providing a description of the CRM object tag.",
+                      "example": null
+                    },
+                    "displayOrder": {
+                      "type": "integer",
+                      "description": "An integer indicating the display order of the tag.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "filterBranch": {
+                      "description": "A complex object defining the filter branch associated with the tag, which can include various filter types and branches.",
+                      "example": null,
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        }
+                      ]
+                    },
+                    "filterPipelineIds": {
+                      "type": "array",
+                      "description": "An array of strings representing the pipeline IDs that this tag is associated with.",
+                      "example": null,
+                      "items": {
+                        "type": "string",
+                        "example": null
+                      }
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "lastModifiedBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who last modified the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object this tag is associated with, represented as a string.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error, with properties that are arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that acts as a unique identifier for the error instance, useful for tracking and debugging.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects, each providing additional information about specific issues related to the error.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition. It is an object where each key is a string and each value is an array of strings, providing additional information about the error.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing URLs that provide further information or actions related to the error.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing a more specific classification of the error within its category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update tag (Replace)",
+        "description": "Update an existing CRM object tag in your HubSpot account. This operation allows you to modify the properties of a tag identified by its objectTypeId and tagId. Use this endpoint to change tag details such as name, color, and associated filters.",
+        "operationId": "put-/crm/object-tags/2026-09/{objectTypeId}/{tagId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type to which the tag belongs.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "tagId",
+            "in": "path",
+            "description": "The unique identifier of the tag to be updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "color",
+                  "filterBranch",
+                  "filterPipelineIds",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "color": {
+                    "type": "string",
+                    "description": "A string specifying the color associated with the CRM object tag.",
+                    "example": null
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A string providing a description of the CRM object tag.",
+                    "example": null
+                  },
+                  "filterBranch": {
+                    "description": "An object that defines the filter branch for the CRM object tag. It can be one of several filter branch types, such as PublicOrFilterBranch or PublicAndFilterBranch.",
+                    "example": null,
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      },
+                      {
+                        "type": "object",
+                        "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                      }
+                    ]
+                  },
+                  "filterPipelineIds": {
+                    "type": "array",
+                    "description": "An array of strings representing the IDs of the pipelines to which the CRM object tag is applicable.",
+                    "example": null,
+                    "items": {
+                      "type": "string",
+                      "example": null
+                    }
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "A string representing the name of the CRM object tag.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "color",
+                    "createdAt",
+                    "displayOrder",
+                    "filterBranch",
+                    "filterPipelineIds",
+                    "id",
+                    "name",
+                    "objectTypeId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "color": {
+                      "type": "string",
+                      "description": "The color associated with the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "createdBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who created the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A string providing a description of the CRM object tag.",
+                      "example": null
+                    },
+                    "displayOrder": {
+                      "type": "integer",
+                      "description": "An integer indicating the display order of the tag.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "filterBranch": {
+                      "description": "A complex object defining the filter branch associated with the tag, which can include various filter types and branches.",
+                      "example": null,
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        }
+                      ]
+                    },
+                    "filterPipelineIds": {
+                      "type": "array",
+                      "description": "An array of strings representing the pipeline IDs that this tag is associated with.",
+                      "example": null,
+                      "items": {
+                        "type": "string",
+                        "example": null
+                      }
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "lastModifiedBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who last modified the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object this tag is associated with, represented as a string.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error, with properties that are arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that acts as a unique identifier for the error instance, useful for tracking and debugging.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects, each providing additional information about specific issues related to the error.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition. It is an object where each key is a string and each value is an array of strings, providing additional information about the error.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing URLs that provide further information or actions related to the error.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing a more specific classification of the error within its category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete",
+        "description": "Delete a specific CRM object tag identified by its object type ID and tag ID. This operation will remove the tag from the system, and it will no longer be available for use or reference.",
+        "operationId": "delete-/crm/object-tags/2026-09/{objectTypeId}/{tagId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type to which the tag belongs.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "tagId",
+            "in": "path",
+            "description": "The unique identifier of the tag to be deleted.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error, with properties that are arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that acts as a unique identifier for the error instance, useful for tracking and debugging.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects, each providing additional information about specific issues related to the error.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition. It is an object where each key is a string and each value is an array of strings, providing additional information about the error.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing URLs that provide further information or actions related to the error.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing a more specific classification of the error within its category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update tag (Partial)",
+        "description": "Update an existing CRM object tag in your HubSpot account. This endpoint allows you to modify properties of a specific tag identified by its tagId and objectTypeId. Use this to change tag attributes such as color, description, or associated filters.",
+        "operationId": "patch-/crm/object-tags/2026-09/{objectTypeId}/{tagId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type associated with the tag.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "tagId",
+            "in": "path",
+            "description": "The unique identifier of the tag to be updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "color",
+                  "description",
+                  "filterBranch",
+                  "filterPipelineIds",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "color": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "An object representing the new color for the CRM object tag.",
+                    "example": null
+                  },
+                  "description": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "An object representing the new description for the CRM object tag.",
+                    "example": null
+                  },
+                  "filterBranch": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "An object representing the new filter branch for the CRM object tag.",
+                    "example": null
+                  },
+                  "filterPipelineIds": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "An object representing the new set of pipeline IDs associated with the CRM object tag.",
+                    "example": null
+                  },
+                  "name": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "An object representing the new name for the CRM object tag.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "color",
+                    "createdAt",
+                    "displayOrder",
+                    "filterBranch",
+                    "filterPipelineIds",
+                    "id",
+                    "name",
+                    "objectTypeId",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "color": {
+                      "type": "string",
+                      "description": "The color associated with the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "createdBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who created the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A string providing a description of the CRM object tag.",
+                      "example": null
+                    },
+                    "displayOrder": {
+                      "type": "integer",
+                      "description": "An integer indicating the display order of the tag.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "filterBranch": {
+                      "description": "A complex object defining the filter branch associated with the tag, which can include various filter types and branches.",
+                      "example": null,
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        },
+                        {
+                          "type": "object",
+                          "description": "Estrutura recursiva da spec oficial da HubSpot (truncada); ver a spec fonte."
+                        }
+                      ]
+                    },
+                    "filterPipelineIds": {
+                      "type": "array",
+                      "description": "An array of strings representing the pipeline IDs that this tag is associated with.",
+                      "example": null,
+                      "items": {
+                        "type": "string",
+                        "example": null
+                      }
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "lastModifiedBy": {
+                      "type": "integer",
+                      "description": "An integer representing the ID of the user who last modified the tag.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the CRM object tag, represented as a string.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the type of object this tag is associated with, represented as a string.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the tag was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "A string representing the general category of the error.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing additional context about the error, with properties that are arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A string that acts as a unique identifier for the error instance, useful for tracking and debugging.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of ErrorDetail objects, each providing additional information about specific issues related to the error.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. This is a string property.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition. It is an object where each key is a string and each value is an array of strings, providing additional information about the error.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. This is a string property.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a required string property.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. This is a string property.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "An object containing URLs that provide further information or actions related to the error.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A string containing a human-readable message describing the error.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A string providing a more specific classification of the error within its category.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

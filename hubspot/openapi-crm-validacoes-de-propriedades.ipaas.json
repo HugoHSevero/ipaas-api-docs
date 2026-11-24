@@ -1,0 +1,1030 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - CRM - Validações de propriedades",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/crm/property-validations/2026-09/{objectTypeId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Read all property validation rules for an object",
+        "description": "Read all properties with validation rules for a given object.",
+        "operationId": "get-/crm/property-validations/2026-09/{objectTypeId}_/crm/v3/property-validations/{objectTypeId}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which to retrieve property validation rules.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "Collection of properties with their validation rules. Each item maps a property name to its configured validation rules for the specified object type.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "propertyName",
+                          "propertyValidationRules"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "propertyName": {
+                            "type": "string",
+                            "description": "The name of the property for which validation rules are defined.",
+                            "example": null
+                          },
+                          "propertyValidationRules": {
+                            "type": "array",
+                            "description": "A list of validation rules applicable to the property.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "ruleArguments",
+                                "ruleType"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "ruleArguments": {
+                                  "type": "array",
+                                  "description": "A list of arguments that define the specific conditions or parameters for the validation rule.",
+                                  "example": null,
+                                  "items": {
+                                    "type": "string",
+                                    "example": null
+                                  }
+                                },
+                                "ruleType": {
+                                  "type": "string",
+                                  "description": "The category of validation applied to the property, such as FORMAT, ALPHANUMERIC, or MAX_LENGTH.",
+                                  "example": null,
+                                  "enum": [
+                                    "AFTER_DATETIME_DURATION",
+                                    "AFTER_DURATION",
+                                    "ALPHANUMERIC",
+                                    "BEFORE_DATETIME_DURATION",
+                                    "BEFORE_DURATION",
+                                    "DAYS_OF_WEEK",
+                                    "DECIMAL",
+                                    "DOMAIN",
+                                    "EMAIL",
+                                    "EMAIL_ALLOWED_DOMAINS",
+                                    "EMAIL_BLOCKED_DOMAINS",
+                                    "END_DATE",
+                                    "END_DATETIME",
+                                    "FORMAT",
+                                    "MAX_LENGTH",
+                                    "MAX_NUMBER",
+                                    "MIN_LENGTH",
+                                    "MIN_NUMBER",
+                                    "PHONE_NUMBER_WITH_EXPLICIT_COUNTRY_CODE",
+                                    "REGEX",
+                                    "SPECIAL_CHARACTERS",
+                                    "START_DATE",
+                                    "START_DATETIME",
+                                    "URL",
+                                    "URL_ALLOWED_DOMAINS",
+                                    "URL_BLOCKED_DOMAINS",
+                                    "WHITESPACE"
+                                  ]
+                                },
+                                "shouldApplyNormalization": {
+                                  "type": "boolean",
+                                  "description": "A boolean indicating whether normalization should be applied to the property value before validation.",
+                                  "example": null
+                                }
+                              },
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/property-validations/2026-09/{objectTypeId}/{propertyName}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Read validation rules for a property",
+        "description": "Read a property's validation rules identified by {propertyName}.",
+        "operationId": "get-/crm/property-validations/2026-09/{objectTypeId}/{propertyName}_/crm/v3/property-validations/{objectTypeId}/{propertyName}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the property validation rules are being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "propertyName",
+            "in": "path",
+            "description": "The name of the property for which validation rules are being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "Collection of validation rules configured for the specified property. Each rule defines a constraint that property values must satisfy (e.g., format requirements, length limits, allowed values).",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "ruleArguments",
+                          "ruleType"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "ruleArguments": {
+                            "type": "array",
+                            "description": "A list of arguments that define the specific conditions or parameters for the validation rule.",
+                            "example": null,
+                            "items": {
+                              "type": "string",
+                              "example": null
+                            }
+                          },
+                          "ruleType": {
+                            "type": "string",
+                            "description": "The category of validation applied to the property, such as FORMAT, ALPHANUMERIC, or MAX_LENGTH.",
+                            "example": null,
+                            "enum": [
+                              "AFTER_DATETIME_DURATION",
+                              "AFTER_DURATION",
+                              "ALPHANUMERIC",
+                              "BEFORE_DATETIME_DURATION",
+                              "BEFORE_DURATION",
+                              "DAYS_OF_WEEK",
+                              "DECIMAL",
+                              "DOMAIN",
+                              "EMAIL",
+                              "EMAIL_ALLOWED_DOMAINS",
+                              "EMAIL_BLOCKED_DOMAINS",
+                              "END_DATE",
+                              "END_DATETIME",
+                              "FORMAT",
+                              "MAX_LENGTH",
+                              "MAX_NUMBER",
+                              "MIN_LENGTH",
+                              "MIN_NUMBER",
+                              "PHONE_NUMBER_WITH_EXPLICIT_COUNTRY_CODE",
+                              "REGEX",
+                              "SPECIAL_CHARACTERS",
+                              "START_DATE",
+                              "START_DATETIME",
+                              "URL",
+                              "URL_ALLOWED_DOMAINS",
+                              "URL_BLOCKED_DOMAINS",
+                              "WHITESPACE"
+                            ]
+                          },
+                          "shouldApplyNormalization": {
+                            "type": "boolean",
+                            "description": "A boolean indicating whether normalization should be applied to the property value before validation.",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/crm/property-validations/2026-09/{objectTypeId}/{propertyName}/rule-type/{ruleType}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve a validation rule for a specific property and rule type, providing details on how property values should be formatted.",
+        "description": "Retrieve a specific validation rule for a property identified by its name and rule type.",
+        "operationId": "get-/crm/property-validations/2026-09/{objectTypeId}/{propertyName}/rule-type/{ruleType}_/crm/v3/property-validations/{objectTypeId}/{propertyName}/rule-type/{ruleType}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the object type for which the property validation rule is being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "propertyName",
+            "in": "path",
+            "description": "The name of the property for which the validation rule is being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "ruleType",
+            "in": "path",
+            "description": "The type of validation rule to retrieve. Valid values include FORMAT, ALPHANUMERIC, MAX_LENGTH, MIN_LENGTH, MIN_NUMBER, MAX_NUMBER, START_DATE, END_DATE, SPECIAL_CHARACTERS, WHITESPACE, DECIMAL, BEFORE_DURATION, AFTER_DURATION, DAYS_OF_WEEK, REGEX, START_DATETIME, END_DATETIME, BEFORE_DATETIME_DURATION, AFTER_DATETIME_DURATION, PHONE_NUMBER_WITH_EXPLICIT_COUNTRY_CODE, URL, URL_ALLOWED_DOMAINS, URL_BLOCKED_DOMAINS, EMAIL, EMAIL_ALLOWED_DOMAINS, EMAIL_BLOCKED_DOMAINS, DOMAIN.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null,
+              "enum": [
+                "AFTER_DATETIME_DURATION",
+                "AFTER_DURATION",
+                "ALPHANUMERIC",
+                "BEFORE_DATETIME_DURATION",
+                "BEFORE_DURATION",
+                "DAYS_OF_WEEK",
+                "DECIMAL",
+                "DOMAIN",
+                "EMAIL",
+                "EMAIL_ALLOWED_DOMAINS",
+                "EMAIL_BLOCKED_DOMAINS",
+                "END_DATE",
+                "END_DATETIME",
+                "FORMAT",
+                "MAX_LENGTH",
+                "MAX_NUMBER",
+                "MIN_LENGTH",
+                "MIN_NUMBER",
+                "PHONE_NUMBER_WITH_EXPLICIT_COUNTRY_CODE",
+                "REGEX",
+                "SPECIAL_CHARACTERS",
+                "START_DATE",
+                "START_DATETIME",
+                "URL",
+                "URL_ALLOWED_DOMAINS",
+                "URL_BLOCKED_DOMAINS",
+                "WHITESPACE"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ruleArguments",
+                    "ruleType"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "ruleArguments": {
+                      "type": "array",
+                      "description": "A list of arguments that define the specific conditions or parameters for the validation rule.",
+                      "example": null,
+                      "items": {
+                        "type": "string",
+                        "example": null
+                      }
+                    },
+                    "ruleType": {
+                      "type": "string",
+                      "description": "The category of validation applied to the property, such as FORMAT, ALPHANUMERIC, or MAX_LENGTH.",
+                      "example": null,
+                      "enum": [
+                        "AFTER_DATETIME_DURATION",
+                        "AFTER_DURATION",
+                        "ALPHANUMERIC",
+                        "BEFORE_DATETIME_DURATION",
+                        "BEFORE_DURATION",
+                        "DAYS_OF_WEEK",
+                        "DECIMAL",
+                        "DOMAIN",
+                        "EMAIL",
+                        "EMAIL_ALLOWED_DOMAINS",
+                        "EMAIL_BLOCKED_DOMAINS",
+                        "END_DATE",
+                        "END_DATETIME",
+                        "FORMAT",
+                        "MAX_LENGTH",
+                        "MAX_NUMBER",
+                        "MIN_LENGTH",
+                        "MIN_NUMBER",
+                        "PHONE_NUMBER_WITH_EXPLICIT_COUNTRY_CODE",
+                        "REGEX",
+                        "SPECIAL_CHARACTERS",
+                        "START_DATE",
+                        "START_DATETIME",
+                        "URL",
+                        "URL_ALLOWED_DOMAINS",
+                        "URL_BLOCKED_DOMAINS",
+                        "WHITESPACE"
+                      ]
+                    },
+                    "shouldApplyNormalization": {
+                      "type": "boolean",
+                      "description": "A boolean indicating whether normalization should be applied to the property value before validation.",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update a validation rule for a specific property and rule type, allowing customization of property value constraints.",
+        "description": "Update a specific validation rule for a property identified by its name and rule type.",
+        "operationId": "put-/crm/property-validations/2026-09/{objectTypeId}/{propertyName}/rule-type/{ruleType}_/crm/v3/property-validations/{objectTypeId}/{propertyName}/rule-type/{ruleType}",
+        "parameters": [
+          {
+            "name": "objectTypeId",
+            "in": "path",
+            "description": "The unique identifier of the CRM object type to which the property belongs.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "propertyName",
+            "in": "path",
+            "description": "The name of the property for which the validation rule is being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "ruleType",
+            "in": "path",
+            "description": "The type of validation rule to update. Valid values include FORMAT, ALPHANUMERIC, MAX_LENGTH, MIN_LENGTH, MIN_NUMBER, MAX_NUMBER, START_DATE, END_DATE, SPECIAL_CHARACTERS, WHITESPACE, DECIMAL, BEFORE_DURATION, AFTER_DURATION, DAYS_OF_WEEK, REGEX, START_DATETIME, END_DATETIME, BEFORE_DATETIME_DURATION, AFTER_DATETIME_DURATION, PHONE_NUMBER_WITH_EXPLICIT_COUNTRY_CODE, URL, URL_ALLOWED_DOMAINS, URL_BLOCKED_DOMAINS, EMAIL, EMAIL_ALLOWED_DOMAINS, EMAIL_BLOCKED_DOMAINS, DOMAIN.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null,
+              "enum": [
+                "AFTER_DATETIME_DURATION",
+                "AFTER_DURATION",
+                "ALPHANUMERIC",
+                "BEFORE_DATETIME_DURATION",
+                "BEFORE_DURATION",
+                "DAYS_OF_WEEK",
+                "DECIMAL",
+                "DOMAIN",
+                "EMAIL",
+                "EMAIL_ALLOWED_DOMAINS",
+                "EMAIL_BLOCKED_DOMAINS",
+                "END_DATE",
+                "END_DATETIME",
+                "FORMAT",
+                "MAX_LENGTH",
+                "MAX_NUMBER",
+                "MIN_LENGTH",
+                "MIN_NUMBER",
+                "PHONE_NUMBER_WITH_EXPLICIT_COUNTRY_CODE",
+                "REGEX",
+                "SPECIAL_CHARACTERS",
+                "START_DATE",
+                "START_DATETIME",
+                "URL",
+                "URL_ALLOWED_DOMAINS",
+                "URL_BLOCKED_DOMAINS",
+                "WHITESPACE"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "ruleArguments"
+                ],
+                "type": "object",
+                "properties": {
+                  "ruleArguments": {
+                    "type": "array",
+                    "description": "A list of arguments that define the constraints for the validation rule.",
+                    "example": null,
+                    "items": {
+                      "type": "string",
+                      "example": null
+                    }
+                  },
+                  "shouldApplyNormalization": {
+                    "type": "boolean",
+                    "description": "A boolean indicating whether normalization should be applied to the property value as part of the validation process.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

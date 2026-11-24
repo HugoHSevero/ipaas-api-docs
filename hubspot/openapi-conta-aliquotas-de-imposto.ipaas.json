@@ -1,0 +1,521 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Conta - Alíquotas de imposto",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/tax-rates/2026-09/tax-rates": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Get all tax rates",
+        "description": "Retrieve a paginated list of all tax rates set up in the account tax rate library",
+        "operationId": "get-/tax-rates/2026-09/tax-rates",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "description": "A boolean to filter results by their active status.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "example": null
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to display per page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paging": {
+                      "type": "object",
+                      "properties": {
+                        "next": {
+                          "required": [
+                            "after"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "after": {
+                              "type": "string",
+                              "description": "A paging cursor token for retrieving subsequent pages.",
+                              "example": null
+                            },
+                            "link": {
+                              "type": "string",
+                              "description": "A URL that can be used to retrieve the next page results.",
+                              "example": null
+                            }
+                          },
+                          "description": "Specifies the paging information needed to retrieve the next set of results in a paginated API response",
+                          "example": null
+                        }
+                      },
+                      "description": "Paging information for forward-only pagination. Contains the next page reference when more results are available; omitted or empty on the last page.",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of PublicTaxRateGroup objects, each representing a tax rate group with its properties.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "active",
+                          "createdAt",
+                          "id",
+                          "label",
+                          "name",
+                          "percentageRate",
+                          "updatedAt"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "active": {
+                            "type": "boolean",
+                            "description": "Indicates whether the tax rate group is currently active.",
+                            "example": null
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date and time when the tax rate was created.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the tax rate.",
+                            "example": null
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "The display label for the tax rate.",
+                            "example": null
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the tax rate.",
+                            "example": null
+                          },
+                          "percentageRate": {
+                            "type": "number",
+                            "description": "The percentage rate applied.",
+                            "example": null
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date and time when the tax rate was last updated.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/tax-rates/2026-09/tax-rates/{taxRateGroupId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Get a specific tax rate",
+        "description": "Retrieve a specific tax rate by its `taxRateGroupId`.",
+        "operationId": "get-/tax-rates/2026-09/tax-rates/{taxRateGroupId}",
+        "parameters": [
+          {
+            "name": "taxRateGroupId",
+            "in": "path",
+            "description": "The unique identifier of the tax rate group to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "active",
+                    "createdAt",
+                    "id",
+                    "label",
+                    "name",
+                    "percentageRate",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "active": {
+                      "type": "boolean",
+                      "description": "Indicates whether the tax rate group is currently active.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the tax rate was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the tax rate.",
+                      "example": null
+                    },
+                    "label": {
+                      "type": "string",
+                      "description": "The display label for the tax rate.",
+                      "example": null
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the tax rate.",
+                      "example": null
+                    },
+                    "percentageRate": {
+                      "type": "number",
+                      "description": "The percentage rate applied.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the tax rate was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

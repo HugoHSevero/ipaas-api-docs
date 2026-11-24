@@ -1,0 +1,675 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - CRM - Proprietários",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/crm/owners/2026-09": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "List owners",
+        "description": "Retrieve a paginated list of owners from your HubSpot account. This endpoint allows filtering by email and supports pagination through the 'after' parameter. You can also specify the maximum number of results per page and choose to include archived owners in the response.",
+        "operationId": "get-/crm/owners/2026-09_/crm/owners/v3",
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "description": "The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "description": "Whether to return only results that have been archived.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "example": null,
+              "default": false
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Filter by email address (optional)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to display per page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null,
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paging": {
+                      "type": "object",
+                      "properties": {
+                        "next": {
+                          "required": [
+                            "after"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "after": {
+                              "type": "string",
+                              "description": "A string token used as a cursor for pagination, indicating the position after the last item on the current page.",
+                              "example": null
+                            },
+                            "link": {
+                              "type": "string",
+                              "description": "A string containing the URL link to the next page of results.",
+                              "example": null
+                            }
+                          },
+                          "description": "Specifies the paging information needed to retrieve the next set of results in a paginated API response",
+                          "example": null
+                        }
+                      },
+                      "description": "Paging information for forward-only pagination. Contains the next page reference when more results are available; omitted or empty on the last page.",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of PublicOwner objects, each representing an individual owner with their specific details.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "archived",
+                          "createdAt",
+                          "id",
+                          "type",
+                          "updatedAt"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "archived": {
+                            "type": "boolean",
+                            "description": "Indicates whether the owner is archived.",
+                            "example": null
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date and time when the owner was created.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The email address of the owner.",
+                            "example": null
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The first name of the owner.",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier of the owner.",
+                            "example": null
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The last name of the owner.",
+                            "example": null
+                          },
+                          "teams": {
+                            "type": "array",
+                            "description": "An array of teams associated with the owner, where each team is represented by a PublicTeam object.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "id",
+                                "name",
+                                "primary"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "The unique identifier for the team, represented as a string.",
+                                  "example": null
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "The name of the team, represented as a string.",
+                                  "example": null
+                                },
+                                "primary": {
+                                  "type": "boolean",
+                                  "description": "A boolean indicating whether this team is the primary team.",
+                                  "example": null
+                                }
+                              },
+                              "example": null
+                            }
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "The type of the owner, which can be either PERSON or QUEUE.",
+                            "example": null,
+                            "enum": [
+                              "PERSON",
+                              "QUEUE"
+                            ]
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date and time when the owner was last updated.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "userId": {
+                            "type": "integer",
+                            "description": "The user ID of the owner.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "userIdIncludingInactive": {
+                            "type": "integer",
+                            "description": "The user ID of the owner, including inactive users.",
+                            "format": "int32",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-hubspot-user-level-auth": {
+          "internalOnly": false
+        }
+      }
+    },
+    "/crm/owners/2026-09/{ownerId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve a specific owner by ID",
+        "description": "Retrieve details of a specific owner using either their 'id' or 'userId'.",
+        "operationId": "get-/crm/owners/2026-09/{ownerId}_getById",
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "The unique identifier of the owner to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "description": "Whether to return only results that have been archived.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "example": null,
+              "default": false
+            }
+          },
+          {
+            "name": "idProperty",
+            "in": "query",
+            "description": "Specifies which property to use for identifying the owner. Valid values are 'id' or 'userId'. Defaults to 'id'.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null,
+              "default": "id",
+              "enum": [
+                "id",
+                "userId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "archived",
+                    "createdAt",
+                    "id",
+                    "type",
+                    "updatedAt"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "archived": {
+                      "type": "boolean",
+                      "description": "Indicates whether the owner is archived.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the owner was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "The email address of the owner.",
+                      "example": null
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "description": "The first name of the owner.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier of the owner.",
+                      "example": null
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "The last name of the owner.",
+                      "example": null
+                    },
+                    "teams": {
+                      "type": "array",
+                      "description": "An array of teams associated with the owner, where each team is represented by a PublicTeam object.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "id",
+                          "name",
+                          "primary"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the team, represented as a string.",
+                            "example": null
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the team, represented as a string.",
+                            "example": null
+                          },
+                          "primary": {
+                            "type": "boolean",
+                            "description": "A boolean indicating whether this team is the primary team.",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The type of the owner, which can be either PERSON or QUEUE.",
+                      "example": null,
+                      "enum": [
+                        "PERSON",
+                        "QUEUE"
+                      ]
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the owner was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "userId": {
+                      "type": "integer",
+                      "description": "The user ID of the owner.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "userIdIncludingInactive": {
+                      "type": "integer",
+                      "description": "The user ID of the owner, including inactive users.",
+                      "format": "int32",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "Node",
+    "Python",
+    "Ruby",
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

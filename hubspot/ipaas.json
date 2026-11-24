@@ -1,0 +1,866 @@
+{
+  "app": {
+    "name": "HubSpot",
+    "description": "Plataforma HubSpot (API 2026-09): CRM, atividades, comércio, marketing, CMS, automação, conversas, eventos, webhooks, conta e arquivos."
+  },
+  "environments": [
+    {
+      "name": "Produção",
+      "type": "REST",
+      "baseURL": "https://api.hubapi.com",
+      "authModels": [
+        "TOKEN"
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Produção",
+      "environment": "Produção",
+      "authModel": "TOKEN",
+      "token": "<token de private app da HubSpot, cadastrar na interface>"
+    }
+  ],
+  "services": [
+    {
+      "name": "CRM - Associações",
+      "description": "21 operações da API CRM/Associations (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-associacoes.ipaas.json"
+    },
+    {
+      "name": "CRM - Biblioteca de objetos",
+      "description": "2 operações da API CRM/Object Library (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-biblioteca-de-objetos.ipaas.json"
+    },
+    {
+      "name": "CRM - Clientes de parceiros",
+      "description": "14 operações da API CRM/Partner Clients (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-clientes-de-parceiros.ipaas.json"
+    },
+    {
+      "name": "CRM - Contatos",
+      "description": "14 operações da API CRM/Contacts (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-contatos.ipaas.json"
+    },
+    {
+      "name": "CRM - Cursos",
+      "description": "14 operações da API CRM/Courses (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-cursos.ipaas.json"
+    },
+    {
+      "name": "CRM - Divisão de negócios",
+      "description": "2 operações da API CRM/Deal Splits (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-divisao-de-negocios.ipaas.json"
+    },
+    {
+      "name": "CRM - Empresas",
+      "description": "14 operações da API CRM/Companies (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-empresas.ipaas.json"
+    },
+    {
+      "name": "CRM - Envios de forecast",
+      "description": "1 operações da API CRM/Forecast Submissions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-envios-de-forecast.ipaas.json"
+    },
+    {
+      "name": "CRM - Esquemas de objetos",
+      "description": "8 operações da API CRM/Schemas (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-esquemas-de-objetos.ipaas.json"
+    },
+    {
+      "name": "CRM - Exportações",
+      "description": "3 operações da API CRM/Exports (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-exportacoes.ipaas.json"
+    },
+    {
+      "name": "CRM - Governança de pipelines",
+      "description": "8 operações da API CRM/Pipeline Governance (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-governanca-de-pipelines.ipaas.json"
+    },
+    {
+      "name": "CRM - Imóveis (listings)",
+      "description": "14 operações da API CRM/Listings (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-imoveis-listings.ipaas.json"
+    },
+    {
+      "name": "CRM - Importações",
+      "description": "5 operações da API CRM/Imports (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-importacoes.ipaas.json"
+    },
+    {
+      "name": "CRM - Leads",
+      "description": "14 operações da API CRM/Leads (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-leads.ipaas.json"
+    },
+    {
+      "name": "CRM - Limites de uso",
+      "description": "9 operações da API CRM/Limits Tracking (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-limites-de-uso.ipaas.json"
+    },
+    {
+      "name": "CRM - Listas",
+      "description": "30 operações da API CRM/Lists (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-listas.ipaas.json"
+    },
+    {
+      "name": "CRM - Metas",
+      "description": "14 operações da API CRM/Goal Targets (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-metas.ipaas.json"
+    },
+    {
+      "name": "CRM - Negócios",
+      "description": "14 operações da API CRM/Deals (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-negocios.ipaas.json"
+    },
+    {
+      "name": "CRM - Objetos (genérico)",
+      "description": "11 operações da API CRM/Objects (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-objetos-generico.ipaas.json"
+    },
+    {
+      "name": "CRM - Pipelines",
+      "description": "14 operações da API CRM/Pipelines (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-pipelines.ipaas.json"
+    },
+    {
+      "name": "CRM - Projetos",
+      "description": "13 operações da API CRM/Projects (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-projetos.ipaas.json"
+    },
+    {
+      "name": "CRM - Propriedades",
+      "description": "13 operações da API CRM/Properties (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-propriedades.ipaas.json"
+    },
+    {
+      "name": "CRM - Proprietários",
+      "description": "2 operações da API CRM/Crm Owners (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-proprietarios.ipaas.json"
+    },
+    {
+      "name": "CRM - Respostas de feedback",
+      "description": "14 operações da API CRM/Feedback Submissions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-respostas-de-feedback.ipaas.json"
+    },
+    {
+      "name": "CRM - Serviços (objeto)",
+      "description": "14 operações da API CRM/Services (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-servicos-objeto.ipaas.json"
+    },
+    {
+      "name": "CRM - Serviços de parceiros",
+      "description": "14 operações da API CRM/Partner Services (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-servicos-de-parceiros.ipaas.json"
+    },
+    {
+      "name": "CRM - Tags de objetos",
+      "description": "6 operações da API CRM/Object Tags (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-tags-de-objetos.ipaas.json"
+    },
+    {
+      "name": "CRM - Tickets",
+      "description": "14 operações da API CRM/Tickets (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-tickets.ipaas.json"
+    },
+    {
+      "name": "CRM - Tipos de forecast",
+      "description": "2 operações da API CRM/Forecast Types (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-tipos-de-forecast.ipaas.json"
+    },
+    {
+      "name": "CRM - Usuários",
+      "description": "14 operações da API CRM/Users (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-usuarios.ipaas.json"
+    },
+    {
+      "name": "CRM - Validações de propriedades",
+      "description": "4 operações da API CRM/Property Validations (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-crm-validacoes-de-propriedades.ipaas.json"
+    },
+    {
+      "name": "Atividades - Agendador de reuniões",
+      "description": "5 operações da API Scheduler/Meetings (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-agendador-de-reunioes.ipaas.json"
+    },
+    {
+      "name": "Atividades - Chamadas",
+      "description": "14 operações da API CRM/Calls (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-chamadas.ipaas.json"
+    },
+    {
+      "name": "Atividades - Comunicações",
+      "description": "14 operações da API CRM/Communications (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-comunicacoes.ipaas.json"
+    },
+    {
+      "name": "Atividades - Correio postal",
+      "description": "14 operações da API CRM/Postal Mail (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-correio-postal.ipaas.json"
+    },
+    {
+      "name": "Atividades - E-mails",
+      "description": "14 operações da API CRM/Emails (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-e-mails.ipaas.json"
+    },
+    {
+      "name": "Atividades - Notas",
+      "description": "14 operações da API CRM/Notes (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-notas.ipaas.json"
+    },
+    {
+      "name": "Atividades - Resumo de conversas (notetaker)",
+      "description": "1 operações da API CRM/Notetaker Conversation Recap (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-resumo-de-conversas-notetaker.ipaas.json"
+    },
+    {
+      "name": "Atividades - Reuniões",
+      "description": "14 operações da API CRM/Meetings (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-reunioes.ipaas.json"
+    },
+    {
+      "name": "Atividades - Séries de tarefas",
+      "description": "4 operações da API CRM/Tasks Series (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-series-de-tarefas.ipaas.json"
+    },
+    {
+      "name": "Atividades - Tarefas",
+      "description": "14 operações da API CRM/Tasks (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-tarefas.ipaas.json"
+    },
+    {
+      "name": "Atividades - Transcrições",
+      "description": "3 operações da API CRM/Transcriptions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-atividades-transcricoes.ipaas.json"
+    },
+    {
+      "name": "Comércio - Assinaturas",
+      "description": "14 operações da API CRM/Commerce Subscriptions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-assinaturas.ipaas.json"
+    },
+    {
+      "name": "Comércio - Carrinhos",
+      "description": "14 operações da API CRM/Carts (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-carrinhos.ipaas.json"
+    },
+    {
+      "name": "Comércio - Contas de pagamento",
+      "description": "1 operações da API Commerce/Paymentsaccounts (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-contas-de-pagamento.ipaas.json"
+    },
+    {
+      "name": "Comércio - Contratos",
+      "description": "14 operações da API CRM/Contracts (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-contratos.ipaas.json"
+    },
+    {
+      "name": "Comércio - Cotações",
+      "description": "14 operações da API CRM/Quotes (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-cotacoes.ipaas.json"
+    },
+    {
+      "name": "Comércio - Descontos",
+      "description": "14 operações da API CRM/Discounts (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-descontos.ipaas.json"
+    },
+    {
+      "name": "Comércio - Faturas",
+      "description": "14 operações da API CRM/Invoices (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-faturas.ipaas.json"
+    },
+    {
+      "name": "Comércio - Impostos",
+      "description": "14 operações da API CRM/Taxes (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-impostos.ipaas.json"
+    },
+    {
+      "name": "Comércio - Itens de linha",
+      "description": "14 operações da API CRM/Line Items (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-itens-de-linha.ipaas.json"
+    },
+    {
+      "name": "Comércio - Links de pagamento",
+      "description": "5 operações da API Commerce/Payment Links (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-links-de-pagamento.ipaas.json"
+    },
+    {
+      "name": "Comércio - Pagamentos",
+      "description": "14 operações da API CRM/Commerce Payments (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-pagamentos.ipaas.json"
+    },
+    {
+      "name": "Comércio - Pedidos",
+      "description": "14 operações da API CRM/Orders (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-pedidos.ipaas.json"
+    },
+    {
+      "name": "Comércio - Price books",
+      "description": "16 operações da API Commerce/Price Books (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-price-books.ipaas.json"
+    },
+    {
+      "name": "Comércio - Produtos",
+      "description": "14 operações da API CRM/Products (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-produtos.ipaas.json"
+    },
+    {
+      "name": "Comércio - Taxas",
+      "description": "14 operações da API CRM/Fees (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-comercio-taxas.ipaas.json"
+    },
+    {
+      "name": "Marketing - Campanhas",
+      "description": "28 operações da API Marketing/Campaigns Public Api (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-marketing-campanhas.ipaas.json"
+    },
+    {
+      "name": "Marketing - E-mails de marketing",
+      "description": "19 operações da API Marketing/Marketing Emails (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-marketing-e-mails-de-marketing.ipaas.json"
+    },
+    {
+      "name": "Marketing - E-mails transacionais",
+      "description": "6 operações da API Marketing/Transactional Single Send (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-marketing-e-mails-transacionais.ipaas.json"
+    },
+    {
+      "name": "Marketing - Eventos de marketing",
+      "description": "36 operações da API Marketing/Marketing Events (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-marketing-eventos-de-marketing.ipaas.json"
+    },
+    {
+      "name": "Marketing - Preferências de comunicação",
+      "description": "10 operações da API Communication Preferences/Subscriptions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-marketing-preferencias-de-comunicacao.ipaas.json"
+    },
+    {
+      "name": "Marketing - Single send",
+      "description": "1 operações da API Marketing/Single-send (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-marketing-single-send.ipaas.json"
+    },
+    {
+      "name": "CMS - Auditoria de conteúdo",
+      "description": "2 operações da API CMS/Cms Content Audit (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-auditoria-de-conteudo.ipaas.json"
+    },
+    {
+      "name": "CMS - Autores do blog",
+      "description": "14 operações da API CMS/Authors (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-autores-do-blog.ipaas.json"
+    },
+    {
+      "name": "CMS - Busca do site",
+      "description": "2 operações da API CMS/Site Search (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-busca-do-site.ipaas.json"
+    },
+    {
+      "name": "CMS - Código-fonte",
+      "description": "8 operações da API CMS/Source Code (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-codigo-fonte.ipaas.json"
+    },
+    {
+      "name": "CMS - Configurações do blog",
+      "description": "9 operações da API CMS/Blog Settings (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-configuracoes-do-blog.ipaas.json"
+    },
+    {
+      "name": "CMS - Domínios",
+      "description": "2 operações da API CMS/Domains (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-dominios.ipaas.json"
+    },
+    {
+      "name": "CMS - HubDB",
+      "description": "31 operações da API CMS/Hubdb (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-hubdb.ipaas.json"
+    },
+    {
+      "name": "CMS - Mapeamento de URLs",
+      "description": "4 operações da API CMS/Url Mappings (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-mapeamento-de-urls.ipaas.json"
+    },
+    {
+      "name": "CMS - Media Bridge",
+      "description": "33 operações da API CMS/Media Bridge (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-media-bridge.ipaas.json"
+    },
+    {
+      "name": "CMS - Páginas de destino",
+      "description": "39 operações da API CMS/Pages (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-paginas-de-destino.ipaas.json"
+    },
+    {
+      "name": "CMS - Páginas do site",
+      "description": "27 operações da API CMS/Pages (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-paginas-do-site.ipaas.json"
+    },
+    {
+      "name": "CMS - Posts do blog",
+      "description": "30 operações da API CMS/Posts (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-posts-do-blog.ipaas.json"
+    },
+    {
+      "name": "CMS - Redirecionamentos de URL",
+      "description": "9 operações da API CMS/Url Redirects (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-redirecionamentos-de-url.ipaas.json"
+    },
+    {
+      "name": "CMS - Tags do blog",
+      "description": "14 operações da API CMS/Tags (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-cms-tags-do-blog.ipaas.json"
+    },
+    {
+      "name": "Automação - Ações de workflow",
+      "description": "18 operações da API Automation/Actions V4 (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-automacao-acoes-de-workflow.ipaas.json"
+    },
+    {
+      "name": "Automação - Sequências",
+      "description": "11 operações da API Automation/Sequences (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-automacao-sequencias.ipaas.json"
+    },
+    {
+      "name": "Automação - Templates de e-mail",
+      "description": "5 operações da API Automation/Email Templates (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-automacao-templates-de-e-mail.ipaas.json"
+    },
+    {
+      "name": "Conversas - Canais personalizados",
+      "description": "13 operações da API Conversations/Custom Channels (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conversas-canais-personalizados.ipaas.json"
+    },
+    {
+      "name": "Conversas - Conversas",
+      "description": "18 operações da API Conversations/Conversations (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conversas-conversas.ipaas.json"
+    },
+    {
+      "name": "Conversas - Identificação de visitantes",
+      "description": "1 operações da API Conversations/Visitor Identification (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conversas-identificacao-de-visitantes.ipaas.json"
+    },
+    {
+      "name": "Eventos - Consulta de eventos",
+      "description": "2 operações da API Events/Events (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-eventos-consulta-de-eventos.ipaas.json"
+    },
+    {
+      "name": "Eventos - Definições de eventos",
+      "description": "9 operações da API Events/Manage Event Definitions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-eventos-definicoes-de-eventos.ipaas.json"
+    },
+    {
+      "name": "Eventos - Envio de eventos",
+      "description": "1 operações da API Events/Send Event Completions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-eventos-envio-de-eventos.ipaas.json"
+    },
+    {
+      "name": "Webhooks - Assinaturas de webhooks",
+      "description": "9 operações da API Webhooks/Webhooks (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-webhooks-assinaturas-de-webhooks.ipaas.json"
+    },
+    {
+      "name": "Webhooks - Webhooks Journal",
+      "description": "26 operações da API Webhooks Journal/Webhooks Journal (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-webhooks-webhooks-journal.ipaas.json"
+    },
+    {
+      "name": "Conta - Alíquotas de imposto",
+      "description": "2 operações da API Settings/Tax Rates (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-aliquotas-de-imposto.ipaas.json"
+    },
+    {
+      "name": "Conta - Equipes",
+      "description": "9 operações da API Settings/Teams (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-equipes.ipaas.json"
+    },
+    {
+      "name": "Conta - Informações da conta",
+      "description": "2 operações da API Account/Account Info (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-informacoes-da-conta.ipaas.json"
+    },
+    {
+      "name": "Conta - Logs de auditoria",
+      "description": "3 operações da API Account/Audit Logs (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-logs-de-auditoria.ipaas.json"
+    },
+    {
+      "name": "Conta - Multimoeda",
+      "description": "15 operações da API Settings/Multicurrency (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-multimoeda.ipaas.json"
+    },
+    {
+      "name": "Conta - Origens",
+      "description": "6 operações da API Meta/Origins (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-origens.ipaas.json"
+    },
+    {
+      "name": "Conta - Provisionamento de usuários",
+      "description": "8 operações da API Settings/User Provisioning (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-provisionamento-de-usuarios.ipaas.json"
+    },
+    {
+      "name": "Conta - Tokens OAuth",
+      "description": "3 operações da API Auth/Oauth (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-tokens-oauth.ipaas.json"
+    },
+    {
+      "name": "Conta - Unidades de negócio",
+      "description": "1 operações da API Business Units/Business Units (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-conta-unidades-de-negocio.ipaas.json"
+    },
+    {
+      "name": "Arquivos - Arquivos e pastas",
+      "description": "19 operações da API Files/Files (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-arquivos-arquivos-e-pastas.ipaas.json"
+    },
+    {
+      "name": "Extensões CRM - Cartões de CRM",
+      "description": "7 operações da API CRM/Public App Crm Cards (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-extensoes-crm-cartoes-de-crm.ipaas.json"
+    },
+    {
+      "name": "Extensões CRM - Extensão de videoconferência",
+      "description": "3 operações da API CRM/Video Conferencing Extension (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-extensoes-crm-extensao-de-videoconferencia.ipaas.json"
+    },
+    {
+      "name": "Extensões CRM - Extensões de chamada",
+      "description": "13 operações da API CRM/Calling Extensions (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-extensoes-crm-extensoes-de-chamada.ipaas.json"
+    },
+    {
+      "name": "Extensões CRM - Linha do tempo",
+      "description": "3 operações da API CRM/Timeline (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-extensoes-crm-linha-do-tempo.ipaas.json"
+    },
+    {
+      "name": "Gestão de apps - Desinstalação de apps",
+      "description": "1 operações da API CRM/App Uninstalls (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-gestao-de-apps-desinstalacao-de-apps.ipaas.json"
+    },
+    {
+      "name": "Gestão de apps - Feature flags de apps",
+      "description": "10 operações da API CRM/Public App Feature Flags V3 (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-gestao-de-apps-feature-flags-de-apps.ipaas.json"
+    },
+    {
+      "name": "Data Studio - Ingestão de datasources",
+      "description": "8 operações da API Data Studio/Datasource Ingestion (HubSpot 2026-09)",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/dugabriel/ipaas-api-docs/main/hubspot/openapi-data-studio-ingestao-de-datasources.ipaas.json"
+    }
+  ]
+}

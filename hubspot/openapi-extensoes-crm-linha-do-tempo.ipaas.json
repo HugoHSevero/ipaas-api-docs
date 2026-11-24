@@ -1,0 +1,1211 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Extensões CRM - Linha do tempo",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Advanced"
+    },
+    {
+      "name": "Batch"
+    }
+  ],
+  "paths": {
+    "/integrators/timeline/2026-09/events": {
+      "post": {
+        "tags": [
+          "Advanced"
+        ],
+        "summary": "Send event data (single)",
+        "description": "Send a single instance of event data to a specified event type.",
+        "operationId": "post-/integrators/timeline/2026-09/events_create",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "eventTypeName",
+                  "id",
+                  "properties"
+                ],
+                "type": "object",
+                "properties": {
+                  "domain": {
+                    "type": "string",
+                    "description": "The domain associated with the event occurrence, represented as a string.",
+                    "example": null
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The email address associated with the event occurrence, represented as a string.",
+                    "example": null
+                  },
+                  "eventTypeName": {
+                    "type": "string",
+                    "description": "The name of the event type, represented as a string.",
+                    "example": null
+                  },
+                  "extraData": {
+                    "type": "object",
+                    "properties": {},
+                    "description": "An object containing additional data related to the event occurrence.",
+                    "example": null
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "The unique identifier for this event occurrence, represented as a string.",
+                    "example": null
+                  },
+                  "objectId": {
+                    "type": "string",
+                    "description": "The unique identifier of the object related to the event, represented as a string.",
+                    "example": null
+                  },
+                  "objectTypeFullyQualifiedName": {
+                    "type": "string",
+                    "description": "The fully qualified name of the object type associated with the event, represented as a string.",
+                    "example": null
+                  },
+                  "properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "description": "A map of custom property names to their values, represented as an object with string values.",
+                    "example": null
+                  },
+                  "timelineIFrame": {
+                    "required": [
+                      "headerLabel",
+                      "height",
+                      "linkLabel",
+                      "url",
+                      "width"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "headerLabel": {
+                        "type": "string",
+                        "description": "The label of the modal window that displays the iframe contents.",
+                        "example": null
+                      },
+                      "height": {
+                        "type": "integer",
+                        "description": "The height of the modal window in pixels.",
+                        "format": "int32",
+                        "example": null
+                      },
+                      "linkLabel": {
+                        "type": "string",
+                        "description": "The text displaying the link that will display the iframe.",
+                        "example": null
+                      },
+                      "url": {
+                        "type": "string",
+                        "description": "The URI of the iframe contents.",
+                        "example": null
+                      },
+                      "width": {
+                        "type": "integer",
+                        "description": "The width of the modal window in pixels.",
+                        "format": "int32",
+                        "example": null
+                      }
+                    },
+                    "example": null
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "description": "The date and time when the event occurred, represented in ISO 8601 format.",
+                    "format": "date-time",
+                    "example": null
+                  },
+                  "utk": {
+                    "type": "string",
+                    "description": "The user token key (utk) associated with the event, represented as a string.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "App Event Occurrence was accepted and persisted successfully. Mirrored to UnifiedEvents async.",
+            "content": {}
+          },
+          "201": {
+            "description": "successful operation",
+            "headers": {
+              "Location": {
+                "description": "URL of the newly created resource",
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string",
+                  "example": null
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "eventTypeName",
+                    "id",
+                    "properties"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "type": "string",
+                      "description": "The domain associated with the event occurrence, represented as a string.",
+                      "example": null
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "The email address associated with the event occurrence, represented as a string.",
+                      "example": null
+                    },
+                    "eventTypeName": {
+                      "type": "string",
+                      "description": "The name of the event type, represented as a string.",
+                      "example": null
+                    },
+                    "extraData": {
+                      "type": "object",
+                      "properties": {},
+                      "description": "An object containing additional data related to the event occurrence.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for this event occurrence, represented as a string.",
+                      "example": null
+                    },
+                    "objectId": {
+                      "type": "string",
+                      "description": "The unique identifier of the object related to the event, represented as a string.",
+                      "example": null
+                    },
+                    "objectTypeFullyQualifiedName": {
+                      "type": "string",
+                      "description": "The fully qualified name of the object type associated with the event, represented as a string.",
+                      "example": null
+                    },
+                    "properties": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of custom property names to their values, represented as an object with string values.",
+                      "example": null
+                    },
+                    "timelineIFrame": {
+                      "required": [
+                        "headerLabel",
+                        "height",
+                        "linkLabel",
+                        "url",
+                        "width"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "headerLabel": {
+                          "type": "string",
+                          "description": "The label of the modal window that displays the iframe contents.",
+                          "example": null
+                        },
+                        "height": {
+                          "type": "integer",
+                          "description": "The height of the modal window in pixels.",
+                          "format": "int32",
+                          "example": null
+                        },
+                        "linkLabel": {
+                          "type": "string",
+                          "description": "The text displaying the link that will display the iframe.",
+                          "example": null
+                        },
+                        "url": {
+                          "type": "string",
+                          "description": "The URI of the iframe contents.",
+                          "example": null
+                        },
+                        "width": {
+                          "type": "integer",
+                          "description": "The width of the modal window in pixels.",
+                          "format": "int32",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "description": "The date and time when the event occurred, represented in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "utk": {
+                      "type": "string",
+                      "description": "The user token key (utk) associated with the event, represented as a string.",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "400": {
+            "description": "The occurrence has a validation error that prevented us from accepting it for persistence. The response body will contain details about the validation error. Occurrence insert request rejected.",
+            "content": {}
+          },
+          "409": {
+            "description": "An occurrence for this event type and occurrence ID already exists. Occurrences are immutable. Occurrence insert request rejected.",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/integrators/timeline/2026-09/events/batch": {
+      "post": {
+        "tags": [
+          "Batch"
+        ],
+        "summary": "Batch insert events",
+        "description": "Insert a batch of new App Event occurrences into the timeline. Each occurrence in the batch is immutable, and if an occurrence with the same ID already exists, the entire batch will be rejected. The batch can include occurrences from multiple event types, but all must belong to a single portal.",
+        "operationId": "post-/integrators/timeline/2026-09/events/batch_/integrators/timeline/2026-03/events/batch",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                  "inputs": {
+                    "type": "array",
+                    "description": "An array of AppEventOccurrence objects, each representing an individual app event occurrence to be included in the batch. This property is required.",
+                    "example": null,
+                    "items": {
+                      "required": [
+                        "eventTypeName",
+                        "id",
+                        "properties"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "domain": {
+                          "type": "string",
+                          "description": "The domain associated with the event occurrence, represented as a string.",
+                          "example": null
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "The email address associated with the event occurrence, represented as a string.",
+                          "example": null
+                        },
+                        "eventTypeName": {
+                          "type": "string",
+                          "description": "The name of the event type, represented as a string.",
+                          "example": null
+                        },
+                        "extraData": {
+                          "type": "object",
+                          "properties": {},
+                          "description": "An object containing additional data related to the event occurrence.",
+                          "example": null
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "The unique identifier for this event occurrence, represented as a string.",
+                          "example": null
+                        },
+                        "objectId": {
+                          "type": "string",
+                          "description": "The unique identifier of the object related to the event, represented as a string.",
+                          "example": null
+                        },
+                        "objectTypeFullyQualifiedName": {
+                          "type": "string",
+                          "description": "The fully qualified name of the object type associated with the event, represented as a string.",
+                          "example": null
+                        },
+                        "properties": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string",
+                            "example": null
+                          },
+                          "description": "A map of custom property names to their values, represented as an object with string values.",
+                          "example": null
+                        },
+                        "timelineIFrame": {
+                          "required": [
+                            "headerLabel",
+                            "height",
+                            "linkLabel",
+                            "url",
+                            "width"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "headerLabel": {
+                              "type": "string",
+                              "description": "The label of the modal window that displays the iframe contents.",
+                              "example": null
+                            },
+                            "height": {
+                              "type": "integer",
+                              "description": "The height of the modal window in pixels.",
+                              "format": "int32",
+                              "example": null
+                            },
+                            "linkLabel": {
+                              "type": "string",
+                              "description": "The text displaying the link that will display the iframe.",
+                              "example": null
+                            },
+                            "url": {
+                              "type": "string",
+                              "description": "The URI of the iframe contents.",
+                              "example": null
+                            },
+                            "width": {
+                              "type": "integer",
+                              "description": "The width of the modal window in pixels.",
+                              "format": "int32",
+                              "example": null
+                            }
+                          },
+                          "example": null
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "description": "The date and time when the event occurred, represented in ISO 8601 format.",
+                          "format": "date-time",
+                          "example": null
+                        },
+                        "utk": {
+                          "type": "string",
+                          "description": "The user token key (utk) associated with the event, represented as a string.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    }
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "completedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch operation was completed, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of StandardError objects detailing any errors that occurred during the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "category",
+                          "context",
+                          "errors",
+                          "links",
+                          "message",
+                          "status"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string",
+                            "description": "The category of the error.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "The context of the error, potentially including occurrence information.",
+                            "example": null
+                          },
+                          "errors": {
+                            "type": "array",
+                            "description": "An array of ErrorDetail objects providing further information about the error.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "message"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "code": {
+                                  "type": "string",
+                                  "description": "The status code associated with the error detail",
+                                  "example": null
+                                },
+                                "context": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "type": "string",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "Context about the error condition",
+                                  "example": "{missingScopes=[scope1, scope2]}"
+                                },
+                                "in": {
+                                  "type": "string",
+                                  "description": "The name of the field or parameter in which the error was found.",
+                                  "example": null
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "description": "A human readable message describing the error along with remediation steps where appropriate",
+                                  "example": null
+                                },
+                                "subCategory": {
+                                  "type": "string",
+                                  "description": "A specific category that contains more specific detail about the error",
+                                  "example": null
+                                }
+                              },
+                              "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                              "example": null
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The error ID, if any.",
+                            "example": null
+                          },
+                          "links": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "description": "Links to any helpful documentation.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "The error message, if any.",
+                            "example": null
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "The resulting status of the batch operation.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "object",
+                            "properties": {},
+                            "description": "Sub category of the error, if any.",
+                            "example": null
+                          }
+                        },
+                        "description": "Ye olde error",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs that provide additional information about the batch operation.",
+                      "example": null
+                    },
+                    "numErrors": {
+                      "type": "integer",
+                      "description": "The number of errors encountered during the batch operation.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch operation was requested, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of AppEventOccurrence objects representing the results of the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "eventTypeName",
+                          "id",
+                          "properties"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "domain": {
+                            "type": "string",
+                            "description": "The domain associated with the event occurrence, represented as a string.",
+                            "example": null
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The email address associated with the event occurrence, represented as a string.",
+                            "example": null
+                          },
+                          "eventTypeName": {
+                            "type": "string",
+                            "description": "The name of the event type, represented as a string.",
+                            "example": null
+                          },
+                          "extraData": {
+                            "type": "object",
+                            "properties": {},
+                            "description": "An object containing additional data related to the event occurrence.",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for this event occurrence, represented as a string.",
+                            "example": null
+                          },
+                          "objectId": {
+                            "type": "string",
+                            "description": "The unique identifier of the object related to the event, represented as a string.",
+                            "example": null
+                          },
+                          "objectTypeFullyQualifiedName": {
+                            "type": "string",
+                            "description": "The fully qualified name of the object type associated with the event, represented as a string.",
+                            "example": null
+                          },
+                          "properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "description": "A map of custom property names to their values, represented as an object with string values.",
+                            "example": null
+                          },
+                          "timelineIFrame": {
+                            "required": [
+                              "headerLabel",
+                              "height",
+                              "linkLabel",
+                              "url",
+                              "width"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "headerLabel": {
+                                "type": "string",
+                                "description": "The label of the modal window that displays the iframe contents.",
+                                "example": null
+                              },
+                              "height": {
+                                "type": "integer",
+                                "description": "The height of the modal window in pixels.",
+                                "format": "int32",
+                                "example": null
+                              },
+                              "linkLabel": {
+                                "type": "string",
+                                "description": "The text displaying the link that will display the iframe.",
+                                "example": null
+                              },
+                              "url": {
+                                "type": "string",
+                                "description": "The URI of the iframe contents.",
+                                "example": null
+                              },
+                              "width": {
+                                "type": "integer",
+                                "description": "The width of the modal window in pixels.",
+                                "format": "int32",
+                                "example": null
+                              }
+                            },
+                            "example": null
+                          },
+                          "timestamp": {
+                            "type": "string",
+                            "description": "The date and time when the event occurred, represented in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "utk": {
+                            "type": "string",
+                            "description": "The user token key (utk) associated with the event, represented as a string.",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch operation started, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the batch operation. Valid values include 'PENDING', 'PROCESSING', 'CANCELED', and 'COMPLETE'.",
+                      "example": null,
+                      "enum": [
+                        "CANCELED",
+                        "COMPLETE",
+                        "PENDING",
+                        "PROCESSING"
+                      ]
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "400": {
+            "description": "One or more occurrences has a validation error that prevented us from accepting them for persistence. The response body will contain details about the validation error. Occurrence batch insert request rejected, none were accepted.",
+            "content": {}
+          },
+          "409": {
+            "description": "One or more occurrence in the batch already exist. Occurrences are immutable. Occurrence insert request rejected, none were accepted.",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/integrators/timeline/2026-09/types/projects": {
+      "post": {
+        "tags": [
+          "Advanced"
+        ],
+        "summary": "Resolve Event Type",
+        "description": "Resolve the fully qualified name (FQN) of an App Event Type using its developer coordinates, which include the project name and developer symbol. This endpoint is used for event types managed through Projects and does not support legacy or non-migrated event types.",
+        "operationId": "post-/integrators/timeline/2026-09/types/projects_/integrators/timeline/2026-03/types/projects",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "developerSymbol",
+                  "projectName"
+                ],
+                "type": "object",
+                "properties": {
+                  "developerSymbol": {
+                    "type": "string",
+                    "description": "The developer symbol used to identify the App Event Type. It is a string.",
+                    "example": null
+                  },
+                  "projectName": {
+                    "type": "string",
+                    "description": "The name of the project associated with the App Event Type. It is a string.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "developerQualifiedSymbol",
+                    "fullyQualifiedName"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "developerQualifiedSymbol": {
+                      "required": [
+                        "developerSymbol",
+                        "projectName"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "developerSymbol": {
+                          "type": "string",
+                          "description": "A string representing the developer's unique symbol or identifier within the project. This symbol is used in conjunction with the project name to resolve the fully qualified name of an App Event Type.",
+                          "example": null
+                        },
+                        "projectName": {
+                          "type": "string",
+                          "description": "The name of the project associated with the developer. It is a string that identifies the project within the developer's scope.",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "fullyQualifiedName": {
+                      "type": "string",
+                      "description": "A string representing the fully qualified name of the App Event Type.",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "404": {
+            "description": "There is no App Event Type for the provided coordinates. Did you provide them correctly?",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "Node",
+    "Python",
+    "Ruby",
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

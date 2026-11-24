@@ -1,0 +1,481 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Conta - Informações da conta",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/account-info/2026-09/api-usage/daily/private-apps": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve API Usage",
+        "description": "Retrieve the daily API usage for private apps in the account. This endpoint provides insights into the API consumption patterns, helping users monitor and manage their API usage effectively.",
+        "operationId": "get-/account-info/2026-09/api-usage/daily/private-apps",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "An array of API usage records, each detailing the usage metrics for a specific API. Each record includes information such as the name of the API, usage limits, current usage, and the status of the data fetch.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "collectedAt",
+                          "currentUsage",
+                          "fetchStatus",
+                          "name",
+                          "usageLimit"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "collectedAt": {
+                            "type": "string",
+                            "description": "The date and time when the usage data was collected, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "currentUsage": {
+                            "type": "integer",
+                            "description": "An integer indicating the current usage count of the API resource.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "fetchStatus": {
+                            "type": "string",
+                            "description": "The status of the data fetch operation. Valid values include 'SUCCESS', 'TIMEOUT', 'FAILURE', 'CACHED', and 'NOTFOUND'.",
+                            "example": null,
+                            "enum": [
+                              "CACHED",
+                              "FAILURE",
+                              "NOTFOUND",
+                              "SUCCESS",
+                              "TIMEOUT"
+                            ]
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the API resource being tracked.",
+                            "example": null
+                          },
+                          "resetsAt": {
+                            "type": "string",
+                            "description": "The date and time when the usage limit will reset, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "usageLimit": {
+                            "type": "integer",
+                            "description": "An integer representing the maximum allowable usage for the API resource.",
+                            "format": "int32",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category, represented as a string.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing context about the error condition. It maps property names to arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request, represented as a UUID. Include this value with any error reports or support tickets.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array providing further information about the error, with each item being an ErrorDetail object.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. It is a string.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object where each key is a string and each value is an array of strings.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. It is a string.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a string.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. It is a string.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps. Each value is a string.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate. It is a string.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error, represented as a string.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/account-info/2026-09/details": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve details",
+        "description": "Retrieve detailed information about the account associated with the HubSpot portal. This endpoint provides insights into the account type, time zone, currency settings, and data hosting location. It is useful for obtaining a comprehensive overview of the account's configuration and settings.",
+        "operationId": "get-/account-info/2026-09/details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "accountType",
+                    "additionalCurrencies",
+                    "companyCurrency",
+                    "dataHostingLocation",
+                    "portalId",
+                    "timeZone",
+                    "uiDomain",
+                    "utcOffset",
+                    "utcOffsetMilliseconds"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "accountType": {
+                      "type": "string",
+                      "description": "The type of account associated with the portal. Valid values include 'STANDARD', 'DEVELOPER_TEST', 'SANDBOX', and 'APP_DEVELOPER'.",
+                      "example": null,
+                      "enum": [
+                        "APP_DEVELOPER",
+                        "DEVELOPER_TEST",
+                        "SANDBOX",
+                        "STANDARD"
+                      ]
+                    },
+                    "additionalCurrencies": {
+                      "type": "array",
+                      "description": "An array of additional currencies supported by the portal, each represented as a string.",
+                      "example": null,
+                      "items": {
+                        "type": "string",
+                        "example": null
+                      }
+                    },
+                    "companyCurrency": {
+                      "type": "string",
+                      "description": "The primary currency used by the company, represented as a string.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "The timestamp when the portal was created, represented as a Unix timestamp in milliseconds.",
+                      "format": "int64",
+                      "example": null
+                    },
+                    "dataHostingLocation": {
+                      "type": "string",
+                      "description": "The location where the portal's data is hosted, represented as a string.",
+                      "example": null
+                    },
+                    "portalId": {
+                      "type": "integer",
+                      "description": "The unique identifier for the HubSpot portal, represented as an integer.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "portalName": {
+                      "type": "string",
+                      "description": "The name of the portal, represented as a string.",
+                      "example": null
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "description": "The time zone setting of the portal, represented as a string.",
+                      "example": null
+                    },
+                    "uiDomain": {
+                      "type": "string",
+                      "description": "The domain used for the portal's user interface, represented as a string.",
+                      "example": null
+                    },
+                    "utcOffset": {
+                      "type": "string",
+                      "description": "The UTC offset of the portal's time zone, represented as a string.",
+                      "example": null
+                    },
+                    "utcOffsetMilliseconds": {
+                      "type": "integer",
+                      "description": "The UTC offset of the portal's time zone in milliseconds, represented as an integer.",
+                      "format": "int64",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category, represented as a string.",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "An object containing context about the error condition. It maps property names to arrays of strings.",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request, represented as a UUID. Include this value with any error reports or support tickets.",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array providing further information about the error, with each item being an ErrorDetail object.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail. It is a string.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition, represented as an object where each key is a string and each value is an array of strings.",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found. It is a string.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate. It is a string.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error. It is a string.",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps. Each value is a string.",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate. It is a string.",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error, represented as a string.",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-hubspot-user-level-auth": {
+          "internalOnly": false
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

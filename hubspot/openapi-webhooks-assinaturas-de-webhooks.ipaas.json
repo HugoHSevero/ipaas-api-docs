@@ -1,0 +1,2657 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Webhooks - Assinaturas de webhooks",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    },
+    {
+      "name": "Batch"
+    }
+  ],
+  "paths": {
+    "/app-webhooks/2026-09/{appId}/settings": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Read webhook settings",
+        "description": "Retrieve the webhook settings for the specified app, including the webhook’s target URL, throttle configuration, and create/update date.",
+        "operationId": "get-/app-webhooks/2026-09/{appId}/settings_getAll",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app whose webhook settings are being retrieved.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "targetUrl",
+                    "throttling"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the webhook settings were created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "targetUrl": {
+                      "type": "string",
+                      "description": "The URL to which the webhook events will be sent. It is a string.",
+                      "example": null
+                    },
+                    "throttling": {
+                      "required": [
+                        "maxConcurrentRequests"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "maxConcurrentRequests": {
+                          "type": "integer",
+                          "description": "The maximum number of concurrent requests allowed. This is an integer value.",
+                          "format": "int32",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the webhook settings were last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update webhook settings",
+        "description": "Update webhook settings for the specified app.",
+        "operationId": "put-/app-webhooks/2026-09/{appId}/settings_configure",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app whose webhook settings are to be updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "targetUrl",
+                  "throttling"
+                ],
+                "type": "object",
+                "properties": {
+                  "targetUrl": {
+                    "type": "string",
+                    "description": "The URL to which webhook events will be sent. It is a string.",
+                    "example": null
+                  },
+                  "throttling": {
+                    "required": [
+                      "maxConcurrentRequests"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "maxConcurrentRequests": {
+                        "type": "integer",
+                        "description": "The maximum number of concurrent requests allowed. This is an integer value.",
+                        "format": "int32",
+                        "example": null
+                      }
+                    },
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "createdAt",
+                    "targetUrl",
+                    "throttling"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the webhook settings were created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "targetUrl": {
+                      "type": "string",
+                      "description": "The URL to which the webhook events will be sent. It is a string.",
+                      "example": null
+                    },
+                    "throttling": {
+                      "required": [
+                        "maxConcurrentRequests"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "maxConcurrentRequests": {
+                          "type": "integer",
+                          "description": "The maximum number of concurrent requests allowed. This is an integer value.",
+                          "format": "int32",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the webhook settings were last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete webhook settings",
+        "description": "Delete the webhook settings for the specified app. Event subscriptions will not be deleted, but will be paused until another webhook is created.",
+        "operationId": "delete-/app-webhooks/2026-09/{appId}/settings_clear",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app whose webhook settings are to be deleted.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/app-webhooks/2026-09/{appId}/subscriptions": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Read event subscriptions",
+        "description": "Retrieve event subscriptions for the specified app.",
+        "operationId": "get-/app-webhooks/2026-09/{appId}/subscriptions_getAll",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which to retrieve subscriptions.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "description": "An array of subscription responses, each detailing a specific subscription's properties and status.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "active",
+                          "createdAt",
+                          "eventType",
+                          "id"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "active": {
+                            "type": "boolean",
+                            "description": "A boolean indicating whether the subscription is currently active.",
+                            "example": null
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date and time when the subscription was created, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "eventType": {
+                            "type": "string",
+                            "description": "The type of event that triggers the subscription. Valid values include various property changes, creations, deletions, merges, restores, and association changes for different HubSpot objects.",
+                            "example": null,
+                            "enum": [
+                              "company.associationChange",
+                              "company.creation",
+                              "company.deletion",
+                              "company.merge",
+                              "company.propertyChange",
+                              "company.restore",
+                              "contact.associationChange",
+                              "contact.creation",
+                              "contact.deletion",
+                              "contact.merge",
+                              "contact.privacyDeletion",
+                              "contact.propertyChange",
+                              "contact.restore",
+                              "conversation.creation",
+                              "conversation.deletion",
+                              "conversation.newMessage",
+                              "conversation.privacyDeletion",
+                              "conversation.propertyChange",
+                              "deal.associationChange",
+                              "deal.creation",
+                              "deal.deletion",
+                              "deal.merge",
+                              "deal.propertyChange",
+                              "deal.restore",
+                              "event.completed",
+                              "line_item.associationChange",
+                              "line_item.creation",
+                              "line_item.deletion",
+                              "line_item.merge",
+                              "line_item.propertyChange",
+                              "line_item.restore",
+                              "object.associationChange",
+                              "object.creation",
+                              "object.deletion",
+                              "object.merge",
+                              "object.propertyChange",
+                              "object.restore",
+                              "product.creation",
+                              "product.deletion",
+                              "product.merge",
+                              "product.propertyChange",
+                              "product.restore",
+                              "ticket.associationChange",
+                              "ticket.creation",
+                              "ticket.deletion",
+                              "ticket.merge",
+                              "ticket.propertyChange",
+                              "ticket.restore"
+                            ]
+                          },
+                          "eventTypeName": {
+                            "type": "string",
+                            "description": "The name of the event type for the subscription.",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the subscription. It is an integer formatted as int64.",
+                            "example": null
+                          },
+                          "objectTypeId": {
+                            "type": "string",
+                            "description": "The identifier for the object type associated with the subscription. It is a string.",
+                            "example": null
+                          },
+                          "propertyName": {
+                            "type": "string",
+                            "description": "The name of the property associated with the subscription event, if applicable.",
+                            "example": null
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date and time when the subscription was last updated, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Create an event subscription",
+        "description": "Create new event subscription for the specified app.",
+        "operationId": "post-/app-webhooks/2026-09/{appId}/subscriptions_create",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which the webhook subscription is being created.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "active",
+                  "eventType"
+                ],
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean",
+                    "description": "A boolean indicating whether the subscription is active.",
+                    "example": null
+                  },
+                  "eventType": {
+                    "type": "string",
+                    "description": "A string representing the type of event to subscribe to. Valid values include various property changes, creations, deletions, merges, restorations, association changes, and event completions.",
+                    "example": null,
+                    "enum": [
+                      "company.associationChange",
+                      "company.creation",
+                      "company.deletion",
+                      "company.merge",
+                      "company.propertyChange",
+                      "company.restore",
+                      "contact.associationChange",
+                      "contact.creation",
+                      "contact.deletion",
+                      "contact.merge",
+                      "contact.privacyDeletion",
+                      "contact.propertyChange",
+                      "contact.restore",
+                      "conversation.creation",
+                      "conversation.deletion",
+                      "conversation.newMessage",
+                      "conversation.privacyDeletion",
+                      "conversation.propertyChange",
+                      "deal.associationChange",
+                      "deal.creation",
+                      "deal.deletion",
+                      "deal.merge",
+                      "deal.propertyChange",
+                      "deal.restore",
+                      "event.completed",
+                      "line_item.associationChange",
+                      "line_item.creation",
+                      "line_item.deletion",
+                      "line_item.merge",
+                      "line_item.propertyChange",
+                      "line_item.restore",
+                      "object.associationChange",
+                      "object.creation",
+                      "object.deletion",
+                      "object.merge",
+                      "object.propertyChange",
+                      "object.restore",
+                      "product.creation",
+                      "product.deletion",
+                      "product.merge",
+                      "product.propertyChange",
+                      "product.restore",
+                      "ticket.associationChange",
+                      "ticket.creation",
+                      "ticket.deletion",
+                      "ticket.merge",
+                      "ticket.propertyChange",
+                      "ticket.restore"
+                    ]
+                  },
+                  "eventTypeName": {
+                    "type": "string",
+                    "description": "A string providing a human-readable name for the event type.",
+                    "example": null
+                  },
+                  "objectTypeId": {
+                    "type": "string",
+                    "description": "A string representing the ID of the object type associated with the subscription.",
+                    "example": null
+                  },
+                  "propertyName": {
+                    "type": "string",
+                    "description": "A string indicating the specific property name related to the event type, if applicable.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "headers": {
+              "Location": {
+                "description": "URL of the newly created resource",
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string",
+                  "example": null
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "active",
+                    "createdAt",
+                    "eventType",
+                    "id"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "active": {
+                      "type": "boolean",
+                      "description": "A boolean indicating whether the subscription is currently active.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the subscription was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "eventType": {
+                      "type": "string",
+                      "description": "The type of event that triggers the subscription. Valid values include various property changes, creations, deletions, merges, restores, and association changes for different HubSpot objects.",
+                      "example": null,
+                      "enum": [
+                        "company.associationChange",
+                        "company.creation",
+                        "company.deletion",
+                        "company.merge",
+                        "company.propertyChange",
+                        "company.restore",
+                        "contact.associationChange",
+                        "contact.creation",
+                        "contact.deletion",
+                        "contact.merge",
+                        "contact.privacyDeletion",
+                        "contact.propertyChange",
+                        "contact.restore",
+                        "conversation.creation",
+                        "conversation.deletion",
+                        "conversation.newMessage",
+                        "conversation.privacyDeletion",
+                        "conversation.propertyChange",
+                        "deal.associationChange",
+                        "deal.creation",
+                        "deal.deletion",
+                        "deal.merge",
+                        "deal.propertyChange",
+                        "deal.restore",
+                        "event.completed",
+                        "line_item.associationChange",
+                        "line_item.creation",
+                        "line_item.deletion",
+                        "line_item.merge",
+                        "line_item.propertyChange",
+                        "line_item.restore",
+                        "object.associationChange",
+                        "object.creation",
+                        "object.deletion",
+                        "object.merge",
+                        "object.propertyChange",
+                        "object.restore",
+                        "product.creation",
+                        "product.deletion",
+                        "product.merge",
+                        "product.propertyChange",
+                        "product.restore",
+                        "ticket.associationChange",
+                        "ticket.creation",
+                        "ticket.deletion",
+                        "ticket.merge",
+                        "ticket.propertyChange",
+                        "ticket.restore"
+                      ]
+                    },
+                    "eventTypeName": {
+                      "type": "string",
+                      "description": "The name of the event type for the subscription.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the subscription. It is an integer formatted as int64.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the object type associated with the subscription. It is a string.",
+                      "example": null
+                    },
+                    "propertyName": {
+                      "type": "string",
+                      "description": "The name of the property associated with the subscription event, if applicable.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the subscription was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/app-webhooks/2026-09/{appId}/subscriptions/batch/update": {
+      "post": {
+        "tags": [
+          "Batch"
+        ],
+        "summary": "Batch create event subscriptions",
+        "description": "Batch create event subscriptions for the specified app.",
+        "operationId": "post-/app-webhooks/2026-09/{appId}/subscriptions/batch/update_updateBatch",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which the subscriptions are being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                  "inputs": {
+                    "type": "array",
+                    "description": "An array of SubscriptionBatchUpdateRequest objects, each representing a subscription to be updated. This property is required.",
+                    "example": null,
+                    "items": {
+                      "required": [
+                        "active",
+                        "id"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean",
+                          "description": "A boolean indicating whether the subscription is active.",
+                          "example": null
+                        },
+                        "id": {
+                          "type": "integer",
+                          "description": "The unique identifier for the subscription. It is an integer.",
+                          "format": "int32",
+                          "example": null
+                        }
+                      },
+                      "example": null
+                    }
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "completedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch operation was completed, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs providing additional information about the batch operation.",
+                      "example": null
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch operation was requested, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array containing the results of the batch operation, with each item representing an individual subscription response.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "active",
+                          "createdAt",
+                          "eventType",
+                          "id"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "active": {
+                            "type": "boolean",
+                            "description": "A boolean indicating whether the subscription is currently active.",
+                            "example": null
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date and time when the subscription was created, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "eventType": {
+                            "type": "string",
+                            "description": "The type of event that triggers the subscription. Valid values include various property changes, creations, deletions, merges, restores, and association changes for different HubSpot objects.",
+                            "example": null,
+                            "enum": [
+                              "company.associationChange",
+                              "company.creation",
+                              "company.deletion",
+                              "company.merge",
+                              "company.propertyChange",
+                              "company.restore",
+                              "contact.associationChange",
+                              "contact.creation",
+                              "contact.deletion",
+                              "contact.merge",
+                              "contact.privacyDeletion",
+                              "contact.propertyChange",
+                              "contact.restore",
+                              "conversation.creation",
+                              "conversation.deletion",
+                              "conversation.newMessage",
+                              "conversation.privacyDeletion",
+                              "conversation.propertyChange",
+                              "deal.associationChange",
+                              "deal.creation",
+                              "deal.deletion",
+                              "deal.merge",
+                              "deal.propertyChange",
+                              "deal.restore",
+                              "event.completed",
+                              "line_item.associationChange",
+                              "line_item.creation",
+                              "line_item.deletion",
+                              "line_item.merge",
+                              "line_item.propertyChange",
+                              "line_item.restore",
+                              "object.associationChange",
+                              "object.creation",
+                              "object.deletion",
+                              "object.merge",
+                              "object.propertyChange",
+                              "object.restore",
+                              "product.creation",
+                              "product.deletion",
+                              "product.merge",
+                              "product.propertyChange",
+                              "product.restore",
+                              "ticket.associationChange",
+                              "ticket.creation",
+                              "ticket.deletion",
+                              "ticket.merge",
+                              "ticket.propertyChange",
+                              "ticket.restore"
+                            ]
+                          },
+                          "eventTypeName": {
+                            "type": "string",
+                            "description": "The name of the event type for the subscription.",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the subscription. It is an integer formatted as int64.",
+                            "example": null
+                          },
+                          "objectTypeId": {
+                            "type": "string",
+                            "description": "The identifier for the object type associated with the subscription. It is a string.",
+                            "example": null
+                          },
+                          "propertyName": {
+                            "type": "string",
+                            "description": "The name of the property associated with the subscription event, if applicable.",
+                            "example": null
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date and time when the subscription was last updated, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch operation started, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the batch operation. Valid values include 'PENDING', 'PROCESSING', 'CANCELED', and 'COMPLETE'.",
+                      "example": null,
+                      "enum": [
+                        "CANCELED",
+                        "COMPLETE",
+                        "PENDING",
+                        "PROCESSING"
+                      ]
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "207": {
+            "description": "multiple statuses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "completedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch processing was completed, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of StandardError objects detailing any errors that occurred during the batch processing.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "category",
+                          "context",
+                          "errors",
+                          "links",
+                          "message",
+                          "status"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string",
+                            "description": "A string indicating the category of the error.",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "An object containing additional context about the error condition, with each property being an array of strings.",
+                            "example": null
+                          },
+                          "errors": {
+                            "type": "array",
+                            "description": "An array of ErrorDetail objects providing further information about the error.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "message"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "code": {
+                                  "type": "string",
+                                  "description": "The status code associated with the error detail",
+                                  "example": null
+                                },
+                                "context": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "type": "string",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "Context about the error condition",
+                                  "example": "{missingScopes=[scope1, scope2]}"
+                                },
+                                "in": {
+                                  "type": "string",
+                                  "description": "The name of the field or parameter in which the error was found.",
+                                  "example": null
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "description": "A human readable message describing the error along with remediation steps where appropriate",
+                                  "example": null
+                                },
+                                "subCategory": {
+                                  "type": "string",
+                                  "description": "A specific category that contains more specific detail about the error",
+                                  "example": null
+                                }
+                              },
+                              "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                              "example": null
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "A string that uniquely identifies the error instance.",
+                            "example": null
+                          },
+                          "links": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "description": "An object mapping link names to associated URIs that contain documentation about the error or recommended remediation steps.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A string containing a human-readable message describing the error.",
+                            "example": null
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "A string representing the status of the error.",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "object",
+                            "properties": {},
+                            "description": "An object providing more specific categorization of the error.",
+                            "example": null
+                          }
+                        },
+                        "description": "Ye olde error",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs, providing additional resources or documentation related to the batch operation.",
+                      "example": null
+                    },
+                    "numErrors": {
+                      "type": "integer",
+                      "description": "The total number of errors encountered during the batch operation.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch request was initially made, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of SubscriptionResponse objects representing the results of each subscription update processed in the batch.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "active",
+                          "createdAt",
+                          "eventType",
+                          "id"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "active": {
+                            "type": "boolean",
+                            "description": "A boolean indicating whether the subscription is currently active.",
+                            "example": null
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date and time when the subscription was created, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "eventType": {
+                            "type": "string",
+                            "description": "The type of event that triggers the subscription. Valid values include various property changes, creations, deletions, merges, restores, and association changes for different HubSpot objects.",
+                            "example": null,
+                            "enum": [
+                              "company.associationChange",
+                              "company.creation",
+                              "company.deletion",
+                              "company.merge",
+                              "company.propertyChange",
+                              "company.restore",
+                              "contact.associationChange",
+                              "contact.creation",
+                              "contact.deletion",
+                              "contact.merge",
+                              "contact.privacyDeletion",
+                              "contact.propertyChange",
+                              "contact.restore",
+                              "conversation.creation",
+                              "conversation.deletion",
+                              "conversation.newMessage",
+                              "conversation.privacyDeletion",
+                              "conversation.propertyChange",
+                              "deal.associationChange",
+                              "deal.creation",
+                              "deal.deletion",
+                              "deal.merge",
+                              "deal.propertyChange",
+                              "deal.restore",
+                              "event.completed",
+                              "line_item.associationChange",
+                              "line_item.creation",
+                              "line_item.deletion",
+                              "line_item.merge",
+                              "line_item.propertyChange",
+                              "line_item.restore",
+                              "object.associationChange",
+                              "object.creation",
+                              "object.deletion",
+                              "object.merge",
+                              "object.propertyChange",
+                              "object.restore",
+                              "product.creation",
+                              "product.deletion",
+                              "product.merge",
+                              "product.propertyChange",
+                              "product.restore",
+                              "ticket.associationChange",
+                              "ticket.creation",
+                              "ticket.deletion",
+                              "ticket.merge",
+                              "ticket.propertyChange",
+                              "ticket.restore"
+                            ]
+                          },
+                          "eventTypeName": {
+                            "type": "string",
+                            "description": "The name of the event type for the subscription.",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the subscription. It is an integer formatted as int64.",
+                            "example": null
+                          },
+                          "objectTypeId": {
+                            "type": "string",
+                            "description": "The identifier for the object type associated with the subscription. It is a string.",
+                            "example": null
+                          },
+                          "propertyName": {
+                            "type": "string",
+                            "description": "The name of the property associated with the subscription event, if applicable.",
+                            "example": null
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date and time when the subscription was last updated, in ISO 8601 format.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "description": "The date and time when the batch processing began, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the batch operation. Valid values include 'PENDING', 'PROCESSING', 'CANCELED', and 'COMPLETE'.",
+                      "example": null,
+                      "enum": [
+                        "CANCELED",
+                        "COMPLETE",
+                        "PENDING",
+                        "PROCESSING"
+                      ]
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/app-webhooks/2026-09/{appId}/subscriptions/{subscriptionId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Read an event subscription",
+        "description": "Retrieve a specific event subscription by ID.",
+        "operationId": "get-/app-webhooks/2026-09/{appId}/subscriptions/{subscriptionId}_getById",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which the subscription is configured.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "description": "The unique identifier of the subscription to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "active",
+                    "createdAt",
+                    "eventType",
+                    "id"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "active": {
+                      "type": "boolean",
+                      "description": "A boolean indicating whether the subscription is currently active.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the subscription was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "eventType": {
+                      "type": "string",
+                      "description": "The type of event that triggers the subscription. Valid values include various property changes, creations, deletions, merges, restores, and association changes for different HubSpot objects.",
+                      "example": null,
+                      "enum": [
+                        "company.associationChange",
+                        "company.creation",
+                        "company.deletion",
+                        "company.merge",
+                        "company.propertyChange",
+                        "company.restore",
+                        "contact.associationChange",
+                        "contact.creation",
+                        "contact.deletion",
+                        "contact.merge",
+                        "contact.privacyDeletion",
+                        "contact.propertyChange",
+                        "contact.restore",
+                        "conversation.creation",
+                        "conversation.deletion",
+                        "conversation.newMessage",
+                        "conversation.privacyDeletion",
+                        "conversation.propertyChange",
+                        "deal.associationChange",
+                        "deal.creation",
+                        "deal.deletion",
+                        "deal.merge",
+                        "deal.propertyChange",
+                        "deal.restore",
+                        "event.completed",
+                        "line_item.associationChange",
+                        "line_item.creation",
+                        "line_item.deletion",
+                        "line_item.merge",
+                        "line_item.propertyChange",
+                        "line_item.restore",
+                        "object.associationChange",
+                        "object.creation",
+                        "object.deletion",
+                        "object.merge",
+                        "object.propertyChange",
+                        "object.restore",
+                        "product.creation",
+                        "product.deletion",
+                        "product.merge",
+                        "product.propertyChange",
+                        "product.restore",
+                        "ticket.associationChange",
+                        "ticket.creation",
+                        "ticket.deletion",
+                        "ticket.merge",
+                        "ticket.propertyChange",
+                        "ticket.restore"
+                      ]
+                    },
+                    "eventTypeName": {
+                      "type": "string",
+                      "description": "The name of the event type for the subscription.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the subscription. It is an integer formatted as int64.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the object type associated with the subscription. It is a string.",
+                      "example": null
+                    },
+                    "propertyName": {
+                      "type": "string",
+                      "description": "The name of the property associated with the subscription event, if applicable.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the subscription was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete event subscription",
+        "description": "Delete an existing event subscription by ID.",
+        "operationId": "delete-/app-webhooks/2026-09/{appId}/subscriptions/{subscriptionId}_archive",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which the subscription is configured.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "description": "The unique identifier of the subscription to delete.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update an event subscription",
+        "description": "Update an existing event subscription by ID.",
+        "operationId": "patch-/app-webhooks/2026-09/{appId}/subscriptions/{subscriptionId}_update",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "description": "The unique identifier of the app for which the subscription is being updated.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "description": "The unique identifier of the subscription to update.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean",
+                    "description": "A boolean indicating whether the subscription is active. If true, the subscription is active; if false, it is inactive.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "active",
+                    "createdAt",
+                    "eventType",
+                    "id"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "active": {
+                      "type": "boolean",
+                      "description": "A boolean indicating whether the subscription is currently active.",
+                      "example": null
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date and time when the subscription was created, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "eventType": {
+                      "type": "string",
+                      "description": "The type of event that triggers the subscription. Valid values include various property changes, creations, deletions, merges, restores, and association changes for different HubSpot objects.",
+                      "example": null,
+                      "enum": [
+                        "company.associationChange",
+                        "company.creation",
+                        "company.deletion",
+                        "company.merge",
+                        "company.propertyChange",
+                        "company.restore",
+                        "contact.associationChange",
+                        "contact.creation",
+                        "contact.deletion",
+                        "contact.merge",
+                        "contact.privacyDeletion",
+                        "contact.propertyChange",
+                        "contact.restore",
+                        "conversation.creation",
+                        "conversation.deletion",
+                        "conversation.newMessage",
+                        "conversation.privacyDeletion",
+                        "conversation.propertyChange",
+                        "deal.associationChange",
+                        "deal.creation",
+                        "deal.deletion",
+                        "deal.merge",
+                        "deal.propertyChange",
+                        "deal.restore",
+                        "event.completed",
+                        "line_item.associationChange",
+                        "line_item.creation",
+                        "line_item.deletion",
+                        "line_item.merge",
+                        "line_item.propertyChange",
+                        "line_item.restore",
+                        "object.associationChange",
+                        "object.creation",
+                        "object.deletion",
+                        "object.merge",
+                        "object.propertyChange",
+                        "object.restore",
+                        "product.creation",
+                        "product.deletion",
+                        "product.merge",
+                        "product.propertyChange",
+                        "product.restore",
+                        "ticket.associationChange",
+                        "ticket.creation",
+                        "ticket.deletion",
+                        "ticket.merge",
+                        "ticket.propertyChange",
+                        "ticket.restore"
+                      ]
+                    },
+                    "eventTypeName": {
+                      "type": "string",
+                      "description": "The name of the event type for the subscription.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier for the subscription. It is an integer formatted as int64.",
+                      "example": null
+                    },
+                    "objectTypeId": {
+                      "type": "string",
+                      "description": "The identifier for the object type associated with the subscription. It is a string.",
+                      "example": null
+                    },
+                    "propertyName": {
+                      "type": "string",
+                      "description": "The name of the property associated with the subscription event, if applicable.",
+                      "example": null
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date and time when the subscription was last updated, in ISO 8601 format.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "Node",
+    "Python",
+    "Ruby",
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

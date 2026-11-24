@@ -1,0 +1,2373 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - CMS - Redirecionamentos de URL",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/cms/url-redirects/2026-09": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "List URL Redirects",
+        "description": "Retrieve a list of URL redirects in your HubSpot account. This endpoint allows you to filter redirects based on their creation or update timestamps, and sort the results. It supports pagination and can include archived redirects if specified.",
+        "operationId": "get-/cms/url-redirects/2026-09_/cms/url-redirects/v3",
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "description": "The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "description": "Whether to return only results that have been archived.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "example": null
+            }
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "description": "Filter redirects created after the specified date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "createdAt",
+            "in": "query",
+            "description": "Filter redirects by their exact creation timestamp. The value should be in date-time format.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "description": "Filter redirects created before the specified date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to display per page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Specify the fields to sort the results by. This is an array of strings.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null
+              }
+            }
+          },
+          {
+            "name": "updatedAfter",
+            "in": "query",
+            "description": "Filter redirects updated after the specified date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "updatedAt",
+            "in": "query",
+            "description": "Filter redirects by their exact update timestamp. The value should be in date-time format.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "updatedBefore",
+            "in": "query",
+            "description": "Filter redirects updated before the specified date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results",
+                    "total"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paging": {
+                      "type": "object",
+                      "properties": {
+                        "next": {
+                          "required": [
+                            "after"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "after": {
+                              "type": "string",
+                              "description": "The cursor value indicating where to begin fetching the next page of results in a paginated collection.",
+                              "example": null
+                            },
+                            "link": {
+                              "type": "string",
+                              "description": "An optional URL for directly accessing the next page of results.",
+                              "example": null
+                            }
+                          },
+                          "description": "Specifies the paging information needed to retrieve the next set of results in a paginated API response",
+                          "example": null
+                        }
+                      },
+                      "description": "Paging information for forward-only pagination. Contains the next page reference when more results are available; omitted or empty on the last page.",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of UrlMapping objects, each representing a specific URL mapping.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "created",
+                          "destination",
+                          "id",
+                          "isMatchFullUrl",
+                          "isMatchQueryString",
+                          "isOnlyAfterNotFound",
+                          "isPattern",
+                          "isProtocolAgnostic",
+                          "isTrailingSlashOptional",
+                          "precedence",
+                          "redirectStyle",
+                          "routePrefix",
+                          "updated"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "created": {
+                            "type": "string",
+                            "description": "The date and time when the URL mapping was initially created.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "destination": {
+                            "type": "string",
+                            "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique ID of this URL redirect.",
+                            "example": null
+                          },
+                          "isMatchFullUrl": {
+                            "type": "boolean",
+                            "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                            "example": null
+                          },
+                          "isMatchQueryString": {
+                            "type": "boolean",
+                            "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                            "example": null
+                          },
+                          "isOnlyAfterNotFound": {
+                            "type": "boolean",
+                            "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                            "example": null
+                          },
+                          "isPattern": {
+                            "type": "boolean",
+                            "description": "Whether the `routePrefix` should match based on pattern.",
+                            "example": null
+                          },
+                          "isProtocolAgnostic": {
+                            "type": "boolean",
+                            "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                            "example": null
+                          },
+                          "isTrailingSlashOptional": {
+                            "type": "boolean",
+                            "description": "Whether a trailing slash will be ignored.",
+                            "example": null
+                          },
+                          "precedence": {
+                            "type": "integer",
+                            "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "redirectStyle": {
+                            "type": "integer",
+                            "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                            "format": "int32",
+                            "example": null
+                          },
+                          "routePrefix": {
+                            "type": "string",
+                            "description": "The target incoming URL, path, or pattern to match for redirection.",
+                            "example": null
+                          },
+                          "updated": {
+                            "type": "string",
+                            "description": "The date and time when the URL mapping was last modified.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "The total number of URL mappings available.",
+                      "format": "int32",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Create URL Redirect",
+        "description": "Create a new URL redirect in your HubSpot account. This endpoint allows you to define the destination URL, redirect style, and route prefix for the redirect. It is useful for managing URL redirections and ensuring that users are directed to the correct pages.",
+        "operationId": "post-/cms/url-redirects/2026-09_/cms/url-redirects/v3",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "destination",
+                  "redirectStyle",
+                  "routePrefix"
+                ],
+                "type": "object",
+                "properties": {
+                  "destination": {
+                    "type": "string",
+                    "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                    "example": null
+                  },
+                  "isMatchFullUrl": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                    "example": null
+                  },
+                  "isMatchQueryString": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                    "example": null
+                  },
+                  "isOnlyAfterNotFound": {
+                    "type": "boolean",
+                    "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                    "example": null
+                  },
+                  "isPattern": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match based on pattern.",
+                    "example": null
+                  },
+                  "isProtocolAgnostic": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                    "example": null
+                  },
+                  "isTrailingSlashOptional": {
+                    "type": "boolean",
+                    "description": "Whether a trailing slash will be ignored.",
+                    "example": null
+                  },
+                  "precedence": {
+                    "type": "integer",
+                    "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                    "format": "int32",
+                    "example": null
+                  },
+                  "redirectStyle": {
+                    "type": "integer",
+                    "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                    "format": "int32",
+                    "example": null
+                  },
+                  "routePrefix": {
+                    "type": "string",
+                    "description": "The target incoming URL, path, or pattern to match for redirection.",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "created",
+                    "destination",
+                    "id",
+                    "isMatchFullUrl",
+                    "isMatchQueryString",
+                    "isOnlyAfterNotFound",
+                    "isPattern",
+                    "isProtocolAgnostic",
+                    "isTrailingSlashOptional",
+                    "precedence",
+                    "redirectStyle",
+                    "routePrefix",
+                    "updated"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "created": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was initially created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "destination": {
+                      "type": "string",
+                      "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of this URL redirect.",
+                      "example": null
+                    },
+                    "isMatchFullUrl": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                      "example": null
+                    },
+                    "isMatchQueryString": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                      "example": null
+                    },
+                    "isOnlyAfterNotFound": {
+                      "type": "boolean",
+                      "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                      "example": null
+                    },
+                    "isPattern": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match based on pattern.",
+                      "example": null
+                    },
+                    "isProtocolAgnostic": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                      "example": null
+                    },
+                    "isTrailingSlashOptional": {
+                      "type": "boolean",
+                      "description": "Whether a trailing slash will be ignored.",
+                      "example": null
+                    },
+                    "precedence": {
+                      "type": "integer",
+                      "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "redirectStyle": {
+                      "type": "integer",
+                      "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "routePrefix": {
+                      "type": "string",
+                      "description": "The target incoming URL, path, or pattern to match for redirection.",
+                      "example": null
+                    },
+                    "updated": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was last modified.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cms/url-redirects/2026-09/url-mappings": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "List URL Mappings",
+        "description": "Retrieve a list of URL mappings for redirects in your HubSpot account. This endpoint allows you to access all URL mappings, which can be useful for managing and auditing redirects. The response includes details about each URL mapping, such as the destination and route prefix.",
+        "operationId": "get-/cms/url-redirects/2026-09/url-mappings_/cms/url-redirects/2026-03/url-mappings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "example": null,
+                  "items": {
+                    "required": [
+                      "created",
+                      "destination",
+                      "id",
+                      "isMatchFullUrl",
+                      "isMatchQueryString",
+                      "isOnlyAfterNotFound",
+                      "isPattern",
+                      "isProtocolAgnostic",
+                      "isTrailingSlashOptional",
+                      "precedence",
+                      "redirectStyle",
+                      "routePrefix",
+                      "updated"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "created": {
+                        "type": "string",
+                        "description": "The date and time when the URL mapping was initially created.",
+                        "format": "date-time",
+                        "example": null
+                      },
+                      "destination": {
+                        "type": "string",
+                        "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                        "example": null
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "The unique ID of this URL redirect.",
+                        "example": null
+                      },
+                      "isMatchFullUrl": {
+                        "type": "boolean",
+                        "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                        "example": null
+                      },
+                      "isMatchQueryString": {
+                        "type": "boolean",
+                        "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                        "example": null
+                      },
+                      "isOnlyAfterNotFound": {
+                        "type": "boolean",
+                        "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                        "example": null
+                      },
+                      "isPattern": {
+                        "type": "boolean",
+                        "description": "Whether the `routePrefix` should match based on pattern.",
+                        "example": null
+                      },
+                      "isProtocolAgnostic": {
+                        "type": "boolean",
+                        "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                        "example": null
+                      },
+                      "isTrailingSlashOptional": {
+                        "type": "boolean",
+                        "description": "Whether a trailing slash will be ignored.",
+                        "example": null
+                      },
+                      "precedence": {
+                        "type": "integer",
+                        "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                        "format": "int32",
+                        "example": null
+                      },
+                      "redirectStyle": {
+                        "type": "integer",
+                        "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                        "format": "int32",
+                        "example": null
+                      },
+                      "routePrefix": {
+                        "type": "string",
+                        "description": "The target incoming URL, path, or pattern to match for redirection.",
+                        "example": null
+                      },
+                      "updated": {
+                        "type": "string",
+                        "description": "The date and time when the URL mapping was last modified.",
+                        "format": "date-time",
+                        "example": null
+                      }
+                    },
+                    "example": null
+                  }
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Create URL Mapping",
+        "description": "Create a new URL mapping in your HubSpot account. This endpoint allows you to define a new URL redirect rule by specifying the route prefix, destination URL, and redirect style. The request body must include these required fields to successfully create a URL mapping.",
+        "operationId": "post-/cms/url-redirects/2026-09/url-mappings_/cms/url-redirects/2026-03/url-mappings",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "required": [
+                  "created",
+                  "destination",
+                  "id",
+                  "isMatchFullUrl",
+                  "isMatchQueryString",
+                  "isOnlyAfterNotFound",
+                  "isPattern",
+                  "isProtocolAgnostic",
+                  "isTrailingSlashOptional",
+                  "precedence",
+                  "redirectStyle",
+                  "routePrefix",
+                  "updated"
+                ],
+                "type": "object",
+                "properties": {
+                  "created": {
+                    "type": "string",
+                    "description": "The date and time when the URL mapping was initially created.",
+                    "format": "date-time",
+                    "example": null
+                  },
+                  "destination": {
+                    "type": "string",
+                    "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                    "example": null
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "The unique ID of this URL redirect.",
+                    "example": null
+                  },
+                  "isMatchFullUrl": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                    "example": null
+                  },
+                  "isMatchQueryString": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                    "example": null
+                  },
+                  "isOnlyAfterNotFound": {
+                    "type": "boolean",
+                    "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                    "example": null
+                  },
+                  "isPattern": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match based on pattern.",
+                    "example": null
+                  },
+                  "isProtocolAgnostic": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                    "example": null
+                  },
+                  "isTrailingSlashOptional": {
+                    "type": "boolean",
+                    "description": "Whether a trailing slash will be ignored.",
+                    "example": null
+                  },
+                  "precedence": {
+                    "type": "integer",
+                    "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                    "format": "int32",
+                    "example": null
+                  },
+                  "redirectStyle": {
+                    "type": "integer",
+                    "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                    "format": "int32",
+                    "example": null
+                  },
+                  "routePrefix": {
+                    "type": "string",
+                    "description": "The target incoming URL, path, or pattern to match for redirection.",
+                    "example": null
+                  },
+                  "updated": {
+                    "type": "string",
+                    "description": "The date and time when the URL mapping was last modified.",
+                    "format": "date-time",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cms/url-redirects/2026-09/url-mappings/{id}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve URL Mapping",
+        "description": "Retrieve a specific URL mapping by its unique identifier. This endpoint is useful for obtaining details about a particular URL redirect configuration within your HubSpot account. It requires the unique ID of the URL mapping to be specified in the path.",
+        "operationId": "get-/cms/url-redirects/2026-09/url-mappings/{id}_/cms/url-redirects/2026-03/url-mappings/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier of the URL mapping to retrieve. Must be an integer.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "\\d+",
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "created",
+                    "destination",
+                    "id",
+                    "isMatchFullUrl",
+                    "isMatchQueryString",
+                    "isOnlyAfterNotFound",
+                    "isPattern",
+                    "isProtocolAgnostic",
+                    "isTrailingSlashOptional",
+                    "precedence",
+                    "redirectStyle",
+                    "routePrefix",
+                    "updated"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "created": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was initially created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "destination": {
+                      "type": "string",
+                      "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of this URL redirect.",
+                      "example": null
+                    },
+                    "isMatchFullUrl": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                      "example": null
+                    },
+                    "isMatchQueryString": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                      "example": null
+                    },
+                    "isOnlyAfterNotFound": {
+                      "type": "boolean",
+                      "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                      "example": null
+                    },
+                    "isPattern": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match based on pattern.",
+                      "example": null
+                    },
+                    "isProtocolAgnostic": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                      "example": null
+                    },
+                    "isTrailingSlashOptional": {
+                      "type": "boolean",
+                      "description": "Whether a trailing slash will be ignored.",
+                      "example": null
+                    },
+                    "precedence": {
+                      "type": "integer",
+                      "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "redirectStyle": {
+                      "type": "integer",
+                      "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "routePrefix": {
+                      "type": "string",
+                      "description": "The target incoming URL, path, or pattern to match for redirection.",
+                      "example": null
+                    },
+                    "updated": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was last modified.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete",
+        "description": "Delete a specific URL mapping in your HubSpot account using its unique identifier. This operation is useful for removing outdated or incorrect URL redirects. Ensure you have the necessary permissions to perform this action.",
+        "operationId": "delete-/cms/url-redirects/2026-09/url-mappings/{id}_/cms/url-redirects/2026-03/url-mappings/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier of the URL mapping to delete. It must be an integer.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "\\d+",
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cms/url-redirects/2026-09/{urlRedirectId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Get details for a redirect",
+        "description": "Returns the details for a single existing URL redirect by ID.",
+        "operationId": "get-/cms/url-redirects/2026-09/{urlRedirectId}_getById",
+        "parameters": [
+          {
+            "name": "urlRedirectId",
+            "in": "path",
+            "description": "The unique identifier of the URL redirect to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "created",
+                    "destination",
+                    "id",
+                    "isMatchFullUrl",
+                    "isMatchQueryString",
+                    "isOnlyAfterNotFound",
+                    "isPattern",
+                    "isProtocolAgnostic",
+                    "isTrailingSlashOptional",
+                    "precedence",
+                    "redirectStyle",
+                    "routePrefix",
+                    "updated"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "created": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was initially created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "destination": {
+                      "type": "string",
+                      "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of this URL redirect.",
+                      "example": null
+                    },
+                    "isMatchFullUrl": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                      "example": null
+                    },
+                    "isMatchQueryString": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                      "example": null
+                    },
+                    "isOnlyAfterNotFound": {
+                      "type": "boolean",
+                      "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                      "example": null
+                    },
+                    "isPattern": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match based on pattern.",
+                      "example": null
+                    },
+                    "isProtocolAgnostic": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                      "example": null
+                    },
+                    "isTrailingSlashOptional": {
+                      "type": "boolean",
+                      "description": "Whether a trailing slash will be ignored.",
+                      "example": null
+                    },
+                    "precedence": {
+                      "type": "integer",
+                      "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "redirectStyle": {
+                      "type": "integer",
+                      "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "routePrefix": {
+                      "type": "string",
+                      "description": "The target incoming URL, path, or pattern to match for redirection.",
+                      "example": null
+                    },
+                    "updated": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was last modified.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Delete a redirect",
+        "description": "Delete one existing redirect, so it is no longer mapped.",
+        "operationId": "delete-/cms/url-redirects/2026-09/{urlRedirectId}_archive",
+        "parameters": [
+          {
+            "name": "urlRedirectId",
+            "in": "path",
+            "description": "The unique identifier of the URL redirect to delete.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Update a redirect",
+        "description": "Updates the settings for an existing URL redirect.",
+        "operationId": "patch-/cms/url-redirects/2026-09/{urlRedirectId}_update",
+        "parameters": [
+          {
+            "name": "urlRedirectId",
+            "in": "path",
+            "description": "The unique identifier of the URL redirect to update.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "created",
+                  "destination",
+                  "id",
+                  "isMatchFullUrl",
+                  "isMatchQueryString",
+                  "isOnlyAfterNotFound",
+                  "isPattern",
+                  "isProtocolAgnostic",
+                  "isTrailingSlashOptional",
+                  "precedence",
+                  "redirectStyle",
+                  "routePrefix",
+                  "updated"
+                ],
+                "type": "object",
+                "properties": {
+                  "created": {
+                    "type": "string",
+                    "description": "The date and time when the URL mapping was initially created.",
+                    "format": "date-time",
+                    "example": null
+                  },
+                  "destination": {
+                    "type": "string",
+                    "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                    "example": null
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "The unique ID of this URL redirect.",
+                    "example": null
+                  },
+                  "isMatchFullUrl": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                    "example": null
+                  },
+                  "isMatchQueryString": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                    "example": null
+                  },
+                  "isOnlyAfterNotFound": {
+                    "type": "boolean",
+                    "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                    "example": null
+                  },
+                  "isPattern": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match based on pattern.",
+                    "example": null
+                  },
+                  "isProtocolAgnostic": {
+                    "type": "boolean",
+                    "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                    "example": null
+                  },
+                  "isTrailingSlashOptional": {
+                    "type": "boolean",
+                    "description": "Whether a trailing slash will be ignored.",
+                    "example": null
+                  },
+                  "precedence": {
+                    "type": "integer",
+                    "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                    "format": "int32",
+                    "example": null
+                  },
+                  "redirectStyle": {
+                    "type": "integer",
+                    "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                    "format": "int32",
+                    "example": null
+                  },
+                  "routePrefix": {
+                    "type": "string",
+                    "description": "The target incoming URL, path, or pattern to match for redirection.",
+                    "example": null
+                  },
+                  "updated": {
+                    "type": "string",
+                    "description": "The date and time when the URL mapping was last modified.",
+                    "format": "date-time",
+                    "example": null
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "created",
+                    "destination",
+                    "id",
+                    "isMatchFullUrl",
+                    "isMatchQueryString",
+                    "isOnlyAfterNotFound",
+                    "isPattern",
+                    "isProtocolAgnostic",
+                    "isTrailingSlashOptional",
+                    "precedence",
+                    "redirectStyle",
+                    "routePrefix",
+                    "updated"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "created": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was initially created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "destination": {
+                      "type": "string",
+                      "description": "The destination URL, where the target URL should be redirected if it matches the `routePrefix`.",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of this URL redirect.",
+                      "example": null
+                    },
+                    "isMatchFullUrl": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL, including the domain.",
+                      "example": null
+                    },
+                    "isMatchQueryString": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match on the entire URL path, including the query string.",
+                      "example": null
+                    },
+                    "isOnlyAfterNotFound": {
+                      "type": "boolean",
+                      "description": "Whether the URL redirect mapping should apply only if a live page on the URL isn't found. If False, the URL redirect mapping will take precedence over any existing page.",
+                      "example": null
+                    },
+                    "isPattern": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match based on pattern.",
+                      "example": null
+                    },
+                    "isProtocolAgnostic": {
+                      "type": "boolean",
+                      "description": "Whether the `routePrefix` should match both HTTP and HTTPS protocols.",
+                      "example": null
+                    },
+                    "isTrailingSlashOptional": {
+                      "type": "boolean",
+                      "description": "Whether a trailing slash will be ignored.",
+                      "example": null
+                    },
+                    "precedence": {
+                      "type": "integer",
+                      "description": "Used to prioritize URL redirection. If a given URL matches more than one redirect, the one with the **lower** precedence will be used.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "redirectStyle": {
+                      "type": "integer",
+                      "description": "The type of redirect to create. Options include: 301 (permanent), 302 (temporary), or 305 (proxy). Find more details [here](https://knowledge.hubspot.com/cos-general/how-to-redirect-a-hubspot-page).",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "routePrefix": {
+                      "type": "string",
+                      "description": "The target incoming URL, path, or pattern to match for redirection.",
+                      "example": null
+                    },
+                    "updated": {
+                      "type": "string",
+                      "description": "The date and time when the URL mapping was last modified.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "Node",
+    "Python",
+    "Ruby",
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "PROFESSIONAL",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "STARTER",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

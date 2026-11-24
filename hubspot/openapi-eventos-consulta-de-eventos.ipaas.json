@@ -1,0 +1,632 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - Eventos - Consulta de eventos",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/events/event-occurrences/2026-09": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve events",
+        "description": "Retrieve event occurrences for a specified date in September 2026. This endpoint allows you to filter and sort events based on various criteria, such as event type, object type, and occurrence dates. It supports pagination and can return specific properties of events if requested.",
+        "operationId": "get-/events/event-occurrences/2026-09_/events/event-occurrences/2026-03",
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "description": "The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "A cursor token for pagination. Use the value from the previous response's paging.prev.before field.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "eventType",
+            "in": "query",
+            "description": "The type of events to retrieve.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "An array of event IDs to retrieve.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null
+              }
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to display per page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "objectId",
+            "in": "query",
+            "description": "The unique identifier of the object associated with the events.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": null
+            }
+          },
+          {
+            "name": "objectProperty.{propname}",
+            "in": "query",
+            "description": "Filter events based on specific object properties.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "example": null
+            }
+          },
+          {
+            "name": "objectType",
+            "in": "query",
+            "description": "The type of object associated with the events.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "occurredAfter",
+            "in": "query",
+            "description": "Filter events that occurred after this date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "occurredBefore",
+            "in": "query",
+            "description": "Filter events that occurred before this date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "properties",
+            "in": "query",
+            "description": "An array of property names to include in the response.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null
+              }
+            }
+          },
+          {
+            "name": "property.{propname}",
+            "in": "query",
+            "description": "Filter events based on specific event properties.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "example": null
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "An array of fields to sort the results by.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paging": {
+                      "type": "object",
+                      "properties": {
+                        "next": {
+                          "required": [
+                            "after"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "after": {
+                              "type": "string",
+                              "description": "The cursor token to pass as the after query parameter to retrieve the next page of results.",
+                              "example": null
+                            },
+                            "link": {
+                              "type": "string",
+                              "description": "The full URL of the next page of results, with the after cursor token included as a query parameter.",
+                              "example": null
+                            }
+                          },
+                          "description": "Specifies the paging information needed to retrieve the next set of results in a paginated API response",
+                          "example": null
+                        },
+                        "prev": {
+                          "required": [
+                            "before"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "before": {
+                              "type": "string",
+                              "description": "The cursor token to pass as the before query parameter to retrieve the previous page of results.",
+                              "example": null
+                            },
+                            "link": {
+                              "type": "string",
+                              "description": "The full URL of the previous page of results, with the before cursor token included as a query parameter.",
+                              "example": null
+                            }
+                          },
+                          "description": "specifies the paging information needed to retrieve the previous set of results in a paginated API response",
+                          "example": null
+                        }
+                      },
+                      "description": "Represents the pagination information for navigating through a list of results in the API. It provides details on how to access the previous or next set of results.",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of ExternalUnifiedEvent objects, each representing an individual event with its associated details.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "eventType",
+                          "id",
+                          "objectId",
+                          "objectType",
+                          "occurredAt",
+                          "properties"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "eventType": {
+                            "type": "string",
+                            "description": "The format of the `eventType` string is `ae{appId}_{eventTypeLabel}`, `pe{portalId}_{eventTypeLabel}`, or just `e_{eventTypeLabel}` for HubSpot events.",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "A unique identifier for the event.",
+                            "example": null
+                          },
+                          "objectId": {
+                            "type": "string",
+                            "description": "The objectId of the object which did the event.",
+                            "example": null
+                          },
+                          "objectType": {
+                            "type": "string",
+                            "description": "The objectType for the object which did the event.",
+                            "example": null
+                          },
+                          "occurredAt": {
+                            "type": "string",
+                            "description": "An ISO 8601 timestamp when the event occurred.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "description": "A key-value map of event-specific properties. The available properties depend on the event type definition.",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/events/event-occurrences/2026-09/event-types": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Retrieve event types",
+        "description": "Retrieve a list of event type names. You may use these event types to query the API for event occurrences of a desired type.\n\nNote: the `get_types` method is only supported in the Python SDK version `12.0.0-beta.1` or later. ",
+        "operationId": "get-/events/event-occurrences/2026-09/event-types_/events/event-occurrences/2026-03/event-types",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "eventTypes"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "eventTypes": {
+                      "type": "array",
+                      "description": "List of event type names.",
+                      "example": null,
+                      "items": {
+                        "type": "string",
+                        "example": null
+                      }
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "Node",
+    "Python",
+    "Ruby",
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "ENTERPRISE",
+    "sales": "ENTERPRISE",
+    "service": "ENTERPRISE",
+    "cms": "ENTERPRISE",
+    "commerce": "ENTERPRISE",
+    "crmHub": "ENTERPRISE",
+    "dataHub": "ENTERPRISE"
+  }
+}

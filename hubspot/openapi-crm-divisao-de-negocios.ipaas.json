@@ -1,0 +1,1445 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - CRM - Divisão de negócios",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Batch"
+    }
+  ],
+  "paths": {
+    "/deal-splits/2026-09/batch/read": {
+      "post": {
+        "tags": [
+          "Batch"
+        ],
+        "summary": "Read a batch of deal split objects by their associated deal object internal ID",
+        "description": "Read a batch of deal split objects by their associated deal object internal ID",
+        "operationId": "post-/deal-splits/2026-09/batch/read_/crm/objects/v3/deals/splits/batch/read",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                  "inputs": {
+                    "type": "array",
+                    "description": "An array of deal split inputs",
+                    "example": null,
+                    "items": {
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The unique identifier for the public object.",
+                          "example": null
+                        }
+                      },
+                      "description": "Contains the Id of a Public Object",
+                      "example": null
+                    }
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "completedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was completed, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs for additional resources or documentation.",
+                      "example": null
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was requested, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of deal-to-deal split objects representing the results of the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "id",
+                          "splits"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the deal associated with the deal splits.",
+                            "example": null
+                          },
+                          "splits": {
+                            "type": "array",
+                            "description": "An array of deal split objects, each representing a portion of the deal assigned to an owner.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "archived",
+                                "createdAt",
+                                "id",
+                                "properties",
+                                "updatedAt"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "archived": {
+                                  "type": "boolean",
+                                  "description": "A boolean indicating whether this object is archived.",
+                                  "example": null
+                                },
+                                "archivedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was archived, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was created, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "description": "The unique identifier for this object, represented as a string.",
+                                  "example": null
+                                },
+                                "objectWriteTraceId": {
+                                  "type": "string",
+                                  "description": "A string identifier used for tracing write operations on this object.",
+                                  "example": null
+                                },
+                                "properties": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string",
+                                    "example": null
+                                  },
+                                  "description": "A map of property names to their values, where each value is a string.",
+                                  "example": null
+                                },
+                                "propertiesWithHistory": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "required": [
+                                        "sourceType",
+                                        "timestamp",
+                                        "value"
+                                      ],
+                                      "type": "object",
+                                      "properties": {
+                                        "sourceId": {
+                                          "type": "string",
+                                          "description": "A string representing the unique identifier of the source.",
+                                          "example": null
+                                        },
+                                        "sourceLabel": {
+                                          "type": "string",
+                                          "description": "A string providing a human-readable label for the source.",
+                                          "example": null
+                                        },
+                                        "sourceType": {
+                                          "type": "string",
+                                          "description": "A string indicating the type of source from which the value originated.",
+                                          "example": null
+                                        },
+                                        "timestamp": {
+                                          "type": "string",
+                                          "description": "A string in date-time format indicating when the value was recorded.",
+                                          "format": "date-time",
+                                          "example": null
+                                        },
+                                        "updatedByUserId": {
+                                          "type": "integer",
+                                          "description": "An integer representing the ID of the user who last updated the value.",
+                                          "format": "int32",
+                                          "example": null
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "description": "A string representing the main value being tracked.",
+                                          "example": null
+                                        }
+                                      },
+                                      "description": "Property model that includes timestamp.",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "A map of property names to arrays of historical values, each containing a value and its associated timestamp.",
+                                  "example": null
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was last updated, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "A string representing the URL associated with this object.",
+                                  "example": null
+                                }
+                              },
+                              "description": "A simple public object.",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation started, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the batch operation, with possible values: CANCELED, COMPLETE, PENDING, PROCESSING.",
+                      "example": null,
+                      "enum": [
+                        "CANCELED",
+                        "COMPLETE",
+                        "PENDING",
+                        "PROCESSING"
+                      ]
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "207": {
+            "description": "multiple statuses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "completedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was completed, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of error objects detailing the errors that occurred during the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "category",
+                          "context",
+                          "errors",
+                          "links",
+                          "message",
+                          "status"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string",
+                            "description": "The error category",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": null
+                          },
+                          "errors": {
+                            "type": "array",
+                            "description": "An array of ErrorDetail objects that provide further information about the error.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "message"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "code": {
+                                  "type": "string",
+                                  "description": "The status code associated with the error detail",
+                                  "example": null
+                                },
+                                "context": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "type": "string",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "Context about the error condition",
+                                  "example": "{missingScopes=[scope1, scope2]}"
+                                },
+                                "in": {
+                                  "type": "string",
+                                  "description": "The name of the field or parameter in which the error was found.",
+                                  "example": null
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "description": "A human readable message describing the error along with remediation steps where appropriate",
+                                  "example": null
+                                },
+                                "subCategory": {
+                                  "type": "string",
+                                  "description": "A specific category that contains more specific detail about the error",
+                                  "example": null
+                                }
+                              },
+                              "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                              "example": null
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The id of the error",
+                            "example": null
+                          },
+                          "links": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "The error message",
+                            "example": null
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "object",
+                            "properties": {},
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Ye olde error",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs for additional resources or documentation.",
+                      "example": null
+                    },
+                    "numErrors": {
+                      "type": "integer",
+                      "description": "The total number of errors encountered during the batch operation.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was requested, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of deal-to-deal split objects representing the results of the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "id",
+                          "splits"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the deal associated with the deal splits.",
+                            "example": null
+                          },
+                          "splits": {
+                            "type": "array",
+                            "description": "An array of deal split objects, each representing a portion of the deal assigned to an owner.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "archived",
+                                "createdAt",
+                                "id",
+                                "properties",
+                                "updatedAt"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "archived": {
+                                  "type": "boolean",
+                                  "description": "A boolean indicating whether this object is archived.",
+                                  "example": null
+                                },
+                                "archivedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was archived, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was created, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "description": "The unique identifier for this object, represented as a string.",
+                                  "example": null
+                                },
+                                "objectWriteTraceId": {
+                                  "type": "string",
+                                  "description": "A string identifier used for tracing write operations on this object.",
+                                  "example": null
+                                },
+                                "properties": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string",
+                                    "example": null
+                                  },
+                                  "description": "A map of property names to their values, where each value is a string.",
+                                  "example": null
+                                },
+                                "propertiesWithHistory": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "required": [
+                                        "sourceType",
+                                        "timestamp",
+                                        "value"
+                                      ],
+                                      "type": "object",
+                                      "properties": {
+                                        "sourceId": {
+                                          "type": "string",
+                                          "description": "A string representing the unique identifier of the source.",
+                                          "example": null
+                                        },
+                                        "sourceLabel": {
+                                          "type": "string",
+                                          "description": "A string providing a human-readable label for the source.",
+                                          "example": null
+                                        },
+                                        "sourceType": {
+                                          "type": "string",
+                                          "description": "A string indicating the type of source from which the value originated.",
+                                          "example": null
+                                        },
+                                        "timestamp": {
+                                          "type": "string",
+                                          "description": "A string in date-time format indicating when the value was recorded.",
+                                          "format": "date-time",
+                                          "example": null
+                                        },
+                                        "updatedByUserId": {
+                                          "type": "integer",
+                                          "description": "An integer representing the ID of the user who last updated the value.",
+                                          "format": "int32",
+                                          "example": null
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "description": "A string representing the main value being tracked.",
+                                          "example": null
+                                        }
+                                      },
+                                      "description": "Property model that includes timestamp.",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "A map of property names to arrays of historical values, each containing a value and its associated timestamp.",
+                                  "example": null
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was last updated, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "A string representing the URL associated with this object.",
+                                  "example": null
+                                }
+                              },
+                              "description": "A simple public object.",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation started, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the batch operation, with possible values: CANCELED, COMPLETE, PENDING, PROCESSING.",
+                      "example": null,
+                      "enum": [
+                        "CANCELED",
+                        "COMPLETE",
+                        "PENDING",
+                        "PROCESSING"
+                      ]
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/deal-splits/2026-09/batch/upsert": {
+      "post": {
+        "tags": [
+          "Batch"
+        ],
+        "summary": "Create or replace deal splits for deals with the provided IDs. Deal split percentages for each deal must sum up to 1.0 (100%) and may have up to 8 decimal places",
+        "description": "Create or replace deal splits for deals with the provided IDs. Deal split percentages for each deal must sum up to 1.0 (100%) and may have up to 8 decimal places",
+        "operationId": "post-/deal-splits/2026-09/batch/upsert_/crm/objects/v3/deals/splits/batch/upsert",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                  "inputs": {
+                    "type": "array",
+                    "description": "An array of deal split inputs",
+                    "example": null,
+                    "items": {
+                      "required": [
+                        "id",
+                        "splits"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "The unique identifier for the deal.",
+                          "format": "int64",
+                          "example": null
+                        },
+                        "splits": {
+                          "type": "array",
+                          "description": "An array of deal split inputs, each containing an owner ID and a percentage of the deal split.",
+                          "example": null,
+                          "items": {
+                            "required": [
+                              "ownerId",
+                              "percentage"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "ownerId": {
+                                "type": "integer",
+                                "description": "The unique identifier of the owner receiving the deal split.",
+                                "format": "int32",
+                                "example": null
+                              },
+                              "percentage": {
+                                "type": "number",
+                                "description": "The portion of the deal assigned to the owner, expressed as a percentage. The total percentage for all splits in a deal must sum up to 1.0 (100%) and can have up to 8 decimal places.",
+                                "example": null
+                              }
+                            },
+                            "example": null
+                          }
+                        }
+                      },
+                      "example": null
+                    }
+                  }
+                },
+                "example": null
+              },
+              "example": null
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "completedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was completed, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs for additional resources or documentation.",
+                      "example": null
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was requested, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of deal-to-deal split objects representing the results of the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "id",
+                          "splits"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the deal associated with the deal splits.",
+                            "example": null
+                          },
+                          "splits": {
+                            "type": "array",
+                            "description": "An array of deal split objects, each representing a portion of the deal assigned to an owner.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "archived",
+                                "createdAt",
+                                "id",
+                                "properties",
+                                "updatedAt"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "archived": {
+                                  "type": "boolean",
+                                  "description": "A boolean indicating whether this object is archived.",
+                                  "example": null
+                                },
+                                "archivedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was archived, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was created, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "description": "The unique identifier for this object, represented as a string.",
+                                  "example": null
+                                },
+                                "objectWriteTraceId": {
+                                  "type": "string",
+                                  "description": "A string identifier used for tracing write operations on this object.",
+                                  "example": null
+                                },
+                                "properties": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string",
+                                    "example": null
+                                  },
+                                  "description": "A map of property names to their values, where each value is a string.",
+                                  "example": null
+                                },
+                                "propertiesWithHistory": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "required": [
+                                        "sourceType",
+                                        "timestamp",
+                                        "value"
+                                      ],
+                                      "type": "object",
+                                      "properties": {
+                                        "sourceId": {
+                                          "type": "string",
+                                          "description": "A string representing the unique identifier of the source.",
+                                          "example": null
+                                        },
+                                        "sourceLabel": {
+                                          "type": "string",
+                                          "description": "A string providing a human-readable label for the source.",
+                                          "example": null
+                                        },
+                                        "sourceType": {
+                                          "type": "string",
+                                          "description": "A string indicating the type of source from which the value originated.",
+                                          "example": null
+                                        },
+                                        "timestamp": {
+                                          "type": "string",
+                                          "description": "A string in date-time format indicating when the value was recorded.",
+                                          "format": "date-time",
+                                          "example": null
+                                        },
+                                        "updatedByUserId": {
+                                          "type": "integer",
+                                          "description": "An integer representing the ID of the user who last updated the value.",
+                                          "format": "int32",
+                                          "example": null
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "description": "A string representing the main value being tracked.",
+                                          "example": null
+                                        }
+                                      },
+                                      "description": "Property model that includes timestamp.",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "A map of property names to arrays of historical values, each containing a value and its associated timestamp.",
+                                  "example": null
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was last updated, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "A string representing the URL associated with this object.",
+                                  "example": null
+                                }
+                              },
+                              "description": "A simple public object.",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation started, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the batch operation, with possible values: CANCELED, COMPLETE, PENDING, PROCESSING.",
+                      "example": null,
+                      "enum": [
+                        "CANCELED",
+                        "COMPLETE",
+                        "PENDING",
+                        "PROCESSING"
+                      ]
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "207": {
+            "description": "multiple statuses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "completedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was completed, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "An array of error objects detailing the errors that occurred during the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "category",
+                          "context",
+                          "errors",
+                          "links",
+                          "message",
+                          "status"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string",
+                            "description": "The error category",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": null
+                          },
+                          "errors": {
+                            "type": "array",
+                            "description": "An array of ErrorDetail objects that provide further information about the error.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "message"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "code": {
+                                  "type": "string",
+                                  "description": "The status code associated with the error detail",
+                                  "example": null
+                                },
+                                "context": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "type": "string",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "Context about the error condition",
+                                  "example": "{missingScopes=[scope1, scope2]}"
+                                },
+                                "in": {
+                                  "type": "string",
+                                  "description": "The name of the field or parameter in which the error was found.",
+                                  "example": null
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "description": "A human readable message describing the error along with remediation steps where appropriate",
+                                  "example": null
+                                },
+                                "subCategory": {
+                                  "type": "string",
+                                  "description": "A specific category that contains more specific detail about the error",
+                                  "example": null
+                                }
+                              },
+                              "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                              "example": null
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The id of the error",
+                            "example": null
+                          },
+                          "links": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "The error message",
+                            "example": null
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "object",
+                            "properties": {},
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Ye olde error",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs for additional resources or documentation.",
+                      "example": null
+                    },
+                    "numErrors": {
+                      "type": "integer",
+                      "description": "The total number of errors encountered during the batch operation.",
+                      "format": "int32",
+                      "example": null
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation was requested, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "An array of deal-to-deal split objects representing the results of the batch operation.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "id",
+                          "splits"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier for the deal associated with the deal splits.",
+                            "example": null
+                          },
+                          "splits": {
+                            "type": "array",
+                            "description": "An array of deal split objects, each representing a portion of the deal assigned to an owner.",
+                            "example": null,
+                            "items": {
+                              "required": [
+                                "archived",
+                                "createdAt",
+                                "id",
+                                "properties",
+                                "updatedAt"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                "archived": {
+                                  "type": "boolean",
+                                  "description": "A boolean indicating whether this object is archived.",
+                                  "example": null
+                                },
+                                "archivedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was archived, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was created, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "description": "The unique identifier for this object, represented as a string.",
+                                  "example": null
+                                },
+                                "objectWriteTraceId": {
+                                  "type": "string",
+                                  "description": "A string identifier used for tracing write operations on this object.",
+                                  "example": null
+                                },
+                                "properties": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string",
+                                    "example": null
+                                  },
+                                  "description": "A map of property names to their values, where each value is a string.",
+                                  "example": null
+                                },
+                                "propertiesWithHistory": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "example": null,
+                                    "items": {
+                                      "required": [
+                                        "sourceType",
+                                        "timestamp",
+                                        "value"
+                                      ],
+                                      "type": "object",
+                                      "properties": {
+                                        "sourceId": {
+                                          "type": "string",
+                                          "description": "A string representing the unique identifier of the source.",
+                                          "example": null
+                                        },
+                                        "sourceLabel": {
+                                          "type": "string",
+                                          "description": "A string providing a human-readable label for the source.",
+                                          "example": null
+                                        },
+                                        "sourceType": {
+                                          "type": "string",
+                                          "description": "A string indicating the type of source from which the value originated.",
+                                          "example": null
+                                        },
+                                        "timestamp": {
+                                          "type": "string",
+                                          "description": "A string in date-time format indicating when the value was recorded.",
+                                          "format": "date-time",
+                                          "example": null
+                                        },
+                                        "updatedByUserId": {
+                                          "type": "integer",
+                                          "description": "An integer representing the ID of the user who last updated the value.",
+                                          "format": "int32",
+                                          "example": null
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "description": "A string representing the main value being tracked.",
+                                          "example": null
+                                        }
+                                      },
+                                      "description": "Property model that includes timestamp.",
+                                      "example": null
+                                    }
+                                  },
+                                  "description": "A map of property names to arrays of historical values, each containing a value and its associated timestamp.",
+                                  "example": null
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "The date and time when this object was last updated, in ISO 8601 format.",
+                                  "format": "date-time",
+                                  "example": null
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "A string representing the URL associated with this object.",
+                                  "example": null
+                                }
+                              },
+                              "description": "A simple public object.",
+                              "example": null
+                            }
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "startedAt": {
+                      "type": "string",
+                      "description": "The timestamp indicating when the batch operation started, in date-time format.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the batch operation, with possible values: CANCELED, COMPLETE, PENDING, PROCESSING.",
+                      "example": null,
+                      "enum": [
+                        "CANCELED",
+                        "COMPLETE",
+                        "PENDING",
+                        "PROCESSING"
+                      ]
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "ENTERPRISE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

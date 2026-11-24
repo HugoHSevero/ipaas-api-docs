@@ -1,2 +1,6 @@
 __pycache__/
 *.pyc
+
+# HubSpot: o gerador baixa as specs oficiais por SHA e as regenera; só o resultado vai ao Git
+hubspot/_fontes/
+hubspot/_build/

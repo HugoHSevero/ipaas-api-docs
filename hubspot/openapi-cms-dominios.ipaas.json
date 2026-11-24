@@ -1,0 +1,804 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HubSpot - CMS - Domínios",
+    "version": "2026-09"
+  },
+  "servers": [
+    {
+      "url": "https://api.hubapi.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Basic"
+    }
+  ],
+  "paths": {
+    "/cms/domains/2026-09": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "List Domains",
+        "description": "Retrieve a list of content domains associated with your HubSpot account. This endpoint allows filtering by creation and update timestamps, sorting, and pagination. It is useful for managing and reviewing the domains configured in your CMS.",
+        "operationId": "get-/cms/domains/2026-09_/cms/domains/v3",
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "description": "The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "description": "Whether to return only results that have been archived.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "example": null
+            }
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "description": "Filter results to include only domains created after the specified date and time. Format should be date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "createdAt",
+            "in": "query",
+            "description": "Filter results by the exact creation date and time of the domain. Format should be date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "description": "Filter results to include only domains created before the specified date and time. Format should be date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to display per page.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": null
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Specify the fields by which to sort the results. Accepts an array of strings.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "example": null,
+              "items": {
+                "type": "string",
+                "example": null
+              }
+            }
+          },
+          {
+            "name": "updatedAfter",
+            "in": "query",
+            "description": "Filter results to include only domains updated after the specified date and time. Format should be date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "updatedAt",
+            "in": "query",
+            "description": "Filter results by the exact update date and time of the domain. Format should be date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          },
+          {
+            "name": "updatedBefore",
+            "in": "query",
+            "description": "Filter results to include only domains updated before the specified date and time. Format should be date-time.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "results",
+                    "total"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paging": {
+                      "type": "object",
+                      "properties": {
+                        "next": {
+                          "required": [
+                            "after"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "after": {
+                              "type": "string",
+                              "description": "The cursor value indicating where to begin fetching the next page of results in a paginated collection",
+                              "example": null
+                            },
+                            "link": {
+                              "type": "string",
+                              "description": "An optional URL for directly accessing the next page of results.",
+                              "example": null
+                            }
+                          },
+                          "description": "Specifies the paging information needed to retrieve the next set of results in a paginated API response",
+                          "example": null
+                        },
+                        "prev": {
+                          "required": [
+                            "before"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "before": {
+                              "type": "string",
+                              "description": "A string token used as a cursor to identify the position before the current set of results in pagination.",
+                              "example": null
+                            },
+                            "link": {
+                              "type": "string",
+                              "description": "A string containing the URL link to the previous page of results.",
+                              "example": null
+                            }
+                          },
+                          "description": "specifies the paging information needed to retrieve the previous set of results in a paginated API response",
+                          "example": null
+                        }
+                      },
+                      "description": "Represents the pagination information for navigating through a list of results in the API. It provides details on how to access the previous or next set of results.",
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "The results of the query.",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "correctCname",
+                          "created",
+                          "domain",
+                          "id",
+                          "isResolving",
+                          "isSslEnabled",
+                          "isSslOnly",
+                          "isUsedForBlogPost",
+                          "isUsedForEmail",
+                          "isUsedForKnowledge",
+                          "isUsedForLandingPage",
+                          "isUsedForSitePage",
+                          "manuallyMarkedAsResolving",
+                          "primaryBlogPost",
+                          "primaryEmail",
+                          "primaryKnowledge",
+                          "primaryLandingPage",
+                          "primarySitePage",
+                          "secondaryToDomain",
+                          "updated"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "correctCname": {
+                            "type": "string",
+                            "description": "The expected CNAME record for the domain.",
+                            "example": null
+                          },
+                          "created": {
+                            "type": "string",
+                            "description": "The date and time when the domain was created.",
+                            "format": "date-time",
+                            "example": null
+                          },
+                          "domain": {
+                            "type": "string",
+                            "description": "The actual domain or sub-domain. e.g. www.hubspot.com",
+                            "example": null
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique ID of this domain.",
+                            "example": null
+                          },
+                          "isResolving": {
+                            "type": "boolean",
+                            "description": "Whether the DNS for this domain is optimally configured for use with HubSpot.",
+                            "example": null
+                          },
+                          "isSslEnabled": {
+                            "type": "boolean",
+                            "description": "Indicates whether SSL is enabled for the domain.",
+                            "example": null
+                          },
+                          "isSslOnly": {
+                            "type": "boolean",
+                            "description": "Indicates whether the domain is accessible only via SSL.",
+                            "example": null
+                          },
+                          "isUsedForBlogPost": {
+                            "type": "boolean",
+                            "description": "Whether the domain is used for CMS blog posts.",
+                            "example": null
+                          },
+                          "isUsedForEmail": {
+                            "type": "boolean",
+                            "description": "Whether the domain is used for CMS email web pages.",
+                            "example": null
+                          },
+                          "isUsedForKnowledge": {
+                            "type": "boolean",
+                            "description": "Whether the domain is used for CMS knowledge pages.",
+                            "example": null
+                          },
+                          "isUsedForLandingPage": {
+                            "type": "boolean",
+                            "description": "Whether the domain is used for CMS landing pages.",
+                            "example": null
+                          },
+                          "isUsedForSitePage": {
+                            "type": "boolean",
+                            "description": "Whether the domain is used for CMS site pages.",
+                            "example": null
+                          },
+                          "manuallyMarkedAsResolving": {
+                            "type": "boolean",
+                            "description": "Indicates whether the domain has been manually marked as resolving.",
+                            "example": null
+                          },
+                          "primaryBlogPost": {
+                            "type": "boolean",
+                            "description": "Indicates whether the domain is the primary domain for blog posts.",
+                            "example": null
+                          },
+                          "primaryEmail": {
+                            "type": "boolean",
+                            "description": "Indicates whether the domain is the primary domain for email pages.",
+                            "example": null
+                          },
+                          "primaryKnowledge": {
+                            "type": "boolean",
+                            "description": "Indicates whether the domain is the primary domain for knowledge pages.",
+                            "example": null
+                          },
+                          "primaryLandingPage": {
+                            "type": "boolean",
+                            "description": "Indicates whether the domain is the primary domain for landing pages.",
+                            "example": null
+                          },
+                          "primarySitePage": {
+                            "type": "boolean",
+                            "description": "Indicates whether the domain is the primary domain for site pages.",
+                            "example": null
+                          },
+                          "secondaryToDomain": {
+                            "type": "string",
+                            "description": "Specifies the domain to which this domain is secondary.",
+                            "example": null
+                          },
+                          "updated": {
+                            "type": "string",
+                            "description": "The date and time when the domain was last updated.",
+                            "format": "date-time",
+                            "example": null
+                          }
+                        },
+                        "example": null
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "The number of available results.",
+                      "format": "int32",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cms/domains/2026-09/{domainId}": {
+      "get": {
+        "tags": [
+          "Basic"
+        ],
+        "summary": "Get a single domain",
+        "description": "Returns a single domains with the id specified.",
+        "operationId": "get-/cms/domains/2026-09/{domainId}_getById",
+        "parameters": [
+          {
+            "name": "domainId",
+            "in": "path",
+            "description": "The unique identifier of the domain to retrieve.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "example": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "correctCname",
+                    "created",
+                    "domain",
+                    "id",
+                    "isResolving",
+                    "isSslEnabled",
+                    "isSslOnly",
+                    "isUsedForBlogPost",
+                    "isUsedForEmail",
+                    "isUsedForKnowledge",
+                    "isUsedForLandingPage",
+                    "isUsedForSitePage",
+                    "manuallyMarkedAsResolving",
+                    "primaryBlogPost",
+                    "primaryEmail",
+                    "primaryKnowledge",
+                    "primaryLandingPage",
+                    "primarySitePage",
+                    "secondaryToDomain",
+                    "updated"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "correctCname": {
+                      "type": "string",
+                      "description": "The expected CNAME record for the domain.",
+                      "example": null
+                    },
+                    "created": {
+                      "type": "string",
+                      "description": "The date and time when the domain was created.",
+                      "format": "date-time",
+                      "example": null
+                    },
+                    "domain": {
+                      "type": "string",
+                      "description": "The actual domain or sub-domain. e.g. www.hubspot.com",
+                      "example": null
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "The unique ID of this domain.",
+                      "example": null
+                    },
+                    "isResolving": {
+                      "type": "boolean",
+                      "description": "Whether the DNS for this domain is optimally configured for use with HubSpot.",
+                      "example": null
+                    },
+                    "isSslEnabled": {
+                      "type": "boolean",
+                      "description": "Indicates whether SSL is enabled for the domain.",
+                      "example": null
+                    },
+                    "isSslOnly": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain is accessible only via SSL.",
+                      "example": null
+                    },
+                    "isUsedForBlogPost": {
+                      "type": "boolean",
+                      "description": "Whether the domain is used for CMS blog posts.",
+                      "example": null
+                    },
+                    "isUsedForEmail": {
+                      "type": "boolean",
+                      "description": "Whether the domain is used for CMS email web pages.",
+                      "example": null
+                    },
+                    "isUsedForKnowledge": {
+                      "type": "boolean",
+                      "description": "Whether the domain is used for CMS knowledge pages.",
+                      "example": null
+                    },
+                    "isUsedForLandingPage": {
+                      "type": "boolean",
+                      "description": "Whether the domain is used for CMS landing pages.",
+                      "example": null
+                    },
+                    "isUsedForSitePage": {
+                      "type": "boolean",
+                      "description": "Whether the domain is used for CMS site pages.",
+                      "example": null
+                    },
+                    "manuallyMarkedAsResolving": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain has been manually marked as resolving.",
+                      "example": null
+                    },
+                    "primaryBlogPost": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain is the primary domain for blog posts.",
+                      "example": null
+                    },
+                    "primaryEmail": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain is the primary domain for email pages.",
+                      "example": null
+                    },
+                    "primaryKnowledge": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain is the primary domain for knowledge pages.",
+                      "example": null
+                    },
+                    "primaryLandingPage": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain is the primary domain for landing pages.",
+                      "example": null
+                    },
+                    "primarySitePage": {
+                      "type": "boolean",
+                      "description": "Indicates whether the domain is the primary domain for site pages.",
+                      "example": null
+                    },
+                    "secondaryToDomain": {
+                      "type": "string",
+                      "description": "Specifies the domain to which this domain is secondary.",
+                      "example": null
+                    },
+                    "updated": {
+                      "type": "string",
+                      "description": "The date and time when the domain was last updated.",
+                      "format": "date-time",
+                      "example": null
+                    }
+                  },
+                  "example": null
+                },
+                "example": null
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "The error category",
+                      "example": null
+                    },
+                    "context": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "example": null,
+                        "items": {
+                          "type": "string",
+                          "example": null
+                        }
+                      },
+                      "description": "Context about the error condition",
+                      "example": "{invalidPropertyName=[propertyValue], missingScopes=[scope1, scope2]}"
+                    },
+                    "correlationId": {
+                      "type": "string",
+                      "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                      "format": "uuid",
+                      "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "description": "further information about the error",
+                      "example": null,
+                      "items": {
+                        "required": [
+                          "message"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The status code associated with the error detail",
+                            "example": null
+                          },
+                          "context": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "array",
+                              "example": null,
+                              "items": {
+                                "type": "string",
+                                "example": null
+                              }
+                            },
+                            "description": "Context about the error condition",
+                            "example": "{missingScopes=[scope1, scope2]}"
+                          },
+                          "in": {
+                            "type": "string",
+                            "description": "The name of the field or parameter in which the error was found.",
+                            "example": null
+                          },
+                          "message": {
+                            "type": "string",
+                            "description": "A human readable message describing the error along with remediation steps where appropriate",
+                            "example": null
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "description": "A specific category that contains more specific detail about the error",
+                            "example": null
+                          }
+                        },
+                        "description": "Represents detailed information about an error that occurred in the API. This component is used to provide additional context and specifics about errors, typically as part of an error response.",
+                        "example": null
+                      }
+                    },
+                    "links": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string",
+                        "example": null
+                      },
+                      "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A human readable message describing the error along with remediation steps where appropriate",
+                      "example": "An error occurred"
+                    },
+                    "subCategory": {
+                      "type": "string",
+                      "description": "A specific category that contains more specific detail about the error",
+                      "example": null
+                    }
+                  },
+                  "description": "Represents an error response returned by the API when an operation fails. This component is used in various endpoints to provide detailed information about the error encountered.",
+                  "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                      "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                  }
+                },
+                "example": null
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Token de acesso de private app da HubSpot (modelo TOKEN do iPaaS)."
+      }
+    }
+  },
+  "x-hubspot-available-client-libraries": [
+    "Node",
+    "Python",
+    "Ruby",
+    "PHP"
+  ],
+  "x-hubspot-product-tier-requirements": {
+    "marketing": "FREE",
+    "sales": "FREE",
+    "service": "FREE",
+    "cms": "FREE",
+    "commerce": "FREE",
+    "crmHub": "FREE",
+    "dataHub": "FREE"
+  }
+}

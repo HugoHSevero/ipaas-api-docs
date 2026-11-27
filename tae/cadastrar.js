@@ -10,7 +10,7 @@
 
 (async () => {
   const CRIAR = false;
-  const SHA = 'COLOQUE_O_SHA_DO_COMMIT'; // URL por SHA evita o cache do raw.githubusercontent
+  const SHA = '8711c47d0d72a20415253c342b863092fa974270'; // URL por SHA evita o cache do raw.githubusercontent
   const REPO = `https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/${SHA}/tae`;
 
   const APP = {

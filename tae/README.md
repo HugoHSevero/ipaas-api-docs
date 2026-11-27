@@ -83,7 +83,7 @@ O token JWE vem de um login e **expira**. A validade não foi medida. Opções:
 | Etapa | Situação |
 |---|---|
 | Specs geradas (6 serviços, 131 operações) | feito |
-| Commit/push | pendente |
+| Commit/push | feito, `8711c47` no branch `add-tae` do fork `HugoHSevero` (URLs por SHA conferidas: HTTP 200 anônimo) |
 | App, ambiente, serviços e importação no iPaaS | pendente |
 | Conta | pendente |
 | Execução de diagrama `DONE` | **não validado** |

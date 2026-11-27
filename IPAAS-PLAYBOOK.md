@@ -443,7 +443,7 @@ Solução usada (`hubspot/gerar.py`): achar os grupos (componentes fortemente co
 
 **`summary` vazio na spec oficial.** O nome do recurso vem do `summary`; o HubSpot deixa `POST /crm/objects/2026-09/{objectType}/search` sem ele. Preencha com o `operationId` antes de importar.
 
-**Swagger em várias versões e `servers` relativo (ASP.NET/Swashbuckle).** APIs .NET costumam publicar um `swagger.json` por versão (`/swagger/v1/swagger.json`, `/swagger/v2/...`) e um `servers` relativo (`/documents`). A lista de versões está no `index.html` do Swagger UI (`configObject.urls`), não no `swagger-initializer.js`, que traz o petstore padrão. Verificado no TAE: as versões foram juntadas num arquivo por API e os paths receberam o prefixo do `servers`. Assim um ambiente só, com a base no host, atende várias APIs do mesmo fornecedor (`tae/gerar.py`, seis APIs num ambiente). Importação **não verificada** até o cadastro.
+**Swagger em várias versões e `servers` relativo (ASP.NET/Swashbuckle).** APIs .NET costumam publicar um `swagger.json` por versão (`/swagger/v1/swagger.json`, `/swagger/v2/...`) e um `servers` relativo (`/documents`). A lista de versões está no `index.html` do Swagger UI (`configObject.urls`), não no `swagger-initializer.js`, que traz o petstore padrão. Verificado no TAE: as versões foram juntadas num arquivo por API e os paths receberam o prefixo do `servers`. Assim um ambiente só, com a base no host, atende várias APIs do mesmo fornecedor (`tae/gerar.py`, seis APIs num ambiente). Importação **verificada**: os 131 recursos entraram nos seis serviços. A URL final montada na execução (`baseURL` + path prefixado) ainda **não foi verificada**.
 
 **Spec oficial pode vir sem schema de resposta.** No TAE, 130 de 131 operações declaram só `"200": OK`. A importação deve funcionar, mas os recursos ficam sem campos de saída. Os schemas precisam vir de chamadas reais; não invente.
 
@@ -769,6 +769,7 @@ GET    /ipaas/api/v4/messages?page=1&pageSize=10&status=DONE&status=ERROR&initia
 | Open-Meteo | `NO_AUTH` | 9 em 9 serviços | Spec oficial já recortada por domínio, convertida de OpenAPI 3.1.0 YAML para 3.0.3 JSON; 9 recursos importados; **7 ambientes** (um por subdomínio) porque cada domínio tem um host próprio; diagrama com 9 steps executado `DONE`, agregando os 9 payloads reais na resposta síncrona |
 | WhatsApp | `TOKEN` (Bearer) | 100 em 6 serviços | Spec oficial da Meta (`github.com/facebook/openapi`), 113 operações recortadas em 100; convertida de 3.1.0 para 3.0.3; `/{Version}` movido do path para a URL do ambiente; 13 operações sem `tags` retagueadas em 6 domínios; 100 recursos importados e conferidos campo a campo. Diagrama com 5 steps executado `DONE` em 11,4s, com os payloads reais de cada serviço. A entrega **passou a funcionar** depois que um número próprio brasileiro verificado (`VERIFIED`/`LIVE`) substituiu o número de teste americano e a WABA ficou `account_review_status: APPROVED`: template (primeiro contato) e texto livre (janela de 24h aberta) chegaram no aparelho, tanto por chamada direta quanto pelo diagrama. Antes, com o número de teste, os envios recebiam `accepted` e **não entregavam** (erro `130497`, cross-country para o Brasil em conta sem verificação de negócio, só visível no webhook de status). Trocar de número **não** exigiu recriar ambiente/conta nem reimportar: só mudar `phone_number_id`/`WABA-ID` no `inPath` dos steps (ver `whatsapp/CADASTRO-NUMERO.md`). Três armadilhas novas achadas: **import assíncrono** (200 não significa concluído), **`array` sem `items` no `requestBody`** zerando a spec em silêncio, e **`PUT` de conta sem `active: true`** desativando a credencial. A spec oficial da Meta documenta **menos** campos do que a API devolve — 16 acrescentados por observação de resposta real |
 | HubSpot | `TOKEN` (Bearer, **service key**) | 1.187 em 105 serviços | Spec oficial (`HubSpot/HubSpot-public-api-spec-collection`, versão por data `2026-09`), recortada por `hubspot/gerar.py` a partir de `hubspot/servicos.json`, sem operação repetida entre serviços. `securitySchemes` (`oauth2`, `apiKey` em query e header) trocados por um `http bearer`, aceito pelo importador. 105 serviços e 1.187 recursos importados num app só, conferidos: 0 resposta como `response` string. Diagrama com 3 steps (listar proprietários, criar contato via `inBody`, ler contato encadeando `{{{id2.id}}}`) executado `DONE` em 8,2s. Armadilhas novas: grupos circulares de schemas que explodem a dereferência, `$ref` sem destino na fonte, listagem de serviços cortada em 100 sem paginação. Private apps legados não podem mais ser criados; a credencial é a service key |
+| TOTVS Assinatura Eletronica - TAE | `API_KEY` (header `Authorization: Bearer <JWE>`) | 131 em 6 serviços | Specs oficiais Swashbuckle (14 `swagger.json`, um por versão de cada uma das 6 APIs), juntadas por API e com o `servers` relativo (`/documents`) movido para o começo dos paths, para um único ambiente em `https://totvssign.totvs.app`. Cadastro feito por script colado no console (`tae/cadastrar.js`), pois a sessão não tinha MCP do Chrome. 131 recursos importados, contagem conferida por serviço. A spec oficial não declara resposta em 130 das 131 operações. **Conta e diagrama pendentes**: execução `DONE` não feita |
 
 ---
 
@@ -958,6 +959,27 @@ Um app só, com o domínio no nome de cada serviço (`CRM - Contatos`, `CMS - Po
 **O header `Authorization` vazio do recurso não atrapalha.** O `http bearer` da spec vira um campo `Authorization` em cada recurso; deixado vazio no step, a conta injeta o token normalmente. Verificado na execução `DONE`.
 
 A chave usada é de uma conta HubSpot gratuita de teste, com escopos mínimos (`crm.objects.owners.read`, `crm.objects.contacts.read`, `crm.objects.contacts.write`), e **deve ser rotacionada**. A execução criou o contato `265234707503` (`ipaas-teste-1795549572011@example.com`); reexecutar cria um novo a cada vez.
+
+### TOTVS Assinatura Eletronica - TAE — `API_KEY` no header `Authorization`
+
+Um ambiente para as seis APIs. Os paths levam o prefixo da API (`/documents/v1/...`). Detalhes em [`tae/README.md`](./tae/README.md).
+
+| Item | Id |
+|---|---|
+| App (`componentId`) | `ed2aaf7a-b889-437d-9e3e-6dc74307e636` |
+| Ambiente `Produção` (`https://totvssign.totvs.app`) | `6c7cb721-f057-481e-8e46-ea181da7577f` |
+| Serviço `Identidade` (28 recursos) | `47c1cac5-22be-4cca-813e-5f297857f836` |
+| Serviço `Documentos` (38 recursos) | `3b63af3e-7740-4ac4-89bc-402ae5f2a9de` |
+| Serviço `Assinaturas` (31 recursos) | `4cbdbd57-1080-4d96-b149-16ef37a71a50` |
+| Serviço `Contatos` (23 recursos) | `d51e2640-1b61-4716-a629-e583fc106102` |
+| Serviço `Webhooks` (7 recursos) | `92c85c70-6a12-4033-a854-ca0613890a79` |
+| Serviço `Dead Letter` (4 recursos) | `716f05af-5cbc-45f4-bc24-054f0b0308bf` |
+| Conta | **pendente** |
+| Diagrama de validação | **pendente** |
+
+Importado da URL por SHA `8711c47` do fork `HugoHSevero/ipaas-api-docs`, branch `add-tae`. As URLs em `tae/ipaas.json` apontam para `HugoHSevero/.../main/` e passam a valer depois do merge na `main` do fork.
+
+O token JWE do TAE vem de `POST /identityintegration/v3/auth/login` e expira. A validade não foi medida.
 
 ---
 

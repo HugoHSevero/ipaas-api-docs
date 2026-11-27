@@ -1,0 +1,2900 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TOTVS Assinatura Eletrônica - Contatos",
+    "version": "v1+v2",
+    "description": "Fonte: https://totvssign.staging.totvs.app/contact/swagger/ (versões v1, v2)."
+  },
+  "servers": [
+    {
+      "url": "https://totvssign.totvs.app",
+      "description": "Produção"
+    },
+    {
+      "url": "https://totvssign.staging.totvs.app",
+      "description": "Homologação"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Contato"
+    },
+    {
+      "name": "ContatosGrupo"
+    },
+    {
+      "name": "Grupo"
+    }
+  ],
+  "paths": {
+    "/contact/v1/contatos": {
+      "get": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Obtem os dados de um contato específico do usuário logado.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Exclui um contato do usuário logado.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "put": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Altera os dados de um contato do usuário logado.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Cadastra um novo contato do usuário logado.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/contact/v1/contatos/usuario": {
+      "get": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Obtem a lista de contatos do usuário logado.",
+        "parameters": [
+          {
+            "name": "desagrupados",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/contact/v1/contatos-grupo": {
+      "post": {
+        "tags": [
+          "ContatosGrupo"
+        ],
+        "summary": "Vincula contatos em um grupo do usuário logado.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": [
+          "ContatosGrupo"
+        ],
+        "summary": "Desvincula contatos de um grupo do usuário logado.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/contact/v1/grupos": {
+      "get": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Obtem os dados de um grupo de contatos específico do usuário logado.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Cadastra um novo grupo de contatos do usuário logado.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Altera os dados de um grupo de contatos específico do usuário logado.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Exclui um grupo de contatos específico do usuário logado.",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/contact/v1/grupos/usuario": {
+      "get": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Obtem a lista de grupos de contatos do usuário logado",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/contact/v1/grupos/{id}/contatos": {
+      "post": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Vincula contatos em um grupo do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Desvincula contatos de um grupo do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "idsContatos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/contact/v1/grupos/{id}/contato": {
+      "delete": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Desvincula um contato de um grupo do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idContato",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/contact/v2/contatos/{id}": {
+      "get": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Obtem os dados de um contato específico do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Exclui um contato do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Altera os dados de um contato do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "nomeCompleto": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "acao": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "idGrupo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoAutenticacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoEnvioDocumento": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoEnvioCodigo": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/contact/v2/contatos": {
+      "get": {
+        "tags": [
+          "Contato"
+        ],
+        "summary": "Obtem a lista de contatos do usuário logado.",
+        "parameters": [
+          {
+            "name": "desagrupados",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/contact/v2/grupos/{id}": {
+      "get": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Obtem os dados de um grupo de contatos específico do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Altera os dados de um grupo de contatos específico do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "isValid": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Exclui um grupo de contatos específico do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/contact/v2/grupos": {
+      "get": {
+        "tags": [
+          "Grupo"
+        ],
+        "summary": "Obtem a lista de grupos de contatos do usuário logado.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Input the JWT like: Bearer {your token}",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

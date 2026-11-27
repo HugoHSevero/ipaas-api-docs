@@ -1,0 +1,73 @@
+{
+  "app": {
+    "name": "TOTVS Assinatura Eletronica - TAE",
+    "description": "Assinatura eletrônica de documentos: autenticação e usuários, upload e publicação de documentos, assinatura, contatos, webhooks e dead letter."
+  },
+  "environments": [
+    {
+      "name": "Produção",
+      "type": "REST",
+      "baseURL": "https://totvssign.totvs.app",
+      "authModels": ["API_KEY"]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Produção",
+      "environment": "Produção",
+      "authModel": "API_KEY",
+      "addTo": "header",
+      "keys": [{ "key": "Authorization", "value": "Bearer <token JWE de POST /identityintegration/v3/auth/login, cadastrar na interface>" }]
+    }
+  ],
+  "services": [
+    {
+      "name": "Identidade",
+      "description": "API IdentityIntegration: login (token JWE), usuários, administradores, empresas, usuários de serviço e código de verificação",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "user",
+      "swaggerUrl": "https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/main/tae/openapi-identidade.ipaas.json"
+    },
+    {
+      "name": "Documentos",
+      "description": "API Documents: upload de envelopes, publicações, pesquisas, download, anexos e pastas",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "product",
+      "swaggerUrl": "https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/main/tae/openapi-documentos.ipaas.json"
+    },
+    {
+      "name": "Assinaturas",
+      "description": "API SignIntegration: assinar, rejeitar, destinatários e observadores, opções da publicação, callbacks e certificado em nuvem",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "light-bulb",
+      "swaggerUrl": "https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/main/tae/openapi-assinaturas.ipaas.json"
+    },
+    {
+      "name": "Contatos",
+      "description": "API Contact: contatos e grupos de contatos do usuário",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "user",
+      "swaggerUrl": "https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/main/tae/openapi-contatos.ipaas.json"
+    },
+    {
+      "name": "Webhooks",
+      "description": "API Webhooks: subscriptions, callbacks, eventos disponíveis e histórico de envio",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "adb",
+      "swaggerUrl": "https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/main/tae/openapi-webhooks.ipaas.json"
+    },
+    {
+      "name": "Dead Letter",
+      "description": "API DeadLetter: pesquisa, consulta, exclusão e reprocessamento de webhooks que falharam",
+      "environment": "Produção",
+      "resourceType": "REST",
+      "icon": "adb",
+      "swaggerUrl": "https://raw.githubusercontent.com/HugoHSevero/ipaas-api-docs/main/tae/openapi-deadletter.ipaas.json"
+    }
+  ]
+}

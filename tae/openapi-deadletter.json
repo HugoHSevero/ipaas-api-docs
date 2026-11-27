@@ -1,0 +1,210 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TOTVS Assinatura Eletrônica - Dead Letter",
+    "version": "v1",
+    "description": "Fonte: https://totvssign.staging.totvs.app/deadletter/swagger/ (versões v1)."
+  },
+  "servers": [
+    {
+      "url": "https://totvssign.totvs.app",
+      "description": "Produção"
+    },
+    {
+      "url": "https://totvssign.staging.totvs.app",
+      "description": "Homologação"
+    }
+  ],
+  "tags": [
+    {
+      "name": "DeadLetter"
+    }
+  ],
+  "paths": {
+    "/deadletter/v1/deadletter/pesquisas": {
+      "post": {
+        "tags": [
+          "DeadLetter"
+        ],
+        "summary": "Endpoint usado para realizar pesquisa aos deadletters vinculados ao Tenant do usuário.",
+        "description": "Status: Não processado = 0, Processando = 1, Processado com sucesso = 2, Processado com falha = 3",
+        "parameters": [
+          {
+            "name": "CurrentePage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "AscendingOrder",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchDeadLetterRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchDeadLetterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchDeadLetterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchDeadLetterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/deadletter/v1/deadletter/{id}": {
+      "get": {
+        "tags": [
+          "DeadLetter"
+        ],
+        "summary": "Endpoint usado para buscar dados de um deadletter pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DeadLetter"
+        ],
+        "summary": "Endpoint usado para deletar um deadletter.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/deadletter/v1/deadletter/{id}/reprocessar": {
+      "post": {
+        "tags": [
+          "DeadLetter"
+        ],
+        "summary": "Endpoint usado para reprocessar o webhook de um deadletter pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchDeadLetterRequest": {
+        "type": "object",
+        "properties": {
+          "eventType": {
+            "type": "string",
+            "nullable": true
+          },
+          "initialDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finalDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusDeadLetter"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatusDeadLetter": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Input the JWT like: Bearer {your token}",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

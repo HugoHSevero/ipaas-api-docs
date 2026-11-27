@@ -1,0 +1,2288 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TOTVS Assinatura Eletrônica - Documentos",
+    "version": "v1+v2+v3+v4",
+    "description": "Fonte: https://totvssign.staging.totvs.app/documents/swagger/ (versões v1, v2, v3, v4)."
+  },
+  "servers": [
+    {
+      "url": "https://totvssign.totvs.app",
+      "description": "Produção"
+    },
+    {
+      "url": "https://totvssign.staging.totvs.app",
+      "description": "Homologação"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Anexos"
+    },
+    {
+      "name": "Envelopes"
+    },
+    {
+      "name": "LogLeituraArquivo"
+    },
+    {
+      "name": "Pastas"
+    },
+    {
+      "name": "PastasCompartilhadas"
+    },
+    {
+      "name": "Publicacoes"
+    },
+    {
+      "name": "PublicacoesDestinatarios"
+    },
+    {
+      "name": "Tenant"
+    }
+  ],
+  "paths": {
+    "/documents/v1/publicacoes/{idDocumento}/anexos": {
+      "get": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Endpoint para obter a lista de todos os anexos de uma publicação.",
+        "parameters": [
+          {
+            "name": "idDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Endpoint para adicionar um ou mais anexos em uma publicação.",
+        "parameters": [
+          {
+            "name": "idDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "anexos": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "anexos": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Endpoint para remover todos anexos de uma publicação.",
+        "parameters": [
+          {
+            "name": "idDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/{idDocumento}/anexos/{idAnexo}": {
+      "get": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Endpoint para obter o download de um  anexo específico.",
+        "parameters": [
+          {
+            "name": "idDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idAnexo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Endpoint para remover um anexo de uma publicação.",
+        "parameters": [
+          {
+            "name": "idDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idAnexo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/envelopes/upload": {
+      "post": {
+        "tags": [
+          "Envelopes"
+        ],
+        "summary": "Endpoint para realizar o upload de envelopes.",
+        "description": "Tipos PDF-A: 0=Default, 1=Pdf-A/1a, 2=Pdf-A/1b, 3=Pdf-A/2a, 4=Pdf-A/2b, 5=Pdf-A/2u, 10=Pdf-A/4e",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Envelope": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "NomeEnvelope": {
+                    "type": "string"
+                  },
+                  "TipoPdfA": {
+                    "$ref": "#/components/schemas/TipoPdfa"
+                  }
+                }
+              },
+              "encoding": {
+                "Envelope": {
+                  "style": "form"
+                },
+                "NomeEnvelope": {
+                  "style": "form"
+                },
+                "TipoPdfA": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/{id}/leituras": {
+      "post": {
+        "tags": [
+          "LogLeituraArquivo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarLogLeituraRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarLogLeituraRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarLogLeituraRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarLogLeituraRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "POST /documents/v1/publicacoes/{id}/leituras"
+      }
+    },
+    "/documents/v1/pastas/{id}": {
+      "get": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Obtem os dados de uma pasta do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Exclui uma pasta do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Altera o nome de uma pasta do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarPastaRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarPastaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarPastaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarPastaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/pastas": {
+      "get": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Obtem as pastas raizes do usuário logado.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Cria uma pasta para o usuário logado.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarPastaRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarPastaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarPastaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarPastaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/pastas/{id}/arquivos": {
+      "post": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Move arquivos para uma pasta do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VincularArquivosPastaRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VincularArquivosPastaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VincularArquivosPastaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VincularArquivosPastaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Remove arquivos de uma pasta do usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DesvincularArquivosPastaRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DesvincularArquivosPastaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DesvincularArquivosPastaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DesvincularArquivosPastaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/pastas/{id}/contatos": {
+      "get": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Obtem a lista de e-mails que possuem acesso a uma pasta compartilhada.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Compartilha uma pasta com um e-mail.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompartilharPastaContatoRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompartilharPastaContatoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompartilharPastaContatoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompartilharPastaContatoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Pastas"
+        ],
+        "summary": "Remove o compartilhamento de uma pasta com um e-mail.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoverCompartilhamentoPastaContatoRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoverCompartilhamentoPastaContatoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoverCompartilhamentoPastaContatoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoverCompartilhamentoPastaContatoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/pastas/compartilhadas": {
+      "get": {
+        "tags": [
+          "PastasCompartilhadas"
+        ],
+        "summary": "Obtem a lista de pastas compartilhadas com o usuário logado.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/pastas/compartilhadas/{id}": {
+      "get": {
+        "tags": [
+          "PastasCompartilhadas"
+        ],
+        "summary": "Obtem os dados de uma pasta compartilhada com o usuário logado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Realiza o cadastro de uma nova publicação.",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarPublicacaoRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarPublicacaoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarPublicacaoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastrarPublicacaoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/pesquisas": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota não considera documentos cancelados, favor utilizar a rota /v2/publicacoes/pesquisas.",
+        "description": "Administradores podem visualizar todas as publicações da empresa.",
+        "parameters": [
+          {
+            "name": "PaginaAtual",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "TamanhoPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "Ordenacao",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/OrdenacaoPublicacao"
+            }
+          },
+          {
+            "name": "OrdemCrescente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV1"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV1"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV1"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/documents/v1/publicacoes/{id}": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota não considera documentos cancelados, favor utilizar a rota /v2/publicacoes/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Deleta publicacao com status de rascunho",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/{id}/download": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Realiza o download de um documento específico.",
+        "description": "tipoDownload: 1=Original, 2=Assinado, 3=Com Certificado, 4=Todos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "tipoDownload",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TipoDownload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/documents/v1/publicacoes/sem-cadastro/{id}": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota não considera documentos cancelados, favor utilizar a rota /v2/publicacoes/sem-cadastro/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/documents/v1/publicacoes/sem-cadastro/{id}/download": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Realiza o download de um documento específico, para usuários sem cadastro.",
+        "description": "tipoDownload: 1=Original, 2=Assinado, 3=Com Certificado, 4=Todos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "tipoDownload",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TipoDownload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/documents/v1/publicacoes/dashboard/destinatario": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Obtém os totais por status de publicações feitas pelo usuário logado para um destinatário específico.",
+        "description": "TipoAutenticacaoDestinatario: 1=LoginNoSistema, 2=CodigoViaEmail, null=Ambos",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterTotaisPublicacoesDestinatarioRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterTotaisPublicacoesDestinatarioRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterTotaisPublicacoesDestinatarioRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterTotaisPublicacoesDestinatarioRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/pesquisas/destinatario": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Obtém as lista de publicações do usuário logado para um destinatário específico.",
+        "description": "TipoAutenticacaoDestinatario: 1=LoginNoSistema, 2=CodigoViaEmail, null=Ambos",
+        "parameters": [
+          {
+            "name": "PaginaAtual",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "TamanhoPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "Ordenacao",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/OrdenacaoPublicacao"
+            }
+          },
+          {
+            "name": "OrdemCrescente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterListaPublicacoesPorDestinatarioRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterListaPublicacoesPorDestinatarioRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterListaPublicacoesPorDestinatarioRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObterListaPublicacoesPorDestinatarioRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/{id}/files": {
+      "put": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Realiza a substituição do documento em rascunho do autor.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "FileList": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "EnvelopeName": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "FileList": {
+                  "style": "form"
+                },
+                "EnvelopeName": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/{id}/cancelar": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Realiza o cancelamento de uma publicacao do autor.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/{id}/destinatarios": {
+      "post": {
+        "tags": [
+          "PublicacoesDestinatarios"
+        ],
+        "summary": "Obtem lista de destinatarios de uma publicacao baseada no id da mesma, para usuários autores da publicação.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinatarioPublicacaoRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinatarioPublicacaoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinatarioPublicacaoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinatarioPublicacaoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v1/publicacoes/{id}/tenant/params": {
+      "get": {
+        "tags": [
+          "Tenant"
+        ],
+        "summary": "Realiza a busca pelos parâmetros da empresa do documento.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v2/publicacoes/pesquisas": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Obtem a lista de publicações que o usuário possui acesso.",
+        "description": "Administradores podem visualizar todas as publicações da empresa.",
+        "parameters": [
+          {
+            "name": "PaginaAtual",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "TamanhoPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "Ordenacao",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/OrdenacaoPublicacao"
+            }
+          },
+          {
+            "name": "OrdemCrescente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV2"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV2"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV2"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV2"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/documents/v2/publicacoes/{id}": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Obtem os dados de uma publicação específica.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v2/publicacoes/{id}/download": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Retorna uma URL temporária cujo conteúdo é o tipo do documento especificado ou um zip para downloads tipo Todos.",
+        "description": "tipoDownload: 1=Original, 2=Assinado, 3=Com Certificado, 4=Todos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "TipoDownload",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TipoDownload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v2/publicacoes/sem-cadastro/{id}": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Obtem os dados de uma publicação específica, para usuários sem cadastro no TAE.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/v3/publicacoes/pesquisas": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Obtem a lista de publicações que o usuário possui acesso sem total de registros.",
+        "description": "Administradores podem visualizar todas as publicações da empresa.",
+        "parameters": [
+          {
+            "name": "PaginaAtual",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "TamanhoPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "Ordenacao",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/OrdenacaoPublicacao"
+            }
+          },
+          {
+            "name": "OrdemCrescente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV3"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV3"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV3"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV3"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/documents/v4/publicacoes/pesquisas": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Obtem a lista de publicações que o usuário possui acesso, considerando data e hora na pesquisa.",
+        "description": "Administradores podem visualizar todas as publicações da empresa.",
+        "parameters": [
+          {
+            "name": "PaginaAtual",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "TamanhoPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "Ordenacao",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/OrdenacaoPublicacao"
+            }
+          },
+          {
+            "name": "OrdemCrescente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV4"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV4"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV4"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PesquisaPublicacoesRequestV4"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AcaoDoUsuario": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "AtualizarPastaRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CadastrarLogLeituraRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "tipoLogLeitura": {
+            "$ref": "#/components/schemas/TipoLogLeitura"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CadastrarPublicacaoRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "idDocumento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "destinatarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Destinatario"
+            },
+            "nullable": true
+          },
+          "observadores": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicacaoObservador"
+            },
+            "nullable": true
+          },
+          "utilizaWorkflow": {
+            "type": "boolean"
+          },
+          "publicacaoOpcoes": {
+            "$ref": "#/components/schemas/PublicacaoOpcoes"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompartilharPastaContatoRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "idPasta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CriarPastaRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "idPastaPai": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Destinatario": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "acao": {
+            "$ref": "#/components/schemas/AcaoDoUsuario"
+          },
+          "workflow": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "papelAssinante": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoAutenticacao": {
+            "$ref": "#/components/schemas/TipoAutenticacao"
+          },
+          "tipoIdentificacao": {
+            "$ref": "#/components/schemas/TipoIdentificacao"
+          },
+          "identificacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "notificaEnvio": {
+            "type": "boolean"
+          },
+          "tipoEnvioDocumento": {
+            "$ref": "#/components/schemas/TipoEnvioDocumento"
+          },
+          "tipoEnvioCodigo": {
+            "$ref": "#/components/schemas/TipoEnvioCodigo"
+          },
+          "telefone": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DestinatarioPublicacaoRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "destinatarioEmail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DesvincularArquivosPastaRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "idsArquivos": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObterListaPublicacoesPorDestinatarioRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "destinatarioEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "destinatarioPendente": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "destinatarioTipoAutenticacao": {
+            "$ref": "#/components/schemas/TipoAutenticacao"
+          },
+          "nomeArquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusDocumento"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObterTotaisPublicacoesDestinatarioRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "emailDestinatario": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoAutenticacaoDestinatario": {
+            "$ref": "#/components/schemas/TipoAutenticacao"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrdenacaoPublicacao": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PesquisaPublicacoesRequestV1": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeArquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusArquivo": {
+            "$ref": "#/components/schemas/StatusDocumento"
+          },
+          "pesquisarEmTodaEmpresa": {
+            "type": "boolean"
+          },
+          "idPasta": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dataCriacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataCriacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicacaoObservador": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tipoEnvioDocumento": {
+            "$ref": "#/components/schemas/TipoEnvioDocumento"
+          },
+          "telefone": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicacaoOpcoes": {
+        "type": "object",
+        "properties": {
+          "dataExpiracao": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "solicitaAssinaturaManuscrita": {
+            "type": "boolean"
+          },
+          "assuntoMensagem": {
+            "type": "string",
+            "nullable": true
+          },
+          "corpoMensagem": {
+            "type": "string",
+            "nullable": true
+          },
+          "permiteRejeitarDocumento": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "intervaloLembrete": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RemoverCompartilhamentoPastaContatoRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "idPasta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatusDocumento": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TipoAutenticacao": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TipoDownload": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TipoEnvioCodigo": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TipoEnvioDocumento": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TipoIdentificacao": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TipoLogLeitura": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TipoPdfa": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          10,
+          99
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "VincularArquivosPastaRequest": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "idsArquivos": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PesquisaPublicacoesRequestV2": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeArquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusArquivo": {
+            "$ref": "#/components/schemas/StatusDocumento"
+          },
+          "pesquisarEmTodaEmpresa": {
+            "type": "boolean"
+          },
+          "idPasta": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dataCriacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataCriacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PesquisaPublicacoesRequestV3": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeArquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusArquivo": {
+            "$ref": "#/components/schemas/StatusDocumento"
+          },
+          "pesquisarEmTodaEmpresa": {
+            "type": "boolean"
+          },
+          "idPasta": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dataCriacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataCriacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PesquisaPublicacoesRequestV4": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeArquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusArquivo": {
+            "$ref": "#/components/schemas/StatusDocumento"
+          },
+          "pesquisarEmTodaEmpresa": {
+            "type": "boolean"
+          },
+          "idPasta": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dataCriacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataCriacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataMovimentacaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dataExpiracaoFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Input the JWT like: Bearer {your token}",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

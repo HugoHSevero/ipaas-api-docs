@@ -1,0 +1,3235 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TOTVS Assinatura Eletrônica - Assinaturas",
+    "version": "v1+v2+v3",
+    "description": "Fonte: https://totvssign.staging.totvs.app/signintegration/swagger/ (versões v1, v2, v3)."
+  },
+  "servers": [
+    {
+      "url": "https://totvssign.totvs.app",
+      "description": "Produção"
+    },
+    {
+      "url": "https://totvssign.staging.totvs.app",
+      "description": "Homologação"
+    }
+  ],
+  "tags": [
+    {
+      "name": "AssinaturaEmNuvem"
+    },
+    {
+      "name": "PapeisAssinantes"
+    },
+    {
+      "name": "PublicacaoCallBack"
+    },
+    {
+      "name": "Subscricao"
+    },
+    {
+      "name": "Anexos"
+    },
+    {
+      "name": "Assinaturas"
+    },
+    {
+      "name": "Contratos"
+    },
+    {
+      "name": "PublicacaoOpcoes"
+    },
+    {
+      "name": "Publicacoes"
+    },
+    {
+      "name": "Usuarios"
+    }
+  ],
+  "paths": {
+    "/signintegration/v1/assinaturas/digital/nuvem": {
+      "get": {
+        "tags": [
+          "AssinaturaEmNuvem"
+        ],
+        "summary": "Solicita a lista de certificados em nuvem pelo CPF/CNPJ.",
+        "parameters": [
+          {
+            "name": "cpfCnpj",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "resposta de sucesso da lista de certificados em nuvem.",
+            "content": {
+              "text/plain": {
+                "schema": {},
+                "example": {
+                  "services": [
+                    {
+                      "serviceInfo": {
+                        "serviceName": "BirdID",
+                        "provider": "SOLUTI",
+                        "endpoint": "https://api.birdid.com.br/",
+                        "badgeUrl": "https://cdn.lacunasoftware.com/img/psc/birdid.png"
+                      },
+                      "authUrl": "https://api.birdid.com.br/v0/oauth/authorize?client_id=123&response_type=code&scope=signature_session&redirect_uri=https%3A%2F%2Fcloudhub.lacunasoftware.com%2Fcallback&state=fdjkdjk48fsa&login_hint=[cpfcnpj]&code_challenge=sdjiewfe54fe84hw&code_challenge_method=S256&lifetime=0"
+                    },
+                    {
+                      "serviceInfo": {
+                        "serviceName": "VIDaaS",
+                        "provider": "VALID",
+                        "endpoint": "https://certificado.vidaas.com.br/",
+                        "badgeUrl": "https://cdn.lacunasoftware.com/img/psc/vidaas.png"
+                      },
+                      "authUrl": "https://certificado.vidaas.com.br/v0/oauth/authorize?client_id=123&response_type=code&scope=signature_session&redirect_uri=https%3A%2F%2Fcloudhub.lacunasoftware.com%2Fcallback&state=d4fewg89g4rhr7s7&login_hint=[cpfcnpj]&code_challenge=ds1ge15g1&code_challenge_method=S256&lifetime=0"
+                    }
+                  ]
+                }
+              },
+              "application/json": {
+                "schema": {},
+                "example": {
+                  "services": [
+                    {
+                      "serviceInfo": {
+                        "serviceName": "BirdID",
+                        "provider": "SOLUTI",
+                        "endpoint": "https://api.birdid.com.br/",
+                        "badgeUrl": "https://cdn.lacunasoftware.com/img/psc/birdid.png"
+                      },
+                      "authUrl": "https://api.birdid.com.br/v0/oauth/authorize?client_id=123&response_type=code&scope=signature_session&redirect_uri=https%3A%2F%2Fcloudhub.lacunasoftware.com%2Fcallback&state=fdjkdjk48fsa&login_hint=[cpfcnpj]&code_challenge=sdjiewfe54fe84hw&code_challenge_method=S256&lifetime=0"
+                    },
+                    {
+                      "serviceInfo": {
+                        "serviceName": "VIDaaS",
+                        "provider": "VALID",
+                        "endpoint": "https://certificado.vidaas.com.br/",
+                        "badgeUrl": "https://cdn.lacunasoftware.com/img/psc/vidaas.png"
+                      },
+                      "authUrl": "https://certificado.vidaas.com.br/v0/oauth/authorize?client_id=123&response_type=code&scope=signature_session&redirect_uri=https%3A%2F%2Fcloudhub.lacunasoftware.com%2Fcallback&state=d4fewg89g4rhr7s7&login_hint=[cpfcnpj]&code_challenge=ds1ge15g1&code_challenge_method=S256&lifetime=0"
+                    }
+                  ]
+                }
+              },
+              "text/json": {
+                "schema": {},
+                "example": {
+                  "services": [
+                    {
+                      "serviceInfo": {
+                        "serviceName": "BirdID",
+                        "provider": "SOLUTI",
+                        "endpoint": "https://api.birdid.com.br/",
+                        "badgeUrl": "https://cdn.lacunasoftware.com/img/psc/birdid.png"
+                      },
+                      "authUrl": "https://api.birdid.com.br/v0/oauth/authorize?client_id=123&response_type=code&scope=signature_session&redirect_uri=https%3A%2F%2Fcloudhub.lacunasoftware.com%2Fcallback&state=fdjkdjk48fsa&login_hint=[cpfcnpj]&code_challenge=sdjiewfe54fe84hw&code_challenge_method=S256&lifetime=0"
+                    },
+                    {
+                      "serviceInfo": {
+                        "serviceName": "VIDaaS",
+                        "provider": "VALID",
+                        "endpoint": "https://certificado.vidaas.com.br/",
+                        "badgeUrl": "https://cdn.lacunasoftware.com/img/psc/vidaas.png"
+                      },
+                      "authUrl": "https://certificado.vidaas.com.br/v0/oauth/authorize?client_id=123&response_type=code&scope=signature_session&redirect_uri=https%3A%2F%2Fcloudhub.lacunasoftware.com%2Fcallback&state=d4fewg89g4rhr7s7&login_hint=[cpfcnpj]&code_challenge=ds1ge15g1&code_challenge_method=S256&lifetime=0"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AssinaturaEmNuvem"
+        ],
+        "summary": "Realiza assinatura com certificado digital em nuvem.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "session": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "assinaturaComplete": {
+                    "type": "object",
+                    "properties": {
+                      "tipoAutenticacao": {
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "enderecoIp": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "enderecoIpV6": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "geoLocalizacao": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "tipoIdentificacao": {
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "identificacao": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "session": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "assinaturaComplete": {
+                    "type": "object",
+                    "properties": {
+                      "tipoAutenticacao": {
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "enderecoIp": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "enderecoIpV6": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "geoLocalizacao": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "tipoIdentificacao": {
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "identificacao": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "session": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "assinaturaComplete": {
+                    "type": "object",
+                    "properties": {
+                      "tipoAutenticacao": {
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "enderecoIp": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "enderecoIpV6": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "geoLocalizacao": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "tipoIdentificacao": {
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "identificacao": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v1/papeis-assinante": {
+      "get": {
+        "tags": [
+          "PapeisAssinantes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "GET /signintegration/v1/papeis-assinante"
+      }
+    },
+    "/signintegration/v1/Publicacoes/{IdArquivo}/CallBacks": {
+      "post": {
+        "tags": [
+          "PublicacaoCallBack"
+        ],
+        "parameters": [
+          {
+            "name": "IdArquivo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "POST /signintegration/v1/Publicacoes/{IdArquivo}/CallBacks"
+      }
+    },
+    "/signintegration/v1/Subscricao": {
+      "put": {
+        "tags": [
+          "Subscricao"
+        ],
+        "parameters": [
+          {
+            "name": "tipo",
+            "in": "query",
+            "schema": {
+              "enum": [
+                1,
+                2
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "cortarImagem",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "PUT /signintegration/v1/Subscricao"
+      }
+    },
+    "/signintegration/v1/Subscricao/{tipo}": {
+      "get": {
+        "tags": [
+          "Subscricao"
+        ],
+        "parameters": [
+          {
+            "name": "tipo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                1,
+                2
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "GET /signintegration/v1/Subscricao/{tipo}"
+      }
+    },
+    "/signintegration/v2/Anexos/{idArquivo}": {
+      "get": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota GET /v1/publicacoes/{idDocumento}/anexos na API Documents.",
+        "parameters": [
+          {
+            "name": "idArquivo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota POST /v1/publicacoes/{idDocumento}/anexos na API Documents.",
+        "parameters": [
+          {
+            "name": "idArquivo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Anexos": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Anexos": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Anexos/download/{idFileStream}": {
+      "get": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota GET /v1/publicacoes/{idDocumento}/anexos/{idAnexo} na API Documents.",
+        "parameters": [
+          {
+            "name": "idFileStream",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Anexos/{idAnexo}": {
+      "delete": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota DELETE /v1/publicacoes/{idDocumento}/anexos/{idAnexo} na API Documents.",
+        "parameters": [
+          {
+            "name": "idAnexo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Anexos/all/{idArquivo}": {
+      "delete": {
+        "tags": [
+          "Anexos"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota DELETE /v1/publicacoes/{idDocumento}/anexos na API Documents.",
+        "parameters": [
+          {
+            "name": "idArquivo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Assinaturas": {
+      "post": {
+        "tags": [
+          "Assinaturas"
+        ],
+        "summary": "Realiza uma assinatura eletrônica",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "idDocumento"
+                ],
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "required": [
+                  "idDocumento"
+                ],
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "required": [
+                  "idDocumento"
+                ],
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "papelAssinante": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Assinaturas/sem-cadastro": {
+      "post": {
+        "tags": [
+          "Assinaturas"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota /v3/Assinaturas/sem-cadastro.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enviarEmailPublicacaoFinalizadaUltimoAssinante": {
+                    "type": "boolean"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enviarEmailPublicacaoFinalizadaUltimoAssinante": {
+                    "type": "boolean"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enviarEmailPublicacaoFinalizadaUltimoAssinante": {
+                    "type": "boolean"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Assinaturas/rejeitar": {
+      "post": {
+        "tags": [
+          "Assinaturas"
+        ],
+        "summary": "Realiza a rejeição de um documento",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "idDocumento",
+                  "motivo"
+                ],
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "motivo": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "required": [
+                  "idDocumento",
+                  "motivo"
+                ],
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "motivo": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "required": [
+                  "idDocumento",
+                  "motivo"
+                ],
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "motivo": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Assinaturas/rejeitar-sem-cadastro": {
+      "post": {
+        "tags": [
+          "Assinaturas"
+        ],
+        "summary": "Realiza a rejeição de um documento por um usuario sem cadastro",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "motivo": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "motivo": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "motivo": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Contratos": {
+      "get": {
+        "tags": [
+          "Contratos"
+        ],
+        "summary": "Retorna os contratos de termo de uso ou politica de privacidade do TAE",
+        "parameters": [
+          {
+            "name": "TipoContrato",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                1,
+                2
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/PublicacaoOpcoes/{idDocumento}": {
+      "get": {
+        "tags": [
+          "PublicacaoOpcoes"
+        ],
+        "summary": "Retorna as opções de uma publicação existente",
+        "parameters": [
+          {
+            "name": "idDocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/PublicacaoOpcoes": {
+      "put": {
+        "tags": [
+          "PublicacaoOpcoes"
+        ],
+        "summary": "Altera as opções de uma publicação existente",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "dataExpiracao": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "solicitaAssinaturaManuscrita": {
+                    "type": "boolean"
+                  },
+                  "assuntoMensagem": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "corpoMensagem": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "permiteRejeitarDocumento": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "intervaloLembrete": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "dataExpiracao": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "solicitaAssinaturaManuscrita": {
+                    "type": "boolean"
+                  },
+                  "assuntoMensagem": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "corpoMensagem": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "permiteRejeitarDocumento": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "intervaloLembrete": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "dataExpiracao": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "solicitaAssinaturaManuscrita": {
+                    "type": "boolean"
+                  },
+                  "assuntoMensagem": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "corpoMensagem": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "permiteRejeitarDocumento": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "intervaloLembrete": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Publicacoes": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota será descontinuada em 30/11/2025, favor utilizar a rota v1/publicacoes na API Documents",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "destinatarios": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "acao": {
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "workflow": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "papelAssinante": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "nomeCompleto": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoAutenticacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoIdentificacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "identificacao": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  },
+                  "observadores": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  },
+                  "utilizaWorkflow": {
+                    "type": "boolean"
+                  },
+                  "responsavelAssinaDocumento": {
+                    "type": "boolean"
+                  },
+                  "assinaturaResponsavel": {
+                    "required": [
+                      "idDocumento"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "idDocumento": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "enderecoIp": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "enderecoIpV6": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "geoLocalizacao": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "id": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "tipoDeAssinatura": {
+                        "enum": [
+                          0,
+                          1,
+                          2,
+                          3,
+                          4,
+                          -1
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "papelAssinante": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "dataExpiracao": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "publicacaoOpcoes": {
+                    "type": "object",
+                    "properties": {
+                      "idDocumento": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "solicitaAssinaturaManuscrita": {
+                        "type": "boolean"
+                      },
+                      "assuntoMensagem": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "corpoMensagem": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "permiteRejeitarDocumento": {
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "intervaloLembrete": {
+                        "type": "integer",
+                        "format": "int32"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "destinatarios": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "acao": {
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "workflow": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "papelAssinante": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "nomeCompleto": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoAutenticacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoIdentificacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "identificacao": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  },
+                  "observadores": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  },
+                  "utilizaWorkflow": {
+                    "type": "boolean"
+                  },
+                  "responsavelAssinaDocumento": {
+                    "type": "boolean"
+                  },
+                  "assinaturaResponsavel": {
+                    "required": [
+                      "idDocumento"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "idDocumento": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "enderecoIp": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "enderecoIpV6": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "geoLocalizacao": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "id": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "tipoDeAssinatura": {
+                        "enum": [
+                          0,
+                          1,
+                          2,
+                          3,
+                          4,
+                          -1
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "papelAssinante": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "dataExpiracao": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "publicacaoOpcoes": {
+                    "type": "object",
+                    "properties": {
+                      "idDocumento": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "solicitaAssinaturaManuscrita": {
+                        "type": "boolean"
+                      },
+                      "assuntoMensagem": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "corpoMensagem": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "permiteRejeitarDocumento": {
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "intervaloLembrete": {
+                        "type": "integer",
+                        "format": "int32"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "destinatarios": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "acao": {
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "workflow": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "papelAssinante": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "nomeCompleto": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoAutenticacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoIdentificacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "identificacao": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  },
+                  "observadores": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  },
+                  "utilizaWorkflow": {
+                    "type": "boolean"
+                  },
+                  "responsavelAssinaDocumento": {
+                    "type": "boolean"
+                  },
+                  "assinaturaResponsavel": {
+                    "required": [
+                      "idDocumento"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "idDocumento": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "enderecoIp": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "enderecoIpV6": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "geoLocalizacao": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "id": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "tipoDeAssinatura": {
+                        "enum": [
+                          0,
+                          1,
+                          2,
+                          3,
+                          4,
+                          -1
+                        ],
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "papelAssinante": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "dataExpiracao": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "publicacaoOpcoes": {
+                    "type": "object",
+                    "properties": {
+                      "idDocumento": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "solicitaAssinaturaManuscrita": {
+                        "type": "boolean"
+                      },
+                      "assuntoMensagem": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "corpoMensagem": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "permiteRejeitarDocumento": {
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "intervaloLembrete": {
+                        "type": "integer",
+                        "format": "int32"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      },
+      "delete": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota DELETE /v1/publicacoes/{id} na API Documents.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Publicacoes/{id}": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota /v2/publicacoes/{id} na API Documents",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Publicacoes/filter": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota /v2/publicacoes/pesquisas na API Documents",
+        "parameters": [
+          {
+            "name": "Termo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdPasta",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PaginaAtual",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "TamanhoPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "Ordenacao",
+            "in": "query",
+            "schema": {
+              "enum": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "OrdemCrescente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Publicacoes/destinatario-list": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Adiciona destinatários em uma publicação existente",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "destinatarios": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "acao": {
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "workflow": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "papelAssinante": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "nomeCompleto": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoAutenticacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoIdentificacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "identificacao": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoEnvioDocumento": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoEnvioCodigo": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "telefone": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "destinatarios": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "acao": {
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "workflow": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "papelAssinante": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "nomeCompleto": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoAutenticacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoIdentificacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "identificacao": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoEnvioDocumento": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoEnvioCodigo": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "telefone": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "destinatarios": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "acao": {
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "workflow": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "papelAssinante": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "nomeCompleto": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoAutenticacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoIdentificacao": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "identificacao": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "tipoEnvioDocumento": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tipoEnvioCodigo": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "telefone": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Publicacoes/destinatario": {
+      "delete": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Remove destinatários de uma publicação existente",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "emailDestinatario": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "emailDestinatario": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "emailDestinatario": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Publicacoes/observador-list": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Adiciona observadores em uma publicação existente",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "observadores": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "tipoEnvioDocumento": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "telefone": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "observadores": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "tipoEnvioDocumento": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "telefone": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "observadores": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "email"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "tipoEnvioDocumento": {
+                          "enum": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "telefone": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Publicacoes/observador": {
+      "delete": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Remove observadores de uma publicação existente",
+        "parameters": [
+          {
+            "name": "IdDocumento",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "EmailObservador",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Publicacoes/documentos-empresa": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "[Rota exclusiva para usuários de serviço] - Retorna todos os documentos da empresa",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Publicacoes/filter-basic": {
+      "get": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Esta rota será descontinuada, favor utilizar a rota /v2/publicacoes/pesquisas na API Documents",
+        "parameters": [
+          {
+            "name": "Termo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PaginaAtual",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "TamanhoPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "OrdemCrescente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Ordenacao",
+            "in": "query",
+            "schema": {
+              "enum": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/signintegration/v2/Publicacoes/reenvia-email-pendentes": {
+      "post": {
+        "tags": [
+          "Publicacoes"
+        ],
+        "summary": "Reenvia e-mail para todos os usuários pendentes de uma ou mais publicações",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "listaDocumentos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "listaDocumentos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "listaDocumentos": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v2/Usuarios/email-list": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Retorna a lista de e-mails que o usuário logado já enviou algum documento",
+        "parameters": [
+          {
+            "name": "Filter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/signintegration/v3/Assinaturas/sem-cadastro": {
+      "post": {
+        "tags": [
+          "Assinaturas"
+        ],
+        "summary": "Realiza a ssinatura eletrônica para um participante sem cadastro",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enviarEmailPublicacaoFinalizadaUltimoAssinante": {
+                    "type": "boolean"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enviarEmailPublicacaoFinalizadaUltimoAssinante": {
+                    "type": "boolean"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "aggregateId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "idDocumento": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enderecoIp": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "enderecoIpV6": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "geoLocalizacao": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "tipoDeAssinatura": {
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      -1
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "enviarEmailPublicacaoFinalizadaUltimoAssinante": {
+                    "type": "boolean"
+                  },
+                  "tipoIdentificacao": {
+                    "enum": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "identificacao": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Input the JWT like: Bearer {your token}",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

@@ -443,6 +443,10 @@ Solução usada (`hubspot/gerar.py`): achar os grupos (componentes fortemente co
 
 **`summary` vazio na spec oficial.** O nome do recurso vem do `summary`; o HubSpot deixa `POST /crm/objects/2026-09/{objectType}/search` sem ele. Preencha com o `operationId` antes de importar.
 
+**Swagger em várias versões e `servers` relativo (ASP.NET/Swashbuckle).** APIs .NET costumam publicar um `swagger.json` por versão (`/swagger/v1/swagger.json`, `/swagger/v2/...`) e um `servers` relativo (`/documents`). A lista de versões está no `index.html` do Swagger UI (`configObject.urls`), não no `swagger-initializer.js`, que traz o petstore padrão. Verificado no TAE: as versões foram juntadas num arquivo por API e os paths receberam o prefixo do `servers`. Assim um ambiente só, com a base no host, atende várias APIs do mesmo fornecedor (`tae/gerar.py`, seis APIs num ambiente). Importação **não verificada** até o cadastro.
+
+**Spec oficial pode vir sem schema de resposta.** No TAE, 130 de 131 operações declaram só `"200": OK`. A importação deve funcionar, mas os recursos ficam sem campos de saída. Os schemas precisam vir de chamadas reais; não invente.
+
 **OpenAPI 3.1 continua não verificado.** A spec da Meta é 3.1.0 e foi **rebaixada para 3.0.3** antes de importar, com sucesso. Como o rebaixamento veio primeiro, não se sabe se o importador aceitaria 3.1 direto. Rebaixar é barato quando a spec não usa recursos de 3.1 de fato (a da Meta não usava: nenhum `type` como lista, nenhum `$defs`, e usava até `nullable`, que é de 3.0).
 
 ---
